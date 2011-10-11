@@ -313,6 +313,8 @@ Neural.synapses.install = function ( ) {
 
 }
 
+/* Single */
+
 /* Get */
 Neural.synapses.get = function ( key, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': Neural.synapses.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
@@ -332,6 +334,9 @@ Neural.synapses.add = function ( data, on_success, on_error )  {
 Neural.synapses.remove = function ( key, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': Neural.synapses.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
 }
+
+
+/* Multi */
 
 Neural.synapses.cursor = Neural.synapses.cursor || {};
 
