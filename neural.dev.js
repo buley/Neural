@@ -23,7 +23,7 @@ Neural.neurons.shorthand_map = {
 Neural.neurons.install = function ( ) {
 
         var neurons = {
-                'neurons': { 'key': Neural.neurons.shorthand( 'id' ), 'incrementing_key': true, 'unique': true }
+                'neurons': { 'key': Neural.neurons.shorthand( 'id' ), 'incrementing_key': 'true', 'unique': 'true' }
         };
 
         var neurons_idxs = {};
@@ -75,7 +75,7 @@ Neural.neurons.cursor = Neural.neurons.cursor || {};
 
 /* Cursor Get */
 
-Neural.neurons.cursor.get = function( key, key_name, data, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
+Neural.neurons.cursor.get = function( key, key_name, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
 
         /* Action */
 
