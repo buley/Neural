@@ -425,6 +425,8 @@ Neural.synapses.cursor.delete = function( key, key_name, begin, end, on_success,
 
 	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'synapses', 'keyRange': InDB.range.only( key ), 'index': key_name, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 
+};
+
 /* Cursor Update */
 Neural.synapses.cursor.update = function( key, key_name, data, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
 
