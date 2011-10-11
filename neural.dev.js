@@ -3,6 +3,9 @@
  * Basic MLP neural network.
  **/
 
+var Neural = Neural || {};
+var Neural.neurons = Neural.neurons || {};
+var Neural.synapses = Neural.synapses || {};
 
 /* Database */
 
