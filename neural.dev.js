@@ -1,102 +1,10 @@
 
-/* Neural.js */
-
-/* Query comes: 
-	- clean up query w/stemming and stop words
-	- build in Memory the portion of network relevant to Query
-	- query 
-	- cleanup
-
-intialize weights to random values
-present input patter to network
-calc the network output
-for each node n in the output layer:
-	- calc the error 
-	- add error to all the weights of nodes connected to n 
-	- multiplied by learning rate
-neurons are like 0|1 switches
-synapses between neurons are matrixes of numbers (weights)
-
-supervised learning through training
-
- */
-var Neural = Neural || {};
-
-Neural.layers.hidden = {};
-Neural.layers.query = {};
-Neural.layers.output = {};
-
-Neural.connection = Neural.connection || {};
-
-Neural.connection.strength = Neureal.connection.strength || {};
-
-Neural.neurons = Neural.neurons || {};
-
-Neural.nodes = Neural.nodes || {};
-Neural.nodes.hidden = Neural.nodes.hidden || {};
-
-Neural.nodes.hidden.get = function() {
-
-};
-
-Neural.utilities = Neural.language || {};
-Neural.utilities.filter = function() {
-	//throw out HTML and other non ASCII
-};
-
-Neural.utilities.tokenizer = function( ) {
-
-};
-Neural.utilities.stemmer = function( ) {
-
-};
-Neural.utilities.decommonizer = function( ) {
-	//throw out common words
-};
-
-
-
-Neural.network = Neural.network || {};
-Neural.network.build = function( query ) {
-	var words = query.words;
-	var hidden_nodes = Neural.nodes.hidden.get( query );
-};
-
-//types: private, public
-Neural.nodes.generate = function( type ) {
-
-};
-
-Neural.connection.strength.get = function( from, to, on_success, on_error ) {
-	// get from, to via synapses
-
-};
-
-Neural.connection.strength.set = function( from, to, strength, on_success, on_error ) {
-	// set from, to via synapses
-};
-
-
-Neural.training = Neural.training || {};
-
-var learning_rate = ".5"; //.2 to .8
-
-Neural.training.setup_query_layer = function() {
-
-};
-
-Neural.training.delta_rule = function() {
-	//calculate error  between calculated output and sample output data
-	//adjust weights based on error minimization ('gradient descent')
-}
-
-Neural.training.backpropigate = function() {
-
-};
+/* Neural.js
+ * Basic MLP neural network.
+ **/
 
 
 /* Database */
-/* Built using InDB */
 
 /* Neurons */
 
