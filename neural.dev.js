@@ -49,14 +49,22 @@ Neural.neurons.install = function ( ) {
 
 }
 
+/* Get */
+Neural.neurons.get = function ( data, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_get', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
+}
+
+/* Put */
 Neural.neurons.put = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_put', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
+/* Add */
 Neural.neurons.add = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
+/* Remove */
 Neural.neurons.remove = function ( key, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_delete', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
 }
@@ -176,14 +184,22 @@ Neural.synapses.install = function ( ) {
 
 }
 
+/* Get */
+Neural.synapses.get = function ( data, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'data': Neural.synapses.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
+}
+
+/* Put */
 Neural.synapses.put = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': Neural.synapses.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
+/* Add */
 Neural.synapses.add = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': Neural.synapses.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
+/* Remove */
 Neural.synapses.remove = function ( key, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': Neural.synapses.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
 }
