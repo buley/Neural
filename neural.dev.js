@@ -4,8 +4,8 @@
  **/
 
 var Neural = Neural || {};
-var Neural.neurons = Neural.neurons || {};
-var Neural.synapses = Neural.synapses || {};
+Neural.neurons = Neural.neurons || {};
+Neural.synapses = Neural.synapses || {};
 
 /* Database */
 
