@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>Neural.js</title>
+		<!--<link rel="stylesheet" href="/css/style.css">-->
+	</head>
+	<body>
+		<div id="result"></div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var browser_check = InDB.checkBrowser();
+				InDB.assert( -1 !== browser_check, 'incompatible browser' );
+				if ( 0 === browser_check ) {
+					InDB.fixBrowser();
+				}
+				InDB.debug = true;
+				InDB.trigger( 'InDB_do_database_load', { 'name': Buleys.database_name, 'description': Buleys.database_description } ) ;
+			});
+		</script>
+		<script type="text/javascript" src="/neural.dev.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	</body>
+</html>
+
