@@ -50,8 +50,8 @@ Neural.neurons.install = function ( ) {
 }
 
 /* Get */
-Neural.neurons.get = function ( data, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_get', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
+Neural.neurons.get = function ( key, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_get', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Put */
