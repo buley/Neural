@@ -31,8 +31,6 @@ Neural.synapses.cursor.setStrength = function( request ) {
 };
 
 
-
-
 /* Database */
 
 /* Neurons */
