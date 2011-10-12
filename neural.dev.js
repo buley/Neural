@@ -383,7 +383,6 @@ Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begi
 	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
 
 	/* Setup */
-	console.log('key is probs an object not string');
 	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Callbacks */
@@ -404,7 +403,7 @@ Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begi
 	};
 
 	/* Request */
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': Neural.synapses.shorthand( key_name ), 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': key_name, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 
 }
 
