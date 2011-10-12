@@ -389,7 +389,7 @@ Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begi
 
 	var cursor_on_success = function ( context ) {
 		var result = context.event.target.result;
-		var item = Neuron.synapses.reverse_shorthand( InDB.row.value( result ) );
+		var item = Neural.synapses.reverse_shorthand( InDB.row.value( result ) );
 		console.log( 'synapses test', item, result );
 		if( 'function' == typeof on_error ) {
 			on_success( context );
