@@ -9,7 +9,7 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				var Neural = Neural || {};
-				Neural.database_name = "Neural-005";
+				Neural.database_name = "Neural-010";
 				Neural.database_description = "Basic MLP neural network."
 				var browser_check = InDB.checkBrowser();
 				InDB.assert( -1 !== browser_check, 'incompatible browser' );
@@ -27,18 +27,18 @@
 			jQuery( document ).bind( 'neuron_database_loaded', function( context ) {
 				console.log( "Neuron InDB is loaded", context );
 
-				var count = 10;
+				var count = 1;
 				var map = [];
 				for( var i = 0; i < count; i++ ) {
 					/* map.push( {
 					
 					} ); */
 					
-					Neural.neurons.add( { 'type': 'input', 'slug': InDB.utilities.random( 12, 'string' ), 'display': InDB.utilities.random( 12, 'string' ) }, function( context ) {
+					Neural.neurons.add( { 'type': 'hidden', 'slug': InDB.utilities.random( 12, 'letters' ), 'display': InDB.utilities.random( 12, 'letters' ) }, function( context ) {
 						console.log( 'Added', context );
 					} );
 
-					Neural.synapses.add( { 'type': InDB.utilities.random( 12, 'string' ), 'to': Math.floor( Math.random() * 100 ), 'from': Math.floor( Math.random() * 100 ), 'strength': Math.random() }, function( context ) {
+					Neural.synapses.add( { 'type': InDB.utilities.random( 12, 'letters' ), 'to': Math.floor( Math.random() * 100 ), 'from': Math.floor( Math.random() * 100 ), 'strength': Math.random() }, function( context ) {
 						console.log( 'Added', context );
 					} );
 

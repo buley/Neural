@@ -273,10 +273,8 @@ Neural.neurons.shorthand_encode = function( object ) {
 }
 
 
-
-
-
 /* Synapses */
+
 
 Neural.synapses.shorthand_map = {
 	'id': 'i',
