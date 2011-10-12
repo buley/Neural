@@ -117,7 +117,7 @@ Neural.neurons.cursor.get = function( key, key_name, on_success, on_error, begin
 
 	/* Setup */
 
-	var keyRange = InDB.range.get( val, begin, end, left_inclusive, right_inclusive );
+	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Callbacks */
 
@@ -160,7 +160,7 @@ Neural.neurons.cursor.delete = function( key, key_name, begin, end, on_success, 
 
 	/* Setup */
 
-	var keyRange = InDB.range.get( val, begin, end, left_inclusive, right_inclusive );
+	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Callbacks */
 
@@ -203,7 +203,7 @@ Neural.neurons.cursor.update = function( key, key_name, data, on_success, on_err
 
 	/* Setup */
 
-	var keyRange = InDB.range.get( val, begin, end, left_inclusive, right_inclusive );
+	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Callbacks */
 
@@ -370,7 +370,7 @@ Neural.synapses.cursor = Neural.synapses.cursor || {};
 
 /* Cursor Get */
 
-Neural.synapses.cursor.get = function( key, key_name, data, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
+Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
 
         /* Action */
 
@@ -429,7 +429,7 @@ Neural.synapses.cursor.delete = function( key, key_name, begin, end, on_success,
 
 	/* Setup */
 
-	var keyRange = InDB.range.get( val, begin, end, left_inclusive, right_inclusive );
+	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Callbacks */
 
@@ -472,7 +472,7 @@ Neural.synapses.cursor.update = function( key, key_name, data, on_success, on_er
 
 	/* Setup */
 
-	var keyRange = InDB.range.get( val, begin, end, left_inclusive, right_inclusive );
+	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Callbacks */
 
