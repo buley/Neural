@@ -386,7 +386,7 @@ Neural.synapses.cursor.get = function( key, key_name, data, on_success, on_error
 
 	/* Setup */
 
-	var keyRange = InDB.range.get( val, begin, end, left_inclusive, right_inclusive );
+	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Callbacks */
 
