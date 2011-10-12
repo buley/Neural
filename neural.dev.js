@@ -385,7 +385,7 @@ Neural.synapses.cursor.get = function( key, key_name, data, on_success, on_error
 	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
 
 	/* Setup */
-
+	console.log('key is probs an object not string');
 	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Callbacks */
