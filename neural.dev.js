@@ -404,8 +404,7 @@ Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begi
 	};
 
 	/* Request */
-	console.log( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': InDB.range.only( Neural.synapses.shorthand( key ) ), 'index': Neural.synapses.shorthand( key_name ), 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': InDB.range.only( Neural.synapses.shorthand( key ) ), 'index': Neural.synapses.shorthand( key_name ), 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': InDB.range.only( key ), 'index': Neural.synapses.shorthand( key_name ), 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 
 }
 
