@@ -9,7 +9,7 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				var Neural = Neural || {};
-				Neural.database_name = "Neural-002";
+				Neural.database_name = "Neural-005";
 				Neural.database_description = "Basic MLP neural network."
 				var browser_check = InDB.checkBrowser();
 				InDB.assert( -1 !== browser_check, 'incompatible browser' );
@@ -27,9 +27,9 @@
 			jQuery( document ).bind( 'neuron_database_loaded', function( context ) {
 				console.log( "Neuron InDB is loaded", context );
 
-				var count = 100;
+				var count = 10;
 				var map = [];
-				for( var i = 0; i < 99; i++ ) {
+				for( var i = 0; i < count; i++ ) {
 					/* map.push( {
 					
 					} ); */
