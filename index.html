@@ -9,7 +9,7 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				var Neural = Neural || {};
-				Neural.database_name = "Neural-001";
+				Neural.database_name = "Neural-002";
 				Neural.database_description = "Basic MLP neural network."
 				var browser_check = InDB.checkBrowser();
 				InDB.assert( -1 !== browser_check, 'incompatible browser' );
@@ -17,8 +17,37 @@
 					InDB.fixBrowser();
 				}
 				InDB.debug = true;
-				InDB.trigger( 'InDB_do_database_load', { 'name': Neural.database_name, 'description': Neural.database_description } ) ;
+				var on_loaded = function( context ) {
+					jQuery( document ).trigger( 'neuron_database_loaded', context );
+				}
+				InDB.trigger( 'InDB_do_database_load', { 'name': Neural.database_name, 'description': Neural.database_description, 'on_success': on_loaded } ) ;
 			});
+	
+
+			jQuery( document ).bind( 'neuron_database_loaded', function( context ) {
+				console.log( "Neuron InDB is loaded", context );
+
+				var count = 100;
+				var map = [];
+				for( var i = 0; i < 99; i++ ) {
+					/* map.push( {
+					
+					} ); */
+					
+					Neural.neurons.add( { 'type': 'input', 'slug': InDB.utilities.random( 12, 'string' ), 'display': InDB.utilities.random( 12, 'string' ) }, function( context ) {
+						console.log( 'Added', context );
+					} );
+
+					Neural.synapses.add( { 'type': InDB.utilities.random( 12, 'string' ), 'to': Math.floor( Math.rand( 0, 100 ) ), 'from': Math.floor( Math.rand( 0, 100 ) ), 'strength': Math.rand( 0, 1 ) }, function( context ) {
+						console.log( 'Added', context );
+					} );
+
+
+
+				}
+				//console.log( map );
+
+			} );
 		</script>
 		<script type="text/javascript" src="http://github.com/editor/InDB/raw/master/indb.dev.js"></script>
 		<script type="text/javascript" src="https://github.com/editor/Neural/raw/master/neural.dev.js"></script>
