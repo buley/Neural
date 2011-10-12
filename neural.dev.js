@@ -7,6 +7,30 @@ var Neural = Neural || {};
 Neural.neurons = Neural.neurons || {};
 Neural.synapses = Neural.synapses || {};
 
+/* Relationship helpers */
+
+/*
+Each takes an object w/attributes { options: obj, on_success: fn, on_error: fn }
+*/
+
+Neural.synapses.cursor = Neural.synapses.cursor || {};
+
+Neural.synapses.getStrength = function( request ) {
+	Neural.neurons.get( request.options, request.on_success, request.on_error );
+};
+Neural.synapses.cursor.getStrength = function( request ) {
+	Neural.neurons.cursor.get( request.options, request.on_success, request.on_error );
+};
+Neural.synapses.setStrength = function( request ) {
+	Neural.neurons.set( request.options, request.on_success, request.on_error );
+};
+Neural.synapses.cursor.setStrength = function( request ) {
+	Neural.neurons.cursor.set( request.options, request.on_success, request.on_error );
+};
+
+
+
+
 /* Database */
 
 /* Neurons */
@@ -354,7 +378,6 @@ Neural.synapses.cursor.get = function( key, key_name, data, on_success, on_error
 
 	/* Defaults */
 
-	replace = ( true == replace ) ? true : false;
 	begin = ( 'undefined' !== typeof begin ) ? begin : null;
 	end = ( 'undefined' !== typeof end ) ? end : null;
 	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
