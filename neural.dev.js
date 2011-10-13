@@ -15,7 +15,6 @@ Each takes an object w/attributes { options: obj, on_success: fn, on_error: fn }
 
 Neural.synapses.cursor = Neural.synapses.cursor || {};
 
-
 /* There are all wrong arguments wise */
 Neural.synapses.getStrength = function( request ) {
 	Neural.neurons.get( request.options, request.on_success, request.on_error );
@@ -52,12 +51,14 @@ Neural.neurons.install = function ( ) {
 
         var neurons_idxs = {};
 	neurons_idxs[ 'neurons' ] = {
+		'id': {},
 		'display': {},
 		'type': {},
 		'slug': {}
 	};
 
         //neurons_idxs[ '' ][ Neural.neurons.shorthand( '' ) ] = '';
+        neurons_idxs.neurons[ 'id' ][ Neural.neurons.shorthand( 'id' ) ] = false;
         neurons_idxs.neurons[ 'type' ][ Neural.neurons.shorthand( 'type' ) ] = false;
         neurons_idxs.neurons[ 'display' ][ Neural.neurons.shorthand( 'display' ) ] = false;
         neurons_idxs.neurons[ 'slug' ][ Neural.neurons.shorthand( 'slug' ) ] = false;
@@ -69,7 +70,6 @@ Neural.neurons.install = function ( ) {
                         console.log( 'neurons store loaded', context2 );
                 } } );
         } } );
-
 
 }
 
@@ -85,7 +85,6 @@ Neural.neurons.put = function ( data, on_success, on_error )  {
 
 /* Add */
 Neural.neurons.add = function ( data, on_success, on_error )  {
-	console.log( 'blahblah', data, Neural.neurons.shorthand_encode( data ) );
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
@@ -316,6 +315,7 @@ Neural.synapses.install = function ( ) {
 
         var synapses_idxs = {};
 	synapses_idxs[ 'synapses' ] = {
+		'id': {},
 		'type': {},
 		'to': {},
 		'from': {},
@@ -323,6 +323,7 @@ Neural.synapses.install = function ( ) {
 	};
 
         //synapses_idxs[ '' ][ Neural.synapses.shorthand( '' ) ] = '';
+        synapses_idxs[ 'synapses' ][ 'id' ][ Neural.synapses.shorthand( 'id' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'type' ][ Neural.synapses.shorthand( 'type' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'to' ][ Neural.synapses.shorthand( 'to' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'from' ][ Neural.synapses.shorthand( 'from' ) ] = false;
@@ -406,6 +407,7 @@ Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begi
 	};
 
 	/* Request */
+
 	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': key_name, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 
 }
