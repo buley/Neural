@@ -120,7 +120,7 @@ Neural.neurons.cursor.get = function( key, key_name, on_success, on_error, begin
 	/* Callbacks */
 
 	var cursor_on_success = function ( context ) {
-		var result = context_1.event.target.result;
+		var result = context.event.target.result;
 		var item = result.value;
 		console.log( 'synapses test', item, result );
 		if( 'function' == typeof on_error ) {
@@ -162,7 +162,7 @@ Neural.neurons.cursor.delete = function( key, key_name, begin, end, on_success, 
 	/* Callbacks */
 
 	var cursor_on_success = function ( context ) {
-		var result = context_1.event.target.result;
+		var result = context.event.target.result;
 		var item = result.value;
 		console.log( 'synapses test', item, result );
 		if( 'function' == typeof on_error ) {
@@ -205,7 +205,7 @@ Neural.neurons.cursor.update = function( key, key_name, data, on_success, on_err
 	/* Callbacks */
 
 	var cursor_on_success = function ( context ) {
-		var result = context_1.event.target.result;
+		var result = context.event.target.result;
 		var item = result.value;
 		console.log( 'synapses test', item, result );
 		if( 'function' == typeof on_error ) {
@@ -481,7 +481,7 @@ Neural.synapses.cursor.update = function( key, key_name, data, on_success, on_er
 	/* Callbacks */
 
 	var cursor_on_success = function ( context ) {
-		var result = context_1.event.target.result;
+		var result = context.event.target.result;
 		var item = result.value;
 		console.log( 'synapses test', item, result );
 		if( 'function' == typeof on_error ) {
