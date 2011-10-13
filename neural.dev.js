@@ -17,16 +17,50 @@ Neural.synapses.cursor = Neural.synapses.cursor || {};
 
 /* There are all wrong arguments wise */
 Neural.synapses.getStrength = function( request ) {
-	Neural.neurons.get( request.options, request.on_success, request.on_error );
+	var on_success =  function( context ) {
+		console.log( 'Neural.synapses.setStrength success', context );
+        };
+	var on_error =  function( context ) {
+		console.log( 'Neural.synapses.setStrength error', context );
+	};
+
+	Neural.synapses.cursor.get( request.key, request.key_name, request.on_success, request.on_error, request.begin, request.end, request.left_inclusive, request.right_inclusive );
+
+;
 };
 Neural.synapses.cursor.getStrength = function( request ) {
 	Neural.neurons.cursor.get( request.options, request.on_success, request.on_error );
 };
 Neural.synapses.setStrength = function( request ) {
-	Neural.neurons.set( request.options, request.on_success, request.on_error );
+
 };
+
+//TODO: need to implement update/no replace
+// ( 'key': string, 'key_name': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
+Neural.synapses.setStrength = function( request ) {
+	
+	var on_success =  function( context ) {
+		console.log( 'Neural.synapses.setStrength success', context );
+        };
+	var on_error =  function( context ) {
+		console.log( 'Neural.synapses.setStrength error', context );
+	};
+
+	Neural.synapses.update( request.key, request.key_name, { 'strength': request.strength }, request.on_success, request.on_error );
+
+};
+// ( 'key': string, 'key_name': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
 Neural.synapses.cursor.setStrength = function( request ) {
-	Neural.neurons.cursor.set( request.options, request.on_success, request.on_error );
+	
+	var on_success =  function( context ) {
+		console.log( 'Neural.synapses.cursor.setStrength success', context );
+        };
+	var on_error =  function( context ) {
+		console.log( 'Neural.synapses.cursor.setStrength', context );
+	};
+
+	Neural.synapses.cursor.update( request.key, request.key_name, request.data, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
+
 };
 
 
@@ -121,6 +155,7 @@ Neural.neurons.cursor.get = function( key, key_name, on_success, on_error, begin
 
 	var cursor_on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
+		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof on_error ) {
 			on_success( context );
 		}
@@ -161,6 +196,7 @@ Neural.neurons.cursor.delete = function( key, key_name, begin, end, on_success, 
 
 	var cursor_on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
+		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof on_error ) {
 			on_success( context );
 		}
@@ -202,6 +238,7 @@ Neural.neurons.cursor.update = function( key, key_name, data, on_success, on_err
 
 	var cursor_on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
+		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof on_error ) {
 			on_success( context );
 		}
@@ -391,7 +428,9 @@ Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begi
 
 	var cursor_on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
+		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof on_error ) {
+			if( !!Neural.debug ) console.log( 'success', item );
 			on_success( context );
 		}
 	};
@@ -431,6 +470,7 @@ Neural.synapses.cursor.delete = function( key, key_name, begin, end, on_success,
 
 	var cursor_on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
+		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof on_error ) {
 			on_success( context );
 		}
@@ -472,6 +512,7 @@ Neural.synapses.cursor.update = function( key, key_name, data, on_success, on_er
 
 	var cursor_on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
+		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof on_error ) {
 			on_success( context );
 		}
