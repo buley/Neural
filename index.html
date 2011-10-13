@@ -51,7 +51,8 @@
 						console.log( 'on_error', context );
 					};
 
-					Neural.neurons.cursor.get( null, 'to', on_success, on_error, 0, null, true, false );
+					//Neural.synapses.cursor.get( null, 'to', on_success, on_error, 0, null, true, false );
+					Neural.neurons.cursor.get( null, 'strength', on_success, on_error, 0, null, true, false );
 
 				}
 				//console.log( map );
