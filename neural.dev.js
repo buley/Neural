@@ -372,11 +372,15 @@ Neural.synapses.cursor = Neural.synapses.cursor || {};
 Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
 
         /* Action */
+
 	var request = { "key_name": key_name, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error };
-        jQuery(document).trigger('cursor_put_synapses',request);
-	if( true || !!Neural.debug ) {
+
+	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.cursor.get', request );
 	}
+
+        jQuery(document).trigger('cursor_put_synapses',request);
+
 	/* Defaults */
 
 	begin = ( 'undefined' !== typeof begin ) ? begin : null;
@@ -434,7 +438,7 @@ Neural.synapses.cursor.delete = function( key, key_name, begin, end, on_success,
 	/* Callbacks */
 
 	var cursor_on_success = function ( context ) {
-		var result = context_1.event.target.result;
+		var result = context.event.target.result;
 		var item = result.value;
 		console.log( 'synapses test', item, result );
 		if( 'function' == typeof on_error ) {
