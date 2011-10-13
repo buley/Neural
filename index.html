@@ -44,7 +44,14 @@
 						console.log( 'Added', context );
 					} );
 					*/
+					var on_success = function( context ) {
+						console.log( on_success );
+					};
+					var on_error = function( context ) {
+						console.log( on_error );
+					};
 
+					Neural.synapses.get( null, 'to', on_success, on_error, 0, null, true, false );
 
 				}
 				//console.log( map );
