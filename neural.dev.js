@@ -38,6 +38,7 @@ Neural.synapses.setStrength = function( request ) {
 
 	var data = {};
 	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength;
+	console.log("DAATTTTTTTTTTTTA",data);
 	Neural.synapses.update( request.key, request.index, data, on_success, on_error );
 
 };
