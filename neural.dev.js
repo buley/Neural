@@ -30,13 +30,13 @@ Neural.synapses.setStrength = function( request ) {
 		console.log( 'Neural.synapses.setStrength error', context );
 	};
 
-	Neural.synapses.update( request.key, request.key_name, { 'strength': request.strength }, request.on_success, request.on_error );
+	Neural.synapses.update( request.key, request.index, { 'strength': request.strength }, request.on_success, request.on_error );
 
 };
 
 /* Synapses Get */
 //TODO: need to implement update/no replace
-// ( 'key': string, 'key_name': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
+// ( 'key': string, 'index': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
 Neural.synapses.getStrength = function( request ) {
 	
 	var on_success =  function( context ) {
@@ -47,12 +47,12 @@ Neural.synapses.getStrength = function( request ) {
 		console.log( 'Neural.synapses.setStrength error', context );
 	};
 
-	Neural.synapses.get( request.key, request.key_name, request.on_success, request.on_error );
+	Neural.synapses.get( request.key, request.index, request.on_success, request.on_error );
 
 };
 
 /* Synapses Cursor set */
-// ( 'key': string, 'key_name': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
+// ( 'key': string, 'index': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
 Neural.synapses.cursor.setStrength = function( request ) {
 	
 	var on_success =  function( context ) {
@@ -63,7 +63,7 @@ Neural.synapses.cursor.setStrength = function( request ) {
 		console.log( 'Neural.synapses.cursor.setStrength', context );
 	};
 
-	Neural.synapses.cursor.update( request.key, request.key_name, request.data, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
+	Neural.synapses.cursor.update( request.key, request.index, request.data, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
 
 };
 
@@ -78,7 +78,7 @@ Neural.synapses.cursor.getStrength = function( request ) {
 		console.log( 'Neural.synapses.setStrength error', context );
 	};
 
-	Neural.synapses.get( request.key, request.key_name, request.on_success, request.on_error );
+	Neural.synapses.get( request.key, request.index, request.on_success, request.on_error );
 
 };
 
@@ -138,9 +138,9 @@ Neural.neurons.put = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_put', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
-/* Put */
-Neural.neurons.put = function ( data, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_put', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
+/* Update */
+Neural.neurons.update = function ( data, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Add */
@@ -159,11 +159,11 @@ Neural.neurons.cursor = Neural.neurons.cursor || {};
 
 /* Cursor Get */
 
-Neural.neurons.cursor.get = function( key, key_name, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
+Neural.neurons.cursor.get = function( key, index, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
 
         /* Action */
 
-        jQuery(document).trigger('cursor_get_neurons', { "key_name": key_name, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_get_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
@@ -195,16 +195,16 @@ Neural.neurons.cursor.get = function( key, key_name, on_success, on_error, begin
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'neurons', 'keyRange': keyRange, 'index': key_name, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'neurons', 'keyRange': keyRange, 'index': index, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 
 };
 
 /* Cursor Delete */
-Neural.neurons.cursor.delete = function( key, key_name, begin, end, on_success, on_error ) {
+Neural.neurons.cursor.delete = function( key, index, begin, end, on_success, on_error ) {
 
         /* Action */
 
-        jQuery(document).trigger('cursor_delete_neurons', { "key_name": key_name, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_delete_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
@@ -236,16 +236,16 @@ Neural.neurons.cursor.delete = function( key, key_name, begin, end, on_success, 
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'neurons', 'keyRange': keyRange, 'index': key_name, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'neurons', 'keyRange': keyRange, 'index': index, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 
 };
 
 /* Cursor Update */
-Neural.neurons.cursor.update = function( key, key_name, data, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
+Neural.neurons.cursor.update = function( key, index, data, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
 
         /* Action */
 
-        jQuery(document).trigger('cursor_put_neurons', { "key_name": key_name, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_put_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
@@ -278,7 +278,7 @@ Neural.neurons.cursor.update = function( key, key_name, data, on_success, on_err
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'neurons', 'data': data, 'keyRange': keyRange, 'index': key_name, 'replace': replace,'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'neurons', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace,'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 	
 };
 
@@ -426,11 +426,11 @@ Neural.synapses.cursor = Neural.synapses.cursor || {};
 
 /* Cursor Get */
 
-Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
+Neural.synapses.cursor.get = function( key, index, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
 
         /* Action */
 
-	var request = { "key_name": key_name, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error };
+	var request = { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error };
 
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.cursor.get', request );
@@ -469,16 +469,16 @@ Neural.synapses.cursor.get = function( key, key_name, on_success, on_error, begi
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': key_name, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 
 }
 
 /* Cursor Delete */
-Neural.synapses.cursor.delete = function( key, key_name, begin, end, on_success, on_error ) {
+Neural.synapses.cursor.delete = function( key, index, begin, end, on_success, on_error ) {
 
         /* Action */
 
-        jQuery(document).trigger('cursor_delete_synapses', { "key_name": key_name, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_delete_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
@@ -510,16 +510,16 @@ Neural.synapses.cursor.delete = function( key, key_name, begin, end, on_success,
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'synapses', 'keyRange': keyRange, 'index': key_name, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 
 };
 
 /* Cursor Update */
-Neural.synapses.cursor.update = function( key, key_name, data, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
+Neural.synapses.cursor.update = function( key, index, data, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
 
         /* Action */
 
-        jQuery(document).trigger('cursor_put_synapses', { "key_name": key_name, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_put_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
@@ -552,7 +552,7 @@ Neural.synapses.cursor.update = function( key, key_name, data, on_success, on_er
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': key_name, 'replace': replace,'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace,'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 	
 }
 
