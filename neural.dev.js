@@ -645,23 +645,23 @@ Neural.synapses.shorthand_encode = function( object ) {
 	var encoded1 = {};
 	console.log('starting out', encoded1 );
 	for( var item in object ) {
-		console.log("FOCUS", item, object, encoded );
+		console.log("FOCUS", item, object, encoded1 );
 		if( object.hasOwnProperty( item ) ) {
 			//recursive case: object value
 			//base case: string value
-			console.log("INSIDE", item, object, encoded, typeof object[item] );
+			console.log("INSIDE", item, object, encoded1, typeof object[item] );
 			if( 'object' === typeof object[ item ] ) {
 				console.log('encoded',s,Neural.synapses.shorthand( item ), object[ item ] );
-				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
+				encoded1[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
 			} else {
 			       console.log("ADDING", Neural.synapses.shorthand( item ), object[item] );
 		       		console.log("EXISTING", encoded );	       
-				encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
+				encoded1[ Neural.synapses.shorthand( item ) ] = object[ item ];
 			}
 		}
 	}
-	console.log("ENCODED",encoded);
-	return encoded;
+	console.log("ENCODED",encoded1);
+	return encoded1;
 }
 
 /* End Synapses InDB */
