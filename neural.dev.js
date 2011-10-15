@@ -660,7 +660,7 @@ Neural.synapses.shorthand_encode = function( object ) {
 			}
 		}
 	}
-	console.log("ENCODED",encoded);
+	console.log('en',encoded,object);
 	return encoded;
 }
 
