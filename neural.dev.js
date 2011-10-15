@@ -138,6 +138,11 @@ Neural.neurons.put = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_put', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
+/* Put */
+Neural.neurons.put = function ( data, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_put', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
+}
+
 /* Add */
 Neural.neurons.add = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
