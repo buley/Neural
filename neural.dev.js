@@ -444,7 +444,7 @@ Neural.synapses.update = function ( key, index, data, on_success, on_error, on_a
 	}
 	console.log("C1", data );
 	data = Neural.synapses.shorthand_encode( data );
-	console.log("C2", data );
+	console.log("C2" + JSON.toString( data ) );
 	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
 }
 
@@ -641,26 +641,19 @@ Neural.synapses.shorthand_decode = function( object ) {
 
 //recursive
 Neural.synapses.shorthand_encode = function( object ) {
-	console.log("BUSH LEAGUE", object );
 	var encoded = {};
-	console.log('starting out', encoded );
 	for( var item in object ) {
 		console.log("FOCUS", item, object, encoded );
 		if( object.hasOwnProperty( item ) ) {
 			//recursive case: object value
 			//base case: string value
-			console.log("INSIDE", item, object, encoded, typeof object[item] );
 			if( 'object' === typeof object[ item ] ) {
-				//console.log('encoded',s,Neural.synapses.shorthand( item ), object[ item ] );
 				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
 			} else {
-				//console.log("ADDING", Neural.synapses.shorthand( item ), object[item] );
-		       		//console.log("EXISTING", encoded );	       
 				encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
 			}
 		}
 	}
-	console.log('en',encoded,object);
 	return encoded;
 }
 
