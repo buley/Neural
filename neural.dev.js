@@ -71,7 +71,9 @@ Neural.synapses.cursor.setStrength = function( request ) {
 		console.log( 'Neural.synapses.cursor.setStrength', context );
 	};
 
-	Neural.synapses.cursor.update( request.key, request.index, { Neural.synapses.shorthand( 'strength' ): request.strength }, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
+	var data = {};
+	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength'
+	Neural.synapses.cursor.update( request.key, request.index, data, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
 
 };
 
