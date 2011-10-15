@@ -36,8 +36,9 @@ Neural.synapses.setStrength = function( request ) {
 		}
 	};
 
-
-	Neural.synapses.update( request.key, request.index, { Neural.synapses.shorthand( 'strength' ): request.strength }, on_success, on_error );
+	var data = {};
+	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength;
+	Neural.synapses.update( request.key, request.index, data, on_success, on_error );
 
 };
 
