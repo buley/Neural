@@ -15,33 +15,17 @@ Each takes an object w/attributes { options: obj, on_success: fn, on_error: fn }
 
 Neural.synapses.cursor = Neural.synapses.cursor || {};
 
-/* There are all wrong arguments wise */
-Neural.synapses.getStrength = function( request ) {
+/* Synapses Set */
+Neural.synapses.setStrength = function( request ) {
+
+	if( !!Neural.debug ) {
+		console.log( 'Neural.synapses.setStrength', request );
+	}
+
 	var on_success =  function( context ) {
 		console.log( 'Neural.synapses.setStrength success', context );
         };
-	var on_error =  function( context ) {
-		console.log( 'Neural.synapses.setStrength error', context );
-	};
 
-	Neural.synapses.cursor.get( request.key, request.key_name, request.on_success, request.on_error, request.begin, request.end, request.left_inclusive, request.right_inclusive );
-
-;
-};
-Neural.synapses.cursor.getStrength = function( request ) {
-	Neural.neurons.cursor.get( request.options, request.on_success, request.on_error );
-};
-Neural.synapses.setStrength = function( request ) {
-
-};
-
-//TODO: need to implement update/no replace
-// ( 'key': string, 'key_name': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
-Neural.synapses.setStrength = function( request ) {
-	
-	var on_success =  function( context ) {
-		console.log( 'Neural.synapses.setStrength success', context );
-        };
 	var on_error =  function( context ) {
 		console.log( 'Neural.synapses.setStrength error', context );
 	};
@@ -49,12 +33,32 @@ Neural.synapses.setStrength = function( request ) {
 	Neural.synapses.update( request.key, request.key_name, { 'strength': request.strength }, request.on_success, request.on_error );
 
 };
+
+/* Synapses Get */
+//TODO: need to implement update/no replace
+// ( 'key': string, 'key_name': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
+Neural.synapses.getStrength = function( request ) {
+	
+	var on_success =  function( context ) {
+		console.log( 'Neural.synapses.setStrength success', context );
+        };
+
+	var on_error =  function( context ) {
+		console.log( 'Neural.synapses.setStrength error', context );
+	};
+
+	Neural.synapses.get( request.key, request.key_name, request.on_success, request.on_error );
+
+};
+
+/* Synapses Cursor set */
 // ( 'key': string, 'key_name': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
 Neural.synapses.cursor.setStrength = function( request ) {
 	
 	var on_success =  function( context ) {
 		console.log( 'Neural.synapses.cursor.setStrength success', context );
         };
+
 	var on_error =  function( context ) {
 		console.log( 'Neural.synapses.cursor.setStrength', context );
 	};
@@ -62,6 +66,23 @@ Neural.synapses.cursor.setStrength = function( request ) {
 	Neural.synapses.cursor.update( request.key, request.key_name, request.data, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
 
 };
+
+/* Synapses Cursor get */
+Neural.synapses.cursor.getStrength = function( request ) {
+	
+	var on_success =  function( context ) {
+		console.log( 'Neural.synapses.setStrength success', context );
+        };
+
+	var on_error =  function( context ) {
+		console.log( 'Neural.synapses.setStrength error', context );
+	};
+
+	Neural.synapses.get( request.key, request.key_name, request.on_success, request.on_error );
+
+};
+
+
 
 
 /* Database */
