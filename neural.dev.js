@@ -24,13 +24,20 @@ Neural.synapses.setStrength = function( request ) {
 
 	var on_success =  function( context ) {
 		console.log( 'Neural.synapses.setStrength success', context );
-        };
+		if( 'function' == typeof request.on_success ) {
+			request.on_success( context );
+		}
+	};
 
 	var on_error =  function( context ) {
 		console.log( 'Neural.synapses.setStrength error', context );
+		if( 'function' == typeof request.on_error ) {
+			request.on_error( context );
+		}
 	};
 
-	Neural.synapses.update( request.key, request.index, { 'strength': request.strength }, request.on_success, request.on_error );
+
+	Neural.synapses.update( request.key, request.index, { 'strength': request.strength }, on_success, on_error );
 
 };
 
@@ -354,15 +361,18 @@ Neural.neurons.shorthand_encode = function( object ) {
 
 /* Synapses */
 
+/* Shorthand Map */
 
 Neural.synapses.shorthand_map = {
 	'id': 'i',
 	'to': 't',
 	'from': 'f',
 	'strength': 's',
+	'type': 't',
 	'votes': 'v',
 	'payload': 'p'
 };
+
 
 Neural.synapses.install = function ( ) {
 
@@ -420,11 +430,9 @@ Neural.synapses.add = function ( data, on_success, on_error )  {
 }
 
 /* Update */
-Neural.synapses.update = function ( key, index, data, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': data, 'on_success': on_success, 'on_error': on_error } );
+Neural.synapses.update = function ( key, index, data, on_success, on_error, on_abort, on_complete )  {
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': Neural.synapses.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
 }
-
-
 
 /* Multi */
 
