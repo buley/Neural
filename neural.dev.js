@@ -16,7 +16,7 @@ Each takes an object w/attributes { options: obj, on_success: fn, on_error: fn }
 Neural.synapses.cursor = Neural.synapses.cursor || {};
 
 /* Synapses Set */
-Neural.synapses.setStrength = function( request ) {
+Neural.synapses..shorthand( key )etStrength = function( request ) {
 
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.setStrength', request );
@@ -163,7 +163,7 @@ Neural.neurons.cursor.get = function( key, index, on_success, on_error, begin, e
 
         /* Action */
 
-        jQuery(document).trigger('cursor_get_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
+ao      jQuery(document).trigger('cursor_get_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
@@ -400,8 +400,13 @@ Neural.synapses.install = function ( ) {
 /* Single */
 
 /* Get */
-Neural.synapses.get = function ( key, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': Neural.synapses.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
+Neural.synapses.get = function ( key, index, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': key, 'index': index, 'on_success': on_success, 'on_error': on_error } );
+}
+
+/* Remove */
+Neural.synapses.remove = function ( key, index, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': key, 'index': index, 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Put */
@@ -414,10 +419,11 @@ Neural.synapses.add = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': Neural.synapses.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
-/* Remove */
-Neural.synapses.remove = function ( key, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': Neural.synapses.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
+/* Update */
+Neural.synapses.update = function ( key, index, data, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': data, 'on_success': on_success, 'on_error': on_error } );
 }
+
 
 
 /* Multi */
@@ -425,7 +431,6 @@ Neural.synapses.remove = function ( key, on_success, on_error )  {
 Neural.synapses.cursor = Neural.synapses.cursor || {};
 
 /* Cursor Get */
-
 Neural.synapses.cursor.get = function( key, index, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
 
         /* Action */
@@ -552,10 +557,9 @@ Neural.synapses.cursor.update = function( key, index, data, on_success, on_error
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace,'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 	
 }
-
 
 
 Neural.synapses.shorthand = function ( key ) {
