@@ -643,6 +643,7 @@ Neural.synapses.shorthand_decode = function( object ) {
 Neural.synapses.shorthand_encode = function( object ) {
 	console.log("BUSH LEAGUE", object );
 	var encoded = {};
+	console.log('starting out', encoded );
 	for( var item in object ) {
 		console.log("FOCUS", item, object, encoded );
 		if( object.hasOwnProperty( item ) ) {
