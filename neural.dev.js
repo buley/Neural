@@ -644,11 +644,11 @@ Neural.synapses.shorthand_encode = function( object ) {
 	console.log("BUSH LEAGUE", object );
 	var encoded = {};
 	for( var item in object ) {
-		console.log("FOCUS", item, object );
+		console.log("FOCUS", item, object, encoded );
 		if( object.hasOwnProperty( item ) ) {
 			//recursive case: object value
 			//base case: string value
-
+			console.log("INSIDE", encoded );
 			if( 'object' === typeof object[ item ] ) {
 				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
 			} else { 
