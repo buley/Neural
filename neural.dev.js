@@ -38,7 +38,6 @@ Neural.synapses.setStrength = function( request ) {
 
 	var data = {};
 	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength;
-	console.log("DAATTTTTTTTTTTTA",data);
 	Neural.synapses.update( request.key, request.index, data, on_success, on_error );
 
 };
@@ -443,7 +442,9 @@ Neural.synapses.update = function ( key, index, data, on_success, on_error, on_a
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.update', key, index, data, on_success, on_error, on_abort, on_complete );
 	}
+	console.log("C1", data );
 	data = Neural.synapses.shorthand_encode( data );
+	console.log("C2", data );
 	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
 }
 
