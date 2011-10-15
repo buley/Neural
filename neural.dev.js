@@ -645,17 +645,17 @@ Neural.synapses.shorthand_encode = function( object ) {
 	var encoded = {};
 	for( var item in object ) {
 		console.log("FOCUS", item, object, encoded );
-		//if( object.hasOwnProperty( item ) ) {
+		if( object.hasOwnProperty( item ) ) {
 			//recursive case: object value
 			//base case: string value
-			console.log("INSIDE", encoded );
+			console.log("INSIDE", item, object, encoded, typeof object[item] );
 			if( 'object' === typeof object[ item ] ) {
 				console.log('encoded',s,Neural.synapses.shorthand( item ), object[ item ] );
 				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
 			} else { 
 				encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
 			}
-		//}
+		}
 	}
 	console.log("ENCODED",encoded);
 	return encoded;
