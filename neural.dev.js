@@ -421,12 +421,14 @@ Neural.synapses.remove = function ( key, index, on_success, on_error )  {
 
 /* Put */
 Neural.synapses.put = function ( data, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': Neural.synapses.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
+	data = Neural.synapses.shorthand_encode( data );
+	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Add */
 Neural.synapses.add = function ( data, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': Neural.synapses.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
+	data = Neural.synapses.shorthand_encode( data );
+	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Update */
@@ -530,7 +532,11 @@ Neural.synapses.cursor.delete = function( key, index, begin, end, on_success, on
 /* Cursor Update */
 Neural.synapses.cursor.update = function( key, index, data, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
 
-        /* Action */
+	/* Shorthand Encoding */
+
+	data = Neural.synapses.shorthand_encode( data );
+
+	/* Action */
 
         jQuery(document).trigger('cursor_put_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error } );
 
