@@ -653,7 +653,8 @@ Neural.synapses.shorthand_encode = function( object ) {
 				console.log('encoded',s,Neural.synapses.shorthand( item ), object[ item ] );
 				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
 			} else {
-			       console.log("ADDING", Neural.synapses.shorthand( item ), object[item] );	
+			       console.log("ADDING", Neural.synapses.shorthand( item ), object[item] );
+		       		console.log("EXISTING", encoded );	       
 				encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
 			}
 		}
