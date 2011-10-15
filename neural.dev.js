@@ -163,7 +163,7 @@ Neural.neurons.cursor.get = function( key, index, on_success, on_error, begin, e
 
         /* Action */
 
-ao      jQuery(document).trigger('cursor_get_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
+	jQuery(document).trigger('cursor_get_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
