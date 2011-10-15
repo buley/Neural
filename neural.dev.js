@@ -16,7 +16,7 @@ Each takes an object w/attributes { options: obj, on_success: fn, on_error: fn }
 Neural.synapses.cursor = Neural.synapses.cursor || {};
 
 /* Synapses Set */
-Neural.synapses..shorthand( key )etStrength = function( request ) {
+Neural.synapses.setStrength = function( request ) {
 
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.setStrength', request );
