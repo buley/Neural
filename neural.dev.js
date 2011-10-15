@@ -442,7 +442,8 @@ Neural.synapses.update = function ( key, index, data, on_success, on_error, on_a
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.update', key, index, data, on_success, on_error, on_abort, on_complete );
 	}
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': Neural.synapses.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
+	data = Neural.synapses.shorthand_encode( data );
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
 }
 
 /* Multi */
