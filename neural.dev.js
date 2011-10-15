@@ -652,11 +652,11 @@ Neural.synapses.shorthand_encode = function( object ) {
 			console.log("INSIDE", item, object, encoded, typeof object[item] );
 			if( 'object' === typeof object[ item ] ) {
 				console.log('encoded',s,Neural.synapses.shorthand( item ), object[ item ] );
-				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
+				//encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
 			} else {
 			       console.log("ADDING", Neural.synapses.shorthand( item ), object[item] );
 		       		console.log("EXISTING", encoded );	       
-				encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
+				//encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
 			}
 		}
 	}
