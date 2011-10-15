@@ -650,6 +650,7 @@ Neural.synapses.shorthand_encode = function( object ) {
 			//base case: string value
 			console.log("INSIDE", encoded );
 			if( 'object' === typeof object[ item ] ) {
+				console.log('encoded',s,Neural.synapses.shorthand( item ), object[ item ] );
 				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
 			} else { 
 				encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
