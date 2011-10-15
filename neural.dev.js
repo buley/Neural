@@ -431,6 +431,9 @@ Neural.synapses.put = function ( data, on_success, on_error )  {
 /* Add */
 Neural.synapses.add = function ( data, on_success, on_error )  {
 	data = Neural.synapses.shorthand_encode( data );
+	if( !!Neural.debug ) {
+		console.log( 'Neural.synapses.add', data, on_success, on_error );
+	}
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error } );
 }
 
