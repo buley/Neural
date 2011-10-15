@@ -642,26 +642,26 @@ Neural.synapses.shorthand_decode = function( object ) {
 //recursive
 Neural.synapses.shorthand_encode = function( object ) {
 	console.log("BUSH LEAGUE", object );
-	var encoded1 = {};
-	console.log('starting out', encoded1 );
+	var encoded = {};
+	console.log('starting out', encoded );
 	for( var item in object ) {
-		console.log("FOCUS", item, object, encoded1 );
+		console.log("FOCUS", item, object, encoded );
 		if( object.hasOwnProperty( item ) ) {
 			//recursive case: object value
 			//base case: string value
-			console.log("INSIDE", item, object, encoded1, typeof object[item] );
+			console.log("INSIDE", item, object, encoded, typeof object[item] );
 			if( 'object' === typeof object[ item ] ) {
 				console.log('encoded',s,Neural.synapses.shorthand( item ), object[ item ] );
-				encoded1[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
+				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
 			} else {
 			       console.log("ADDING", Neural.synapses.shorthand( item ), object[item] );
-		       		console.log("EXISTING", encoded1 );	       
-				encoded1[ Neural.synapses.shorthand( item ) ] = object[ item ];
+		       		console.log("EXISTING", encoded );	       
+				encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
 			}
 		}
 	}
-	console.log("ENCODED",encoded1);
-	return encoded1;
+	console.log("ENCODED",encoded);
+	return encoded;
 }
 
 /* End Synapses InDB */
