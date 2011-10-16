@@ -655,28 +655,6 @@ Neural.synapses.cursor.delete = function( request ) {
 	var left_inclusive = request.left_inclusive;
 	var right_inclusive = request.right_inclusive;
 
-
-        /* Action */
-
-        jQuery(document).trigger('cursor_delete_synapses', { "index": index, "key": key, 'direction': direction, 'limit': limit, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": request.on_success, 'on_error': request.on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
-
-
-	/* Defaults */
-
-	begin = ( 'undefined' !== typeof begin ) ? begin : null;
-	end = ( 'undefined' !== typeof end ) ? end : null;
-	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
-	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
-	limit = ( 'undefined' !== typeof limit ) ? limit : null;
-	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
-
-
-	/* Setup */
-
-	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
-
-
 	/* Callbacks */
 
 	var on_success = function ( context ) {
@@ -693,6 +671,26 @@ Neural.synapses.cursor.delete = function( request ) {
 		}
 	};
 
+
+        /* Action */
+
+        jQuery(document).trigger('cursor_delete_synapses', { "index": index, "key": key, 'direction': direction, 'limit': limit, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+
+
+	/* Defaults */
+
+	begin = ( 'undefined' !== typeof begin ) ? begin : null;
+	end = ( 'undefined' !== typeof end ) ? end : null;
+	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
+	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
+	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
+	limit = ( 'undefined' !== typeof limit ) ? limit : null;
+	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
+
+
+	/* Setup */
+
+	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Request */
 
