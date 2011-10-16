@@ -88,7 +88,91 @@
 				
 
 			};
-			
+
+	
+			test.synapses.get = function() {
+
+				var on_error = function( context ) {
+					console.log( 'test.synapses.get(): failed' );
+				};
+				var id_to_get = 2;
+				Neural.synapses.get( {
+					'key': id_to_get
+					, 'index': 'id'
+					, 'on_success': function( context ) {	
+						var value = InDB.row.value( context.event );	
+						console.log( 'test.synapses.get(): passed' );
+					}, 'on_error': on_error
+				} );
+				
+
+			};
+
+			test.synapses.set = function() {
+
+				var on_error = function( context ) {
+					console.log( 'test.synapses.set(): failed' );
+				};
+				var id_to_get = 2;
+				Neural.synapses.get( {
+					'key': id_to_get
+					, 'index': 'id'
+					, 'on_success': function( context ) {	
+						var value = InDB.row.value( context.event );	
+						var expected =  {};
+						var key = Neural.synapses.shorthand( 'to' );
+					       	expected[ key ] = value[ key ];
+						Neural.synapses.set( {
+							'key': id_to_get
+							, 'index': 'id'
+							, 'expecting': expected
+							, 'data': function( current ) {
+								var to = current[ Neural.synapses.shorthand( 'to' );
+								to = ( !!to ) ? to + 1: 1;	
+							}, 'on_success': function( context ) {
+								Neural.synapses.get( {
+									'key': id_to_get
+									, 'index': 'id'
+									, 'on_success': function( context ) {
+										var value = InDB.row.value( context );
+										console.log( 'test.synapses.set(): passed', value );
+									}, 'on_error': on_error 
+								} );
+							}, 'on_error': on_error
+						} );
+
+					}, 'on_error': on_error
+				} );
+				
+
+			};
+
+
+
+			/* Cursor */
+
+
+			test.synapses.cursor.update = function() {
+
+				var on_error = function( context ) {
+					console.log( 'test.synapses.getStrength(): failed' );
+				};
+				var id_to_get = 2;
+				var before = {};
+				var after = {};
+				Neural.synapses.getStrength( {
+					'key': id_to_get
+					, 'index': 'id'
+					, 'on_success': function( context ) {	
+						var value = InDB.row.value( context.event );	
+						console.log( 'test.synapses.getStrength(): passed' );
+					}, 'on_error': on_error
+				} );
+				
+
+			};
+
+
 			$(document).ready(function() {
 				var Neural = Neural || {};
 				Neural.database_name = "Neural-011";
@@ -123,11 +207,9 @@
 				test.synapses.getStrength();
 				test.synapses.setStrength();
 				/* 
-				test.synapses.delete();
-				test.synapses.set();
-				test.synapses.get();
-				test.synapses.put();
-				test.synapses.update();			
+				test.synapses.cursor.delete();
+				test.synapses.cursor.get();
+				test.synapses.cursor.update();			
 				*/
 				//Neural.synapses.cursor.get( null, 'to', on_success, on_error, 0, null, true, false );
 				//Neural.neurons.cursor.get( null, 'type', on_success, on_error, 0, null, true, false );
