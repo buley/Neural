@@ -186,7 +186,7 @@
 									, 'on_success': function( context ) {
 										var returned_value = InDB.row.value( context );
 										if( 'undefined' !== typeof returned_value && null !== returned_value && ( returned_value[ key ] - inc_amount )  == expected[ key ] ) {
-											console.log( 'test.synapses.update(): passed', value );
+											console.log( 'test.synapses.update(): passed' );
 										} else {
 											console.log( 'test.synapses.update(): failed' );
 										}
