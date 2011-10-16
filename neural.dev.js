@@ -23,14 +23,18 @@ Neural.synapses.setStrength = function( request ) {
 	}
 
 	var on_success =  function( context ) {
-		console.log( 'Neural.synapses.setStrength success', context );
+		if( !!Neural.debug ) {
+			console.log( 'Neural.synapses.setStrength success', context );
+		}
 		if( 'function' == typeof request.on_success ) {
 			request.on_success( context );
 		}
 	};
 
 	var on_error =  function( context ) {
-		console.log( 'Neural.synapses.setStrength error', context );
+		if( !!Neural.debug ) {
+			console.log( 'Neural.synapses.setStrength error', context );
+		}
 		if( 'function' == typeof request.on_error ) {
 			request.on_error( context );
 		}

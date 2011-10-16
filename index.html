@@ -64,6 +64,7 @@
 					, 'strength': function( current ) {
 						console.log("CURRENT",current);
 						var replacement = current[ Neural.synapses.shorthand( 'strength' ) ] / 2;
+						replacement( !!replacement ) ? replacement : 1;
 						return replacement;
 					}, 'on_success': function( context ) {
 
