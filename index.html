@@ -7,6 +7,27 @@
 	<body>
 		<div id="result"></div>
 		<script type="text/javascript">
+
+			function add_data() {
+
+				var count = 3;
+				var map = [];
+				for( var i = 0; i < count; i++ ) {
+
+					Neural.neurons.add( { 'type': 'hidden', 'slug': InDB.utilities.random( 12, 'letters' ), 'display': InDB.utilities.random( 12, 'letters' ) }, function( context ) {
+						var value = InDB.row.value( context );
+						console.log( 'Added index @', value );
+
+						var node = Math.floor( Math.random()*100 );	
+						Neural.synapses.add( { 'type': 'connection', 'from': value, 'to': node, 'strength': Math.random() }, function( context ) {
+							console.log( 'Added synapses from ' + value + ' to ' + node );
+						} );
+
+					} );
+				}
+
+
+			}
 			$(document).ready(function() {
 				var Neural = Neural || {};
 				Neural.database_name = "Neural-011";
@@ -27,24 +48,8 @@
 
 			jQuery( document ).bind( 'neuron_database_loaded', function( context ) {
 				console.log( "Neuron InDB is loaded", context );
-
-				/*
-				var count = 10;
-				var map = [];
-				for( var i = 0; i < count; i++ ) {
-
-					Neural.neurons.add( { 'type': 'hidden', 'slug': InDB.utilities.random( 12, 'letters' ), 'display': InDB.utilities.random( 12, 'letters' ) }, function( context ) {
-						var value = InDB.row.value( context );
-						console.log( 'Added index @', value );
-
-						var node = Math.floor( Math.random()*100 );	
-						Neural.synapses.add( { 'type': 'connection', 'from': value, 'to': node, 'strength': Math.random() }, function( context ) {
-							console.log( 'Added synapses from ' + value + ' to ' + node );
-						} );
-
-					} );
-				}
-				*/
+				
+				add_data();
 
 				var on_success = function( context ) {
 					console.log( 'set/getStrength on_success', JSON.stringify( InDB.row.value( context.event ) ) );
