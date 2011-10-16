@@ -209,28 +209,28 @@
 					, 'on_success': function( value ) {	
 						var expected =  {};
 						var key = Neural.synapses.shorthand( 'to' );
-					       	expected[ key ] = value[ key ];
+						expected[ 'to' ] = value[ 'to' ];
 						Neural.synapses.update( {
 							'key': test_id
 							, 'index': 'id'
 							, 'expecting': expected
 							, 'data': function( current ) {
 								var val = {};
-						       		val[ key ] = current[ key ];
-								val[ key ] = parseInt( val[ key ], 10 ) + inc_amount;
+						       		val[ 'to' ] = current[ 'to' ];
+								val[ 'to' ] = parseInt( val[ 'to' ], 10 ) + inc_amount;
 								return val;
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
 									'key': test_id
 									, 'index': 'id'
 									, 'on_success': function( returned_value ) {
-										if( 'undefined' !== typeof returned_value && null !== returned_value && ( returned_value[ key ] - inc_amount )  == expected[ key ] ) {
+										if( 'undefined' !== typeof returned_value && null !== returned_value && ( returned_value[ 'to' ] - inc_amount )  == expected[ 'to' ] ) {
 											console.log( 'test.synapses.update(): passed' );
 										} else {
 											console.log( 'test.synapses.update(): failed' );
 										}
 										if( 'function' == typeof test_callback ) {
-											test_callback( context );
+											test_callback( returned_value );
 										}
 									}, 'on_error': on_error 
 								} );
