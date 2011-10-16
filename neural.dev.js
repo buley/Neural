@@ -40,9 +40,12 @@ Neural.synapses.setStrength = function( request ) {
 		}
 	};
 
+	request.on_success = on_success;
+	request.on_error = on_error;
+
 	var data = {};
 	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength;
-	Neural.synapses.update( request.key, request.index, data, request.replace, request.expecting, on_success, on_error );
+	Neural.synapses.update( request );
 
 };
 
@@ -52,14 +55,27 @@ Neural.synapses.setStrength = function( request ) {
 Neural.synapses.getStrength = function( request ) {
 	
 	var on_success =  function( context ) {
-		console.log( 'Neural.synapses.setStrength success', context );
+		if( !!Neural.debug ) {
+			console.log( 'Neural.synapses.setStrength success', context );
+		}
+		if( 'function' == typeof request.on_success ) {
+			request.on_success( context );
+		}
         };
 
 	var on_error =  function( context ) {
-		console.log( 'Neural.synapses.setStrength error', context );
+		if( !!Neural.debug ) {
+			console.log( 'Neural.synapses.getStrength error', context );
+		}
+		if( 'function' == typeof request.on_error ) {
+			request.on_error( context );
+		}
 	};
 
-	Neural.synapses.get( request.key, request.index, request.on_success, request.on_error );
+	request.on_success = on_success;
+	request.on_error = on_error;
+
+	Neural.synapses.get( request );
 
 };
 
@@ -418,49 +434,66 @@ Neural.synapses.install = function ( ) {
 /* Single */
 
 /* Get */
-Neural.synapses.get = function ( key, index, on_success, on_error )  {
+Neural.synapses.get = function ( request )  {
+
 	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.get', key, index, on_success, on_error );
+		console.log( 'Neural.synapses.get', request );
 	}
-	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': key, 'index': index, 'on_success': on_success, 'on_error': on_error } );
+
+	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'on_success': request.on_success, 'on_error': request.on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+
 }
 
 /* Remove */
-Neural.synapses.remove = function ( key, index, on_success, on_error )  {
+Neural.synapses.remove = function ( request ) {
+
 	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.remove', key, index, on_success, on_error );
+		console.log( 'Neural.synapses.remove', request );
 	}
-	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': key, 'index': index, 'on_success': on_success, 'on_error': on_error } );
+
+	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'on_success': request.on_success, 'on_error': request.on_error } );
+
 }
 
 /* Put */
-Neural.synapses.put = function ( data, on_success, on_error )  {
+Neural.synapses.put = function ( request )  {
+
 	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.put', data, on_success, on_error );
+		console.log( 'Neural.synapses.put', request );
 	}
+
+	var data = request.data;
 	data = Neural.synapses.shorthand_encode( data );
-	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error } );
+
+	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data, 'on_success': request.on_success, 'on_error': request.on_error } );
+
 }
 
 /* Add */
-Neural.synapses.add = function ( data, on_success, on_error )  {
-	data = Neural.synapses.shorthand_encode( data );
+Neural.synapses.add = function ( request )  {
+
 	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.add', data, on_success, on_error );
+		console.log( 'Neural.synapses.add', request );
 	}
-	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error } );
+
+	var data = request.data;
+	data = Neural.synapses.shorthand_encode( data );
+
+	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': request.on_success, 'on_error': request.on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete} );
+
 }
 
 /* Update */
-Neural.synapses.update = function ( key, index, data, replace, expecting, on_success, on_error, on_abort, on_complete )  {
+Neural.synapses.update = function ( request ) {
 
 	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.update', key, index, data, on_success, on_error, on_abort, on_complete );
+		console.log( 'Neural.synapses.update', request );
 	}
 
+	var data = request.data;
 	data = Neural.synapses.shorthand_encode( data );
 
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': data, 'replace': replace, 'expecting': expecting, 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data, 'replace': request.replace, 'expecting': request.expecting, 'on_success': request.on_success, 'on_error': request.on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
