@@ -58,14 +58,12 @@
 					console.log( 'set/getStrength on_error', context );
 				};
 				var id_to_get = 2;
-				console.log( 'about to get', context );
 				Neural.synapses.getStrength( {
 					'key': id_to_get
 					, 'index': 'id'
 					, 'on_success': function( context ) {
 						
 						var value = InDB.row.value( context.event );	
-		console.log("VALUE",value,context);
 						var expected =  {};
 						var key = Neural.synapses.shorthand( 'strength' );
 					       	expected[ key ] = value[ key ];
@@ -75,7 +73,6 @@
 							, 'index': 'id'
 							, 'expecting': expected
 							, 'strength': function( current ) {
-
 								var replacement = current / 2;
 								replacement = ( !!replacement && replacement > .001 ) ? replacement : 1;
 								return replacement;
