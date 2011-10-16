@@ -443,7 +443,9 @@ Neural.synapses.get = function ( request )  {
 	var on_success = function( context ) {
 		if( 'function' == typeof request.on_success ) {
 			var value = Neural.synapses.shorthand_decode( InDB.row.value( value ) );
+			console.log('calc',value);
 			if( 'undefined' !== typeof context && 'undefined' !== typeof context.target && 'undefined' !== typeof context.target.result ) {
+				console.log('new valu', value );
 				context.target.result = value;
 			}
 			request.on_success( context );
@@ -451,7 +453,9 @@ Neural.synapses.get = function ( request )  {
 	}
 
 	var on_error = function( context ) {
-
+		if( 'function' == typeof request.on_error ) {
+			request.on_error( context );
+		}
 	}
 
 	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'on_success': request.on_success, 'on_error': request.on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
