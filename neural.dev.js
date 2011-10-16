@@ -453,6 +453,7 @@ Neural.synapses.get = function ( request )  {
 				var clone = context;
 				clone.event.target.result = value;
 				context = clone;
+				console.log( 'xxx', context.event.target.result );
 			}
 			console.log("PADDING",context);
 			request.on_success( context );
