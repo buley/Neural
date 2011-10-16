@@ -563,6 +563,10 @@ Neural.synapses.update = function ( request ) {
 	var data = request.data;
 	if( 'function' !== typeof data ) {
 		data = Neural.synapses.shorthand_encode( data );
+	} else {
+		data = function( arg ) {
+			return Neural.synapses.shorthand_encode( arg );
+		};
 	}
 
 	var expected = request.expected;
