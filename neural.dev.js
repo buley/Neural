@@ -153,8 +153,8 @@ Neural.neurons.put = function ( data, on_success, on_error )  {
 }
 
 /* Update */
-Neural.neurons.update = function ( data, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
+Neural.neurons.update = function ( data, replace, expecting, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'data': Neural.neurons.shorthand_encode( data ), 'replace': replace, 'expecting': expecting, 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Add */
@@ -452,12 +452,16 @@ Neural.synapses.add = function ( data, on_success, on_error )  {
 }
 
 /* Update */
-Neural.synapses.update = function ( key, index, data, on_success, on_error, on_abort, on_complete )  {
+Neural.synapses.update = function ( key, index, data, replace, expecting, on_success, on_error, on_abort, on_complete )  {
+
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.update', key, index, data, on_success, on_error, on_abort, on_complete );
 	}
+
 	data = Neural.synapses.shorthand_encode( data );
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
+
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': key, 'index': index, 'data': data, 'replace': replace, 'expecting': expecting, 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
+
 }
 
 /* Multi */
