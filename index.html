@@ -15,6 +15,8 @@
 			test.neurons.cursor = test.neurons.cursor || {};
 
 			var test_id = 2;
+			var inc_amount = 3;
+
 
 			test.synapses.add = function() {
 
@@ -121,8 +123,8 @@
 						var new_value = InDB.row.value( context.event );	
 						var from_key = Neural.synapses.shorthand( 'from' );
 						var to_key = Neural.synapses.shorthand( 'to' );
-						new_value[ from_key ] = parseInt( new_value[ from_key ], 10 ) + 1;	
-						new_value[ to_key ] = parseInt( new_value[ to_key ], 10 ) + 1;	
+						new_value[ from_key ] = parseInt( new_value[ from_key ], 10 ) + inc_amount;
+						new_value[ to_key ] = parseInt( new_value[ to_key ], 10 ) + inc_amount;	
 						Neural.synapses.put( {
 							'key': test_id
 							, 'data': new_value
@@ -168,7 +170,7 @@
 							, 'data': function( current ) {
 								var val = {};
 						       		val[ key ] = current[ key ];
-								val[ key ] = parseInt( val[ key ], 10 ) + 1;
+								val[ key ] = parseInt( val[ key ], 10 ) + inc_amount;
 								val[ key ] = ( 'undefined' !== typeof val && !isNaN( val[ key ] ) ) ? val[ key ] : 1; 
 								return val;
 							}, 'on_success': function( context ) {
@@ -177,7 +179,7 @@
 									, 'index': 'id'
 									, 'on_success': function( context ) {
 										var value = InDB.row.value( context );
-										if( 'undefined' !== typeof value && null !== value && value[ key ] == expected[ key ] + 3 ) {
+										if( 'undefined' !== typeof value && null !== value && value[ key ] == expected[ key ] + inc_amount ) {
 											console.log( 'test.synapses.update(): passed', value );
 										} else {
 											console.log( 'test.synapses.update(): failed' );
@@ -248,14 +250,14 @@
 				test.synapses.add();
 				test.synapses.delete();
 				 */
-				//test.synapses.put();
-				//test.synapses.get();
+				test.synapses.put();
+				test.synapses.get();
 				test.synapses.update();
 				/*
 				test.synapses.clear();
 				*/
-				//test.synapses.getStrength();
-				//test.synapses.setStrength();
+				test.synapses.getStrength();
+				test.synapses.setStrength();
 				/* 
 				test.synapses.cursor.delete();
 				test.synapses.cursor.get();
