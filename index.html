@@ -316,7 +316,8 @@
 				};
 				var item_count = 0;
 				Neural.synapses.cursor.get( {
-					'key': test_id
+					'begin: 0
+					, 'left_inclusive': true
 					//, 'index': 'id'
 					, 'on_success': function( value ) {	
 						item_count++;
