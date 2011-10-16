@@ -179,6 +179,8 @@
 										var value = InDB.row.value( context );
 										if( 'undefined' !== typeof value && null !== value && value[ key ] == expected[ key ] + 3 ) {
 											console.log( 'test.synapses.update(): passed', value );
+										} else {
+											console.log( 'test.synapses.update(): failed' );
 										}
 									}, 'on_error': on_error 
 								} );
