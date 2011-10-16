@@ -306,6 +306,33 @@
 
 			/* Cursor */
 
+			test.synapses.cursor.get = function( test_callback ) {
+
+				var on_error = function( get_context ) {
+					console.log( 'test.synapses.get(): failed' );
+					if( 'function' == typeof test_callback ) {
+						test_callback( get_context );
+					}
+				};
+				var item_count = 0;
+				Neural.synapses.cursor.get( {
+					'key': test_id
+					//, 'index': 'id'
+					, 'on_success': function( value ) {	
+						console.log('Sucess at Neural.synapses.cursor.get');
+						item_count++;
+					}, 'on_complete': function( value ) {	
+						console.log( 'test.synapses.get(): passed', item_count );
+						if( 'function' == typeof test_callback ) {
+							test_callback( value );
+						}
+					}, 'on_error': on_error
+				} );
+				
+
+			};
+
+
 
 			test.synapses.cursor.update = function() {
 
@@ -383,8 +410,8 @@
 				//test.synapses.getStrength();
 				//test.synapses.setStrength();
 				/* 
-				test.synapses.cursor.delete();
 				test.synapses.cursor.get();
+				test.synapses.cursor.delete();
 				test.synapses.cursor.update();			
 				*/
 
