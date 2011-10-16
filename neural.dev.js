@@ -159,8 +159,8 @@ Neural.neurons.install = function ( ) {
 }
 
 /* Get */
-Neural.neurons.get = function ( key, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_get', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
+Neural.neurons.get = function ( key, index, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_get', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'index': index, 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Put */
@@ -178,9 +178,9 @@ Neural.neurons.add = function ( data, on_success, on_error )  {
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'neurons', 'data': Neural.neurons.shorthand_encode( data ), 'on_success': on_success, 'on_error': on_error } );
 }
 
-/* Remove */
-Neural.neurons.remove = function ( key, on_success, on_error )  {
-	InDB.trigger( 'InDB_do_row_delete', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'on_success': on_success, 'on_error': on_error } );
+/* Delete */
+Neural.neurons.delete = function ( key, index, on_success, on_error )  {
+	InDB.trigger( 'InDB_do_row_delete', { 'store': 'neurons', 'key': Neural.neurons.shorthand( key ), 'index': index, 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Multi */
@@ -458,7 +458,7 @@ Neural.synapses.get = function ( request )  {
 }
 
 /* Remove */
-Neural.synapses.remove = function ( request ) {
+Neural.synapses.delete = function ( request ) {
 
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.remove', request );
