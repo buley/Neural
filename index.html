@@ -160,14 +160,17 @@
 						var value = InDB.row.value( context.event );	
 						var expected =  {};
 						var key = Neural.synapses.shorthand( 'to' );
-					       	expected = value;
+					       	expected[ key ] = value[ key ];
 						Neural.synapses.put( {
 							'key': test_id
 							, 'index': 'id'
 							, 'expecting': expected
 							, 'data': function( current ) {
-								var to = current[ Neural.synapses.shorthand( 'to' ) ];
-								to = ( !!to ) ? parseInt( to, 10 ) + 1: 1;	
+								var val = current[ key ];
+								val = parseInt( val, 10 ) + 1;
+								val = ( !!val ) ? val : 1; 
+								current[ key ] = val;
+								return current;
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
 									'key': test_id
