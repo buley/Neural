@@ -490,7 +490,7 @@ Neural.synapses.update = function ( request ) {
 		console.log( 'Neural.synapses.update', request );
 	}
 
-	reuest.store = 'synapses';
+	request.store = 'synapses';
 
 	var data = request.data;
 	request.data = Neural.synapses.shorthand_encode( data );
