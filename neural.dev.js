@@ -562,10 +562,15 @@ Neural.synapses.update = function ( request ) {
 
 	var data = request.data;
 	if( 'function' !== typeof data ) {
-		request.data = Neural.synapses.shorthand_encode( data );
+		data = Neural.synapses.shorthand_encode( data );
 	}
 
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data, 'replace': request.replace, 'expected': request.expected, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	var expected = request.expected;
+	if( 'function' !== typeof expected ) {
+		expected = Neural.synapses.shorthand_encode( expected );
+	}
+
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data, 'replace': request.replace, 'expected': expected, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
