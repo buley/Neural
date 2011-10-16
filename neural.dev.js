@@ -561,10 +561,11 @@ Neural.synapses.update = function ( request ) {
 	}
 
 	var data = request.data;
+	var new_data;
 	if( 'function' !== typeof data ) {
-		data = Neural.synapses.shorthand_encode( data );
+		new_data = Neural.synapses.shorthand_encode( data );
 	} else {
-		data = function( arg ) {
+		new_data = function( arg ) {
 			return Neural.synapses.shorthand_encode( data( Neural.synapses.shorthand_decode( arg ) ) );
 		};
 	}
@@ -574,7 +575,7 @@ Neural.synapses.update = function ( request ) {
 		expected = Neural.synapses.shorthand_encode( expected );
 	}
 
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data, 'replace': request.replace, 'expected': expected, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': new_data, 'replace': request.replace, 'expected': expected, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
