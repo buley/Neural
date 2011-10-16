@@ -214,7 +214,6 @@
 							, 'expecting': expected
 							, 'data': function( current ) {
 								var val = {};
-								console.log('current?!?',current);
 								val[ 'to' ] = parseInt( current[ 'to' ], 10 ) + inc_amount;
 								return val;
 							}, 'on_success': function( context ) {
@@ -222,7 +221,6 @@
 									'key': test_id
 									, 'index': 'id'
 									, 'on_success': function( returned_value ) {
-										console.log('comparing',returned_value, expected );
 										if( 'undefined' !== typeof returned_value && null !== returned_value && ( returned_value[ 'to' ] - inc_amount )  == expected[ 'to' ] ) {
 											console.log( 'test.synapses.update(): passed' );
 										} else {
