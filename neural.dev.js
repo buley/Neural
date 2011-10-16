@@ -450,7 +450,9 @@ Neural.synapses.get = function ( request )  {
 			console.log('4','undefined' !== typeof context.event.target.result);
 			if( 'undefined' !== typeof context && 'undefined' !== typeof context.event && 'undefined' !== typeof context.event.target && 'undefined' !== typeof context.event.target.result ) {
 				console.log('new valu', value );
-				context.event.target.result = value;
+				var clone = context;
+				clone.event.target.result = value;
+				context = clone;
 			}
 			console.log("PADDING",context);
 			request.on_success( context );
