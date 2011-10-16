@@ -134,7 +134,7 @@
 									, 'index': 'id'
 									, 'on_success': function( context ) {
 										var return_value = InDB.row.value( context );
-										if( 'undefined' !== typeof return_value[ from_key] && new_value[ from_key ] == return_value[ from_key ] && 'undefined' !== typeof return_value[ to_key ] && new_value[ from_key ] == return_value[ to_key ] ) ) {	
+										if( 'undefined' !== typeof return_value[ from_key] && new_value[ from_key ] == return_value[ from_key ] && 'undefined' !== typeof return_value[ to_key ] && new_value[ from_key ] == return_value[ to_key ] ) {	
 											console.log( 'test.synapses.put(): passed' );
 										} else {
 											console.log( 'test.synapses.put(): failed' );
