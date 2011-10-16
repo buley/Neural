@@ -392,7 +392,7 @@ Neural.synapses.shorthand_map = {
 	'to': 't',
 	'from': 'f',
 	'strength': 's',
-	'type': 't',
+	'type': 'y',
 	'votes': 'v',
 	'payload': 'p'
 };
