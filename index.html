@@ -65,7 +65,7 @@
 					, 'strength': function( current ) {
 
 						var replacement = current / 2;
-						replacement = ( !!replacement ) ? replacement : 1;
+						replacement = ( !!replacement && replacement > .001 ) ? replacement : 1;
 						return replacement;
 					}, 'on_success': function( context ) {
 
