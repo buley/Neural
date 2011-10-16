@@ -264,7 +264,7 @@
 							, 'on_success': function( get_value_1 ) {
 								console.log("GOT", get_value_1 );
 								Neural.synapses.delete( {
-									'key': test_id
+									'key': add_value
 									, 'index': 'id'
 									, 'on_success': function( delete_value ) {
 										Neural.synapses.get( {
@@ -322,7 +322,7 @@
 				if ( 0 === browser_check ) {
 					InDB.fixBrowser();
 				}
-				var debug = false;
+				var debug = true;
 				InDB.debug = debug;
 				Neural.debug = debug;
 				var on_loaded = function( context ) {
