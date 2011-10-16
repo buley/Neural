@@ -179,9 +179,12 @@
 									'key': test_id
 									, 'index': 'id'
 									, 'on_success': function( context ) {
-										var value = InDB.row.value( context );
-										console.log( 'on_value', value );
-										if( 'undefined' !== typeof value && null !== value && value[ key ] == expected[ key ] + inc_amount ) {
+										var returned_value = InDB.row.value( context );
+										console.log( 'on_value', returned_value );
+										console.log('1', 'undefined' !== typeof returned_value);
+										console.log('2',null !== returned_value );
+										console.log('3', returned_value[ key ] == expected[ key ] + inc_amount, returned_value[ key ],expected[ key ] + inc_amount);
+										if( 'undefined' !== typeof returned_value && null !== returned_value && returned_value[ key ] == expected[ key ] + inc_amount ) {
 											console.log( 'test.synapses.update(): passed', value );
 										} else {
 											console.log( 'test.synapses.update(): failed' );
