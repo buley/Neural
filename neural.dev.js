@@ -710,7 +710,7 @@ Neural.synapses.cursor.update = function( key, index, data, on_success, on_error
 	var on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
 		if( !!Neural.debug ) console.log( 'success', item );
-		if( 'function' == typeof on_error ) {
+		if( 'function' == typeof on_success ) {
 			request.on_success( context );
 		}
 	};
