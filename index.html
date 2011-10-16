@@ -8,7 +8,11 @@
 		<div id="result"></div>
 		<script type="text/javascript">
 
-			function add_data() {
+			var test = test || {};
+			test.synapses = test.synapses || {};
+			test.neurons = text.neurons || {};
+
+			test.synapses.add = function() {
 
 				var count = 3;
 				var map = [];
@@ -25,9 +29,48 @@
 
 					} );
 				}
+			};
+			
+			test.synapses.setStrength = function() {
 
+				var on_error = function( context ) {
+					console.log( 'test.synapses.set on_error', context );
+					throw new Error( 'Error in test.synapses.set()' );
+				};
+				var id_to_get = 2;
+				Neural.synapses.getStrength( {
+					'key': id_to_get
+					, 'index': 'id'
+					, 'on_success': function( context ) {	
+						var value = InDB.row.value( context.event );	
+						var expected =  {};
+						var key = Neural.synapses.shorthand( 'strength' );
+					       	expected[ key ] = value[ key ];
+						Neural.synapses.setStrength( {
+							'key': id_to_get
+							, 'index': 'id'
+							, 'expecting': expected
+							, 'strength': function( current ) {
+								var replacement = current / 2;
+								replacement = ( !!replacement && replacement > .001 ) ? replacement : 1;
+								return replacement;
+							}, 'on_success': function( context ) {
+								Neural.synapses.getStrength( {
+									'key': id_to_get
+									, 'index': 'id'
+									, 'on_success': function( context ) {
+										console.log( 'Success', InDB.row.value( context ) );
+									}, 'on_error': on_error 
+								} );
+							}, 'on_error': on_error
+						} );
 
-			}
+					}, 'on_error': on_error
+				} );
+				
+
+			};
+			
 			$(document).ready(function() {
 				var Neural = Neural || {};
 				Neural.database_name = "Neural-011";
@@ -50,38 +93,8 @@
 				console.log( "Neuron InDB is loaded", context );
 				
 				//add_data();
-
-				var on_success = function( context ) {
-					console.log( 'set/getStrength on_success', context );
-				};
-				var on_error = function( context ) {
-					console.log( 'set/getStrength on_error', context );
-				};
-				var id_to_get = 2;
-				Neural.synapses.getStrength( {
-					'key': id_to_get
-					, 'index': 'id'
-					, 'on_success': function( context ) {
-						
-						var value = InDB.row.value( context.event );	
-						var expected =  {};
-						var key = Neural.synapses.shorthand( 'strength' );
-					       	expected[ key ] = value[ key ];
-						Neural.synapses.setStrength( {
-							'key': id_to_get
-							, 'index': 'id'
-							, 'expecting': expected
-							, 'strength': function( current ) {
-								var replacement = current / 2;
-								replacement = ( !!replacement && replacement > .001 ) ? replacement : 1;
-								return replacement;
-							}, 'on_success': on_success, 'on_error': on_error
-						} );
-
-					}, 'on_error': on_error
-				} );
+				test.synapses.setStrength();
 				
-
 				//Neural.synapses.cursor.get( null, 'to', on_success, on_error, 0, null, true, false );
 				//Neural.neurons.cursor.get( null, 'type', on_success, on_error, 0, null, true, false );
 				//console.log( map );
