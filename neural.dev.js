@@ -601,12 +601,13 @@ Neural.synapses.cursor.get = function( request ) {
 		console.log( 'Neural.synapses.cursor.get', request );
 	}
 
-        jQuery(document).trigger('cursor_put_synapses',request);
+        jQuery(document).trigger('cursor_get_synapses',request);
 
 
 	/* Defaults */
-
-	direction = ( 1 == direction || 2 == direction ) ? direction : 1;
+	console.log("GETTING DIRECTION",direction);
+	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cusor.direction.next();
+	console.log("GOt DIRECTION",direction);
 	limit = ( 'undefined' !== typeof limit ) ? limit : null;
 	begin = ( 'undefined' !== typeof begin ) ? begin : null;
 	end = ( 'undefined' !== typeof end ) ? end : null;
