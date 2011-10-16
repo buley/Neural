@@ -510,7 +510,7 @@ Neural.synapses.put = function ( request )  {
 		data = Neural.synapses.shorthand_encode( data );
 	}
 
-	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
@@ -539,7 +539,7 @@ Neural.synapses.add = function ( request )  {
 		data = Neural.synapses.shorthand_encode( data );
 	}
 
-	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
@@ -568,7 +568,7 @@ Neural.synapses.update = function ( request ) {
 		request.data = Neural.synapses.shorthand_encode( data );
 	}
 
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
@@ -605,10 +605,9 @@ Neural.synapses.cursor.get = function( key, index, on_success, on_error, begin, 
 
 	var cursor_on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
-		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof on_error ) {
 			if( !!Neural.debug ) console.log( 'success', item );
-			on_success( context );
+			on_success( item );
 		}
 	};
 
