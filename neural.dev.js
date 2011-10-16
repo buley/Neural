@@ -440,6 +440,20 @@ Neural.synapses.get = function ( request )  {
 		console.log( 'Neural.synapses.get', request );
 	}
 
+	var on_success = function( context ) {
+		if( 'function' == typeof request.on_success ) {
+			var value = Neural.synapses.shorthand_decode( InDB.row.value( value ) );
+			if( 'undefined' !== typeof context && 'undefined' !== typeof context.target && 'undefined' !== typeof context.target.result ) {
+				context.target.result = value;
+			}
+			request.on_success( context );
+		}
+	}
+
+	var on_error = function( context ) {
+
+	}
+
 	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'on_success': request.on_success, 'on_error': request.on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
