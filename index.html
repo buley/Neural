@@ -180,6 +180,7 @@
 									, 'index': 'id'
 									, 'on_success': function( context ) {
 										var value = InDB.row.value( context );
+										console.log( 'on_value', value );
 										if( 'undefined' !== typeof value && null !== value && value[ key ] == expected[ key ] + inc_amount ) {
 											console.log( 'test.synapses.update(): passed', value );
 										} else {
