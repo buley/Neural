@@ -215,8 +215,8 @@
 							, 'expecting': expected
 							, 'data': function( current ) {
 								var val = {};
-						       		val[ 'to' ] = current[ 'to' ];
-								val[ 'to' ] = parseInt( val[ 'to' ], 10 ) + inc_amount;
+								console.log('current?!?',current);
+								val[ 'to' ] = parseInt( current[ 'to' ], 10 ) + inc_amount;
 								return val;
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
