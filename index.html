@@ -57,9 +57,9 @@
 				var on_error = function( context ) {
 					console.log( 'set/getStrength on_error', context );
 				};
-
+				var id_to_get = 2;
 				Neural.synapses.setStrength( {
-					'key': 1
+					'key': id_to_get
 					, 'index': 'id'
 					, 'strength': function( current ) {
 						console.log("CURRENT",current);
@@ -69,7 +69,7 @@
 
 						console.log( 'about to get', context );
 						Neural.synapses.getStrength( {
-							'key': 1
+							'key': id_to_get
 							, 'index': 'id'
 							, 'on_success': on_success
 							, 'on_error': on_error
