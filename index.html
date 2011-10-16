@@ -172,6 +172,7 @@
 								var val = {};
 						       		val[ key ] = current[ key ];
 								val[ key ] = parseInt( val[ key ], 10 ) + inc_amount;
+								console.log('vally',val);
 								return val;
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
@@ -182,7 +183,7 @@
 										console.log( 'on_value', returned_value );
 										console.log('1', 'undefined' !== typeof returned_value);
 										console.log('2',null !== returned_value );
-										console.log('3', returned_value[ key ] == expected[ key ], expected[ key ], returned_value[ key ] - inc_amount);
+										console.log('3', returned_value[ key ] == expected[ key ], expected[ key ], returned_value[ key ] );
 										if( 'undefined' !== typeof returned_value && null !== returned_value && ( returned_value[ key ] - inc_amount )  == expected[ key ] ) {
 											console.log( 'test.synapses.update(): passed', value );
 										} else {
