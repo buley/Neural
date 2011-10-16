@@ -491,9 +491,10 @@ Neural.synapses.update = function ( request ) {
 	}
 
 	var data = request.data;
-	data = Neural.synapses.shorthand_encode( data );
-	console.log("HELLO",data);
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data, 'replace': request.replace, 'expecting': request.expecting, 'on_success': request.on_success, 'on_error': request.on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	request.data = Neural.synapses.shorthand_encode( data );
+	
+console.log('doing row-update', request );
+	InDB.trigger( 'InDB_do_row_update', request);
 
 }
 
