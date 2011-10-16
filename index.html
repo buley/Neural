@@ -17,48 +17,38 @@
 			var test_id = 2;
 			var inc_amount = 3;
 
-
-			test.synapses.add = function() {
-
-				var count = 3;
-				var map = [];
-				for( var i = 0; i < count; i++ ) {
-
-					Neural.neurons.add( { 'type': 'hidden', 'slug': InDB.utilities.random( 12, 'letters' ), 'display': InDB.utilities.random( 12, 'letters' ) }, function( context ) {
-						var value = InDB.row.value( context );
-						console.log( 'Added index @', value );
-
-						var node = Math.floor( Math.random()*100 );	
-						Neural.synapses.add( { 'type': 'connection', 'from': value, 'to': node, 'strength': Math.random() }, function( context ) {
-							console.log( 'Added synapses from ' + value + ' to ' + node );
-						} );
-
-					} );
-				}
-			};
-
-	
-			test.synapses.getStrength = function() {
-
-				var on_error = function( context ) {
+			test.synapses.getStrength = function( test_callback ) {
+				var on_error = function( test_callback ) {
 					console.log( 'test.synapses.getStrength(): failed' );
+					if( 'function' !== typeof test_callback ) {
+						test_callback( value );
+					}
 				};
 				Neural.synapses.getStrength( {
 					'key': test_id
 					, 'index': 'id'
-					, 'on_success': function( context ) {	
-						var value = InDB.row.value( context.event );	
-						console.log( 'test.synapses.getStrength(): passed' );
+					, 'on_success': function( value ) {	
+						if( 'undefined' !== value ) {
+							console.log( 'test.synapses.getStrength(): passed' );
+						} else {
+							console.log( 'test.synapses.getStrength(): failed' );
+						}
+						if( 'function' !== typeof test_callback ) {
+							test_callback( value );
+						}
 					}, 'on_error': on_error
 				} );
 				
 
 			};
 
-			test.synapses.setStrength = function() {
+			test.synapses.setStrength = function( test_callback ) {
 
-				var on_error = function( context ) {
+				var on_error = function( value ) {
 					console.log( 'test.synapses.setStrength(): failed' );
+					if( 'function' !== typeof test_callback ) {
+						test_callback( value );
+					}
 				};
 				Neural.synapses.getStrength( {
 					'key': test_id
@@ -80,8 +70,15 @@
 								Neural.synapses.getStrength( {
 									'key': test_id
 									, 'index': 'id'
-									, 'on_success': function( context ) {
-										console.log( 'test.synapses.setStrength(): passed' );
+									, 'on_success': function( value ) {
+										if( 'undefined' !== typeof value ) {
+											console.log( 'test.synapses.setStrength(): passed' );
+										} else {
+											console.log( 'test.synapses.setStrength(): failed' );
+										}
+										if( 'function' !== typeof test_callback ) {
+											test_callback( value );
+										}
 									}, 'on_error': on_error 
 								} );
 							}, 'on_error': on_error
@@ -105,8 +102,7 @@
 				Neural.synapses.get( {
 					'key': test_id
 					, 'index': 'id'
-					, 'on_success': function( get_context ) {	
-						var value = InDB.row.value( get_context.event );	
+					, 'on_success': function( value ) {	
 						console.log( 'test.synapses.get(): passed' );
 						if( 'function' == typeof test_callback ) {
 							test_callback( get_context );
@@ -119,17 +115,16 @@
 
 			test.synapses.put = function( test_callback ) {
 
-				var on_error = function( context ) {
+				var on_error = function( value ) {
 					console.log( 'test.synapses.put(): failed' );
 					if( 'function' == typeof test_callback ) {
-						test_callback( context );
+						test_callback( value );
 					}
 				};
 				Neural.synapses.get( {
 					'key': test_id
 					, 'index': 'id'
-					, 'on_success': function( context ) {	
-						var new_value = InDB.row.value( context.event );	
+					, 'on_success': function( new_value ) {
 						var from_key = Neural.synapses.shorthand( 'from' );
 						var to_key = Neural.synapses.shorthand( 'to' );
 						new_value[ from_key ] = parseInt( new_value[ from_key ], 10 ) + inc_amount;
@@ -141,9 +136,7 @@
 								Neural.synapses.get( {
 									'key': test_id
 									, 'index': 'id'
-									, 'on_success': function( context ) {
-
-										var return_value = InDB.row.value( context );
+									, 'on_success': function( return_value ) {
 										if( 'undefined' !== typeof return_value[ from_key] && new_value[ from_key ] == return_value[ from_key ] && 'undefined' !== typeof return_value[ to_key ] && new_value[ to_key ] == return_value[ to_key ] ) {	
 											console.log( 'test.synapses.put(): passed' );
 										} else {
@@ -164,10 +157,10 @@
 
 			test.synapses.add = function( test_callback ) {
 
-				var on_error = function( context ) {
+				var on_error = function( value ) {
 					console.log( 'test.synapses.add(): failed' );
 					if( 'function' == typeof test_callback ) {
-						test_callback( context );
+						test_callback( value );
 					}
 				};
 				var new_value = {
@@ -179,22 +172,18 @@
 				Neural.synapses.add( {
 					'key': test_id
 					, 'data': new_value
-					, 'on_success': function( context ) {
-						var add_value = InDB.row.value( context );
+					, 'on_success': function( add_value ) {
 						Neural.synapses.get( {
 							'key': add_value
 							, 'index': 'id'
-							, 'on_success': function( context ) {
-								console.log('preval c',context);
-								var return_value = InDB.row.value( context );
-								console.log(return_value,new_value,return_value == new_value );
+							, 'on_success': function( return_value ) {
 								if( 'undefined' !== typeof return_value && null !== return_value && new_value == return_value ) {
 									console.log( 'test.synapses.add(): passed' );
 								} else {
 									console.log( 'test.synapses.add(): failed', return_value );
 								}
 								if( 'function' == typeof test_callback ) {
-									test_callback( context );
+									test_callback( return_value );
 								}							
 							}, 'on_error': on_error 
 						} );
@@ -206,17 +195,16 @@
 
 			test.synapses.update = function( test_callback ) {
 
-				var on_error = function( context ) {
+				var on_error = function( value ) {
 					console.log( 'test.synapses.update(): failed' );
 					if( 'function' == typeof test_callback ) {
-						test_callback( context );
+						test_callback( value );
 					}
 				};
 				Neural.synapses.get( {
 					'key': test_id
 					, 'index': 'id'
-					, 'on_success': function( context ) {	
-						var value = InDB.row.value( context.event );	
+					, 'on_success': function( value ) {	
 						var expected =  {};
 						var key = Neural.synapses.shorthand( 'to' );
 					       	expected[ key ] = value[ key ];
@@ -233,8 +221,7 @@
 								Neural.synapses.get( {
 									'key': test_id
 									, 'index': 'id'
-									, 'on_success': function( context ) {
-										var returned_value = InDB.row.value( context );
+									, 'on_success': function( returned_value ) {
 										if( 'undefined' !== typeof returned_value && null !== returned_value && ( returned_value[ key ] - inc_amount )  == expected[ key ] ) {
 											console.log( 'test.synapses.update(): passed' );
 										} else {
