@@ -208,7 +208,6 @@
 					, 'index': 'id'
 					, 'on_success': function( value ) {	
 						var expected =  {};
-						var key = Neural.synapses.shorthand( 'to' );
 						expected[ 'to' ] = value[ 'to' ];
 						Neural.synapses.update( {
 							'key': test_id
