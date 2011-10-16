@@ -650,7 +650,6 @@ Neural.synapses.shorthand_decode = function( object ) {
 Neural.synapses.shorthand_encode = function( object ) {
 	var encoded = {};
 	for( var item in object ) {
-		console.log("FOCUS", item, object, encoded );
 		if( object.hasOwnProperty( item ) ) {
 			//recursive case: object value
 			//base case: string value

@@ -62,8 +62,7 @@
 					'key': 1
 					, 'index': 'id'
 					, 'strength': function( current ) {
-						var replacement = Math.random();
-						console.log( "replacing " + current + " with " + replacement );
+						var replacement = current[ Neural.synapses.shorthand( 'strength' ) ] / 2;
 						return replacement;
 					}, 'on_success': function( context ) {
 
