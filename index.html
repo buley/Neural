@@ -64,8 +64,10 @@
 				Neural.synapses.setStrength( {
 					'key': 1
 					, 'index': 'id'
-					, 'strength': function() {
-						return Math.random();
+					, 'strength': function( current ) {
+						var replacement = Math.random();
+						console.log( "replacing " + current + " with " + replacement );
+						return replacement;
 					}, 'on_success': on_success
 					, 'on_error': on_error
 				} );	
