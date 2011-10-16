@@ -133,7 +133,12 @@
 									'key': test_id
 									, 'index': 'id'
 									, 'on_success': function( context ) {
+
 										var return_value = InDB.row.value( context );
+										console.log( '1', 'undefined' !== typeof return_value[ from_key] );
+										console.log( '2', new_value[ from_key ] == return_value[ from_key ] );
+										console.log( '3', 'undefined' !== typeof return_value[ to_key ] );
+										console.log( '4', new_value[ from_key ] == return_value[ to_key ]  );
 										if( 'undefined' !== typeof return_value[ from_key] && new_value[ from_key ] == return_value[ from_key ] && 'undefined' !== typeof return_value[ to_key ] && new_value[ from_key ] == return_value[ to_key ] ) {	
 											console.log( 'test.synapses.put(): passed' );
 										} else {
