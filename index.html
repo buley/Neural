@@ -169,7 +169,7 @@
 								var val = {};
 						       		val[ key ] = current[ key ];
 								val[ key ] = parseInt( val, 10 ) + 1;
-								val[ key ] = ( 'undefined' !== typeof val[ key ] ) ? val[ key ] : 1; 
+								val[ key ] = ( 'undefined' !== typeof val && !isNaN( val[ key ] ) ) ? val[ key ] : 1; 
 								return val;
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
