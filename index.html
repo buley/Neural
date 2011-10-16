@@ -102,8 +102,8 @@
 				Neural.synapses.get( {
 					'key': test_id
 					, 'index': 'id'
-					, 'on_success': function( context ) {	
-						var value = InDB.row.value( context.event );	
+					, 'on_success': function( get_context ) {	
+						var value = InDB.row.value( get_context.event );	
 						console.log( 'test.synapses.get(): passed' );
 					}, 'on_error': on_error
 				} );
