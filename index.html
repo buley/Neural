@@ -25,7 +25,7 @@
 						var value = InDB.row.value( context );
 			*///			console.log( 'Added index @', value );
 						var node = Math.floor( Math.random()*100 );	
-						Neural.synapses.add( { 'type': 'connection', 'from': 1, 'to': node, 'strength': Math.random() }, function( context ) {
+						Neural.synapses.add( { 'data': { 'type': 'connection', 'from': 1, 'to': node, 'strength': Math.random() } }, function( context ) {
 							console.log( 'Added synapses from ' + value + ' to ' + node );
 						}, function( context ) {
 							console.log( 'FAILED to add synapses', context );       
