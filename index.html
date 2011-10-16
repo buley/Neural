@@ -27,6 +27,8 @@
 						var node = Math.floor( Math.random()*100 );	
 						Neural.synapses.add( { 'type': 'connection', 'from': value, 'to': node, 'strength': Math.random() }, function( context ) {
 							console.log( 'Added synapses from ' + value + ' to ' + node );
+						}, function( context ) {
+							console.log( 'FAILED', context );       
 						} );
 					} );
 				}
