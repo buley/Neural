@@ -17,6 +17,21 @@
 			var test_id = 10;
 			var inc_amount = 3;
 
+			function add_data() {
+				var count = 3;
+				var map = [];
+				for( var i = 0; i < count; i++ ) {
+					Neural.neurons.add( { 'type': 'hidden', 'slug': InDB.utilities.random( 12, 'letters' ), 'display': InDB.utilities.random( 12, 'letters' ) }, function( context ) {
+						var value = InDB.row.value( context );
+						console.log( 'Added index @', value );
+						var node = Math.floor( Math.random()*100 );	
+						Neural.synapses.add( { 'type': 'connection', 'from': value, 'to': node, 'strength': Math.random() }, function( context ) {
+							console.log( 'Added synapses from ' + value + ' to ' + node );
+						} );
+					} );
+				}
+			}
+
 			test.synapses.getStrength = function( test_callback ) {
 				var on_error = function( test_callback ) {
 					console.log( 'test.synapses.getStrength(): failed' );
@@ -177,6 +192,7 @@
 							, 'index': 'id'
 							, 'on_success': function( return_value ) {
 								if( 'undefined' !== typeof return_value && null !== return_value && add_value == return_value.id ) {
+									test_id = return_value;
 									console.log( 'test.synapses.add(): passed' );
 								} else {
 									console.log( 'test.synapses.add(): failed' );
