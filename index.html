@@ -141,7 +141,7 @@
 											console.log( 'test.synapses.put(): failed', new_value, return_value );
 										}
 										if( 'function' == typeof test_callback ) {
-											test_callback( context );
+											test_callback( return_value );
 										}							
 									}, 'on_error': on_error 
 								} );
