@@ -180,11 +180,14 @@
 					'key': test_id
 					, 'data': new_value
 					, 'on_success': function( context ) {
+						var add_value = InDB.row.value( context );
+						console.log('add value',add_value);
 						Neural.synapses.get( {
-							'key': test_id
+							'key': add_value
 							, 'index': 'id'
 							, 'on_success': function( context ) {
 								var return_value = InDB.row.value( context );
+
 								if( 'undefined' !== typeof return_value && null !== return_value && new_value == return_value ) {
 									console.log( 'test.synapses.add(): passed' );
 								} else {
