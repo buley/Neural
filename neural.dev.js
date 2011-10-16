@@ -636,16 +636,16 @@ Neural.synapses.cursor.get = function( request ) {
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': on_success, 'on_error': on_error } );
+	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
 
 }
 
 /* Cursor Delete */
-Neural.synapses.cursor.delete = function( key, index, begin, end, on_success, on_error ) {
+Neural.synapses.cursor.delete = function( key, index, begin, end, on_success, on_error, on_abort, on_complete ) {
 
         /* Action */
 
-        jQuery(document).trigger('cursor_delete_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_delete_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complette } );
 
 	/* Defaults */
 
@@ -690,7 +690,7 @@ Neural.synapses.cursor.update = function( key, index, data, on_success, on_error
 
 	/* Action */
 
-        jQuery(document).trigger('cursor_put_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_put_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complette } );
 
 	/* Defaults */
 
@@ -707,23 +707,23 @@ Neural.synapses.cursor.update = function( key, index, data, on_success, on_error
 
 	/* Callbacks */
 
-	var cursor_on_success = function ( context ) {
+	var on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
 		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof on_error ) {
-			on_success( context );
+			request.on_success( context );
 		}
 	};
 
-	var cursor_on_error = function ( context ) {
+	var on_error = function ( context ) {
 		if( 'function' == typeof on_error ) {
-			on_error( context );
+			request.on_error( context );
 		}
 	};
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 	
 }
 
