@@ -444,9 +444,9 @@ Neural.synapses.get = function ( request )  {
 		if( 'function' == typeof request.on_success ) {
 			var value = Neural.synapses.shorthand_decode( InDB.row.value( context ) );
 			console.log('calc',value);
-			if( 'undefined' !== typeof context && 'undefined' !== typeof context.target && 'undefined' !== typeof context.target.result ) {
+			if( 'undefined' !== typeof context && 'undefined' !== typeof context.event && 'undefined' !== typeof context.event.target && 'undefined' !== typeof context.event.target.result ) {
 				console.log('new valu', value );
-				context.target.result = value;
+				context.event.target.result = value;
 			}
 			request.on_success( context );
 		}
