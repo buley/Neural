@@ -66,10 +66,12 @@
 						
 						var value = InDB.row.value( context );	
 
+						var expected =  { value[ Neural.synapses.shorthand( 'strength' ): value };
+
 						Neural.synapses.setStrength( {
 							'key': id_to_get
 							, 'index': 'id'
-							, 'expecting': { value[ Neural.synapses.shorthand( 'strength' ): value }
+							, 'expecting': expected
 							, 'strength': function( current ) {
 
 								var replacement = current / 2;
