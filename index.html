@@ -400,7 +400,8 @@
 				Neural.synapses.add( { 'data': { 'type': 'connection', 'from': node1, 'to': node2, 'strength': Math.random() }, 'on_success': function( result_value ) {
 					console.log( 'Added test synapse from ' + node1 + ' to ' + node2 + ' @ index ' + result_value );
 					test_id = result_value;
-					get_test();
+					//get_test();
+					test.synapses.cursor.get();
 				}, 'on_error': function( context ) {
 					console.log( 'FAILED to add synapses', context );       
 				} } );
