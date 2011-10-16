@@ -590,6 +590,8 @@ Neural.synapses.cursor.get = function( request ) {
         /* Action */
 
 	var index = request.index;
+	var direction = request.direction;
+	var limit = request.limit;
 	var key = request.key;
 	var begin = request.begin;
        	var end = request.end;
@@ -605,6 +607,8 @@ Neural.synapses.cursor.get = function( request ) {
 
 	/* Defaults */
 
+	direction = ( 1 == direction || 2 == direction ) ? direction : 1;
+	limit = ( 'undefined' !== typeof limit ) ? limit : null;
 	begin = ( 'undefined' !== typeof begin ) ? begin : null;
 	end = ( 'undefined' !== typeof end ) ? end : null;
 	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
@@ -635,17 +639,28 @@ Neural.synapses.cursor.get = function( request ) {
 
 
 	/* Request */
-	console.log("SENDING ONCOMPLETE",request.on_complete);
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
 /* Cursor Delete */
-Neural.synapses.cursor.delete = function( key, index, begin, end, on_success, on_error, on_abort, on_complete ) {
+Neural.synapses.cursor.delete = function( request ) {
+
+	/* Setup */
+
+	var index = request.index;
+	var direction = request.direction;
+	var limit = request.limit;
+	var key = request.key;
+	var begin = request.begin;
+       	var end = request.end;
+	var left_inclusive = request.left_inclusive;
+	var right_inclusive = request.right_inclusive;
+
 
         /* Action */
 
-        jQuery(document).trigger('cursor_delete_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complette } );
+        jQuery(document).trigger('cursor_delete_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": request.on_success, 'on_error': request.on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
 
 	/* Defaults */
 
@@ -653,6 +668,8 @@ Neural.synapses.cursor.delete = function( key, index, begin, end, on_success, on
 	end = ( 'undefined' !== typeof end ) ? end : null;
 	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
 	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
+	direction = ( 1 == direction || 2 == direction ) ? direction : 1;
+	limit = ( 'undefined' !== typeof limit ) ? limit : null;
 	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
 
 	/* Setup */
@@ -661,28 +678,39 @@ Neural.synapses.cursor.delete = function( key, index, begin, end, on_success, on
 
 	/* Callbacks */
 
-	var cursor_on_success = function ( context ) {
+	var on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
 		if( !!Neural.debug ) console.log( 'success', item );
-		if( 'function' == typeof on_error ) {
-			on_success( context );
+		if( 'function' == typeof request.on_success ) {
+			request.on_success( context );
 		}
 	};
 
-	var cursor_on_error = function ( context ) {
-		if( 'function' == typeof on_error ) {
-			on_error( context );
+	var on_error = function ( context ) {
+		if( 'function' == typeof request.on_error ) {
+			request.on_error( context );
 		}
 	};
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 };
 
 /* Cursor Update */
-Neural.synapses.cursor.update = function( key, index, data, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
+Neural.synapses.cursor.update = function( request ) {
+
+	var index = request.index;
+	var direction = request.direction;
+	var limit = request.limit;
+	var key = request.key;
+	var replace = request.replace;
+	var begin = request.begin;
+       	var end = request.end;
+	var left_inclusive = request.left_inclusive;
+	var right_inclusive = request.right_inclusive;
+
 
 	/* Shorthand Encoding */
 
@@ -690,11 +718,13 @@ Neural.synapses.cursor.update = function( key, index, data, on_success, on_error
 
 	/* Action */
 
-        jQuery(document).trigger('cursor_put_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complette } );
+        jQuery(document).trigger('cursor_put_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, 'direction': direction, 'limit': limit, "on_success": on_success, 'on_error': on_error, 'on_abort': on_abort, 'on_complete': on_complete } );
 
 	/* Defaults */
 
 	replace = ( true == replace ) ? true : false;
+	direction = ( 1 == direction || 2 == direction ) ? direction : 1;
+	limit = ( 'undefined' !== typeof limit ) ? limit : null;
 	begin = ( 'undefined' !== typeof begin ) ? begin : null;
 	end = ( 'undefined' !== typeof end ) ? end : null;
 	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
@@ -723,7 +753,7 @@ Neural.synapses.cursor.update = function( key, index, data, on_success, on_error
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 	
 }
 
