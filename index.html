@@ -26,7 +26,7 @@
 			*///			console.log( 'Added index @', value );
 						var node = Math.floor( Math.random()*100 );	
 						Neural.synapses.add( { 'data': { 'type': 'connection', 'from': 1, 'to': node, 'strength': Math.random() }, 'on_success': function( result_value ) {
-							console.log( 'Added synapses from ' + '1' + ' to ' + node ' using index ' + result_value );
+							console.log( 'Added synapses from ' + '1' + ' to ' + node + ' using index ' + result_value );
 						}, 'on_error': function( context ) {
 							console.log( 'FAILED to add synapses', context );       
 						} } );
