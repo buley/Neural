@@ -62,6 +62,7 @@
 					'key': 1
 					, 'index': 'id'
 					, 'strength': function( current ) {
+						console.log("CURRENT",current);
 						var replacement = current[ Neural.synapses.shorthand( 'strength' ) ] / 2;
 						return replacement;
 					}, 'on_success': function( context ) {
