@@ -42,7 +42,7 @@ Neural.synapses.setStrength = function( request ) {
 
 	var data = {};
 	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength;
-	Neural.synapses.update( request.key, request.index, data, on_success, on_error );
+	Neural.synapses.update( request.key, request.index, data, request.replace, request.expecting, on_success, on_error );
 
 };
 
@@ -77,7 +77,7 @@ Neural.synapses.cursor.setStrength = function( request ) {
 
 	var data = {};
 	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength;
-	Neural.synapses.cursor.update( request.key, request.index, data, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
+	Neural.synapses.cursor.update( request.key, request.index, data, request.replace, replace.expecting, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
 
 };
 
@@ -255,15 +255,16 @@ Neural.neurons.cursor.delete = function( key, index, begin, end, on_success, on_
 };
 
 /* Cursor Update */
-Neural.neurons.cursor.update = function( key, index, data, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
+Neural.neurons.cursor.update = function( key, index, data, replace, expecting, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
 
         /* Action */
 
-        jQuery(document).trigger('cursor_put_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_put_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "expecting": expecting, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
 	replace = ( true == replace ) ? true : false;
+	expecting = ( 'undefined' !== expecting && null !== expecting ) ? expecting : null;
 	begin = ( 'undefined' !== typeof begin ) ? begin : null;
 	end = ( 'undefined' !== typeof end ) ? end : null;
 	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
@@ -292,7 +293,7 @@ Neural.neurons.cursor.update = function( key, index, data, on_success, on_error,
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'neurons', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace,'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'neurons', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'expecting': expecting, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
 	
 };
 
