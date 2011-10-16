@@ -636,7 +636,7 @@ Neural.synapses.cursor.get = function( request ) {
 
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': on_success, 'on_error': on_error } );
 
 }
 
