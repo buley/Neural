@@ -143,7 +143,7 @@ Neural.neurons.install = function ( ) {
 	};
 
         //neurons_idxs[ '' ][ Neural.neurons.shorthand( '' ) ] = '';
-        neurons_idxs.neurons[ 'id' ][ Neural.neurons.shorthand( 'id' ) ] = false;
+        neurons_idxs.neurons[ 'id' ][ Neural.neurons.shorthand( 'id' ) ] = true;
         neurons_idxs.neurons[ 'type' ][ Neural.neurons.shorthand( 'type' ) ] = false;
         neurons_idxs.neurons[ 'display' ][ Neural.neurons.shorthand( 'display' ) ] = false;
         neurons_idxs.neurons[ 'slug' ][ Neural.neurons.shorthand( 'slug' ) ] = false;
@@ -414,7 +414,7 @@ Neural.synapses.install = function ( ) {
 	};
 
         //synapses_idxs[ '' ][ Neural.synapses.shorthand( '' ) ] = '';
-        synapses_idxs[ 'synapses' ][ 'id' ][ Neural.synapses.shorthand( 'id' ) ] = false;
+        synapses_idxs[ 'synapses' ][ 'id' ][ Neural.synapses.shorthand( 'id' ) ] = true;
         synapses_idxs[ 'synapses' ][ 'type' ][ Neural.synapses.shorthand( 'type' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'to' ][ Neural.synapses.shorthand( 'to' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'from' ][ Neural.synapses.shorthand( 'from' ) ] = false;
@@ -461,7 +461,7 @@ Neural.synapses.get = function ( request )  {
 Neural.synapses.delete = function ( request ) {
 
 	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.remove', request );
+		console.log( 'Neural.synapses.delete', request );
 	}
 
 	var on_success = function( context ) {
@@ -477,7 +477,7 @@ Neural.synapses.delete = function ( request ) {
 		}
 	}
 
-	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': request.key, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
