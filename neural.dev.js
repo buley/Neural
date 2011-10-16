@@ -481,11 +481,7 @@ Neural.synapses.remove = function ( request ) {
 		}
 	}
 
-	request.store = 'synapses';
-	request.on_success = on_success;
-	request.on_error = on_error;
-
-	InDB.trigger( 'InDB_do_row_delete', request );
+	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
@@ -509,17 +505,12 @@ Neural.synapses.put = function ( request )  {
 		}
 	}
 
-	request.store = 'synapses';
-	request.on_success = on_success;
-	request.on_error = on_error;
-
 	var data = request.data;
 	if( 'function' !== typeof data ) {
 		data = Neural.synapses.shorthand_encode( data );
 	}
-	request.data = data;
 
-	InDB.trigger( 'InDB_do_row_put', request );
+	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
@@ -543,17 +534,12 @@ Neural.synapses.add = function ( request )  {
 		}
 	}
 
-	request.store = 'synapses';
-	request.on_success = on_success;
-	request.on_error = on_error;
-
 	var data = request.data;
 	if( 'function' !== typeof data ) {
 		data = Neural.synapses.shorthand_encode( data );
 	}
-	request.data = data;
 
-	InDB.trigger( 'InDB_do_row_add', request );
+	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
@@ -577,15 +563,12 @@ Neural.synapses.update = function ( request ) {
 		}
 	}
 
-	request.store = 'synapses';
-	request.on_success = on_success;
-	request.on_error = on_error;
-
 	var data = request.data;
 	if( 'function' !== typeof data ) {
 		request.data = Neural.synapses.shorthand_encode( data );
 	}
-	InDB.trigger( 'InDB_do_row_update', request);
+
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
