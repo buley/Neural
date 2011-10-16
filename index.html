@@ -21,16 +21,16 @@
 				var count = 3;
 				var map = [];
 				for( var i = 0; i < count; i++ ) {
-					Neural.neurons.add( { 'type': 'hidden', 'slug': InDB.utilities.random( 12, 'letters' ), 'display': InDB.utilities.random( 12, 'letters' ) }, function( context ) {
+				/*	Neural.neurons.add( { 'type': 'hidden', 'slug': InDB.utilities.random( 12, 'letters' ), 'display': InDB.utilities.random( 12, 'letters' ) }, function( context ) {
 						var value = InDB.row.value( context );
-						console.log( 'Added index @', value );
+			*///			console.log( 'Added index @', value );
 						var node = Math.floor( Math.random()*100 );	
-						Neural.synapses.add( { 'type': 'connection', 'from': value, 'to': node, 'strength': Math.random() }, function( context ) {
+						Neural.synapses.add( { 'type': 'connection', 'from': 1, 'to': node, 'strength': Math.random() }, function( context ) {
 							console.log( 'Added synapses from ' + value + ' to ' + node );
 						}, function( context ) {
-							console.log( 'FAILED', context );       
+							console.log( 'FAILED to add synapses', context );       
 						} );
-					} );
+			//		} );
 				}
 			}
 
