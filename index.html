@@ -180,10 +180,10 @@
 							'key': add_value
 							, 'index': 'id'
 							, 'on_success': function( return_value ) {
-								if( 'undefined' !== typeof return_value && null !== return_value && new_value == return_value ) {
+								if( 'undefined' !== typeof return_value && null !== return_value && add_value == return_value.id ) {
 									console.log( 'test.synapses.add(): passed' );
 								} else {
-									console.log( 'test.synapses.add(): failed', return_value );
+									console.log( 'test.synapses.add(): failed', return_value, new_value );
 								}
 								if( 'function' == typeof test_callback ) {
 									test_callback( return_value );
