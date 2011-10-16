@@ -141,7 +141,7 @@
 				};
 				Neural.synapses.get( {
 					'key': test_id
-					, 'index': 'id'
+					//, 'index': 'id'
 					, 'on_success': function( new_value ) {
 						new_value[ 'from' ] = ( isNaN( new_value[ 'from' ] ) ) ? 1 : new_value[ 'from' ];
 						new_value[ 'from' ] = parseInt( new_value[ 'from' ], 10 ) + inc_amount;
