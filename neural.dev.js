@@ -701,18 +701,20 @@ Neural.synapses.cursor.delete = function( request ) {
 
 /* Cursor Update */
 Neural.synapses.cursor.update = function( request ) {
-
+console.log('1');
 	var index = request.index;
 	var direction = request.direction;
 	var limit = request.limit;
 	var key = request.key;
+	var data = request.data;
 	var replace = request.replace;
 	var begin = request.begin;
        	var end = request.end;
+       	var data = request.data;
 	var left_inclusive = request.left_inclusive;
 	var right_inclusive = request.right_inclusive;
 
-
+console.log('2');
 	/* Callbacks */
 
 	var on_success = function ( context ) {
@@ -730,13 +732,15 @@ Neural.synapses.cursor.update = function( request ) {
 	};
 
 
+console.log('3');
+
 	/* Shorthand Encoding */
 
 	data = Neural.synapses.shorthand_encode( data );
 
 	/* Action */
 
-        jQuery(document).trigger('cursor_put_synapses', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, 'direction': direction, 'limit': limit, "on_success": on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+        jQuery(document).trigger('cursor_update_synapses', { 'data': data, "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, 'direction': direction, 'limit': limit, "on_success": on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 	/* Defaults */
 
@@ -754,7 +758,8 @@ Neural.synapses.cursor.update = function( request ) {
 	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Request */
-console.log('blaahhhh');
+console.log('4');
+	
 	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 	
 }
