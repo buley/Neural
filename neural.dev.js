@@ -495,7 +495,7 @@ Neural.synapses.update = function ( request ) {
 	var data = request.data;
 	console.log('before!',data);
 	request.data = Neural.synapses.shorthand_encode( data );
-console.log('doing row-update!',JSON.stringify(request);	
+console.log('doing row-update!',JSON.stringify(request) );	
 	InDB.trigger( 'InDB_do_row_update', request);
 
 }
