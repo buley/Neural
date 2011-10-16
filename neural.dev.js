@@ -606,7 +606,7 @@ Neural.synapses.cursor.get = function( request ) {
 
 	/* Defaults */
 	console.log("GETTING DIRECTION",direction);
-	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cusor.direction.next();
+	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
 	console.log("GOt DIRECTION",direction);
 	limit = ( 'undefined' !== typeof limit ) ? limit : null;
 	begin = ( 'undefined' !== typeof begin ) ? begin : null;
