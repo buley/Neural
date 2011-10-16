@@ -125,12 +125,10 @@
 					'key': test_id
 					, 'index': 'id'
 					, 'on_success': function( new_value ) {
-						console.log("WAS",new_value);
 						new_value[ 'from' ] = ( isNaN( new_value[ 'from' ] ) ) ? 1 : new_value[ 'from' ];
 						new_value[ 'from' ] = parseInt( new_value[ 'from' ], 10 ) + inc_amount;
 						new_value[ 'to' ] = ( isNaN( new_value[ 'to' ] ) ) ? 1 : new_value[ 'to' ];
 						new_value[ 'to' ] = parseInt( new_value[ 'to' ], 10 ) + inc_amount;
-						console.log("IS NOW",new_value);
 						Neural.synapses.put( {
 							'key': test_id
 							, 'data': new_value

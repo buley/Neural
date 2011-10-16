@@ -443,7 +443,6 @@ Neural.synapses.get = function ( request )  {
 	var on_success = function( context ) {
 		if( 'function' == typeof request.on_success ) {
 			var value = Neural.synapses.shorthand_decode( InDB.row.value( context ) );
-			console.log('context and stuff',context,value);
 			request.on_success( value );
 		}
 	}
