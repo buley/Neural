@@ -110,10 +110,46 @@
 
 			};
 
-			test.synapses.set = function() {
+			test.synapses.put = function() {
 
 				var on_error = function( context ) {
-					console.log( 'test.synapses.set(): failed' );
+					console.log( 'test.synapses.put(): failed' );
+				};
+				var id_to_get = 2;
+				Neural.synapses.get( {
+					'key': id_to_get
+					, 'index': 'id'
+					, 'on_success': function( context ) {	
+						var value = InDB.row.value( context.event );	
+						var from_key = Neural.synapses.shorthand( 'from' );
+						var to_key = Neural.synapses.shorthand( 'to' );
+						value[ from_key ] = parseInt( value[ from_key ], 10 ) + 1;	
+						value[ to_key ] = parseInt( value[ to_key ], 10 ) + 1;	
+						Neural.synapses.put( {
+							'key': id_to_get
+							, 'data': value,
+							, 'on_success': function( context ) {
+								Neural.synapses.get( {
+									'key': id_to_get
+									, 'index': 'id'
+									, 'on_success': function( context ) {
+										var value = InDB.row.value( context );
+										console.log( 'test.synapses.put(): passed', value );
+									}, 'on_error': on_error 
+								} );
+							}, 'on_error': on_error
+						} );
+
+					}, 'on_error': on_error
+				} );	
+
+			};
+
+
+			test.synapses.update = function() {
+
+				var on_error = function( context ) {
+					console.log( 'test.synapses.put(): failed' );
 				};
 				var id_to_get = 2;
 				Neural.synapses.get( {
@@ -123,8 +159,8 @@
 						var value = InDB.row.value( context.event );	
 						var expected =  {};
 						var key = Neural.synapses.shorthand( 'to' );
-					       	expected[ key ] = value[ key ];
-						Neural.synapses.set( {
+					       	expected = value;
+						Neural.synapses.put( {
 							'key': id_to_get
 							, 'index': 'id'
 							, 'expecting': expected
@@ -137,7 +173,7 @@
 									, 'index': 'id'
 									, 'on_success': function( context ) {
 										var value = InDB.row.value( context );
-										console.log( 'test.synapses.set(): passed', value );
+										console.log( 'test.synapses.add(): passed', value );
 									}, 'on_error': on_error 
 								} );
 							}, 'on_error': on_error
@@ -148,6 +184,8 @@
 				
 
 			};
+
+
 
 
 
@@ -201,10 +239,9 @@
 				test.synapses.add();
 				test.synapses.delete();
 				 */
-				test.synapses.set();
-				//test.synapses.get();
-				/*
 				test.synapses.put();
+				test.synapses.get();
+				/*
 				test.synapses.update();
 				test.synapses.clear();
 				*/
