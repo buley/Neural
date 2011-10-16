@@ -61,10 +61,11 @@
 				Neural.synapses.setStrength( {
 					'key': id_to_get
 					, 'index': 'id'
+					, 'expecting': {"s":0.00048828125}
 					, 'strength': function( current ) {
 
 						var replacement = current / 2;
-						replacement( !!replacement ) ? replacement : 1;
+						replacement = ( !!replacement ) ? replacement : 1;
 						return replacement;
 					}, 'on_success': function( context ) {
 
