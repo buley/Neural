@@ -454,8 +454,8 @@ Neural.synapses.get = function ( request )  {
 	}
 
 	request.store = 'synapses';
-	request.on_success = on_success;
-	request.on_error = on_error;
+	//request.on_success = on_success;
+	//request.on_error = on_error;
 
 	InDB.trigger( 'InDB_do_row_get', request );
 
