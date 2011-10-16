@@ -166,12 +166,12 @@
 							, 'index': 'id'
 							, 'expecting': expected
 							, 'data': function( current ) {
-								var val = current[ key ];
-								val = parseInt( val, 10 ) + 1;
-								val = ( !!val ) ? val : 1; 
-								current[ key ] = val;
-								console.log("UPDATINGGGGGG",current);
-								return current;
+								var val = {};
+						       		val[ key ]= current[ key ];
+								val[ key ] = parseInt( val, 10 ) + 1;
+								val[ key ] = ( !!val[ key ] ) ? val[ key ] : 1; 
+								console.log("UPDATINGGGGGG",val);
+								return val;
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
 									'key': test_id
