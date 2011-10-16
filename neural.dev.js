@@ -453,10 +453,6 @@ Neural.synapses.get = function ( request )  {
 		}
 	}
 
-	request.store = 'synapses';
-	request.on_success = on_success;
-	request.on_error = on_error;
-
 	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
