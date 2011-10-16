@@ -754,7 +754,7 @@ Neural.synapses.cursor.update = function( request ) {
 	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Request */
-
+console.log('blaahhhh');
 	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 	
 }
