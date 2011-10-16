@@ -232,7 +232,7 @@
 				if ( 0 === browser_check ) {
 					InDB.fixBrowser();
 				}
-				var debug = true;
+				var debug = false;
 				InDB.debug = debug;
 				Neural.debug = debug;
 				var on_loaded = function( context ) {
@@ -253,7 +253,7 @@
 				 */
 				test.synapses.get();
 				test.synapses.put();
-				//test.synapses.update();
+				test.synapses.update();
 				
 				/*
 				test.synapses.clear();
