@@ -463,7 +463,9 @@ Neural.synapses.put = function ( request )  {
 	}
 
 	var data = request.data;
-	data = Neural.synapses.shorthand_encode( data );
+	if( 'function' !== typeof data ) {
+		data = Neural.synapses.shorthand_encode( data );
+	}
 
 	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data, 'on_success': request.on_success, 'on_error': request.on_error } );
 
@@ -477,7 +479,9 @@ Neural.synapses.add = function ( request )  {
 	}
 
 	var data = request.data;
-	data = Neural.synapses.shorthand_encode( data );
+	if( 'function' !== typeof data ) {
+		data = Neural.synapses.shorthand_encode( data );
+	}
 
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': request.on_success, 'on_error': request.on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete} );
 
@@ -493,9 +497,9 @@ Neural.synapses.update = function ( request ) {
 	request.store = 'synapses';
 
 	var data = request.data;
-	console.log('before!',data);
-	request.data = Neural.synapses.shorthand_encode( data );
-console.log('doing row-update!',JSON.stringify(request) );	
+	if( 'function' !== typeof data ) {
+		request.data = Neural.synapses.shorthand_encode( data );
+	}
 	InDB.trigger( 'InDB_do_row_update', request);
 
 }
