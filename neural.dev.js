@@ -565,7 +565,7 @@ Neural.synapses.update = function ( request ) {
 		data = Neural.synapses.shorthand_encode( data );
 	} else {
 		data = function( arg ) {
-			return Neural.synapses.shorthand_encode( arg );
+			return Neural.synapses.shorthand_encode( data( Neural.synapses.shorthand_decode( arg ) ) );
 		};
 	}
 
