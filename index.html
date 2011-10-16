@@ -182,7 +182,7 @@
 										console.log( 'on_value', returned_value );
 										console.log('1', 'undefined' !== typeof returned_value);
 										console.log('2',null !== returned_value );
-										console.log('3', returned_value[ key ] == expected[ key ] + inc_amount, returned_value[ key ],expected[ key ] + inc_amount);
+										console.log('3', returned_value[ key ] == expected[ key ] + inc_amount, returned_value[ key ] - inc_amount);
 										if( 'undefined' !== typeof returned_value && null !== returned_value && returned_value[ key ] == expected[ key ] + inc_amount ) {
 											console.log( 'test.synapses.update(): passed', value );
 										} else {
@@ -235,7 +235,7 @@
 				if ( 0 === browser_check ) {
 					InDB.fixBrowser();
 				}
-				var debug = false;
+				var debug = true;
 				InDB.debug = debug;
 				Neural.debug = debug;
 				var on_loaded = function( context ) {
