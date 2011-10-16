@@ -65,7 +65,7 @@
 					, 'on_success': function( context ) {
 						
 						var value = InDB.row.value( context.event );	
-
+		console.log("VALUE",value,context);
 						var expected =  {};
 					       	expected[ Neural.synapses.shorthand( 'strength' ) ] = value;
 
