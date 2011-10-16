@@ -98,7 +98,9 @@
 
 				var on_error = function( get_context ) {
 					console.log( 'test.synapses.get(): failed' );
-					test_callback( get_context );
+					if( 'function' == test_callback ) {
+						test_callback( get_context );
+					}
 				};
 				Neural.synapses.get( {
 					'key': test_id
@@ -106,7 +108,9 @@
 					, 'on_success': function( get_context ) {	
 						var value = InDB.row.value( get_context.event );	
 						console.log( 'test.synapses.get(): passed' );
-						test_callback( get_context );
+						if( 'function' == test_callback ) {
+							test_callback( get_context );
+						}
 					}, 'on_error': on_error
 				} );
 				
@@ -117,7 +121,9 @@
 
 				var on_error = function( context ) {
 					console.log( 'test.synapses.put(): failed' );
-					test_callback( context );
+					if( 'function' == test_callback ) {
+						test_callback( context );
+					}
 				};
 				Neural.synapses.get( {
 					'key': test_id
@@ -143,7 +149,9 @@
 										} else {
 											console.log( 'test.synapses.put(): failed', new_value, return_value );
 										}
-										test_callback( context );							
+										if( 'function' == test_callback ) {
+											test_callback( context );
+										}							
 									}, 'on_error': on_error 
 								} );
 							}, 'on_error': on_error
@@ -159,7 +167,9 @@
 
 				var on_error = function( context ) {
 					console.log( 'test.synapses.update(): failed' );
-					test_callback( context );
+					if( 'function' == test_callback ) {
+						test_callback( context );
+					}
 				};
 				Neural.synapses.get( {
 					'key': test_id
@@ -177,7 +187,6 @@
 								var val = {};
 						       		val[ key ] = current[ key ];
 								val[ key ] = parseInt( val[ key ], 10 ) + inc_amount;
-								console.log('vally',val);
 								return val;
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
@@ -190,7 +199,9 @@
 										} else {
 											console.log( 'test.synapses.update(): failed' );
 										}
-										test_callback( context );
+										if( 'function' == test_callback ) {
+											test_callback( context );
+										}
 									}, 'on_error': on_error 
 								} );
 							}, 'on_error': on_error
