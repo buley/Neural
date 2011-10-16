@@ -255,12 +255,10 @@
 				Neural.synapses.add( {
 					'data': new_value
 					, 'on_success': function( add_value ) {
-						console.log("ID THAT WAS ADDED", add_value );				
 						Neural.synapses.get( {
 							'key': add_value
 							, 'index': 'id'
 							, 'on_success': function( get_value_1 ) {
-								console.log("GOT", get_value_1 );
 								Neural.synapses.delete( {
 									'key': add_value
 									, 'on_success': function( delete_value ) {
@@ -268,9 +266,8 @@
 											'key': add_value
 											, 'index': 'id'
 											, 'on_success': function( get_value_2 ) {
-												console.log("GOT", get_value_2 );
-					
-													if( 'undefined' !== typeof get_value_2 && null == get_value_1 ) {
+													console.log("AFTER DELETE",get_value_2);
+													if( 'undefined' !== typeof get_value_2 && null == get_value_2 ) {
 														console.log( 'test.synapses.delete(): passed' );
 													} else {
 														console.log( 'test.synapses.delete(): failed' );
