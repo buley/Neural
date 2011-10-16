@@ -127,7 +127,7 @@
 							, 'index': 'id'
 							, 'expecting': expected
 							, 'data': function( current ) {
-								var to = current[ Neural.synapses.shorthand( 'to' ) );
+								var to = current[ Neural.synapses.shorthand( 'to' ) ];
 								to = ( !!to ) ? parseInt( to, 10 ) + 1: 1;	
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
