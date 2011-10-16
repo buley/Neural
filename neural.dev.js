@@ -565,7 +565,7 @@ Neural.synapses.update = function ( request ) {
 		request.data = Neural.synapses.shorthand_encode( data );
 	}
 
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
+	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': data, 'replace': request.replace, 'expected': request.expected, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
 
