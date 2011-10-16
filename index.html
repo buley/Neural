@@ -120,14 +120,14 @@
 					'key': id_to_get
 					, 'index': 'id'
 					, 'on_success': function( context ) {	
-						var value = InDB.row.value( context.event );	
+						var new_value = InDB.row.value( context.event );	
 						var from_key = Neural.synapses.shorthand( 'from' );
 						var to_key = Neural.synapses.shorthand( 'to' );
-						value[ from_key ] = parseInt( value[ from_key ], 10 ) + 1;	
-						value[ to_key ] = parseInt( value[ to_key ], 10 ) + 1;	
+						new_value[ from_key ] = parseInt( value[ from_key ], 10 ) + 1;	
+						new_value[ to_key ] = parseInt( value[ to_key ], 10 ) + 1;	
 						Neural.synapses.put( {
 							'key': id_to_get
-							, 'data': value
+							, 'data': new_value
 							, 'on_success': function( context ) {
 								Neural.synapses.get( {
 									'key': id_to_get
