@@ -353,7 +353,7 @@
 					, 'on_success': function( value ) {	
 						item_count++;
 					}, 'on_complete': function( value ) {	
-						if( limit > 0 && limit <= item_count ) {
+						if( limit > 0 && item_count <= limit ) {
 							console.log( 'test.synapses.cursor.delete(): passed' );
 						} else {
 							console.log( 'test.synapses.cursor.delete(): failed. Counted ' + item_count + ' successes, expected ' + limit );
