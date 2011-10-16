@@ -177,7 +177,9 @@
 									, 'index': 'id'
 									, 'on_success': function( context ) {
 										var value = InDB.row.value( context );
-										console.log( 'test.synapses.update(): passed', value );
+										if( 'undefined' !== typeof value && null !== value && value[ key ] == expected[ key ] + 1 ) {
+											console.log( 'test.synapses.update(): passed', value );
+										}
 									}, 'on_error': on_error 
 								} );
 							}, 'on_error': on_error
