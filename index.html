@@ -63,10 +63,8 @@
 					, 'index': 'id'
 					, 'strength': function( current ) {
 
-						console.log("CUR",current);
-						var replacement = current[ Neural.synapses.shorthand( 'strength' ) ] / 2;
+						var replacement = current / 2;
 						replacement( !!replacement ) ? replacement : 1;
-						console.log("CURRENT",current);
 						return replacement;
 					}, 'on_success': function( context ) {
 
