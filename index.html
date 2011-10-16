@@ -49,7 +49,7 @@
 			jQuery( document ).bind( 'neuron_database_loaded', function( context ) {
 				console.log( "Neuron InDB is loaded", context );
 				
-				add_data();
+				//add_data();
 
 				var on_success = function( context ) {
 					console.log( 'set/getStrength on_success', JSON.stringify( InDB.row.value( context.event ) ) );
