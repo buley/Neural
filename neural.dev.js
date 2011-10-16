@@ -443,20 +443,7 @@ Neural.synapses.get = function ( request )  {
 	var on_success = function( context ) {
 		if( 'function' == typeof request.on_success ) {
 			var value = Neural.synapses.shorthand_decode( InDB.row.value( context ) );
-			console.log('calc',value);
-			console.log('1','undefined' !== typeof context);
-			console.log('2','undefined' !== typeof context.event);
-			console.log('3','undefined' !== typeof context.event.target);
-			console.log('4','undefined' !== typeof context.event.target.result);
-			if( 'undefined' !== typeof context && 'undefined' !== typeof context.event && 'undefined' !== typeof context.event.target && 'undefined' !== typeof context.event.target.result ) {
-				console.log('new valu', value );
-				var clone = context;
-				clone.event.target.result = value;
-				context = clone;
-				console.log( 'xxx', context.event.target.result );
-			}
-			console.log("PADDING",context);
-			request.on_success( context );
+			request.on_success( value );
 		}
 	}
 
