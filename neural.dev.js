@@ -143,7 +143,7 @@ Neural.neurons.install = function ( ) {
 	};
 
         //neurons_idxs[ '' ][ Neural.neurons.shorthand( '' ) ] = '';
-        neurons_idxs.neurons[ 'id' ][ Neural.neurons.shorthand( 'id' ) ] = { 'unique': true, 'auto_increment': true };
+        neurons_idxs.neurons[ 'id' ][ Neural.neurons.shorthand( 'id' ) ] = false;
         neurons_idxs.neurons[ 'type' ][ Neural.neurons.shorthand( 'type' ) ] = false;
         neurons_idxs.neurons[ 'display' ][ Neural.neurons.shorthand( 'display' ) ] = false;
         neurons_idxs.neurons[ 'slug' ][ Neural.neurons.shorthand( 'slug' ) ] = false;
@@ -414,7 +414,7 @@ Neural.synapses.install = function ( ) {
 	};
 
         //synapses_idxs[ '' ][ Neural.synapses.shorthand( '' ) ] = '';
-        synapses_idxs[ 'synapses' ][ 'id' ][ Neural.synapses.shorthand( 'id' ) ] = { 'unique': true, 'incrementing_key': true };
+        synapses_idxs[ 'synapses' ][ 'id' ][ Neural.synapses.shorthand( 'id' ) ] = { 'unique': true, 'multirow': false };
         synapses_idxs[ 'synapses' ][ 'type' ][ Neural.synapses.shorthand( 'type' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'to' ][ Neural.synapses.shorthand( 'to' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'from' ][ Neural.synapses.shorthand( 'from' ) ] = false;
