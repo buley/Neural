@@ -162,6 +162,44 @@
 
 			};
 
+			test.synapses.add = function( test_callback ) {
+
+				var on_error = function( context ) {
+					console.log( 'test.synapses.add(): failed' );
+					if( 'function' == typeof test_callback ) {
+						test_callback( context );
+					}
+				};
+				var new_value = {
+					'to': 1
+					, 'from': 1
+					, 'type': connection
+					, 'strength: Math.random()
+				};
+				Neural.synapses.add( {
+					'key': test_id
+					, 'data': new_value
+					, 'on_success': function( context ) {
+						Neural.synapses.get( {
+							'key': test_id
+							, 'index': 'id'
+							, 'on_success': function( context ) {
+								var return_value = InDB.row.value( context );
+								if( 'undefined' !== typeof return_value && null !== return_value && new_value == return_value ) {
+									console.log( 'test.synapses.add(): passed' );
+								} else {
+									console.log( 'test.synapses.add(): failed', return_value );
+								}
+								if( 'function' == typeof test_callback ) {
+									test_callback( context );
+								}							
+							}, 'on_error': on_error 
+						} );
+					}, 'on_error': on_error
+				} );
+
+			};
+
 
 			test.synapses.update = function( test_callback ) {
 
@@ -275,8 +313,14 @@
 					test.synapses.put( update_test );
 				};
 				var update_test = function( context ) {
-					test.synapses.update();
-				}
+					test.synapses.update( add_test );
+				};
+				var add_test = function( context ) {
+					test.synapses.add();
+				};
+
+
+
 
 				get_test();
 
