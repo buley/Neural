@@ -101,7 +101,7 @@
 					, 'index': 'id'
 					, 'on_success': function( context ) {	
 						var value = InDB.row.value( context.event );	
-						console.log( 'test.synapses.get(): passed' );
+						console.log( 'test.synapses.get(): passed', value );
 					}, 'on_error': on_error
 				} );
 				
