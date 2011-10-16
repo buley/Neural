@@ -52,7 +52,7 @@
 				//add_data();
 
 				var on_success = function( context ) {
-					console.log( 'set/getStrength on_success', JSON.stringify( InDB.row.value( context.event ) ) );
+					console.log( 'set/getStrength on_success', context );
 				};
 				var on_error = function( context ) {
 					console.log( 'set/getStrength on_error', context );
