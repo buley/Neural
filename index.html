@@ -184,7 +184,7 @@
 				if ( 0 === browser_check ) {
 					InDB.fixBrowser();
 				}
-				InDB.debug = false;
+				InDB.debug = true;
 				Neural.debug = false;
 				var on_loaded = function( context ) {
 					jQuery( document ).trigger( 'neuron_database_loaded', context );
