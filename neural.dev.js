@@ -532,11 +532,10 @@ Neural.synapses.add = function ( request )  {
 	}
 
 	var data = request.data;
-	console.log('before', data);
 	if( 'function' !== typeof data ) {
 		data = Neural.synapses.shorthand_encode( data );
 	}
-	console.log('after', data);
+
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }
