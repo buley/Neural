@@ -585,17 +585,23 @@ Neural.synapses.update = function ( request ) {
 Neural.synapses.cursor = Neural.synapses.cursor || {};
 
 /* Cursor Get */
-Neural.synapses.cursor.get = function( key, index, on_success, on_error, begin, end, left_inclusive, right_inclusive ) {
+Neural.synapses.cursor.get = function( request ) {
 
         /* Action */
 
-	var request = { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error };
+	var index = request.index;
+	var key = request.key;
+	var begin = request.begin;
+       	var end = request.end;
+	var left_inclusive = request.left_inclusive;
+	var right_inclusive = request.right_inclusive;
 
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.cursor.get', request );
 	}
 
         jQuery(document).trigger('cursor_put_synapses',request);
+
 
 	/* Defaults */
 
@@ -605,25 +611,28 @@ Neural.synapses.cursor.get = function( key, index, on_success, on_error, begin, 
 	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
 	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
 
+
 	/* Setup */
 
 	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
+
 	/* Callbacks */
 
-	var cursor_on_success = function ( context ) {
+	var on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
-		if( 'function' == typeof on_error ) {
+		if( 'function' == typeof request.on_success ) {
 			if( !!Neural.debug ) console.log( 'success', item );
-			on_success( item );
+			request.on_success( item );
 		}
 	};
 
-	var cursor_on_error = function ( context ) {
-		if( 'function' == typeof on_error ) {
-			on_error( context );
+	var on_error = function ( context ) {
+		if( 'function' == typeof request.on_error ) {
+			request.on_error( context );
 		}
 	};
+
 
 	/* Request */
 
