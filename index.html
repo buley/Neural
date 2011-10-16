@@ -312,14 +312,14 @@
 
 			$(document).ready(function() {
 				var Neural = Neural || {};
-				Neural.database_name = "Neural-011";
+				Neural.database_name = "Neural-012";
 				Neural.database_description = "Basic MLP neural network."
 				var browser_check = InDB.checkBrowser();
 				InDB.assert( -1 !== browser_check, 'incompatible browser' );
 				if ( 0 === browser_check ) {
 					InDB.fixBrowser();
 				}
-				var debug = false;
+				var debug = true;
 				InDB.debug = debug;
 				Neural.debug = debug;
 				var on_loaded = function( context ) {
