@@ -414,7 +414,7 @@ Neural.synapses.install = function ( ) {
 	};
 
         //synapses_idxs[ '' ][ Neural.synapses.shorthand( '' ) ] = '';
-        synapses_idxs[ 'synapses' ][ 'id' ][ Neural.synapses.shorthand( 'id' ) ] = { 'unique': true, 'multirow': false };
+        synapses_idxs[ 'synapses' ][ 'id' ][ Neural.synapses.shorthand( 'id' ) ] = { 'unique': false, 'multirow': false };
         synapses_idxs[ 'synapses' ][ 'type' ][ Neural.synapses.shorthand( 'type' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'to' ][ Neural.synapses.shorthand( 'to' ) ] = false;
         synapses_idxs[ 'synapses' ][ 'from' ][ Neural.synapses.shorthand( 'from' ) ] = false;

@@ -138,7 +138,7 @@
 				};
 				Neural.synapses.get( {
 					'key': test_id
-					//, 'index': 'id'
+					, 'index': 'id'
 					, 'on_success': function( new_value ) {
 						new_value[ 'from' ] = ( isNaN( new_value[ 'from' ] ) ) ? 1 : new_value[ 'from' ];
 						new_value[ 'from' ] = parseInt( new_value[ 'from' ], 10 ) + inc_amount;
@@ -150,7 +150,7 @@
 							, 'on_success': function( result_id ) {
 								Neural.synapses.get( {
 									'key': result_id
-									//, 'index': 'id'
+									, 'index': 'id'
 									, 'on_success': function( return_value ) {
 										if( 'undefined' !== typeof return_value[ 'from' ] && new_value[ 'from' ] == return_value[ 'from' ] && 'undefined' !== typeof return_value[ 'to' ] && new_value[ 'to' ] == return_value[ 'to' ] ) {	
 											console.log( 'test.synapses.put(): passed' );
@@ -325,7 +325,7 @@
 
 			$(document).ready(function() {
 				var Neural = Neural || {};
-				Neural.database_name = "Neural-013";
+				Neural.database_name = "Neural-014";
 				Neural.database_description = "Basic MLP neural network."
 				var browser_check = InDB.checkBrowser();
 				InDB.assert( -1 !== browser_check, 'incompatible browser' );
