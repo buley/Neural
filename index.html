@@ -125,7 +125,9 @@
 					'key': test_id
 					, 'index': 'id'
 					, 'on_success': function( new_value ) {
+						new_value[ 'from' ] = ( isNaN( new_value[ 'from' ] ) ) ? 1 : new_value[ 'from' ];
 						new_value[ 'from' ] = parseInt( new_value[ 'from' ], 10 ) + inc_amount;
+						new_value[ 'to' ] = ( isNaN( new_value[ 'to' ] ) ) ? 1 : new_value[ 'to' ];
 						new_value[ 'to' ] = parseInt( new_value[ 'to' ], 10 ) + inc_amount;	
 						Neural.synapses.put( {
 							'key': test_id
@@ -141,7 +143,7 @@
 											console.log( 'test.synapses.put(): failed', new_value, return_value );
 										}
 										if( 'function' == typeof test_callback ) {
-											test_callback( return_value );
+											test_callback( context );
 										}							
 									}, 'on_error': on_error 
 								} );
