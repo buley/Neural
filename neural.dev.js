@@ -635,7 +635,7 @@ Neural.synapses.cursor.get = function( request ) {
 
 
 	/* Request */
-
+	console.log("SENDING ONCOMPLETE',on_complete);
 	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }

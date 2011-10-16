@@ -319,10 +319,9 @@
 					'key': test_id
 					//, 'index': 'id'
 					, 'on_success': function( value ) {	
-						console.log('Sucess at Neural.synapses.cursor.get');
 						item_count++;
 					}, 'on_complete': function( value ) {	
-						console.log( 'test.synapses.get(): passed', item_count );
+						console.log( 'test.synapses.cursor.get(): passed', item_count );
 						if( 'function' == typeof test_callback ) {
 							test_callback( value );
 						}
