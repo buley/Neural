@@ -335,7 +335,6 @@
 			};
 
 			test.synapses.cursor.delete = function( test_callback ) {
-
 				var on_error = function( get_context ) {
 					console.log( 'test.synapses.get(): failed' );
 					if( 'function' == typeof test_callback ) {
@@ -363,9 +362,43 @@
 						}
 					}, 'on_error': on_error
 				} );
-				
-
 			};
+
+			test.synapses.cursor.update = function( test_callback ) {
+				var on_error = function( get_context ) {
+					console.log( 'test.synapses.update(): failed' );
+					if( 'function' == typeof test_callback ) {
+						test_callback( get_context );
+					}
+				};
+				var item_count = 0;
+				var limit = 20;
+				Neural.synapses.cursor.update( {
+					'begin': 0
+					, 'left_inclusive': true
+					//, 'index': 'id'
+					, 'data': function( current_value ) {
+						console.log("REPLACEING",current_value);
+						return current_value;
+					}, 'limit': limit
+					, 'direction': InDB.cursor.direction.previous()
+					, 'on_success': function( value ) {	
+						item_count++;
+					}, 'on_complete': function( value ) {	
+						if( limit > 0 && item_count <= limit ) {
+							console.log( 'test.synapses.cursor.update(): passed' );
+						} else {
+							console.log( 'test.synapses.cursor.update(): failed. Counted ' + item_count + ' successes, expected ' + limit );
+						}
+						if( 'function' == typeof test_callback ) {
+							test_callback( value );
+						}
+					}, 'on_error': on_error
+				} );
+			};
+
+
+
 
 
 
