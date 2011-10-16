@@ -175,6 +175,7 @@
 					'key': test_id
 					, 'data': new_value
 					, 'on_success': function( add_value ) {
+						console.log("ADD VAKLUE",add_value);
 						Neural.synapses.get( {
 							'key': add_value
 							, 'index': 'id'
