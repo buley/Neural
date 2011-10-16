@@ -320,7 +320,7 @@
 					, 'left_inclusive': true
 					//, 'index': 'id'
 					, 'limit': 20
-					, 'direction': 1
+					, 'direction': InDB.cursor.direction.previous();
 					, 'on_success': function( value ) {	
 						item_count++;
 					}, 'on_complete': function( value ) {	
