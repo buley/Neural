@@ -414,16 +414,25 @@ Neural.synapses.install = function ( ) {
 
 /* Get */
 Neural.synapses.get = function ( key, index, on_success, on_error )  {
+	if( !!Neural.debug ) {
+		console.log( 'Neural.synapses.get', key, index, on_success, on_error );
+	}
 	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': key, 'index': index, 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Remove */
 Neural.synapses.remove = function ( key, index, on_success, on_error )  {
+	if( !!Neural.debug ) {
+		console.log( 'Neural.synapses.remove', key, index, on_success, on_error );
+	}
 	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': key, 'index': index, 'on_success': on_success, 'on_error': on_error } );
 }
 
 /* Put */
 Neural.synapses.put = function ( data, on_success, on_error )  {
+	if( !!Neural.debug ) {
+		console.log( 'Neural.synapses.put', data, on_success, on_error );
+	}
 	data = Neural.synapses.shorthand_encode( data );
 	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error } );
 }
