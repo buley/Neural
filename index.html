@@ -67,7 +67,8 @@
 						var value = InDB.row.value( context.event );	
 		console.log("VALUE",value,context);
 						var expected =  {};
-					       	expected[ Neural.synapses.shorthand( 'strength' ) ] = value;
+						var key = Neural.synapses.shorthand( 'strength' );
+					       	expected[ key ] = value[ key ];
 
 						Neural.synapses.setStrength( {
 							'key': id_to_get
