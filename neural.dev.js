@@ -736,7 +736,9 @@ console.log('3', data);
 
 	/* Shorthand Encoding */
 
-	data = Neural.synapses.shorthand_encode( data );
+	if( 'function' !== typeof data ) {
+		data = Neural.synapses.shorthand_encode( data( Neural.synapses.shorthand_decode( data ) );
+	}
 
 	/* Action */
 
