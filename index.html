@@ -125,15 +125,14 @@
 					'key': test_id
 					, 'index': 'id'
 					, 'on_success': function( new_value ) {
-						console.log("NEW VALUE", new_value );
 						new_value[ 'from' ] = parseInt( new_value[ 'from' ], 10 ) + inc_amount;
 						new_value[ 'to' ] = parseInt( new_value[ 'to' ], 10 ) + inc_amount;	
 						Neural.synapses.put( {
 							'key': test_id
 							, 'data': new_value
-							, 'on_success': function( context ) {
+							, 'on_success': function( result_id ) {
 								Neural.synapses.get( {
-									'key': test_id
+									'key': result_id
 									, 'index': 'id'
 									, 'on_success': function( return_value ) {
 										if( 'undefined' !== typeof return_value[ 'from' ] && new_value[ 'from' ] == return_value[ 'from' ] && 'undefined' !== typeof return_value[ 'to' ] && new_value[ 'to' ] == return_value[ 'to' ] ) {	
