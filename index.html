@@ -367,8 +367,18 @@
 				var clear_test = function( context ) {
 					console.log('clear test');	
 				}
+		
+				var node1 = Math.floor( Math.random()*100 );	
+				var node2 = Math.floor( Math.random()*100 );	
+				Neural.synapses.add( { 'data': { 'type': 'connection', 'from': node1, 'to': node2, 'strength': Math.random() }, 'on_success': function( result_value ) {
+					console.log( 'Added test synapse from ' + node1 + ' to ' + node2 + ' @ index ' + result_value );
+					test_id = result_value;
+					get_test();
+				}, 'on_error': function( context ) {
+					console.log( 'FAILED to add synapses', context );       
+				} } );
 
-				get_test();
+
 
 				//test.synapses.getStrength();
 				//test.synapses.setStrength();
