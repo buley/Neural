@@ -170,6 +170,7 @@
 								val = parseInt( val, 10 ) + 1;
 								val = ( !!val ) ? val : 1; 
 								current[ key ] = val;
+								console.log("UPDATINGGGGGG",current);
 								return current;
 							}, 'on_success': function( context ) {
 								Neural.synapses.get( {
