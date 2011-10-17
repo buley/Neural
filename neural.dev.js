@@ -534,7 +534,7 @@ Neural.synapses.add = function ( request )  {
 	if( 'function' !== typeof data ) {
 		data = Neural.synapses.shorthand_encode( data );
 	}
-
+	console.log('doing add', on_success );
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
 }

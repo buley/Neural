@@ -511,7 +511,6 @@
 				var node1 = Math.floor( Math.random()*100 );	
 				var node2 = Math.floor( Math.random()*100 );	
 				Neural.synapses.add( { 'data': { 'type': 'connection', 'from': node1, 'to': node2, 'strength': Math.random() }, 'on_success': function( result_value ) {
-					console.log("H20");
 					test_id = result_value;
 					get_test();
 					test.synapses.cursor.get();
