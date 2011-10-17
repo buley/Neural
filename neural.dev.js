@@ -273,9 +273,25 @@ Neural.neurons.cursor.delete = function( key, index, begin, end, on_success, on_
 /* Cursor Update */
 Neural.neurons.cursor.update = function( key, index, data, replace, expecting, on_success, on_error, begin, end, left_inclusive, right_inclusive, replace ) {
 
+	/* Callbacks */
+
+	var on_success = function ( context ) {
+		var value = Neural.synapses.shorthand_reverse( InDB.cursor.value( context.event ) );
+		if( 'function' == typeof request.on_error ) {
+			request.on_success( value );
+		}
+	};
+
+	var on_error = function ( context ) {
+		if( 'function' == typeof request.on_error ) {
+			request.on_error( context );
+		}
+	};
+
+
         /* Action */
 
-        jQuery(document).trigger('cursor_put_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "expecting": expecting, "on_success": on_success, 'on_error': on_error } );
+        jQuery(document).trigger('cursor_update_neurons', { "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, "expecting": expecting, "on_success": on_success, 'on_error': on_error } );
 
 	/* Defaults */
 
@@ -291,25 +307,9 @@ Neural.neurons.cursor.update = function( key, index, data, replace, expecting, o
 
 	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
-	/* Callbacks */
-
-	var cursor_on_success = function ( context ) {
-		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
-		if( !!Neural.debug ) console.log( 'success', item );
-		if( 'function' == typeof on_error ) {
-			on_success( context );
-		}
-	};
-
-	var cursor_on_error = function ( context ) {
-		if( 'function' == typeof on_error ) {
-			on_error( context );
-		}
-	};
-
 	/* Request */
 
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'neurons', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'expecting': expecting, 'on_success': cursor_on_success, 'on_error': cursor_on_error } );
+	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'neurons', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'expecting': expecting, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 	
 };
 
