@@ -336,7 +336,7 @@
 
 			test.synapses.cursor.delete = function( test_callback ) {
 				var on_error = function( get_context ) {
-					console.log( 'test.synapses.get(): failed' );
+					console.log( 'test.synapses.delete(): failed' );
 					if( 'function' == typeof test_callback ) {
 						test_callback( get_context );
 					}
@@ -348,7 +348,7 @@
 					, 'left_inclusive': true
 					//, 'index': 'id'
 					, 'limit': limit
-					, 'direction': InDB.cursor.direction.previous()
+					, 'direction': InDB.cursor.direction.next()
 					, 'on_success': function( value ) {	
 						item_count++;
 					}, 'on_complete': function( value ) {	
