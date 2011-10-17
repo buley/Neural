@@ -737,6 +737,7 @@ Neural.synapses.cursor.update = function( request ) {
 		new_data = Neural.synapses.shorthand_encode( data );
 	} else {
 		new_data = function( arg ) {
+			console.log("NEWWWWW",arg);
 			return Neural.synapses.shorthand_encode( data( Neural.synapses.shorthand_decode( arg ) ) );
 		};
 	}
@@ -781,9 +782,6 @@ Neural.synapses.clear = function( request ) {
 			request.on_error( context );
 		}
 	};
-
-
-
 
 	InDB.trigger( 'InDB_do_store_clear', { 'store': 'synapses', 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort } );
 	
