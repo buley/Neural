@@ -517,25 +517,24 @@ Neural.synapses.add = function ( request )  {
 		console.log( 'Neural.synapses.add', request );
 	}
 
-	console.log('x');
 	var on_success = function( context ) {
 		if( 'function' == typeof request.on_success ) {
 			var value = InDB.row.value( context );
 			request.on_success( value );
 		}
-	}
+	};
 
-	console.log('y');
 	var on_error = function( context ) {
 		if( 'function' == typeof request.on_error ) {
 			request.on_error( context );
 		}
-	}
-	console.log('z');
+	};
+
 	var data = request.data;
 	if( 'function' !== typeof data ) {
 		data = Neural.synapses.shorthand_encode( data );
 	}
+
 	console.log('doing add', on_success );
 	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 
