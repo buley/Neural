@@ -462,12 +462,13 @@
 						if( 'undefined' !== typeof current_value && null !== current_value && 'undefined' !== typeof current_value.strength ) {
 							var new_strength = ( !!current_value ) ? current_value.strength / 2 : 1;
 							console.log("NEW STNE",new_strength);
+							console.log("CURRENT",current_value);
 							update_map[ current_value.id ] = new_strength;
 							current_value.strength = new_strength;
 							return current_value;
 						}
 						console.log("REPLACEING",current_value);
-						return { 'blah': 'blkah'};
+						return current_value;
 					}, 'limit': limit
 					, 'direction': InDB.cursor.direction.next()
 					, 'on_success': function( value ) {	
