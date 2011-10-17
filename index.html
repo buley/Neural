@@ -522,19 +522,23 @@
 				var cursor_get_test = function( context ) {
 					test.synapses.cursor.get( cursor_update_test );
 				};
+				var cursor_get_delete = function( context ) {
+					test.synapses.cursor.delete( cursor_delete_test );
+				};
 				var cursor_update_test = function( context ) {
 					test.synapses.cursor.update( clear_test );
 				};
 				
 				var clear_test = function( context ) {
-					test.synapses.clear( done );
+					test.synapses.clear( cursor_get_test );
 				};
 
 				var node1 = Math.floor( Math.random()*100 );	
 				var node2 = Math.floor( Math.random()*100 );	
 				Neural.synapses.add( { 'data': { 'type': 'connection', 'from': node1, 'to': node2, 'strength': Math.random() }, 'on_success': function( result_value ) {
 					test_id = result_value;
-					get_test();
+					//get_test();
+					cursor_delete_test();
 					test.synapses.cursor.get();
 				}, 'on_error': function( context ) {
 					console.log( 'FAILED to add synapses', context );       
