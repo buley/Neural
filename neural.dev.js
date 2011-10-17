@@ -436,12 +436,11 @@ Neural.synapses.install = function ( ) {
 /* Get */
 Neural.synapses.get = function ( request )  {
 
-	if( true || !!Neural.debug ) {
+	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.get', request );
 	}
 
 	var on_success = function( context ) {
-		console.log('TESTTTT', context );
 		if( 'function' == typeof request.on_success ) {
 			var value = Neural.synapses.shorthand_decode( InDB.row.value( context ) );
 			request.on_success( value );
@@ -514,7 +513,7 @@ Neural.synapses.put = function ( request )  {
 /* Add */
 Neural.synapses.add = function ( request )  {
 
-	if( true || !!Neural.debug ) {
+	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.add', request );
 	}
 
