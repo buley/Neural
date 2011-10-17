@@ -621,7 +621,7 @@ Neural.synapses.cursor.get = function( request ) {
 	/* Callbacks */
 
 	var on_success = function ( context ) {
-		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
+		var item = Neural.synapses.shorthand_reverse( InDB.cursor.value( context.event ) );
 		if( 'function' == typeof request.on_success ) {
 			if( !!Neural.debug ) console.log( 'success', item );
 			request.on_success( item );
@@ -657,8 +657,9 @@ Neural.synapses.cursor.delete = function( request ) {
 	/* Callbacks */
 
 	var on_success = function ( context ) {
+		var result = InDB.cursor.value( context.event );
 		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
+			request.on_success( result );
 		}
 	};
 
@@ -716,7 +717,7 @@ Neural.synapses.cursor.update = function( request ) {
 	/* Callbacks */
 
 	var on_success = function ( context ) {
-		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
+		var item = Neural.synapses.shorthand_reverse( InDB.cursor.value( context.event ) );
 		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof request.on_success ) {
 			request.on_success( context );
