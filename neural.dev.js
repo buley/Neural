@@ -512,7 +512,7 @@ Neural.synapses.put = function ( request )  {
 
 /* Add */
 Neural.synapses.add = function ( request )  {
-
+	console.log('prince joey');
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.add', request );
 	}
