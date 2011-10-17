@@ -547,7 +547,8 @@
 				var node2 = Math.floor( Math.random()*100 );	
 				Neural.synapses.add( { 'data': { 'type': 'connection', 'from': node1, 'to': node2, 'strength': Math.random() }, 'on_success': function( result_value ) {
 					test_id = result_value;
-					get_test();
+					//get_test();
+					cursor_delete_test();
 				}, 'on_error': function( context ) {
 					console.log( 'FAILED to add synapses', context );       
 				} } );
