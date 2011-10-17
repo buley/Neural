@@ -469,7 +469,7 @@
 						console.log("REPLACEING",current_value);
 						return current_value;
 					}, 'limit': limit
-					, 'direction': InDB.cursor.direction.next()
+					, 'direction': InDB.cursor.direction.previous()
 					, 'on_success': function( value ) {	
 						item_count++;
 					}, 'on_complete': function( value ) {	
