@@ -469,10 +469,11 @@
 						console.log("REPLACEING",current_value);
 						return current_value;
 					}, 'limit': limit
-					, 'direction': InDB.cursor.direction.previous()
+					, 'direction': InDB.cursor.direction.next()
 					, 'on_success': function( value ) {	
 						item_count++;
 					}, 'on_complete': function( value ) {	
+						console.log("UPPITY",value);
 						if( limit > 0 && item_count <= limit ) {
 							console.log( 'test.synapses.cursor.update(): passed', update_map );
 						} else {
