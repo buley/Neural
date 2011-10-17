@@ -472,6 +472,7 @@
 					, 'direction': InDB.cursor.direction.next()
 					, 'on_success': function( value ) {	
 						item_count++;
+						console.log('updated');
 					}, 'on_complete': function( value ) {	
 						console.log("UPPITY",value);
 						if( limit > 0 && item_count <= limit ) {
