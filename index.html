@@ -413,6 +413,7 @@
 							//, 'limit': limit
 							, 'direction': InDB.cursor.direction.next()
 							, 'on_success': function( value ) {	
+								console.log("DELETED",value);
 								delete_count++;
 							}, 'on_complete': function( value ) {	
 							var final_count = 0;
@@ -426,18 +427,13 @@
 									, 'on_success': function( value ) {	
 										final_count++;
 									}, 'on_complete': function( value ) {	
-
 										console.log("FINAL", final_count );
-
 									}
 								} );
-
 							}, 'on_error': on_error
 						} );
 					}, 'on_error': on_error
 				} );
-				
-
 			};
 
 			test.synapses.cursor.update = function( test_callback ) {
