@@ -413,11 +413,9 @@
 							//, 'limit': limit
 							, 'direction': InDB.cursor.direction.next()
 							, 'on_success': function( value ) {	
-								console.log("DELETED",value);
 								delete_count++;
 							}, 'on_complete': function( value ) {	
 							var final_count = 0;
-								console.log("DELETE COUNT", delete_count );
 								Neural.synapses.cursor.get( {
 									'begin': 0
 									, 'left_inclusive': true
@@ -426,11 +424,17 @@
 									, 'direction': InDB.cursor.direction.previous()
 									, 'on_success': function( value ) {
 										if( 'undefined' !== typeof value && null !== value ) {	
-											console.log("WINK",value);
 											final_count++;
 										}
 									}, 'on_complete': function( value ) {	
-										console.log("FINAL", final_count );
+										if( 0 == final_count ) {
+											console.log( 'test.synapses.cursor.delete(): passed' );
+										} else {
+											console.log( 'test.synapses.cursor.delete(): failed' );
+										}
+										if( 'function' == typeof test_callback ) {
+											test_callback( value );
+										}
 									}
 								} );
 							}, 'on_error': on_error
