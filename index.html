@@ -339,7 +339,7 @@
 					'begin': 0
 					, 'left_inclusive': true
 					//, 'index': 'id'
-					, 'limit': 20
+					//, 'limit': 20
 					, 'direction': InDB.cursor.direction.previous()
 					, 'on_success': function( value ) {	
 						item_count++;
@@ -405,6 +405,7 @@
 						item_count++;
 					}, 'on_complete': function( value ) {	
 						console.log("TOTAL", item_count );
+						var delete_count = 0;
 						Neural.synapses.cursor.delete( {
 							'begin': 0
 							, 'left_inclusive': true
@@ -412,9 +413,10 @@
 							//, 'limit': limit
 							, 'direction': InDB.cursor.direction.next()
 							, 'on_success': function( value ) {	
-								item_count++;
+								delete_count++;
 							}, 'on_complete': function( value ) {	
-								var final_count = 0;
+							var final_count = 0;
+								console.log("DELETE COUNT", delete_count );
 								Neural.synapses.cursor.get( {
 									'begin': 0
 									, 'left_inclusive': true
