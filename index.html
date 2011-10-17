@@ -460,8 +460,9 @@
 					, 'data': function( current_value ) {
 						if( 'undefined' !== typeof current_value && 'undefined' !== current_value.strength ) {
 							var new_strength = ( !!current_value ) ? current_value.strength / 2 : 1;
-							update_map[ current_value.id ] = new_strength;
-							current_value.strength = new_strength;
+							console.log("NEW STNE",new_strength);
+							//update_map[ current_value.id ] = new_strength;
+							//current_value.strength = new_strength;
 						}
 						console.log("REPLACEING",current_value);
 						return current_value;
