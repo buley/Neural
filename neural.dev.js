@@ -701,7 +701,9 @@ Neural.synapses.cursor.delete = function( request ) {
 
 /* Cursor Update */
 Neural.synapses.cursor.update = function( request ) {
-console.log('1');
+
+	/* Setup */
+
 	var index = request.index;
 	var direction = request.direction;
 	var limit = request.limit;
@@ -714,7 +716,6 @@ console.log('1');
 	var left_inclusive = request.left_inclusive;
 	var right_inclusive = request.right_inclusive;
 
-console.log('2');
 	/* Callbacks */
 
 	var on_success = function ( context ) {
@@ -731,8 +732,6 @@ console.log('2');
 		}
 	};
 
-
-console.log('3', data);
 
 	/* Shorthand Encoding */
 
@@ -760,7 +759,6 @@ console.log('3', data);
 	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
 
 	/* Request */
-console.log('4');
 	
 	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
 	
