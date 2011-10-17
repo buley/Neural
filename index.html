@@ -426,6 +426,7 @@
 									, 'direction': InDB.cursor.direction.previous()
 									, 'on_success': function( value ) {
 										if( 'undefined' !== typeof value && null !== value ) {	
+											console.log("WINK",value);
 											final_count++;
 										}
 									}, 'on_complete': function( value ) {	
