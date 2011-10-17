@@ -425,16 +425,13 @@
 				};
 				var item_count = 0;
 				var limit = 20;
-				var update_map;
 				Neural.synapses.cursor.update( {
 					'begin': 0
 					, 'left_inclusive': true
 					//, 'index': 'id'
 					, 'data': function( current_value ) {
 						if( 'undefined' !== typeof current_value && 'undefined' !== current_value.strength ) {
-							var new_strength = ( !!current_value ) ? current_value.strength / 2 : 1;
-							update_map[ current_value.id ] = new_strength;
-							current_value.strength = new_strength;
+							current_value.strength = ( !!current_value ) ? current_value.strength / 2 : 1;
 						}
 						console.log("REPLACEING",current_value);
 						return current_value;
@@ -444,7 +441,7 @@
 						item_count++;
 					}, 'on_complete': function( value ) {	
 						if( limit > 0 && item_count <= limit ) {
-							console.log( 'test.synapses.cursor.update(): passed', update_map );
+							console.log( 'test.synapses.cursor.update(): passed' );
 						} else {
 							console.log( 'test.synapses.cursor.update(): failed. Counted ' + item_count + ' successes, expected ' + limit );
 						}
@@ -480,7 +477,7 @@
 
 				var done = function( context ) {
 					console.log( "Tests complete." );
-				};
+				}
 
 				var get_test = function( context ) {
 					test.synapses.get( put_test );
@@ -503,11 +500,11 @@
 				var cursor_update_test = function( context ) {
 					test.synapses.cursor.update( clear_test );
 				};
-				
+
 				var clear_test = function( context ) {
 					test.synapses.clear( done );
-				};
-
+				}
+		
 				var node1 = Math.floor( Math.random()*100 );	
 				var node2 = Math.floor( Math.random()*100 );	
 				Neural.synapses.add( { 'data': { 'type': 'connection', 'from': node1, 'to': node2, 'strength': Math.random() }, 'on_success': function( result_value ) {
