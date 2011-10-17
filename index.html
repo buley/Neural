@@ -424,8 +424,10 @@
 									//, 'index': 'id'
 									//, 'limit': limit
 									, 'direction': InDB.cursor.direction.previous()
-									, 'on_success': function( value ) {	
-										final_count++;
+									, 'on_success': function( value ) {
+										if( 'undefined' !== typeof value && null !== value ) {	
+											final_count++;
+										}
 									}, 'on_complete': function( value ) {	
 										console.log("FINAL", final_count );
 									}
