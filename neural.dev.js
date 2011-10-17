@@ -562,6 +562,7 @@ Neural.synapses.update = function ( request ) {
 	var data = request.data;
 	var new_data;
 	if( 'function' !== typeof data ) {
+		console.log('boring data',data);
 		new_data = Neural.synapses.shorthand_encode( data );
 	} else {
 		new_data = function( arg ) {
