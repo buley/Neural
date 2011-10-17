@@ -522,13 +522,13 @@
 					test.synapses.add( delete_test );
 				};
 				var delete_test = function( context ) {
-					test.synapses.delete( clear_test );
+					test.synapses.delete( cursor_delete_test );
 				};
 				var cursor_get_test = function( context ) {
 					test.synapses.cursor.get( cursor_update_test );
 				};
 				var cursor_delete_test = function( context ) {
-					test.synapses.cursor.delete( cursor_delete_test );
+					test.synapses.cursor.delete( cursor_get_test );
 				};
 				var cursor_update_test = function( context ) {
 					test.synapses.cursor.update( clear_test );
