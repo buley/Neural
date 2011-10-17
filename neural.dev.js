@@ -512,11 +512,12 @@ Neural.synapses.put = function ( request )  {
 
 /* Add */
 Neural.synapses.add = function ( request )  {
-	console.log('prince joey');
+	
 	if( !!Neural.debug ) {
 		console.log( 'Neural.synapses.add', request );
 	}
 
+	console.log('x');
 	var on_success = function( context ) {
 		if( 'function' == typeof request.on_success ) {
 			var value = InDB.row.value( context );
@@ -524,12 +525,13 @@ Neural.synapses.add = function ( request )  {
 		}
 	}
 
+	console.log('y');
 	var on_error = function( context ) {
 		if( 'function' == typeof request.on_error ) {
 			request.on_error( context );
 		}
 	}
-
+	console.log('z');
 	var data = request.data;
 	if( 'function' !== typeof data ) {
 		data = Neural.synapses.shorthand_encode( data );
