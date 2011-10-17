@@ -720,7 +720,7 @@ Neural.synapses.cursor.update = function( request ) {
 	var on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.cursor.value( context.event ) );
 		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
+			request.on_success( item );
 		}
 	};
 

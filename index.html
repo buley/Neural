@@ -458,13 +458,11 @@
 					, 'left_inclusive': true
 					//, 'index': 'id'
 					, 'data': function( current_value ) {
-						console.log("WATERS",current_value.strength, 'undefined' !== typeof current_value && null !== current_value && 'undefined' !== typeof current_value.strength, typeof current_value.strength );
 						if( 'undefined' !== typeof current_value && null !== current_value && 'undefined' !== typeof current_value.strength ) {
 							var new_strength = ( !!current_value ) ? current_value.strength / 2 : 1;
 							update_map[ current_value.id ] = new_strength;
 							current_value.strength = new_strength;
 						}
-						console.log("REPLACEING",current_value);
 						return current_value;
 					}//, 'limit': limit
 					, 'direction': InDB.cursor.direction.next()
