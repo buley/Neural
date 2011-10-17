@@ -657,8 +657,6 @@ Neural.synapses.cursor.delete = function( request ) {
 	/* Callbacks */
 
 	var on_success = function ( context ) {
-		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
-		if( !!Neural.debug ) console.log( 'success', item );
 		if( 'function' == typeof request.on_success ) {
 			request.on_success( context );
 		}
@@ -720,13 +718,13 @@ Neural.synapses.cursor.update = function( request ) {
 	var on_success = function ( context ) {
 		var item = Neural.synapses.shorthand_reverse( InDB.row.value( context.event ) );
 		if( !!Neural.debug ) console.log( 'success', item );
-		if( 'function' == typeof on_success ) {
+		if( 'function' == typeof request.on_success ) {
 			request.on_success( context );
 		}
 	};
 
 	var on_error = function ( context ) {
-		if( 'function' == typeof on_error ) {
+		if( 'function' == typeof request.on_error ) {
 			request.on_error( context );
 		}
 	};
@@ -763,6 +761,28 @@ Neural.synapses.cursor.update = function( request ) {
 	
 }
 
+Neural.synapses.clear = function( request ) {
+
+	/* Callbacks */
+
+	var on_success = function ( context ) {
+		if( 'function' == typeof request.on_success ) {
+			request.on_success( context );
+		}
+	};
+
+	var on_error = function ( context ) {
+		if( 'function' == typeof request.on_error ) {
+			request.on_error( context );
+		}
+	};
+
+
+
+
+	InDB.trigger( 'InDB_do_store_clear', { 'store': 'synapses', 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort } );
+	
+};
 
 Neural.synapses.shorthand = function ( key ) {
 	if( 'undefined' !== typeof Neural.synapses.shorthand_map[ key ] ) {

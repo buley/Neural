@@ -302,6 +302,60 @@
 					}, 'on_error': on_error } );
 			};
 
+			/* Clear */
+
+			test.synapses.clear = function( test_callback ) {
+
+				var on_error = function( get_context ) {
+					console.log( 'test.synapses.clear(): failed' );
+					if( 'function' == typeof test_callback ) {
+						test_callback( get_context );
+					}
+				};
+				var item_count = 0;
+				Neural.synapses.clear( {
+					'on_success': function( value ) {	
+						console.log( 'test.synapses.cursor.clear(): passed' );
+						if( 'function' == typeof test_callback ) {
+							test_callback( value );
+						}
+					}, 'on_error': on_error
+				} );
+				
+
+			};
+
+
+test.synapses.cursor.get = function( test_callback ) {
+
+	var on_error = function( get_context ) {
+		console.log( 'test.synapses.get(): failed' );
+		if( 'function' == typeof test_callback ) {
+			test_callback( get_context );
+		}
+	};
+	var item_count = 0;
+	Neural.synapses.cursor.get( {
+		'begin': 0
+		, 'left_inclusive': true
+		//, 'index': 'id'
+		, 'limit': 20
+		, 'direction': InDB.cursor.direction.previous()
+		, 'on_success': function( value ) {	
+			item_count++;
+		}, 'on_complete': function( value ) {	
+			console.log( 'test.synapses.cursor.get(): passed' );
+			if( 'function' == typeof test_callback ) {
+				test_callback( value );
+			}
+		}, 'on_error': on_error
+	} );
+	
+
+};
+
+
+
 			/* Cursor */
 
 			test.synapses.cursor.get = function( test_callback ) {
