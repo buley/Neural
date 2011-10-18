@@ -28,12 +28,16 @@
 						if( !!Neural.debug ) {
 							console.log( 'Added synapse', result_value );
 						}
-						on_success( result_value );
+						if( 'undefined' !== typeof on_success ) {
+							on_success( result_value );
+						}
 					}, 'on_error': function( context ) {
 						if( !!Neural.debug ) {
 							console.log( 'Failed to add synapses', context ); 
 						}
-						on_error( context );
+						if( 'undefined' !== typeof on_error ) {
+							on_error( context );
+						}
 					} } );
 				}
 			}
@@ -471,12 +475,16 @@
 						if( !!Neural.debug ) {
 							console.log( 'Added neuron', result_value );
 						}
-						on_success( result_value );
+						if( 'undefined' !== typeof on_success ) {
+							on_success( result_value );
+						}
 					}, 'on_error': function( context ) {
 						if( !!Neural.debug ) {
 							console.log( 'Failed to add neurons', context ); 
 						}
-						on_error( context );
+						if( 'undefined' !== typeof on_error ) {
+							on_error( context );
+						}
 					} } );
 				}
 			}
