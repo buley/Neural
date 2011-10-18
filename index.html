@@ -38,21 +38,21 @@
 				}
 			}
 
-			test.synapses.getStrength = function( test_callback ) {
+			test.synapses.getAttr = function( test_callback ) {
 				var on_error = function( test_callback ) {
-					console.log( 'test.synapses.getStrength(): failed' );
+					console.log( 'test.synapses.getAttr(): failed' );
 					if( 'function' !== typeof test_callback ) {
 						test_callback( value );
 					}
 				};
-				Neural.synapses.getStrength( {
+				Neural.synapses.getAttr( {
 					'key': test_id
 					, 'index': 'id'
 					, 'on_success': function( value ) {	
 						if( 'undefined' !== value ) {
-							console.log( 'test.synapses.getStrength(): passed' );
+							console.log( 'test.synapses.getAttr(): passed' );
 						} else {
-							console.log( 'test.synapses.getStrength(): failed' );
+							console.log( 'test.synapses.getAttr(): failed' );
 						}
 						if( 'function' !== typeof test_callback ) {
 							test_callback( value );
@@ -63,15 +63,15 @@
 
 			};
 
-			test.synapses.setStrength = function( test_callback ) {
+			test.synapses.setAttr = function( test_callback ) {
 
 				var on_error = function( value ) {
-					console.log( 'test.synapses.setStrength(): failed' );
+					console.log( 'test.synapses.setAttr(): failed' );
 					if( 'function' !== typeof test_callback ) {
 						test_callback( value );
 					}
 				};
-				Neural.synapses.getStrength( {
+				Neural.synapses.getAttr( {
 					'key': test_id
 					, 'index': 'id'
 					, 'on_success': function( context ) {	
@@ -79,7 +79,7 @@
 						var expected =  {};
 						var key = Neural.synapses.shorthand( 'strength' );
 					       	expected[ key ] = value[ key ];
-						Neural.synapses.setStrength( {
+						Neural.synapses.setAttr( {
 							'key': test_id
 							, 'index': 'id'
 							, 'expecting': expected
@@ -88,14 +88,14 @@
 								replacement = ( !!replacement && replacement > .001 ) ? replacement : 1;
 								return replacement;
 							}, 'on_success': function( context ) {
-								Neural.synapses.getStrength( {
+								Neural.synapses.getAttr( {
 									'key': test_id
 									, 'index': 'id'
 									, 'on_success': function( value ) {
 										if( 'undefined' !== typeof value ) {
-											console.log( 'test.synapses.setStrength(): passed' );
+											console.log( 'test.synapses.setAttr(): passed' );
 										} else {
-											console.log( 'test.synapses.setStrength(): failed' );
+											console.log( 'test.synapses.setAttr(): failed' );
 										}
 										if( 'function' !== typeof test_callback ) {
 											test_callback( value );
@@ -359,7 +359,7 @@
 			};
 
 			test.synapses.cursor.delete = function( test_callback ) {
-				test.data.add( 5 );
+				test.synapses.data.add( 5 );
 				var on_error = function( get_context ) {
 					console.log( 'test.synapses.delete(): failed' );
 					if( 'function' == typeof test_callback ) {
@@ -417,7 +417,7 @@
 			};
 
 			test.synapses.cursor.update = function( test_callback ) {
-				test.data.add( 5 );
+				test.synapses.data.add( 5 );
 				var on_error = function( get_context ) {
 					console.log( 'test.synapses.update(): failed' );
 					if( 'function' == typeof test_callback ) {
@@ -462,7 +462,7 @@
 
 			/* Neurons */
 
-			test.neurons.data.add = function ( count, on_success, on_error  {
+			test.neurons.data.add = function ( count, on_success, on_error )  {
 				var map = [];
 				for( var i = 0; i < count; i++ ) {
 					var node1 = Math.floor( Math.random()*100 );	
@@ -483,7 +483,7 @@
 
 			test.neurons.getAttr = function( attribute, key, index, test_callback ) {
 				var on_error = function( test_callback ) {
-					console.log( 'test.neurons.getStrength(): failed' );
+					console.log( 'test.neurons.getAttr(): failed' );
 					if( 'function' !== typeof test_callback ) {
 						test_callback( value );
 					}
@@ -510,7 +510,7 @@
 			test.neurons.setAttr = function( attribute, key, index, test_callback ) {
 
 				var on_error = function( value ) {
-					console.log( 'test.neurons.setStrength(): failed' );
+					console.log( 'test.neurons.setAttr(): failed' );
 					if( 'function' !== typeof test_callback ) {
 						test_callback( value );
 					}
@@ -524,7 +524,7 @@
 						var expected =  {};
 						var key = Neural.neurons.shorthand( 'strength' );
 					       	expected[ key ] = value[ key ];
-						Neural.neurons.setStrength( {
+						Neural.neurons.setAttr( {
 							'key': test_id
 							, 'index': 'id'
 							, 'expecting': expected
@@ -533,14 +533,14 @@
 								replacement = ( !!replacement && replacement > .001 ) ? replacement : 1;
 								return replacement;
 							}, 'on_success': function( context ) {
-								Neural.neurons.getStrength( {
+								Neural.neurons.getAttr( {
 									'key': test_id
 									, 'index': 'id'
 									, 'on_success': function( value ) {
 										if( 'undefined' !== typeof value ) {
-											console.log( 'test.neurons.setStrength(): passed' );
+											console.log( 'test.neurons.setAttr(): passed' );
 										} else {
-											console.log( 'test.neurons.setStrength(): failed' );
+											console.log( 'test.neurons.setAttr(): failed' );
 										}
 										if( 'function' !== typeof test_callback ) {
 											test_callback( value );
@@ -804,7 +804,7 @@
 			};
 
 			test.neurons.cursor.delete = function( test_callback ) {
-				test.data.add( 5 );
+				test.neurons.data.add( 5 );
 				var on_error = function( get_context ) {
 					console.log( 'test.neurons.delete(): failed' );
 					if( 'function' == typeof test_callback ) {
@@ -862,7 +862,7 @@
 			};
 
 			test.neurons.cursor.update = function( test_callback ) {
-				test.data.add( 5 );
+				test.neurons.data.add( 5 );
 				var on_error = function( get_context ) {
 					console.log( 'test.neurons.update(): failed' );
 					if( 'function' == typeof test_callback ) {
@@ -972,8 +972,8 @@
 					console.log( 'FAILED to add synapses', context );       
 				} } );
 
-				//test.synapses.getStrength();
-				//test.synapses.setStrength();
+				//test.synapses.getAttr();
+				//test.synapses.setAttr();
 
 			} );
 		</script>

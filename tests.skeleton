@@ -17,21 +17,21 @@ Application.test.data.add = function ( count, on_success, on_error ) {
 	}
 }
 
-Application.test.getStrength = function( test_callback ) {
+Application.test.getAttr = function( test_callback ) {
 	var on_error = function( test_callback ) {
-		console.log( 'Application.test.getStrength(): failed' );
+		console.log( 'Application.test.getAttr(): failed' );
 		if( 'function' !== typeof test_callback ) {
 			test_callback( value );
 		}
 	};
-	Application.namespace.getStrength( {
+	Application.namespace.getAttr( {
 		'key': test_id
 		, 'index': 'id'
 		, 'on_success': function( value ) {	
 			if( 'undefined' !== value ) {
-				console.log( 'Application.test.getStrength(): passed' );
+				console.log( 'Application.test.getAttr(): passed' );
 			} else {
-				console.log( 'Application.test.getStrength(): failed' );
+				console.log( 'Application.test.getAttr(): failed' );
 			}
 			if( 'function' !== typeof test_callback ) {
 				test_callback( value );
@@ -42,15 +42,15 @@ Application.test.getStrength = function( test_callback ) {
 
 };
 
-Application.test.setStrength = function( test_callback ) {
+Application.test.setAttr = function( test_callback ) {
 
 	var on_error = function( value ) {
-		console.log( 'Application.test.setStrength(): failed' );
+		console.log( 'Application.test.setAttr(): failed' );
 		if( 'function' !== typeof test_callback ) {
 			test_callback( value );
 		}
 	};
-	Application.namespace.getStrength( {
+	Application.namespace.getAttr( {
 		'key': test_id
 		, 'index': 'id'
 		, 'on_success': function( context ) {	
@@ -58,7 +58,7 @@ Application.test.setStrength = function( test_callback ) {
 			var expected =  {};
 			var key = Application.namespace.shorthand( 'strength' );
 			expected[ key ] = value[ key ];
-			Application.namespace.setStrength( {
+			Application.namespace.setAttr( {
 				'key': test_id
 				, 'index': 'id'
 				, 'expecting': expected
@@ -67,14 +67,14 @@ Application.test.setStrength = function( test_callback ) {
 					replacement = ( !!replacement && replacement > .001 ) ? replacement : 1;
 					return replacement;
 				}, 'on_success': function( context ) {
-					Application.namespace.getStrength( {
+					Application.namespace.getAttr( {
 						'key': test_id
 						, 'index': 'id'
 						, 'on_success': function( value ) {
 							if( 'undefined' !== typeof value ) {
-								console.log( 'Application.test.setStrength(): passed' );
+								console.log( 'Application.test.setAttr(): passed' );
 							} else {
-								console.log( 'Application.test.setStrength(): failed' );
+								console.log( 'Application.test.setAttr(): failed' );
 							}
 							if( 'function' !== typeof test_callback ) {
 								test_callback( value );
