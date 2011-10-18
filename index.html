@@ -459,10 +459,12 @@
 					//, 'index': 'id'
 					, 'data': function( current_value ) {
 						if( 'undefined' !== typeof current_value && null !== current_value && 'undefined' !== typeof current_value.strength ) {
-							var new_strength = ( !!current_value ) ? current_value.strength / 2 : 1;
+							var new_strength = ( 'undefined' !== typeof current_value.strength ) ? current_value.strength / 2 : 1;
 							update_map[ current_value.id ] = new_strength;
+						console.log("UPDATED FROM/TO",current_value.strength/new_strength);
 							current_value.strength = new_strength;
 						}
+
 						return current_value;
 					}//, 'limit': limit
 					, 'direction': InDB.cursor.direction.next()
