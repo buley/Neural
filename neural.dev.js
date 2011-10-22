@@ -1,1178 +1,421 @@
 
-/* Neural.js
+/* N.prototype.js
  * Basic MLP neural network.
  **/
 
-var Neural = Neural || {};
-Neural.neurons = Neural.neurons || {};
-Neural.synapses = Neural.synapses || {};
 
+var Neural = (function() {
 
-/* Database */
+	var current_database = "Neural";
+	var current_description = "A basic MLP network."
 
-/* Neurons */
-
-Neural.neurons.shorthand_map = {
-	'id': 'i',
-	'display': 'd',
-	'display_alternatives': 'a',
-	'type': 't',
-	'slug': 's',
-	'parents': 'p'
-};
-
-Neural.neurons.install = function ( ) {
-
-        var neurons = {
-                'neurons': { 'key': Neural.neurons.shorthand( 'id' ), 'incrementing_key': true, 'unique': 'true' }
-        };
-
-        var neurons_idxs = {};
-	neurons_idxs[ 'neurons' ] = {
-		'id': {},
-		'display': {},
-		'type': {},
-		'slug': {}
-	};
-
-        //neurons_idxs[ '' ][ Neural.neurons.shorthand( '' ) ] = '';
-        neurons_idxs.neurons[ 'id' ][ Neural.neurons.shorthand( 'id' ) ] = false;
-        neurons_idxs.neurons[ 'type' ][ Neural.neurons.shorthand( 'type' ) ] = false;
-        neurons_idxs.neurons[ 'display' ][ Neural.neurons.shorthand( 'display' ) ] = false;
-        neurons_idxs.neurons[ 'slug' ][ Neural.neurons.shorthand( 'slug' ) ] = false;
-
-	console.log( 'Neural_neurons_install', neurons, neurons_idxs );
-
-        InDB.trigger( 'InDB_do_stores_create', { 'stores': neurons, 'on_success': function( context ) {
-                InDB.trigger( 'InDB_do_indexes_create', { 'indexes': neurons_idxs, 'on_complete': function( context2 ) {
-                        console.log( 'neurons store loaded', context2 );
-                } } );
-        } } );
-
-}
-
-Neural.neurons.shorthand = function ( key ) {
-	if( 'undefined' !== typeof Neural.neurons.shorthand_map[ key ] ) {
-		return Neural.neurons.shorthand_map[ key ];
-	} else {
-		return key;
-	}
-};
-
-
-Neural.neurons.shorthand_reverse = function ( key ) {
-	var k = key;
-	var reversed = {};
-	for( var item in Neural.neurons.shorthand_map ) {
-		if( Neural.neurons.shorthand_map.hasOwnProperty( item ) ) {
-			reversed[ Neural.neurons.shorthand_map[ item ] ] = item;
+	function N( request ) {
+		if( 'undefined' !== request.database ) {
+			current_database = request.database;
+		}
+		if( 'undefined' !== request.description ) {
+			current_description = request.description;
 		}
 	}
-	if( 'undefined' !== typeof reversed[ k ] ) {
-		return reversed[ k ];
-	} else {
-		return k;
-	}
-};
 
-//recursive
-Neural.neurons.shorthand_decode = function( object ) {
-	var encoded = {};
-	var total = 0;
-	for( var itemobj in object ) {
-		if( 'undefined' !== typeof itemobj && object.hasOwnProperty( itemobj ) ) {
-			//recursive case: object value
-			//base case: string value
-			var value = object[ itemobj ];
-			if( 'object' === typeof value ) {
-				encoded[ Neural.neurons.shorthand_reverse( itemobj ) ] = Neural.neurons.shorthand_decode( value );
-				delete value;
-			} else { 
-				encoded[ Neural.neurons.shorthand_reverse( itemobj ) ] = value;
-				delete value;
+	N.prototype.neurons = new IDB( { 'database': current_database, 'description': current_description, 'store': 'neurons' } );
+	N.prototype.synapses = new IDB( { 'database': current_database, 'description': current_description, 'store': 'synapses' } );
+
+	/* Bridges */
+
+	/* gets the strength of a synapse */
+	/* arguments: 
+	 * 	key (string) - required - unique numerical id for the synapse
+	 * 	on_success (function) - optional - success callback
+	 * 	on_error (function) - optional - error callback
+	 */
+	N.prototype.synapses.getStrength = function( key, on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.synapses.getStrength error', value );
 			}
-		}
-		total++;
-	}
-	if( total > 0 ) {
-		return encoded;
-	} else {
-		return {};
-	}
-}
-
-
-//recursive
-Neural.neurons.shorthand_encode = function( object ) {
-	var encoded = {};
-	for( var item in object ) {
-		if( object.hasOwnProperty( item ) ) {
-			//recursive case: object value
-			//base case: string value
-
-			if( 'object' === typeof object[ item ] ) {
-				encoded[ Neural.neurons.shorthand( item ) ] = Neural.neurons.shorthand_encode( object[ item ] );	
-			} else { 
-				encoded[ Neural.neurons.shorthand( item ) ] = object[ item ];
+			if( 'function' == typeof on_success ) {
+				on_success( value );
 			}
-		}
-	}
-	return encoded;
-}
-
-/* Methods */
-
-/* Relationship helpers */
-
-/*
-Each takes an object w/attributes { options: obj, on_success: fn, on_error: fn }
-*/
-
-Neural.neurons.cursor = Neural.neurons.cursor || {};
-
-/* Synapses Set */
-Neural.neurons.setAttr = function( request ) {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.neurons.setAttr', request );
-	}
-
-	var on_success =  function( context ) {
-		if( !!Neural.debug ) {
-			console.log( 'Neural.neurons.setAttr success', context );
-		}
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
-		}
-	};
-
-	var on_error =  function( context ) {
-		if( !!Neural.debug ) {
-			console.log( 'Neural.neurons.setAttr error', context );
-		}
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-	request.on_success = on_success;
-	request.on_error = on_error;
-
-	var data = {};
-	data[ Neural.neurons.shorthand( 'strength' ) ] = request.strength;
-	Neural.neurons.update( request );
-
-};
-
-/* Synapses Get */
-//TODO: need to implement update/no replace
-// ( 'key': string, 'index': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
-Neural.neurons.getAttr = function( request ) {
-	
-	var on_success =  function( context ) {
-		if( !!Neural.debug ) {
-			console.log( 'Neural.neurons.setAttr success', context );
-		}
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
-		}
-        };
-
-	var on_error =  function( context ) {
-		if( !!Neural.debug ) {
-			console.log( 'Neural.neurons.getAttr error', context );
-		}
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-	request.on_success = on_success;
-	request.on_error = on_error;
-
-	Neural.neurons.get( request );
-
-};
-
-/* Synapses Cursor set */
-// ( 'key': string, 'index': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
-Neural.neurons.cursor.setAttr = function( request ) {
-	
-	var on_success =  function( context ) {
-		console.log( 'Neural.neurons.cursor.setAttr success', context );
-        };
-
-	var on_error =  function( context ) {
-		console.log( 'Neural.neurons.cursor.setAttr', context );
-	};
-
-	var data = {};
-	data[ Neural.neurons.shorthand( 'strength' ) ] = request.strength;
-	Neural.neurons.cursor.update( request.key, request.index, data, request.replace, replace.expecting, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
-
-};
-
-/* Synapses Cursor get */
-Neural.neurons.cursor.getAttr = function( request ) {
-	
-	var on_success =  function( context ) {
-		console.log( 'Neural.neurons.setAttr success', context );
-		var value = InDB.cursor.value( context.event );
-		request.on_success( value[ request.attribute ] );
-        };
-
-	var on_error =  function( context ) {
-		console.log( 'Neural.neurons.setAttr error', context );
-		request.on_error( context );
-	};
-
-	Neural.neurons.get( request.key, request.index, request.on_success, request.on_error );
-
-};
-
-
-
-
-/* Single */
-
-/* Get */
-Neural.neurons.get = function ( request )  {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.neurons.get', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = Neural.neurons.shorthand_decode( InDB.row.value( context ) );
-			request.on_success( value );
-		}
-	}
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	}
-
-	InDB.trigger( 'InDB_do_row_get', { 'store': 'neurons', 'key': request.key, 'index': request.index, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Remove */
-Neural.neurons.delete = function ( request ) {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.neurons.delete', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = InDB.row.value( context );
-			request.on_success( value );
-		}
-	}
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	}
-
-	InDB.trigger( 'InDB_do_row_delete', { 'store': 'neurons', 'key': request.key, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Put */
-Neural.neurons.put = function ( request )  {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.neurons.put', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = InDB.row.value( context );
-			request.on_success( value );
-		}
-	}
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	}
-
-	var data = request.data;
-	if( 'function' !== typeof data ) {
-		data = Neural.neurons.shorthand_encode( data );
-	}
-
-	InDB.trigger( 'InDB_do_row_put', { 'store': 'neurons', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Add */
-Neural.neurons.add = function ( request )  {
-	
-	if( !!Neural.debug ) {
-		console.log( 'Neural.neurons.add', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = InDB.row.value( context );
-			request.on_success( value );
-		}
-	};
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-	var data = request.data;
-	if( 'function' !== typeof data ) {
-		data = Neural.neurons.shorthand_encode( data );
-	}
-
-	InDB.trigger( 'InDB_do_row_add', { 'store': 'neurons', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Update */
-Neural.neurons.update = function ( request ) {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.neurons.update', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = InDB.row.value( context );
-			request.on_success( value );
-		}
-	}
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	}
-
-	var data = request.data;
-	var new_data;
-	if( 'function' !== typeof data ) {
-		new_data = Neural.neurons.shorthand_encode( data );
-	} else {
-		new_data = function( arg ) {
-			return Neural.neurons.shorthand_encode( data( Neural.neurons.shorthand_decode( arg ) ) );
 		};
-	}
 
-	var expected = request.expected;
-	if( 'function' !== typeof expected ) {
-		expected = Neural.neurons.shorthand_encode( expected );
-	}
-
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'neurons', 'key': request.key, 'index': request.index, 'data': new_data, 'replace': request.replace, 'expected': expected, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Multi */
-
-Neural.neurons.cursor = Neural.neurons.cursor || {};
-
-/* Cursor Get */
-Neural.neurons.cursor.get = function( request ) {
-
-        /* Action */
-
-	var index = request.index;
-	var direction = request.direction;
-	var limit = request.limit;
-	var key = request.key;
-	var begin = request.begin;
-       	var end = request.end;
-	var left_inclusive = request.left_inclusive;
-	var right_inclusive = request.right_inclusive;
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.neurons.cursor.get', request );
-	}
-
-        jQuery(document).trigger('cursor_get_neurons',request);
-
-
-	/* Defaults */
-	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
-	limit = ( 'undefined' !== typeof limit ) ? limit : null;
-	begin = ( 'undefined' !== typeof begin ) ? begin : null;
-	end = ( 'undefined' !== typeof end ) ? end : null;
-	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
-	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
-
-
-	/* Setup */
-
-	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
-
-
-	/* Callbacks */
-
-	var on_success = function ( context ) {
-		var item = Neural.neurons.shorthand_reverse( InDB.cursor.value( context.event ) );
-		console.log('blah',item);
-		if( 'function' == typeof request.on_success ) {
-			if( !!Neural.debug ) console.log( 'success', item );
-			request.on_success( item );
-		}
-	};
-
-	var on_error = function ( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-
-	/* Request */
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'neurons', 'keyRange': keyRange, 'index': index, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Cursor Delete */
-Neural.neurons.cursor.delete = function( request ) {
-
-	/* Setup */
-
-	var index = request.index;
-	var direction = request.direction;
-	var limit = request.limit;
-	var key = request.key;
-	var begin = request.begin;
-       	var end = request.end;
-	var left_inclusive = request.left_inclusive;
-	var right_inclusive = request.right_inclusive;
-
-	/* Callbacks */
-
-	var on_success = function ( context ) {
-		var result = InDB.cursor.value( context.event );
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( result );
-		}
-	};
-
-	var on_error = function ( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-
-        /* Action */
-
-        jQuery(document).trigger('cursor_delete_neurons', { "index": index, "key": key, 'direction': direction, 'limit': limit, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-
-	/* Defaults */
-
-	begin = ( 'undefined' !== typeof begin ) ? begin : null;
-	end = ( 'undefined' !== typeof end ) ? end : null;
-	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
-	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
-	limit = ( 'undefined' !== typeof limit ) ? limit : null;
-	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
-
-
-	/* Setup */
-
-	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
-
-	/* Request */
-
-	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'neurons', 'keyRange': keyRange, 'index': index, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-
-};
-
-/* Cursor Update */
-Neural.neurons.cursor.update = function( request ) {
-
-	/* Setup */
-
-	var index = request.index;
-	var direction = request.direction;
-	var limit = request.limit;
-	var key = request.key;
-	var data = request.data;
-	var replace = request.replace;
-	var begin = request.begin;
-       	var end = request.end;
-       	var data = request.data;
-	var left_inclusive = request.left_inclusive;
-	var right_inclusive = request.right_inclusive;
-
-	/* Callbacks */
-
-	var on_success = function ( context ) {
-		var item = Neural.neurons.shorthand_reverse( InDB.cursor.value( context.event ) );
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( item );
-		}
-	};
-
-	var on_error = function ( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-
-	/* Shorthand Encoding */
-	var new_data;
-	if( 'function' !== typeof data ) {
-		new_data = Neural.neurons.shorthand_encode( data );
-	} else {
-		new_data = function( arg ) {
-			return Neural.neurons.shorthand_encode( data( Neural.neurons.shorthand_decode( arg ) ) );
-		};
-	}
-
-	/* Action */
-
-        jQuery(document).trigger('cursor_update_neurons', { 'data': new_data, "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, 'direction': direction, 'limit': limit, "on_success": on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-	/* Defaults */
-
-	replace = ( true == replace ) ? true : false;
-	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
-	limit = ( 'undefined' !== typeof limit ) ? limit : null;
-	begin = ( 'undefined' !== typeof begin ) ? begin : null;
-	end = ( 'undefined' !== typeof end ) ? end : null;
-	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
-	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
-
-	/* Setup */
-
-	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
-
-	/* Request */
-	
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'neurons', 'data': new_data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-	
-}
-
-Neural.neurons.clear = function( request ) {
-
-	/* Callbacks */
-
-	var on_success = function ( context ) {
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
-		}
-	};
-
-	var on_error = function ( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-	InDB.trigger( 'InDB_do_store_clear', { 'store': 'neurons', 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort } );
-	
-};
-
-
-
-/* Synapses */
-
-/* Shorthand Map */
-
-Neural.synapses.shorthand_map = {
-	'id': 'i',
-	'to': 't',
-	'from': 'f',
-	'strength': 's',
-	'type': 'y',
-	'votes': 'v',
-	'payload': 'p'
-};
-
-
-Neural.synapses.install = function ( ) {
-
-        var synapses = {
-                'synapses': { 'key': Neural.synapses.shorthand( 'id' ), 'incrementing_key': true, 'unique': true }
-        };
-
-        var synapses_idxs = {};
-	synapses_idxs[ 'synapses' ] = {
-		'id': {},
-		'type': {},
-		'to': {},
-		'from': {},
-		'strength': {}
-	};
-
-        //synapses_idxs[ '' ][ Neural.synapses.shorthand( '' ) ] = '';
-        synapses_idxs[ 'synapses' ][ 'id' ][ Neural.synapses.shorthand( 'id' ) ] = false;//{ 'unique': false, 'multirow': false };
-        synapses_idxs[ 'synapses' ][ 'type' ][ Neural.synapses.shorthand( 'type' ) ] = false;
-        synapses_idxs[ 'synapses' ][ 'to' ][ Neural.synapses.shorthand( 'to' ) ] = false;
-        synapses_idxs[ 'synapses' ][ 'from' ][ Neural.synapses.shorthand( 'from' ) ] = false;
-        synapses_idxs[ 'synapses' ][ 'strength' ][ Neural.synapses.shorthand( 'strength' ) ] = false;
-
-	console.log( 'Neural_synapses_install', synapses, synapses_idxs );
-
-        InDB.trigger( 'InDB_do_stores_create', { 'stores': synapses, 'on_success': function( context ) {
-                InDB.trigger( 'InDB_do_indexes_create', { 'indexes': synapses_idxs, 'on_complete': function( context2 ) {
-                        console.log( 'synapses store loaded', context2 );
-                } } );
-        } } );
-
-
-}
-
-
-
-/* Relationship helpers */
-
-/*
-Each takes an object w/attributes { options: obj, on_success: fn, on_error: fn }
-*/
-
-Neural.synapses.cursor = Neural.synapses.cursor || {};
-
-/* Synapses Set */
-Neural.synapses.setAttr = function( request ) {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.setAttr', request );
-	}
-
-	var on_success =  function( context ) {
-		if( !!Neural.debug ) {
-			console.log( 'Neural.synapses.setAttr success', context );
-		}
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
-		}
-	};
-
-	var on_error =  function( context ) {
-		if( !!Neural.debug ) {
-			console.log( 'Neural.synapses.setAttr error', context );
-		}
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-	request.on_success = on_success;
-	request.on_error = on_error;
-
-	var data = {};
-	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength;
-	Neural.synapses.update( request );
-
-};
-
-/* Synapses Get */
-//TODO: need to implement update/no replace
-// ( 'key': string, 'index': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
-Neural.synapses.getAttr = function( request ) {
-	
-	var on_success =  function( context ) {
-		if( !!Neural.debug ) {
-			console.log( 'Neural.synapses.setAttr success', context );
-		}
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
-		}
-        };
-
-	var on_error =  function( context ) {
-		if( !!Neural.debug ) {
-			console.log( 'Neural.synapses.getAttr error', context );
-		}
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-	request.on_success = on_success;
-	request.on_error = on_error;
-
-	Neural.synapses.get( request );
-
-};
-
-/* Synapses Cursor set */
-// ( 'key': string, 'index': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
-Neural.synapses.cursor.setAttr = function( request ) {
-	
-	var on_success =  function( context ) {
-		console.log( 'Neural.synapses.cursor.setAttr success', context );
-        };
-
-	var on_error =  function( context ) {
-		console.log( 'Neural.synapses.cursor.setAttr', context );
-	};
-
-	var data = {};
-	data[ Neural.synapses.shorthand( 'strength' ) ] = request.strength;
-	Neural.synapses.cursor.update( request.key, request.index, data, request.replace, replace.expecting, request.on_success, request.on_error, request.left_inclusive, request.right_inclusive );
-
-};
-
-/* Synapses Cursor get */
-Neural.synapses.cursor.getAttr = function( request ) {
-	
-	var on_success =  function( context ) {
-		console.log( 'Neural.synapses.setAttr success', context );
-		var value = InDB.cursor.value( context.event );
-		request.on_success( value[ request.attribute ] );
-        };
-
-	var on_error =  function( context ) {
-		console.log( 'Neural.synapses.setAttr error', context );
-		request.on_error( context );
-	};
-
-	Neural.synapses.get( request.key, request.index, request.on_success, request.on_error );
-
-};
-
-
-
-
-/* Single */
-
-/* Get */
-Neural.synapses.get = function ( request )  {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.get', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = Neural.synapses.shorthand_decode( InDB.row.value( context ) );
-			request.on_success( value );
-		}
-	}
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	}
-
-	InDB.trigger( 'InDB_do_row_get', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Remove */
-Neural.synapses.delete = function ( request ) {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.delete', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = InDB.row.value( context );
-			request.on_success( value );
-		}
-	}
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	}
-
-	InDB.trigger( 'InDB_do_row_delete', { 'store': 'synapses', 'key': request.key, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Put */
-Neural.synapses.put = function ( request )  {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.put', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = InDB.row.value( context );
-			request.on_success( value );
-		}
-	}
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	}
-
-	var data = request.data;
-	if( 'function' !== typeof data ) {
-		data = Neural.synapses.shorthand_encode( data );
-	}
-
-	InDB.trigger( 'InDB_do_row_put', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Add */
-Neural.synapses.add = function ( request )  {
-	
-	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.add', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = InDB.row.value( context );
-			request.on_success( value );
-		}
-	};
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-	var data = request.data;
-	if( 'function' !== typeof data ) {
-		data = Neural.synapses.shorthand_encode( data );
-	}
-
-	InDB.trigger( 'InDB_do_row_add', { 'store': 'synapses', 'data': data, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Update */
-Neural.synapses.update = function ( request ) {
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.update', request );
-	}
-
-	var on_success = function( context ) {
-		if( 'function' == typeof request.on_success ) {
-			var value = InDB.row.value( context );
-			request.on_success( value );
-		}
-	}
-
-	var on_error = function( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	}
-
-	var data = request.data;
-	var new_data;
-	if( 'function' !== typeof data ) {
-		new_data = Neural.synapses.shorthand_encode( data );
-	} else {
-		new_data = function( arg ) {
-			return Neural.synapses.shorthand_encode( data( Neural.synapses.shorthand_decode( arg ) ) );
-		};
-	}
-
-	var expected = request.expected;
-	if( 'function' !== typeof expected ) {
-		expected = Neural.synapses.shorthand_encode( expected );
-	}
-
-	InDB.trigger( 'InDB_do_row_update', { 'store': 'synapses', 'key': request.key, 'index': request.index, 'data': new_data, 'replace': request.replace, 'expected': expected, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Multi */
-
-Neural.synapses.cursor = Neural.synapses.cursor || {};
-
-/* Cursor Get */
-Neural.synapses.cursor.get = function( request ) {
-
-        /* Action */
-
-	var index = request.index;
-	var direction = request.direction;
-	var limit = request.limit;
-	var key = request.key;
-	var begin = request.begin;
-       	var end = request.end;
-	var left_inclusive = request.left_inclusive;
-	var right_inclusive = request.right_inclusive;
-
-	if( !!Neural.debug ) {
-		console.log( 'Neural.synapses.cursor.get', request );
-	}
-
-        jQuery(document).trigger('cursor_get_synapses',request);
-
-
-	/* Defaults */
-	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
-	limit = ( 'undefined' !== typeof limit ) ? limit : null;
-	begin = ( 'undefined' !== typeof begin ) ? begin : null;
-	end = ( 'undefined' !== typeof end ) ? end : null;
-	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
-	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
-
-
-	/* Setup */
-
-	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
-
-
-	/* Callbacks */
-
-	var on_success = function ( context ) {
-		var item = Neural.synapses.shorthand_reverse( InDB.cursor.value( context.event ) );
-		console.log('blah',item);
-		if( 'function' == typeof request.on_success ) {
-			if( !!Neural.debug ) console.log( 'success', item );
-			request.on_success( item );
-		}
-	};
-
-	var on_error = function ( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-
-	/* Request */
-	InDB.trigger( 'InDB_do_cursor_get', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-}
-
-/* Cursor Delete */
-Neural.synapses.cursor.delete = function( request ) {
-
-	/* Setup */
-
-	var index = request.index;
-	var direction = request.direction;
-	var limit = request.limit;
-	var key = request.key;
-	var begin = request.begin;
-       	var end = request.end;
-	var left_inclusive = request.left_inclusive;
-	var right_inclusive = request.right_inclusive;
-
-	/* Callbacks */
-
-	var on_success = function ( context ) {
-		var result = InDB.cursor.value( context.event );
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( result );
-		}
-	};
-
-	var on_error = function ( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-
-        /* Action */
-
-        jQuery(document).trigger('cursor_delete_synapses', { "index": index, "key": key, 'direction': direction, 'limit': limit, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "on_success": on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-
-	/* Defaults */
-
-	begin = ( 'undefined' !== typeof begin ) ? begin : null;
-	end = ( 'undefined' !== typeof end ) ? end : null;
-	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
-	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
-	limit = ( 'undefined' !== typeof limit ) ? limit : null;
-	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
-
-
-	/* Setup */
-
-	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
-
-	/* Request */
-
-	InDB.trigger( 'InDB_do_cursor_delete', { 'store': 'synapses', 'keyRange': keyRange, 'index': index, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-
-};
-
-/* Cursor Update */
-Neural.synapses.cursor.update = function( request ) {
-
-	/* Setup */
-
-	var index = request.index;
-	var direction = request.direction;
-	var limit = request.limit;
-	var key = request.key;
-	var data = request.data;
-	var replace = request.replace;
-	var begin = request.begin;
-       	var end = request.end;
-       	var data = request.data;
-	var left_inclusive = request.left_inclusive;
-	var right_inclusive = request.right_inclusive;
-
-	/* Callbacks */
-
-	var on_success = function ( context ) {
-		var item = Neural.synapses.shorthand_reverse( InDB.cursor.value( context.event ) );
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( item );
-		}
-	};
-
-	var on_error = function ( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-
-	/* Shorthand Encoding */
-	var new_data;
-	if( 'function' !== typeof data ) {
-		new_data = Neural.synapses.shorthand_encode( data );
-	} else {
-		new_data = function( arg ) {
-			return Neural.synapses.shorthand_encode( data( Neural.synapses.shorthand_decode( arg ) ) );
-		};
-	}
-
-	/* Action */
-
-        jQuery(document).trigger('cursor_update_synapses', { 'data': new_data, "index": index, "key": key, "begin": begin, "end": end, "left_inclusive": left_inclusive, "right_inclusive": right_inclusive, "replace": replace, 'direction': direction, 'limit': limit, "on_success": on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-
-	/* Defaults */
-
-	replace = ( true == replace ) ? true : false;
-	direction = ( InDB.cursor.isDirection( direction ) ) ? direction : InDB.cursor.direction.next();
-	limit = ( 'undefined' !== typeof limit ) ? limit : null;
-	begin = ( 'undefined' !== typeof begin ) ? begin : null;
-	end = ( 'undefined' !== typeof end ) ? end : null;
-	left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : null;
-	right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-	key = ( 'undefined' !== typeof begin && 'undefined' !== typeof end ) ? key : null;
-
-	/* Setup */
-
-	var keyRange = InDB.range.get( key, begin, end, left_inclusive, right_inclusive );
-
-	/* Request */
-	
-	InDB.trigger( 'InDB_do_cursor_update', { 'store': 'synapses', 'data': new_data, 'keyRange': keyRange, 'index': index, 'replace': replace, 'direction': direction, 'limit': limit, 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort, 'on_complete': request.on_complete } );
-	
-}
-
-Neural.synapses.clear = function( request ) {
-
-	/* Callbacks */
-
-	var on_success = function ( context ) {
-		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
-		}
-	};
-
-	var on_error = function ( context ) {
-		if( 'function' == typeof request.on_error ) {
-			request.on_error( context );
-		}
-	};
-
-	InDB.trigger( 'InDB_do_store_clear', { 'store': 'synapses', 'on_success': on_success, 'on_error': on_error, 'on_abort': request.on_abort } );
-	
-};
-
-Neural.synapses.shorthand = function ( key ) {
-	if( 'undefined' !== typeof Neural.synapses.shorthand_map[ key ] ) {
-		return Neural.synapses.shorthand_map[ key ];
-	} else {
-		return key;
-	}
-}
-
-
-Neural.synapses.shorthand_reverse = function ( key ) {
-	var k = key;
-	var reversed = {};
-	for( var item in Neural.synapses.shorthand_map ) {
-		if( Neural.synapses.shorthand_map.hasOwnProperty( item ) ) {
-			reversed[ Neural.synapses.shorthand_map[ item ] ] = item;
-		}
-	}
-	if( 'undefined' !== typeof reversed[ k ] ) {
-		return reversed[ k ];
-	} else {
-		return k;
-	}
-}
-
-//recursive
-Neural.synapses.shorthand_decode = function( object ) {
-	var encoded = {};
-	var total = 0;
-	for( var itemobj in object ) {
-		if( 'undefined' !== typeof itemobj && object.hasOwnProperty( itemobj ) ) {
-			//recursive case: object value
-			//base case: string value
-			var value = object[ itemobj ];
-			if( 'object' === typeof value ) {
-				encoded[ Neural.synapses.shorthand_reverse( itemobj ) ] = Neural.synapses.shorthand_decode( value );
-				delete value;
-			} else { 
-				encoded[ Neural.synapses.shorthand_reverse( itemobj ) ] = value;
-				delete value;
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.synapses.getStrength success', value );
 			}
-		}
-		total++;
-	}
-	if( total > 0 ) {
-		return encoded;
-	} else {
-		return {};
-	}
-}
-
-
-//recursive
-Neural.synapses.shorthand_encode = function( object ) {
-	var encoded = {};
-	for( var item in object ) {
-		if( object.hasOwnProperty( item ) ) {
-			//recursive case: object value
-			//base case: string value
-			if( 'object' === typeof object[ item ] ) {
-				encoded[ Neural.synapses.shorthand( item ) ] = Neural.synapses.shorthand_encode( object[ item ] );	
-			} else {
-				encoded[ Neural.synapses.shorthand( item ) ] = object[ item ];
+			if( 'function' == typeof on_error ) {
+				on_error( context );
 			}
-		}
-	}
-	return encoded;
-}
+		};
 
-/* End Synapses InDB */
+		N.prototype.synapses.getAttr( {
+			'key': key
+			, 'index': 'id'
+			, 'on_success': function( value ) {
+				if( 'function' == typeof success_callback ) {
+					var result = ( 'undefined' !== value && 'undefined' !== value.strength ) ? value.strength : null;
+					success_callback( result );
+				}
+			}, 'on_error': function( context ) {
+				if( 'function' == typeof error_callback ) {
+					error_callback( context );
+				}		
+			}
+		} );
+
+		return this;
+
+	};
+
+
+	/* sets the strength of a synapse */
+	N.prototype.synapses.setStrength = function( key, value, expecting, on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.synapses.setStrength success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.synapses.setStrength error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		N.prototype.synapses.setAttr( {
+			'key': key
+			, 'index': 'id'
+			, 'expecting': ( 'undefined' !== typeof expecting ) ? expecting : null
+			, 'on_success': function( value ) {
+				if( 'function' == typeof success_callback ) {
+					success_callback( value );
+				}
+			}, 'on_error': function( context ) {
+				if( 'function' == typeof error_callback ) {
+					error_callback( context );
+				}		
+			}
+		} );
+
+		return this;
+
+
+	};
+
+	/* create a new node (hidden, input or output) */
+	N.prototype.nodes.create = function( nodes, on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.create success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.create error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+
+	};
+
+	/* generic get used by getHidde, getOutput, getInput */
+	N.prototype.nodes.get = function( key, on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.get success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.get error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+
+	};
+
+	/* gets a hidden node */
+	N.prototype.nodes.getHidden = function( key, on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.getHidden success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.getHidden error', context );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+
+	};
+
+	/* gets an output node */
+	N.prototype.nodes.getOutput = function( key, on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.getOutput success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.getOutput error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+
+	};
+
+	/* gets an input node */
+	N.prototype.nodes.getInput = function( key, on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.getInput success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.nodes.getInput error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+
+	};
+
+	/* queries a network for active output nodes
+	 * takes an input and weight matrix and returns a normalized score */
+	N.prototype.queryNetwork = function( weight_matrix, on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.queryNetwork success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.queryNetwork error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+
+	};
+
+	/* builds an in memory representation of relevant 
+	 * nodes and their connections of an MLP such
+	 * that it can be queried */
+	N.prototype.buildNetwork = function( on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.buildNetwork success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.buildNetwork error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+
+	};
+
+	/* */
+	N.prototype.buildWeightMatrix = function( on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.buildWeightMatrix success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.buildWeightMatrix error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+
+	};
+
+	/* trains an MLP using the standard 'backpropigation' algo */
+	N.prototype.trainNetwork = function( on_success, on_error ) {
+
+		var success_callback = function( value ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.trainNetwork success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		var error_callback = function( context ) {
+			if( !!N.prototype.debug ) {
+				console.log( 'N.prototype.trainNetwork error', value );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		return this;
+
+	};
+
+
+
+	/* Database */
+
+	/* Shorthand Map */
+
+	N.prototype.synapses.shorthand_map = {
+		'id': 'i',
+		'to': 't',
+		'from': 'f',
+		'strength': 's',
+		'type': 'y',
+		'votes': 'v',
+		'payload': 'p'
+	};
+
+	N.prototype.neurons.shorthand_map = {
+		'id': 'i',
+		'display': 'd',
+		'display_alternatives': 'a',
+		'type': 't',
+		'slug': 's',
+		'parents': 'p'
+	};
+
+	N.prototype.neurons.install = function ( ) {
+
+		var indexes = {
+			'primary': {
+				'key': 'id'
+				, 'incrementing': true
+				, 'unique': true
+			}, 'id': {},
+			'display': {},
+			'type': {},
+			'slug': {}
+		}
+
+		console.log( 'Neural_neurons_install', indexes );
+
+		IDB.install( { 'store': 'neurons', 'indexes': indexes, 'on_success': function( context ) {
+			console.log( 'Neural neurons installed', context );
+		} } );
+
+	}
+
+	/* Synapses */
+	N.prototype.synapses.install = function ( ) {
+
+		var indexes = {
+			'primary': {
+				'key': 'id'
+				, 'incrementing': true
+				, 'unique': true
+			}, 'id': true,
+			'type': true,
+			'to': true,
+			'from': true,
+			'strength': true
+		}
+
+		console.log( 'Neural_synapses_install', indexes );
+
+		IDB.install( { 'store': 'synapses', 'indexes': indexes, 'on_success': function( context ) {
+			console.log( 'Neural neurons installed', context );
+		} } );
+
+	}
+
+	return N;
+
+} )();
 
