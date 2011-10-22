@@ -111,11 +111,11 @@ var Neural = (function() {
 	};
 
 	/* create a new node (hidden, input or output) */
-	N.prototype.nodes.create = function( nodes, on_success, on_error ) {
+	N.prototype.neurons.create = function( nodes, on_success, on_error ) {
 
 		var success_callback = function( value ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.create success', value );
+				console.log( 'N.prototype.neurons.create success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -124,7 +124,7 @@ var Neural = (function() {
 
 		var error_callback = function( context ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.create error', value );
+				console.log( 'N.prototype.neurons.create error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
