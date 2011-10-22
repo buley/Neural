@@ -137,11 +137,11 @@ var Neural = (function() {
 	};
 
 	/* generic get used by getHidde, getOutput, getInput */
-	N.prototype.nodes.get = function( key, on_success, on_error ) {
+	N.prototype.neurons.get = function( key, on_success, on_error ) {
 
 		var success_callback = function( value ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.get success', value );
+				console.log( 'N.prototype.neurons.get success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -150,7 +150,7 @@ var Neural = (function() {
 
 		var error_callback = function( context ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.get error', value );
+				console.log( 'N.prototype.neurons.get error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -163,11 +163,11 @@ var Neural = (function() {
 	};
 
 	/* gets a hidden node */
-	N.prototype.nodes.getHidden = function( key, on_success, on_error ) {
+	N.prototype.neurons.getHidden = function( key, on_success, on_error ) {
 
 		var success_callback = function( value ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.getHidden success', value );
+				console.log( 'N.prototype.neurons.getHidden success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -176,7 +176,7 @@ var Neural = (function() {
 
 		var error_callback = function( context ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.getHidden error', context );
+				console.log( 'N.prototype.neurons.getHidden error', context );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -189,11 +189,11 @@ var Neural = (function() {
 	};
 
 	/* gets an output node */
-	N.prototype.nodes.getOutput = function( key, on_success, on_error ) {
+	N.prototype.neurons.getOutput = function( key, on_success, on_error ) {
 
 		var success_callback = function( value ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.getOutput success', value );
+				console.log( 'N.prototype.neurons.getOutput success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -202,7 +202,7 @@ var Neural = (function() {
 
 		var error_callback = function( context ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.getOutput error', value );
+				console.log( 'N.prototype.neurons.getOutput error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -215,11 +215,11 @@ var Neural = (function() {
 	};
 
 	/* gets an input node */
-	N.prototype.nodes.getInput = function( key, on_success, on_error ) {
+	N.prototype.neurons.getInput = function( key, on_success, on_error ) {
 
 		var success_callback = function( value ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.getInput success', value );
+				console.log( 'N.prototype.neurons.getInput success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -228,7 +228,7 @@ var Neural = (function() {
 
 		var error_callback = function( context ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.nodes.getInput error', value );
+				console.log( 'N.prototype.neurons.getInput error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
