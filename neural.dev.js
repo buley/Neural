@@ -386,7 +386,7 @@ var Neural = (function() {
 
 		console.log( 'Neural_neurons_install', indexes );
 
-		IDB.install( { 'store': 'neurons', 'indexes': indexes, 'on_success': function( context ) {
+		InDB.install( { 'store': 'neurons', 'indexes': indexes, 'on_success': function( context ) {
 			console.log( 'Neural neurons installed', context );
 		} } );
 
@@ -409,7 +409,7 @@ var Neural = (function() {
 
 		console.log( 'Neural_synapses_install', indexes );
 
-		IDB.install( { 'store': 'synapses', 'indexes': indexes, 'on_success': function( context ) {
+		InDB.install( { 'store': 'synapses', 'indexes': indexes, 'on_success': function( context ) {
 			console.log( 'Neural neurons installed', context );
 		} } );
 
