@@ -18,8 +18,8 @@ var Neural = (function() {
 		}
 	}
 
-	N.prototype.neurons = new IDB( { 'database': current_database, 'description': current_description, 'store': 'neurons' } );
-	N.prototype.synapses = new IDB( { 'database': current_database, 'description': current_description, 'store': 'synapses' } );
+	N.prototype.neurons = new InDB( { 'database': current_database, 'description': current_description, 'store': 'neurons' } );
+	N.prototype.synapses = new InDB( { 'database': current_database, 'description': current_description, 'store': 'synapses' } );
 
 	/* Bridges */
 
