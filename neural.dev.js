@@ -18,7 +18,7 @@ var Neural = (function() {
 		}
 	}
 
-	var InDB = new IDB( { 'database': current_database, 'description': current_description } );
+	var InDB = {};//new IDB( { 'database': current_database, 'description': current_description } );
 	N.prototype.neurons = {};
 	N.prototype.synapses = {};
 
