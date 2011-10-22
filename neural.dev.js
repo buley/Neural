@@ -10,6 +10,8 @@ var Neural = (function() {
 	var current_description = "A basic MLP network."
 
 	function N( request ) {
+		InDB.shorthand.set( { 'store': 'neurons', 'data': N.prototype.neurons.shorthand_map } );
+		InDB.shorthand.set( { 'store': 'synapses', 'data': N.prototype.synapses.shorthand_map } );
 		if( 'undefined' !== request.database ) {
 			current_database = request.database;
 		}
@@ -20,6 +22,9 @@ var Neural = (function() {
 
 	var db;
 	var InDB = new IDB( { 'database': current_database, 'description': current_description, 'target': db } );
+
+
+
 	N.prototype.neurons = {};
 	N.prototype.synapses = {};
 
@@ -380,10 +385,10 @@ var Neural = (function() {
 				'key': 'id'
 				, 'incrementing': true
 				, 'unique': true
-			}, 'id': {},
-			'display': {},
-			'type': {},
-			'slug': {}
+			}, 'id': true,
+			'display': true,
+			'type': true,
+			'slug': true
 		}
 
 		console.log( 'Neural_neurons_install', indexes );
