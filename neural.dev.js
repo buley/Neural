@@ -6,6 +6,7 @@
 
 var Neural = (function() {
 
+	var InDB;
 	var current_database = "Neural";
 	var current_description = "A basic MLP network."
 
@@ -21,7 +22,7 @@ var Neural = (function() {
 			}
 		}
 
-		var InDB = new IDB( { 'database': current_database, 'description': current_description } );
+		InDB = new IDB( { 'database': current_database, 'description': current_description } );
 
 		InDB.shorthand.set( { 'store': 'neurons', 'data': N.prototype.neurons.shorthand_map } );
 		InDB.shorthand.set( { 'store': 'synapses', 'data': N.prototype.synapses.shorthand_map } );
