@@ -9,16 +9,47 @@
 		<script type="text/javascript">
 
 			// Global
-			var network;
+			var network, neural_net;
 
 			$(document).ready(function() {
-
-				var request = {};
-				request.database = "Neural-019";
-				request.description = "Basic MLP neural network."
-				network = new Neural( request );
-
+				network = new TopicNetwork();
 			});
+
+			var TopicNetwork = function() {
+				var request = {};
+				request.database = "Neural-021";
+				request.description = "Basic MLP neural network."
+				neural_net = new Neural( request );
+			};
+
+			// Takes an array of topic_ids and returns a unique hash
+			TopicNetwork.prototype.topicsToId = function( topics ) {
+				console.log('TopicNetwork.prototype.topicsToId before', topics );
+				var sorted_topics = TopicNetwork.prototype.utils.alphaSortArray( topics );
+				console.log('TopicNetwork.prototype.topicsToId after', sorted_topics );
+				
+			};
+
+			TopicNetwork.prototype.utils = TopicNetwork.prototype.utils || {};
+
+			TopicNetwork.prototype.utils.alphaSortArray = function( unsorted ) {
+				return unsorted.sort( TopicNetwork.prototype.utils.alphaSort );
+			};
+
+			TopicNetwork.prototype.utils.alphaSort = function( a, b ) {
+				// http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
+				var reA = /[^a-zA-Z]/g;
+				var reN = /[^0-9]/g;
+				var aA = a.replace(reA, "");
+				var bA = b.replace(reA, "");
+				if(aA === bA) {
+					var aN = parseInt(a.replace(reN, ""), 10);
+					var bN = parseInt(b.replace(reN, ""), 10);
+					return aN === bN ? 0 : aN > bN ? 1 : -1;
+				} else {
+					return aA > bA ? 1 : -1;
+				}
+			}
 	
 		</script>
 		<script type="text/javascript" src="http://github.com/editor/InDB/raw/master/indb.dev.js"></script>

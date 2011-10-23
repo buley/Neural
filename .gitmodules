@@ -1,0 +1,3 @@
+[submodule "dependencies/md5"]
+	path = dependencies/md5
+	url = https://github.com/wbond/md5-js.git
