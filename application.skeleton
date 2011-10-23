@@ -163,12 +163,13 @@ Application.namespace.setAttr = function( request ) {
 // ( 'key': string, 'index': string (requred), 'strength': int, 'on_success': fn, 'on_error': fn }
 Application.namespace.getAttr = function( request ) {
 	
-	var on_success =  function( context ) {
+	var on_success =  function( value ) {
 		if( !!Application.debug ) {
 			console.log( 'Application.namespace.setAttr success', context );
 		}
 		if( 'function' == typeof request.on_success ) {
-			request.on_success( context );
+			var result = ( 'undefined' !== typeof result ) ? value[ request.attribute ] : null;
+			request.on_success( result );
 		}
         };
 

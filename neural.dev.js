@@ -23,8 +23,6 @@ var Neural = (function() {
 	var db;
 	var InDB = new IDB( { 'database': current_database, 'description': current_description, 'target': db } );
 
-
-
 	N.prototype.neurons = {};
 	N.prototype.synapses = {};
 
@@ -56,8 +54,9 @@ var Neural = (function() {
 			}
 		};
 
-		N.prototype.synapses.getAttr( {
+		InDB.getAttr( {
 			'key': key
+			, 'store': 'synapses'
 			, 'index': 'id'
 			, 'on_success': function( value ) {
 				if( 'function' == typeof success_callback ) {
@@ -97,8 +96,9 @@ var Neural = (function() {
 			}
 		};
 
-		N.prototype.synapses.setAttr( {
+		InDB.setAttr( {
 			'key': key
+			, 'store': 'synapses'
 			, 'index': 'id'
 			, 'expecting': ( 'undefined' !== typeof expecting ) ? expecting : null
 			, 'on_success': function( value ) {
@@ -389,7 +389,7 @@ var Neural = (function() {
 			'display': true,
 			'type': true,
 			'slug': true
-		}
+		};
 
 		console.log( 'Neural_neurons_install', indexes );
 
@@ -412,7 +412,7 @@ var Neural = (function() {
 			'to': true,
 			'from': true,
 			'strength': true
-		}
+		};
 
 		console.log( 'Neural_synapses_install', indexes );
 
