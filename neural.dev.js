@@ -396,7 +396,9 @@ var Neural = (function() {
 			'slug': true
 		};
 
-		console.log( 'Neural_neurons_install', indexes );
+		if( !!Neural.install ) {
+			console.log( 'Neural_neurons_install', indexes );
+		}
 
 		InDB.install( { 'store': 'neurons', 'indexes': indexes, 'on_success': function( context ) {
 			console.log( 'Neural neurons installed', context );
