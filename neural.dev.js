@@ -11,12 +11,14 @@ var Neural = (function() {
 
 	function N( request ) {
 
-		if( 'undefined' !== request.database ) {
-			current_database = request.database;
-		}
+		if( 'undefined' !== typeof request ) {
+			if( 'undefined' !== typeof request.database ) {
+				current_database = request.database;
+			}
 
-		if( 'undefined' !== request.description ) {
-			current_description = request.description;
+			if( 'undefined' !== typeof request.description ) {
+				current_description = request.description;
+			}
 		}
 
 		var InDB = new IDB( { 'database': current_database, 'description': current_description } );
