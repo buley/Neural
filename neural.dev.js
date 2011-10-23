@@ -10,18 +10,21 @@ var Neural = (function() {
 	var current_description = "A basic MLP network."
 
 	function N( request ) {
+
 		InDB.shorthand.set( { 'store': 'neurons', 'data': N.prototype.neurons.shorthand_map } );
 		InDB.shorthand.set( { 'store': 'synapses', 'data': N.prototype.synapses.shorthand_map } );
+
 		if( 'undefined' !== request.database ) {
 			current_database = request.database;
 		}
+
 		if( 'undefined' !== request.description ) {
 			current_description = request.description;
 		}
-	}
 
-	var db;
-	var InDB = new IDB( { 'database': current_database, 'description': current_description, 'target': db } );
+		var InDB = new IDB( { 'database': current_database, 'description': current_description } );
+
+	}
 
 	N.prototype.neurons = {};
 	N.prototype.synapses = {};
