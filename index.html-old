@@ -11,23 +11,48 @@
 			// Global
 			var network, Network;
 
+			var network_shorthand_map = {
+				'word-topic': 'wt'
+				, 'topic-action': 'ta'
+			};
 			$(document).ready(function() {
 				network = new TopicNetwork();
 			});
-			
+
 			var TopicNetwork = function() {
 				var request = {};
 				request.database = "Neural-021";
 				request.description = "Basic MLP neural network."
 				Network = new Neural( request );
+				TopicNetwork.prototype.shorthand.map.set( network_shorthand_map );
+
 				//TODO: extend shorthand
-				Network.shorthand.map.set( {
-					'word-topic': 'wt'
-			 		, 'topic-action': 'ta'		
-				} );
+
 			};
 
+			// Adds one node to the Network
+			TopicNetwork.prototype.node = TopicNetwork.prototype.node || {};
+			TopicNetwork.prototype.node.add = function( request ) {
+				var nodes = request.nodes;
+				var on_success = function( result ) {
+					console.log( 'TopicNetwork.prototype.node.add success', result );
+					if( 'function' === typeof request.on_success ) {
+						request.on_success( result );
+					}
+				};
+				var on_error = function( context ) {
+					console.log( 'TopicNetwork.prototype.node.add error', context );
+					if( 'function' === typeof request.on_error ) {
+						request.on_error( result );
+					}
+				};
+				Network.neurons.add( { 'nodes': nodes, 'on_success': on_success, 'on_error': on_error  } );
+				return this;
+			}
 
+			// Adds one or more topic nodes to the network
+			TopicNetwork.prototype.nodes = TopicNetwork.prototype.nodes || {};
+			
 			TopicNetwork.prototype.nodes.populate = function( request ) {
 				var input = request.input;
 				var output = request.output;
@@ -64,9 +89,9 @@
 				if( !( ouput_length > 0 || input_length > 0 ) ) {
 					return null;
 				}
-				var input_nodes = [];
-				var output_nodes = [];
-				var hidden_nodes = [];
+				var input_nodes = {};
+				var output_nodes = {};
+				var nodes = [];
 				// Add 1 node for each input and output, and a hidden node combination
 				// Total # of nodes should be input.length + output.length + ( input.length * output.length )
 				if( input_length > 0 ) {
@@ -74,12 +99,12 @@
 					for( var x = 0; x < input_length; x++ ) {
 						var val = input[ x ];
 						var hash = TopicNetwork.prototype.utils.topicToId( val ); 
-						input_nodes.push( { 'hash': val, 'payload': val } );
+						nodes.push( { 'network': network_shorthand[ 'word-topic' ], 'type': 'input', 'hash': val, 'payload': val } );
 						// Add a pairwise hidden node
 						for( var y = 0; y < input_length; y++ ) {
 							var value = [ val, input[ y ] ];
-							var hash = TopicNetwork.prototype.utils.topicsToId( value ); 
-							hidden_nodes.push( { 'hash': hash, 'payload': value } );
+							var hash = TopicNetwork.prototype.utils.topicsToId( value );
+							nodes.push( { 'type': 'hidden', 'hash': hash, 'payload': value } );
 						}
 					}
 				}
@@ -101,6 +126,59 @@
 
 				return this;
 			}
+
+			TopicNetwork.prototype.nodes.add = function( request ) {
+				var topics = request.topics || request.topic;
+				var nodes = [];
+				if( 'undefined' === typeof topics.length ) {
+					var hash = topics.hash;
+					hash = ( 'undefined' !== typeof hash ) ? hash : topics;
+					var type = topics.type;
+					type = ( 'undefined' !== typeof type ) ? type : 'hidden';
+					nodes.push( {
+						'type': type
+						, 'hash': hash
+				   	} );
+				} else {
+					for( var x = 0; x < topics.length; x++ ) {
+						var topic = topics[ x ];
+						var hash = topic.hash;
+						hash = ( 'undefined' !== typeof hash ) ? hash : topic;
+						var type = topics.type;
+						type = ( 'undefined' !== typeof type ) ? type : 'hidden';
+						nodes.push( {
+							'type': type
+							, 'hash': hash
+						} );
+					}
+				}
+				var on_success = function( result ) {
+					console.log( 'TopicNetwork.prototype.topic.add success', result );
+					if( 'function' === typeof request.on_success ) {
+						request.on_success( result );
+					}
+				};
+				var on_error = function( context ) {
+					console.log( 'TopicNetwork.prototype.topic.add error', context );
+					if( 'function' === typeof request.on_error ) {
+						request.on_error( result );
+					}
+				};
+				var on_complete = function() {
+					console.log( 'TopicNetwork.prototype.topic.add complete' );
+					if( 'function' === typeof request.on_complete ) {
+						request.on_complete();
+					}
+				};
+				for( var x = 0; x < nodes.length; x++ ) {
+					TopicNetwork.prototype.node.add( { 'nodes': nodes, 'on_success': on_success, 'on_error': on_error } );
+				}
+				if( 'undefined' !== typeof on_complete ) {
+					on_complete();
+				}
+				return this;
+			};
+
 			TopicNetwork.prototype.utils = TopicNetwork.prototype.utils || {};
 
 			TopicNetwork.prototype.utils.alphaSortArray = function( unsorted ) {
@@ -136,7 +214,7 @@
 
 
 		</script>
-		<script type="text/javascript" src="http://github.com/editor/InDB/raw/master/indb.dev.js"></script>
+		<script type="text/javascript" src="http://github.com/editor/TopicNetwork.prototype/raw/master/indb.dev.js"></script>
 		<script type="text/javascript" src="https://github.com/wbond/md5-js/raw/master/md5.js"></script>
 		<script type="text/javascript" src="https://github.com/editor/Neural/raw/master/neural.dev.js"></script>
 	</body>
