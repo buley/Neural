@@ -766,6 +766,9 @@ var Neural = (function() {
 
 	/* Neuron */
 
+	N.prototype.neuron = N.prototype.neuron || {};
+	N.prototype.neurons = N.prototype.neurons || {};
+
 	/* Create */
 
 	/* Adapts InDBApp.add */
