@@ -6,11 +6,7 @@
 
 var Neural = (function() {
 
-	var N.prototype;
-	var current_database = "Neural";
-	var current_description = "A basic MLP network."
-
-	function N( request ) {
+	var N = function ( request ) {
 
 		if( 'undefined' !== typeof request ) {
 			if( 'undefined' !== typeof request.database ) {
@@ -28,6 +24,11 @@ var Neural = (function() {
 		InDBApp.shorthand.set( { 'store': 'synapses', 'data': N.prototype.synapses.shorthand_map } );
 
 	}
+
+	var N.prototype = {};
+	var current_database = "Neural";
+	var current_description = "A basic MLP network."
+
 
 
 	var InDB;
@@ -658,11 +659,11 @@ var Neural = (function() {
 	 * 	on_success (function) - optional - success callback
 	 * 	on_error (function) - optional - error callback
 	 */
-	N.prototype.synapses.getStrength = function( key, on_success, on_error ) {
+	N.prototype.synapses.filterGet = function( key, on_success, on_error ) {
 
 		var success_callback = function( value ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.getStrength error', value );
+				console.log( 'N.prototype.synapses.filterGet error', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -671,7 +672,7 @@ var Neural = (function() {
 
 		var error_callback = function( context ) {
 			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.getStrength success', value );
+				console.log( 'N.prototype.synapses.filterGet success', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -762,6 +763,226 @@ var Neural = (function() {
 	};
 
 	/* Primitives */
+
+	/* Neuron */
+
+	/* Create */
+
+	/* Adapts InDBApp.add */
+	N.prototype.neurons.add = function( request ) {
+		
+		var data = request.data;
+		var on_complete = function() {
+			if( 'function' == typeof request.on_complete ) {
+				request.on_complete();
+			}
+		};
+		delete request.on_complete;
+
+		for( var x = 0; x < data.length; x++ ) {
+			request.data = data[ x ];
+			InDBApp.add( request );
+		}
+
+		on_complete();
+
+		return this;
+
+	};
+
+	/* decorates InDBApp.add */
+	N.prototype.neuron.add = function( request ) {
+		
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.add( request );		
+
+		return this;
+
+	};
+
+	/* Adapts InDBApp.put */
+	N.prototype.neurons.put = function( request ) {
+		
+		var data = request.data;
+		var on_complete = function() {
+			if( 'function' == typeof request.on_complete ) {
+				request.on_complete();
+			}
+		};
+		delete request.on_complete;
+
+		for( var x = 0; x < data.length; x++ ) {
+			request.data = data[ x ];
+			InDBApp.put( request );
+		}
+
+		on_complete();
+
+		return this;
+
+	};
+
+	/* decorates InDBApp.put */
+	N.prototype.neuron.put = function( request ) {
+		
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.put( request );		
+
+		return this;
+
+	};
+
+	
+	/* Read */
+
+	/* decorates InDBApp.cursor.get */
+	N.prototype.neurons.get = function( request ) {
+		
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.cursor.get( request );		
+
+		return this;
+
+	};
+
+	/* decorates InDBApp.get */
+	N.prototype.neuron.get = function( request ) {
+		
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.get( request );		
+
+		return this;
+
+	};
+
+	/* Get Attributes */
+
+	/* Strength */
+
+	/* decorates InDBApp.cursor.filterGet */
+	N.prototype.neurons.filterGet = function( request ) {
+		
+		/* Setup */
+
+		var request.attributes = [ 'strength' ];
+
+		InDBApp.cursor.filterGet( request );		
+
+		return this;
+
+	};
+
+	/* decorates InDBApp.filterGet */
+	N.prototype.neuron.filterGet = function( request ) {
+		
+		/* Setup */
+
+		var request.attributes = [ 'strength' ];
+
+		InDBApp.filterGet( request );		
+
+		return this;
+
+	};
+
+
+	/* Update */
+
+	/* Adapts InDBApp.cursor.update */
+	N.prototype.neurons.update = function( request ) {
+			
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.cursor.update( request );		
+
+		return this;
+
+	};
+
+	/* Adapts InDBApp.cursor.update */
+	N.prototype.neurons.filterUpdate = function( request ) {
+			
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.cursor.filterUpdate( request );		
+
+		return this;
+
+	};
+
+	/* Single Neuron */
+
+	/* Decorates InDBApp.update */
+	N.prototype.neuron.update = function( request ) {
+		
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.update( request );		
+
+		return this;
+
+	};
+
+	/* Decorates InDBApp.filterUpdate */
+	N.prototype.neuron.filterUpdate = function( request ) {
+		
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.filterUpdate( request );		
+
+		return this;
+
+	};
+
+
+
+	/* Delete */
+	/* Adapts InDBApp.cursor.delete */
+	N.prototype.neurons.delete = function( request ) {
+			
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.cursor.delete( request );		
+
+		return this;
+
+	};
+
+	/* decorates InDBApp.delete */
+	N.prototype.neuron.delete = function( request ) {
+		
+		/* Setup */
+
+		var request.store = 'neurons';
+
+		InDBApp.delete( request );		
+
+		return this;
+
+	};
+
 
 	/* Synapse */
 
@@ -871,7 +1092,7 @@ var Neural = (function() {
 	/* Strength */
 
 	/* decorates InDBApp.cursor.filterGet */
-	N.prototype.synapses.getStrength = function( request ) {
+	N.prototype.synapses.filterGet = function( request ) {
 		
 		/* Setup */
 
@@ -884,7 +1105,7 @@ var Neural = (function() {
 	};
 
 	/* decorates InDBApp.filterGet */
-	N.prototype.synapse.getStrength = function( request ) {
+	N.prototype.synapse.filterGet = function( request ) {
 		
 		/* Setup */
 
