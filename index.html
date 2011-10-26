@@ -26,7 +26,10 @@
 			 		, 'topic-action': 'ta'		
 				} );
 			};
+	
 
+			TopicNetwork.prototype = TopicNetwork.prototype || {};
+			TopicNetwork.prototype.nodes = TopicNetwork.prototype.nodes || {};
 			TopicNetwork.prototype.nodes.populate = function( request ) {
 				var input = request.input;
 				var output = request.output;
