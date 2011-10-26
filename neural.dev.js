@@ -876,7 +876,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.attributes = [ 'strength' ];
+		request.attributes = [ 'strength' ];
 
 		InDBApp.cursor.filterGet( request );		
 
@@ -889,7 +889,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.attributes = [ 'strength' ];
+		request.attributes = [ 'strength' ];
 
 		InDBApp.filterGet( request );		
 
@@ -1096,7 +1096,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.attributes = [ 'strength' ];
+		request.attributes = [ 'strength' ];
 
 		InDBApp.cursor.filterGet( request );		
 
@@ -1109,7 +1109,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.attributes = [ 'strength' ];
+		request.attributes = [ 'strength' ];
 
 		InDBApp.filterGet( request );		
 
