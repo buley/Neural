@@ -23,7 +23,7 @@ var Neural = (function() {
 		InDBApp.shorthand.set( { 'store': 'neurons', 'data': N.prototype.neurons.shorthand_map } );
 		InDBApp.shorthand.set( { 'store': 'synapses', 'data': N.prototype.synapses.shorthand_map } );
 
-	}
+	};
 
 	var N.prototype = {};
 	var current_database = "Neural";
