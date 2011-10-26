@@ -989,6 +989,8 @@ var Neural = (function() {
 
 	/* Synapse */
 
+	N.prototype.synapse = N.prototype.synapse || {};
+	N.prototype.synapses = N.prototype.synapses || {};
 	/* Create */
 
 	/* Adapts InDBApp.add */
