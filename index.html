@@ -60,9 +60,9 @@
 
 			TopicNetwork.prototype.nodes.create = function( request ) {
 				var input = request.input;
-				var input_length = ( 'undefined' !== typeof input.length ? input.length : 0;
+				var input_length = ( 'undefined' !== typeof input.length ) ? input.length : 0;
 				var output = request.output;
-				var ouput_length = ( 'undefined' !== typeof output.length ? output.length : 0;
+				var ouput_length = ( 'undefined' !== typeof output.length ) ? output.length : 0;
 				if( !( ouput_length > 0 || input_length > 0 ) ) {
 					return null;
 				}
