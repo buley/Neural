@@ -795,7 +795,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.add( request );		
 
@@ -830,7 +830,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.put( request );		
 
@@ -846,7 +846,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.cursor.get( request );		
 
@@ -859,7 +859,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.get( request );		
 
@@ -905,7 +905,7 @@ var Neural = (function() {
 			
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.cursor.update( request );		
 
@@ -918,7 +918,7 @@ var Neural = (function() {
 			
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.cursor.filterUpdate( request );		
 
@@ -933,7 +933,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.update( request );		
 
@@ -946,7 +946,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.filterUpdate( request );		
 
@@ -962,7 +962,7 @@ var Neural = (function() {
 			
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.cursor.delete( request );		
 
@@ -975,7 +975,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'neurons';
+		request.store = 'neurons';
 
 		InDBApp.delete( request );		
 
@@ -1015,7 +1015,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.add( request );		
 
@@ -1050,7 +1050,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.put( request );		
 
@@ -1066,7 +1066,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.cursor.get( request );		
 
@@ -1079,7 +1079,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.get( request );		
 
@@ -1125,7 +1125,7 @@ var Neural = (function() {
 			
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.cursor.update( request );		
 
@@ -1138,7 +1138,7 @@ var Neural = (function() {
 			
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.cursor.filterUpdate( request );		
 
@@ -1153,7 +1153,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.update( request );		
 
@@ -1166,7 +1166,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.filterUpdate( request );		
 
@@ -1182,7 +1182,7 @@ var Neural = (function() {
 			
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.cursor.delete( request );		
 
@@ -1195,7 +1195,7 @@ var Neural = (function() {
 		
 		/* Setup */
 
-		var request.store = 'synapses';
+		request.store = 'synapses';
 
 		InDBApp.delete( request );		
 
