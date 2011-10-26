@@ -60,6 +60,7 @@
 
 			TopicNetwork.prototype.nodes.create = function( request ) {
 				var input = request.input;
+				console.log( 'number' === typeof input.length ); 
 				var input_length = ( 'number' === typeof input.length ) ? input.length : 0;
 				var output = request.output;
 				var ouput_length = ( 'number' === typeof output.length ) ? output.length : 0;
