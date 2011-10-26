@@ -60,9 +60,9 @@
 
 			TopicNetwork.prototype.nodes.create = function( request ) {
 				var input = request.input;
-				var input_length = input.length;
+				var input_length = input.length || 0;
 				var output = request.output;
-				var output_length = input.length;
+				var output_length = input.length || 0;
 				if( !( ouput_length > 0 || input_length > 0 ) ) {
 					return null;
 				}
@@ -97,12 +97,14 @@
 
 					for( var x = 0; x < input_nodes.length; x++ ) {
 						//if input is part of hidden node
+
 					}
 
 				}	
 
 				return this;
 			}
+
 			TopicNetwork.prototype.utils = TopicNetwork.prototype.utils || {};
 
 			TopicNetwork.prototype.utils.alphaSortArray = function( unsorted ) {
