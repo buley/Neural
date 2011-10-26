@@ -1457,6 +1457,7 @@ var Neural = (function() {
 	//global that stores the maps for various dbs
 	var shorthand_maps = {};
 
+	N.prototype.shorthand = N.prototype.shorthand || {};
 	N.prototype.shorthand.map = N.prototype.shorthand.map || {};
 
 	// Private object setter
