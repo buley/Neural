@@ -25,7 +25,7 @@ var Neural = (function() {
 
 	};
 
-	var N.prototype = {};
+	N.prototype = {};
 	var current_database = "Neural";
 	var current_description = "A basic MLP network."
 
