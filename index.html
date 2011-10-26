@@ -18,7 +18,7 @@
 			var TopicNetwork = function() {
 				var request = {};
 				request.database = "Neural-021";
-				request.description = "Basic MLP neural network."
+				request.description = "Basic MLP neural network.";
 				Network = new Neural( request );
 				//TODO: extend shorthand
 				Network.shorthand.map.set( {
@@ -26,7 +26,6 @@
 			 		, 'topic-action': 'ta'		
 				} );
 			};
-
 
 			TopicNetwork.prototype.nodes.populate = function( request ) {
 				var input = request.input;
