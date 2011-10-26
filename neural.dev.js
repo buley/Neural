@@ -52,7 +52,7 @@ var Neural = (function() {
 	};
 
 	/* Not chainable */
-	InDBApp.prototype.shorthand = InDBAppl.prototype.shorthand || {};
+	InDBApp.prototype.shorthand = InDBApp.prototype.shorthand || {};
 	InDBApp.prototype.shorthand.set = function( request ) {
 		return InDB.shorthand.set( request );
 	};
@@ -60,7 +60,7 @@ var Neural = (function() {
 		return InDB.shorthand.get( request );
 	};
 
-	InDBApp.prototype.cursor = InDBAppl.prototype.cursor || {};
+	InDBApp.prototype.cursor = InDBApp.prototype.cursor || {};
 	InDBApp.prototype.cursor.get = function( request ) {
 
 		/* Setup */
@@ -145,7 +145,7 @@ var Neural = (function() {
 
 	};
 
-	InDBApp.prototype.cursor = InDBAppl.prototype.cursor || {};
+	InDBApp.prototype.cursor = InDBApp.prototype.cursor || {};
 	InDBApp.prototype.cursor.getAttr = function( request ) {
 
 		/* Setup */
@@ -353,7 +353,7 @@ var Neural = (function() {
 
 	};
 	
-	InDBApp.prototype.cursor = InDBAppl.prototype.cursor || {};
+	InDBApp.prototype.cursor = InDBApp.prototype.cursor || {};
 	InDBApp.prototype.cursor.update = function( request ) {
 
 		/* Setup */
@@ -494,7 +494,7 @@ var Neural = (function() {
 
 	};
 	
-	InDBApp.prototype.cursor = InDBAppl.prototype.cursor || {};
+	InDBApp.prototype.cursor = InDBApp.prototype.cursor || {};
 	InDBApp.prototype.cursor.filterUpdate = function( request ) {
 
 		/* Setup */
