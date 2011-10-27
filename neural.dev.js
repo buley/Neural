@@ -801,7 +801,7 @@ var Neural = (function() {
 				'key': 'id'
 				, 'incrementing': true
 				, 'unique': true
-			}, 'id': false
+			}
 			, 'display': false
 			, 'type': false
 			, 'slug': false
@@ -825,11 +825,11 @@ var Neural = (function() {
 				'key': 'id'
 				, 'incrementing': true
 				, 'unique': true
-			}, 'id': true,
-			'type': true,
-			'to': true,
-			'from': true,
-			'strength': true
+			}
+			'type': false,
+			'to': false,
+			'from': false,
+			'strength': false
 		};
 
 		console.log( 'Neural_synapses_install', indexes );
