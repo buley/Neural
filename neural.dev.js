@@ -1,14 +1,23 @@
 
-/* N.prototype.js
+/* Public.prototype.js
  * Basic MLP neural network.
  **/
 
 
 var Neural = (function() {
 
-	var InDBApp;
+	/* PRIVATE */
 
-	var N = function ( request ) {
+
+	/* Decorate a vanilla InDBApp */
+	var Private = new InDBApp();
+	
+	/* PUBLIC */
+
+	var Public = function ( request ) {
+
+		var current_database = "Neural";
+		var current_description = "A basic MLP network."
 
 		if( 'undefined' !== typeof request ) {
 			if( 'undefined' !== typeof request.database ) {
@@ -20,636 +29,18 @@ var Neural = (function() {
 			}
 		}
 
-		InDBApp = new InDBApp( { 'database': current_database, 'description': current_description } );
-
-		InDBApp.shorthand.set( { 'store': 'neurons', 'data': N.prototype.neurons.shorthand_map } );
-		InDBApp.shorthand.set( { 'store': 'synapses', 'data': N.prototype.synapses.shorthand_map } );
-
-	};
-
-	N.prototype = {};
-	var current_database = "Neural";
-	var current_description = "A basic MLP network."
-
-	var InDB;
-
-	/* Begin InDBApp singleton */
-
-	var InDBApp = function( request ) {
-	
-		if( 'undefined' !== typeof request ) {
-			if( 'undefined' !== typeof request.database ) {
-				current_database = request.database;
-			}
-
-			if( 'undefined' !== typeof request.description ) {
-				current_description = request.description;
-			}
-		}
-
-		InDB = new IDB( { 'database': current_database, 'description': current_description } );
-		
-	};
-
-	/* Not chainable */
-	InDBApp.prototype.shorthand = InDBApp.prototype.shorthand || {};
-	InDBApp.prototype.shorthand.set = function( request ) {
-		return InDB.shorthand.set( request );
-	};
-	InDBApp.prototype.shorthand.get = function( request ) {
-		return InDB.shorthand.get( request );
-	};
-
-	InDBApp.prototype.cursor = InDBApp.prototype.cursor || {};
-	InDBApp.prototype.cursor.get = function( request ) {
-
-		/* Setup */
-
-		var store = request.store;
-		if( 'undefined' === typeof store ) {
-			throw new Error( 'InDBApp.prototype.cursor.get: Store must not be empty' );
-		}
-
-		/* Defaults */
-
-		var index = request.key;
-		index = ( 'undefined' !== typeof index ) ? index : null;
-		var limit = request.limit;
-		limit = ( 'undefined' !== typeof limit ) ? limit : 20;
-		var direction = request.limit;
-		direction = ( 'undefined' !== typeof direction ) ? direction : InDB.cursor.direction.previous();
-		var key = request.key;
-		key = ( 'undefined' !== typeof key ) ? key : null;
-		var left = request.left;
-		left = ( 'undefined' !== typeof left ) ? left : 0;
-		var right = request.right;
-		right = ( 'undefined' !== typeof right ) ? right : null;
-		var left_inclusive = request.left_inclusive;
-		left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : true;
-		var right_inclusive = request.right_inclusive;
-		right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-
-		/* Callbacks */
-
-		var on_complete = function() {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get complete' );
-			}
-			/* Callback */
-			if( 'function' == typeof on_complete ) {
-				request.on_complete();
-			}
-		};
-
-		var on_success = function( value ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get success', value );
-			}
-			/* Callback */
-			if( 'function' == typeof on_success ) {
-				request.on_success( value );
-			}
-		};
-
-		var on_error = function( context ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get error', context );
-			}
-			/* Callback */
-			if( 'function' == typeof on_error ) {
-				request.on_error( context );
-			}
-		};
-
-		/* Request */
-
-		InDB.cursor.get( {
-			'direction': direction
-			, 'key': key
-			, 'index': index
-			, 'left': left
-			, 'left_inclusive': left_inclusive
-			, 'limit': limit
-			, 'on_success': on_success
-			, 'on_complete': on_complete
-			, 'on_error': on_error
-			, 'right': right
-			, 'right_inclusive': right_inclusive
-			, 'store': store
-		} );
-
-		return this;
+		Private = new Private( { 'database': current_database, 'description': current_description } );
+		Private.shorthand.set( { 'store': 'neurons', 'data': Public.prototype.neurons.shorthand_map } );
+		Private.shorthand.set( { 'store': 'synapses', 'data': Public.prototype.synapses.shorthand_map } );
 
 	};
 
-	InDBApp.prototype.cursor = InDBApp.prototype.cursor || {};
-	InDBApp.prototype.cursor.getAttr = function( request ) {
-
-		/* Setup */
-
-		var store = request.store;
-		if( 'undefined' === typeof store ) {
-			throw new Error( 'InDBApp.prototype.cursor.get: Store must not be empty' );
-		}
-
-		/* Defaults */
-		var expecting = request.expecting;
-		expecting = ( 'undefined' !== typeof expecting ) ? expecting : null;
-		var attributes = request.attributes || request.attribute;
-		attributes = ( 'undefined' !== typeof attributes ) ? attributes : null;
-		var index = request.index;
-		index = ( 'undefined' !== typeof index ) ? index : null;
-		var limit = request.limit;
-		limit = ( 'undefined' !== typeof limit ) ? limit : 20;
-		var direction = request.limit;
-		direction = ( 'undefined' !== typeof direction ) ? direction : InDB.cursor.direction.previous();
-		var key = request.key;
-		key = ( 'undefined' !== typeof key ) ? key : null;
-		var left = request.left;
-		left = ( 'undefined' !== typeof left ) ? left : 0;
-		var right = request.right;
-		right = ( 'undefined' !== typeof right ) ? right : null;
-		var left_inclusive = request.left_inclusive;
-		left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : true;
-		var right_inclusive = request.right_inclusive;
-		right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-
-		/* Callbacks */
-
-		var on_complete = function() {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'InDBApp.prototype.cursor.getAttr complete' );
-			}
-			/* Callback */
-			if( 'function' == typeof on_complete ) {
-				request.on_complete();
-			}
-		};
-
-		var on_success = function( value ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'InDBApp.prototype.cursor.getAttr success', value );
-			}
-			/* Callback */
-			if( 'function' == typeof on_success ) {
-				request.on_success( value );
-			}
-		};
-
-		var on_error = function( context ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'InDBApp.prototype.cursor.getAttr error', context );
-			}
-			/* Callback */
-			if( 'function' == typeof on_error ) {
-				request.on_error( context );
-			}
-		};
-
-		/* Request */
-
-		InDB.cursor.getAttr( {
-			'attributes': attributes
-			, 'direction': direction
-			, 'key': key
-			, 'expecting': expecting
-			, 'index': index
-			, 'left': left
-			, 'left_inclusive': left_inclusive
-			, 'limit': limit
-			, 'on_success': on_success
-			, 'on_complete': on_complete
-			, 'on_error': on_error
-			, 'right': right
-			, 'right_inclusive': right_inclusive
-			, 'store': store
-		} );
-
-		return this;
-
-	};
-
-
-	InDBApp.prototype.get = function( request ) {
-	
-		/* Setup */
-
-		var store = request.store;
-		if( 'undefined' == typeof store || null === store ) {
-			throw new Error( 'InDBApp.prototype.get: Store cannot be empty' );
-			return null;
-		}
-
-		/* Defaults */
-
-		var index = request.key;
-		index = ( 'undefined' !== typeof index ) ? index : null;
-		var key = request.key;
-		key = ( 'undefined' !== typeof key ) ? key : null;
-	
-		/* Callbacks */
-
-		var on_success = function( value ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get success', value );
-			}
-			/* Callback */
-			if( 'function' == typeof on_success ) {
-				request.on_success( value );
-			}
-		};
-
-		var on_error = function( context ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get error', context );
-			}
-			/* Callback */
-			if( 'function' == typeof on_error ) {
-				request.on_error( context );
-			}
-		};
-
-		/* Request */
-
-		InDB.get( {
-			'index': index
-			, 'key': key
-			, 'on_success': on_success
-			, 'on_error': on_error
-			, 'store': store
-		} );
-
-		return this;
-
-	};
-
-
-	InDBApp.prototype.getAttr = function( request ) {
-
-		/* Setup */
-
-		var store = request.store;
-		if( 'undefined' == typeof store || null === store ) {
-			throw new Error( 'InDBApp.prototype.get: Store cannot be empty' );
-			return null;
-		}
-
-		/* Defaults */
-
-		var index = request.key;
-		index = ( 'undefined' !== typeof index ) ? index : null;
-		var key = request.key;
-		key = ( 'undefined' !== typeof key ) ? key : null;
-		var expecting = request.expecting;
-		expecting = ( 'undefined' !== typeof expecting ) ? expecting : null;
-		var attributes = request.attributes;
-		attributes = ( 'undefined' !== typeof attributes ) ? attributes: null;
-	
-		/* Callbacks */
-
-		var on_success = function( value ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get success', value );
-			}
-			/* Callback */
-			if( 'function' == typeof on_success ) {
-				request.on_success( value );
-			}
-		};
-
-		var on_error = function( context ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get error', context );
-			}
-			/* Callback */
-			if( 'function' == typeof on_error ) {
-				request.on_error( context );
-			}
-		};
-
-		/* Request */
-
-		InDB.getAttr( {
-			'attributes': attributes
-			, 'expecting': expecting
-			, 'index': index
-			, 'key': key
-			, 'on_success': on_success
-			, 'on_error': on_error
-			, 'store': store
-		} );
-
-		return this;
-
-	};
-	
-	InDBApp.prototype.cursor = InDBApp.prototype.cursor || {};
-	InDBApp.prototype.cursor.update = function( request ) {
-
-		/* Setup */
-
-		var store = request.store;
-		if( 'undefined' === typeof store ) {
-			throw new Error( 'InDBApp.prototype.cursor.get: Store must not be empty' );
-		}
-
-		/* Defaults */
-
-		var index = request.key;
-		index = ( 'undefined' !== typeof index ) ? index : null;
-		var limit = request.limit;
-		limit = ( 'undefined' !== typeof limit ) ? limit : 20;
-		var direction = request.limit;
-		direction = ( 'undefined' !== typeof direction ) ? direction : InDB.cursor.direction.previous();
-		var key = request.key;
-		key = ( 'undefined' !== typeof key ) ? key : null;
-		var left = request.left;
-		left = ( 'undefined' !== typeof left ) ? left : 0;
-		var right = request.right;
-		right = ( 'undefined' !== typeof right ) ? right : null;
-		var left_inclusive = request.left_inclusive;
-		left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : true;
-		var right_inclusive = request.right_inclusive;
-		right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-
-		/* Callbacks */
-
-		var on_complete = function() {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get complete' );
-			}
-			/* Callback */
-			if( 'function' == typeof on_complete ) {
-				request.on_complete();
-			}
-		};
-
-		var on_success = function( value ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get success', value );
-			}
-			/* Callback */
-			if( 'function' == typeof on_success ) {
-				request.on_success( value );
-			}
-		};
-
-		var on_error = function( context ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get error', context );
-			}
-			/* Callback */
-			if( 'function' == typeof on_error ) {
-				request.on_error( context );
-			}
-		};
-
-		/* Request */
-
-		InDB.cursor.update( {
-			'left': begin
-			, 'direction': direction
-			, 'key': key
-			, 'index': index
-			, 'left': left
-			, 'left_inclusive': left_inclusive
-			, 'limit': limit
-			, 'on_success': on_success
-			, 'on_complete': on_complete
-			, 'on_error': on_error
-			, 'right': right
-			, 'right_inclusive': right_inclusive
-			, 'store': store
-		} );
-
-		return this;
-
-	};
-
-	InDBApp.prototype.update = function( key, on_success, on_error ) {
-	
-		/* Setup */
-
-		var store = request.store;
-		if( 'undefined' == typeof store || null === store ) {
-			throw new Error( 'InDBApp.prototype.get: Store cannot be empty' );
-			return null;
-		}
-
-		/* Defaults */
-
-		var index = request.key;
-		index = ( 'undefined' !== typeof index ) ? index : null;
-		var key = request.key;
-		key = ( 'undefined' !== typeof key ) ? key : null;
-	
-		/* Callbacks */
-
-		var on_success = function( value ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get success', value );
-			}
-			/* Callback */
-			if( 'function' == typeof on_success ) {
-				request.on_success( value );
-			}
-		};
-
-		var on_error = function( context ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get error', context );
-			}
-			/* Callback */
-			if( 'function' == typeof on_error ) {
-				request.on_error( context );
-			}
-		};
-
-		/* Request */
-
-		InDB.update( {
-			'index': index
-			, 'key': key
-			, 'on_success': on_success
-			, 'on_error': on_error
-			, 'store': store
-		} );
-
-		return this;
-
-	};
-	
-	InDBApp.prototype.cursor = InDBApp.prototype.cursor || {};
-	InDBApp.prototype.cursor.filterUpdate = function( request ) {
-
-		/* Setup */
-
-		var store = request.store;
-		if( 'undefined' === typeof store ) {
-			throw new Error( 'InDBApp.prototype.cursor.get: Store must not be empty' );
-		}
-
-		/* Defaults */
-
-		var expecting = request.expecting;
-		expecting = ( 'undefined' !== typeof expecting ) ? expecting : null;
-		var attributes = request.attributes || request.attribute;
-		attributes = ( 'undefined' !== typeof attributes ) ? attributes : null;
-		var index = request.key;
-		index = ( 'undefined' !== typeof index ) ? index : null;
-		var limit = request.limit;
-		limit = ( 'undefined' !== typeof limit ) ? limit : 20;
-		var direction = request.limit;
-		direction = ( 'undefined' !== typeof direction ) ? direction : InDB.cursor.direction.previous();
-		var key = request.key;
-		key = ( 'undefined' !== typeof key ) ? key : null;
-		var left = request.left;
-		left = ( 'undefined' !== typeof left ) ? left : 0;
-		var right = request.right;
-		right = ( 'undefined' !== typeof right ) ? right : null;
-		var left_inclusive = request.left_inclusive;
-		left_inclusive = ( 'undefined' !== typeof left_inclusive ) ? left_inclusive : true;
-		var right_inclusive = request.right_inclusive;
-		right_inclusive = ( 'undefined' !== typeof right_inclusive ) ? right_inclusive : null;
-
-		/* Callbacks */
-
-		var on_complete = function() {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get complete' );
-			}
-			/* Callback */
-			if( 'function' == typeof on_complete ) {
-				request.on_complete();
-			}
-		};
-
-		var on_success = function( value ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get success', value );
-			}
-			/* Callback */
-			if( 'function' == typeof on_success ) {
-				request.on_success( value );
-			}
-		};
-
-		var on_error = function( context ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get error', context );
-			}
-			/* Callback */
-			if( 'function' == typeof on_error ) {
-				request.on_error( context );
-			}
-		};
-
-		/* Request */
-
-		InDB.cursor.filterUpdate( {
-			'attributes': attributes
-			, 'direction': direction
-			, 'expecting': expecting
-			, 'key': key
-			, 'index': index
-			, 'left': left
-			, 'left_inclusive': left_inclusive
-			, 'limit': limit
-			, 'on_success': on_success
-			, 'on_complete': on_complete
-			, 'on_error': on_error
-			, 'right': right
-			, 'right_inclusive': right_inclusive
-			, 'store': store
-		} );
-
-		return this;
-
-	};
-
-	InDBApp.prototype.filterUpdate = function( key, on_success, on_error ) {
-	
-		/* Setup */
-
-		var store = request.store;
-		if( 'undefined' == typeof store || null === store ) {
-			throw new Error( 'InDBApp.prototype.get: Store cannot be empty' );
-			return null;
-		}
-
-		/* Defaults */
-
-		var index = request.key;
-		index = ( 'undefined' !== typeof index ) ? index : null;
-		var key = request.key;
-		key = ( 'undefined' !== typeof key ) ? key : null;	
-		var expecting = request.expecting;
-		expecting = ( 'undefined' !== typeof expecting ) ? expecting : null;
-		var attributes = request.attributes || request.attribute;
-		attributes = ( 'undefined' !== typeof attributes ) ? attributes : null;
-
-		/* Callbacks */
-
-		var on_success = function( value ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get success', value );
-			}
-			/* Callback */
-			if( 'function' == typeof on_success ) {
-				request.on_success( value );
-			}
-		};
-
-		var on_error = function( context ) {
-			/* Debug */
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.get error', context );
-			}
-			/* Callback */
-			if( 'function' == typeof on_error ) {
-				request.on_error( context );
-			}
-		};
-
-		/* Request */
-
-		InDB.filterUpdate( {
-			'index': index
-			, 'key': key
-			, 'attributes': attributes
-			, 'on_success': on_success
-			, 'on_error': on_error
-			, 'store': store
-		} );
-
-		return this;
-
-	};
-
-	/* End InDBApp Singleton */
-
-	N.prototype.neurons = {};
-	N.prototype.synapses = {};
-	N.prototype.utilities = {};
+	/* Namespaces */
+
+	Public.prototype = {};
+	Public.prototype.neurons = {};
+	Public.prototype.synapses = {};
+	Public.prototype.utilities = {};
 
 	/* Bridges */
 
@@ -659,11 +50,11 @@ var Neural = (function() {
 	 * 	on_success (function) - optional - success callback
 	 * 	on_error (function) - optional - error callback
 	 */
-	N.prototype.synapses.filterGet = function( key, on_success, on_error ) {
+	Public.prototype.synapses.getStrength = function( key, on_success, on_error ) {
 
 		var success_callback = function( value ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.filterGet error', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.filterGet error', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -671,15 +62,15 @@ var Neural = (function() {
 		};
 
 		var error_callback = function( context ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.filterGet success', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.filterGet success', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
 			}
 		};
 
-		N.prototype.getAttr( {
+		Public.prototype.filterGet( {
 			'key': key
 			, 'store': 'synapses'
 			, 'index': 'id'
@@ -701,11 +92,11 @@ var Neural = (function() {
 
 
 	/* sets the strength of a synapse */
-	N.prototype.synapses.setStrength = function( key, value, expecting, on_success, on_error ) {
+	Public.prototype.synapses.setStrength = function( key, value, expecting, on_success, on_error ) {
 
 		var success_callback = function( value ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.setStrength success', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -713,15 +104,15 @@ var Neural = (function() {
 		};
 
 		var error_callback = function( context ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.synapses.setStrength error', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
 			}
 		};
 
-		N.prototype.setAttr( {
+		Public.prototype.filterUpdate( {
 			'key': key
 			, 'store': 'synapses'
 			, 'index': 'id'
@@ -742,21 +133,21 @@ var Neural = (function() {
 	};
 
 	/* gets a hidden neuron */
-	N.prototype.neurons.getHidden = function( key, on_success, on_error ) {
+	Public.prototype.neurons.getHidden = function( key, on_success, on_error ) {
 
 		return this;
 
 	};
 
 	/* gets an output neuron */
-	N.prototype.neurons.getOutput = function( key, on_success, on_error ) {
+	Public.prototype.neurons.getOutput = function( key, on_success, on_error ) {
 
 		return this;
 
 	};
 
 	/* gets an input neuron */
-	N.prototype.neurons.getInput = function( key, on_success, on_error ) {
+	Public.prototype.neurons.getInput = function( key, on_success, on_error ) {
 
 		return this;
 
@@ -766,13 +157,13 @@ var Neural = (function() {
 
 	/* Neuron */
 
-	N.prototype.neuron = N.prototype.neuron || {};
-	N.prototype.neurons = N.prototype.neurons || {};
+	Public.prototype.neuron = Public.prototype.neuron || {};
+	Public.prototype.neurons = Public.prototype.neurons || {};
 
 	/* Create */
 
-	/* Adapts InDBApp.add */
-	N.prototype.neurons.add = function( request ) {
+	/* Decorates Private.add */
+	Public.prototype.neurons.add = function( request ) {
 		
 		var data = request.data;
 		var on_complete = function() {
@@ -784,7 +175,7 @@ var Neural = (function() {
 
 		for( var x = 0; x < data.length; x++ ) {
 			request.data = data[ x ];
-			InDBApp.add( request );
+			Private.add( request );
 		}
 
 		on_complete();
@@ -793,21 +184,21 @@ var Neural = (function() {
 
 	};
 
-	/* decorates InDBApp.add */
-	N.prototype.neuron.add = function( request ) {
+	/* Decorates Private.add */
+	Public.prototype.neuron.add = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.add( request );		
+		Private.add( request );		
 
 		return this;
 
 	};
 
-	/* Adapts InDBApp.put */
-	N.prototype.neurons.put = function( request ) {
+	/* Decorates Private.put */
+	Public.prototype.neurons.put = function( request ) {
 		
 		var data = request.data;
 		var on_complete = function() {
@@ -819,7 +210,7 @@ var Neural = (function() {
 
 		for( var x = 0; x < data.length; x++ ) {
 			request.data = data[ x ];
-			InDBApp.put( request );
+			Private.put( request );
 		}
 
 		on_complete();
@@ -828,14 +219,14 @@ var Neural = (function() {
 
 	};
 
-	/* decorates InDBApp.put */
-	N.prototype.neuron.put = function( request ) {
+	/* Decorates Private.put */
+	Public.prototype.neuron.put = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.put( request );		
+		Private.put( request );		
 
 		return this;
 
@@ -844,27 +235,27 @@ var Neural = (function() {
 	
 	/* Read */
 
-	/* decorates InDBApp.cursor.get */
-	N.prototype.neurons.get = function( request ) {
+	/* Decorates Private.cursor.get */
+	Public.prototype.neurons.get = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.cursor.get( request );		
+		Private.cursor.get( request );		
 
 		return this;
 
 	};
 
-	/* decorates InDBApp.get */
-	N.prototype.neuron.get = function( request ) {
+	/* Decorates Private.get */
+	Public.prototype.neuron.get = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.get( request );		
+		Private.get( request );		
 
 		return this;
 
@@ -874,27 +265,27 @@ var Neural = (function() {
 
 	/* Strength */
 
-	/* decorates InDBApp.cursor.filterGet */
-	N.prototype.neurons.filterGet = function( request ) {
+	/* Decorates Private.cursor.filterGet */
+	Public.prototype.neurons.filterGet = function( request ) {
 		
 		/* Setup */
 
 		request.attributes = [ 'strength' ];
 
-		InDBApp.cursor.filterGet( request );		
+		Private.cursor.filterGet( request );		
 
 		return this;
 
 	};
 
-	/* decorates InDBApp.filterGet */
-	N.prototype.neuron.filterGet = function( request ) {
+	/* Decorates Private.filterGet */
+	Public.prototype.neuron.filterGet = function( request ) {
 		
 		/* Setup */
 
 		request.attributes = [ 'strength' ];
 
-		InDBApp.filterGet( request );		
+		Private.filterGet( request );		
 
 		return this;
 
@@ -903,27 +294,27 @@ var Neural = (function() {
 
 	/* Update */
 
-	/* Adapts InDBApp.cursor.update */
-	N.prototype.neurons.update = function( request ) {
+	/* Decorates Private.cursor.update */
+	Public.prototype.neurons.update = function( request ) {
 			
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.cursor.update( request );		
+		Private.cursor.update( request );		
 
 		return this;
 
 	};
 
-	/* Adapts InDBApp.cursor.update */
-	N.prototype.neurons.filterUpdate = function( request ) {
+	/* Decorates Private.cursor.update */
+	Public.prototype.neurons.filterUpdate = function( request ) {
 			
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.cursor.filterUpdate( request );		
+		Private.cursor.filterUpdate( request );		
 
 		return this;
 
@@ -931,27 +322,27 @@ var Neural = (function() {
 
 	/* Single Neuron */
 
-	/* Decorates InDBApp.update */
-	N.prototype.neuron.update = function( request ) {
+	/* Decorates Private.update */
+	Public.prototype.neuron.update = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.update( request );		
+		Private.update( request );		
 
 		return this;
 
 	};
 
-	/* Decorates InDBApp.filterUpdate */
-	N.prototype.neuron.filterUpdate = function( request ) {
+	/* Decorates Private.filterUpdate */
+	Public.prototype.neuron.filterUpdate = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.filterUpdate( request );		
+		Private.filterUpdate( request );		
 
 		return this;
 
@@ -960,27 +351,27 @@ var Neural = (function() {
 
 
 	/* Delete */
-	/* Adapts InDBApp.cursor.delete */
-	N.prototype.neurons.delete = function( request ) {
+	/* Decorates Private.cursor.delete */
+	Public.prototype.neurons.delete = function( request ) {
 			
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.cursor.delete( request );		
+		Private.cursor.delete( request );		
 
 		return this;
 
 	};
 
-	/* decorates InDBApp.delete */
-	N.prototype.neuron.delete = function( request ) {
+	/* Decorates Private.delete */
+	Public.prototype.neuron.delete = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'neurons';
 
-		InDBApp.delete( request );		
+		Private.delete( request );		
 
 		return this;
 
@@ -989,12 +380,12 @@ var Neural = (function() {
 
 	/* Synapse */
 
-	N.prototype.synapse = N.prototype.synapse || {};
-	N.prototype.synapses = N.prototype.synapses || {};
+	Public.prototype.synapse = Public.prototype.synapse || {};
+	Public.prototype.synapses = Public.prototype.synapses || {};
 	/* Create */
 
-	/* Adapts InDBApp.add */
-	N.prototype.synapses.add = function( request ) {
+	/* Decorates Private.add */
+	Public.prototype.synapses.add = function( request ) {
 		
 		var data = request.data;
 		var on_complete = function() {
@@ -1006,7 +397,7 @@ var Neural = (function() {
 
 		for( var x = 0; x < data.length; x++ ) {
 			request.data = data[ x ];
-			InDBApp.add( request );
+			Private.add( request );
 		}
 
 		on_complete();
@@ -1015,21 +406,21 @@ var Neural = (function() {
 
 	};
 
-	/* decorates InDBApp.add */
-	N.prototype.synapse.add = function( request ) {
+	/* Decorates Private.add */
+	Public.prototype.synapse.add = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.add( request );		
+		Private.add( request );		
 
 		return this;
 
 	};
 
-	/* Adapts InDBApp.put */
-	N.prototype.synapses.put = function( request ) {
+	/* Decorates Private.put */
+	Public.prototype.synapses.put = function( request ) {
 		
 		var data = request.data;
 		var on_complete = function() {
@@ -1041,7 +432,7 @@ var Neural = (function() {
 
 		for( var x = 0; x < data.length; x++ ) {
 			request.data = data[ x ];
-			InDBApp.put( request );
+			Private.put( request );
 		}
 
 		on_complete();
@@ -1050,14 +441,14 @@ var Neural = (function() {
 
 	};
 
-	/* decorates InDBApp.put */
-	N.prototype.synapse.put = function( request ) {
+	/* Decorates Private.put */
+	Public.prototype.synapse.put = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.put( request );		
+		Private.put( request );		
 
 		return this;
 
@@ -1066,27 +457,27 @@ var Neural = (function() {
 	
 	/* Read */
 
-	/* decorates InDBApp.cursor.get */
-	N.prototype.synapses.get = function( request ) {
+	/* Decorates Private.cursor.get */
+	Public.prototype.synapses.get = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.cursor.get( request );		
+		Private.cursor.get( request );		
 
 		return this;
 
 	};
 
-	/* decorates InDBApp.get */
-	N.prototype.synapse.get = function( request ) {
+	/* Decorates Private.get */
+	Public.prototype.synapse.get = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.get( request );		
+		Private.get( request );		
 
 		return this;
 
@@ -1096,27 +487,27 @@ var Neural = (function() {
 
 	/* Strength */
 
-	/* decorates InDBApp.cursor.filterGet */
-	N.prototype.synapses.filterGet = function( request ) {
+	/* Decorates Private.cursor.filterGet */
+	Public.prototype.synapses.filterGet = function( request ) {
 		
 		/* Setup */
 
 		request.attributes = [ 'strength' ];
 
-		InDBApp.cursor.filterGet( request );		
+		Private.cursor.filterGet( request );		
 
 		return this;
 
 	};
 
-	/* decorates InDBApp.filterGet */
-	N.prototype.synapse.filterGet = function( request ) {
+	/* Decorates Private.filterGet */
+	Public.prototype.synapse.filterGet = function( request ) {
 		
 		/* Setup */
 
 		request.attributes = [ 'strength' ];
 
-		InDBApp.filterGet( request );		
+		Private.filterGet( request );		
 
 		return this;
 
@@ -1125,27 +516,27 @@ var Neural = (function() {
 
 	/* Update */
 
-	/* Adapts InDBApp.cursor.update */
-	N.prototype.synapses.update = function( request ) {
+	/* Decorates Private.cursor.update */
+	Public.prototype.synapses.update = function( request ) {
 			
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.cursor.update( request );		
+		Private.cursor.update( request );		
 
 		return this;
 
 	};
 
-	/* Adapts InDBApp.cursor.update */
-	N.prototype.synapses.filterUpdate = function( request ) {
-			
+	/* Decorates Private.cursor.update */
+	Public.prototype.synapses.filterUpdate = function( request ) {
+		
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.cursor.filterUpdate( request );		
+		Private.cursor.filterUpdate( request );		
 
 		return this;
 
@@ -1153,56 +544,54 @@ var Neural = (function() {
 
 	/* Single Synapse */
 
-	/* Decorates InDBApp.update */
-	N.prototype.synapse.update = function( request ) {
+	/* Decorates Private.update */
+	Public.prototype.synapse.update = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.update( request );		
+		Private.update( request );		
 
 		return this;
 
 	};
 
-	/* Decorates InDBApp.filterUpdate */
-	N.prototype.synapse.filterUpdate = function( request ) {
+	/* Decorates Private.filterUpdate */
+	Public.prototype.synapse.filterUpdate = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.filterUpdate( request );		
+		Private.filterUpdate( request );		
 
 		return this;
 
 	};
-
-
 
 	/* Delete */
-	/* Adapts InDBApp.cursor.delete */
-	N.prototype.synapses.delete = function( request ) {
+	/* Decorates Private.cursor.delete */
+	Public.prototype.synapses.delete = function( request ) {
 			
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.cursor.delete( request );		
+		Private.cursor.delete( request );		
 
 		return this;
 
 	};
 
-	/* decorates InDBApp.delete */
-	N.prototype.synapse.delete = function( request ) {
+	/* Decorates Private.delete */
+	Public.prototype.synapse.delete = function( request ) {
 		
 		/* Setup */
 
 		request.store = 'synapses';
 
-		InDBApp.delete( request );		
+		Private.delete( request );		
 
 		return this;
 
@@ -1211,28 +600,27 @@ var Neural = (function() {
 	/* End Primitives */
 
 
-
 	// Adds one or more neuron synapses to the network
-	N.prototype.synapses = N.prototype.synapses || {};
+	Public.prototype.synapses = Public.prototype.synapses || {};
 
-	N.prototype.synapses.add = function( request ) {
+	Public.prototype.synapses.add = function( request ) {
 		var synapses = request.neurons || request.neuron;
 		var nodes = [];
 
 		var on_success = function( result ) {
-			console.log( 'N.prototype.neuron.add success', result );
+			console.log( 'Public.prototype.neuron.add success', result );
 			if( 'function' === typeof request.on_success ) {
 				request.on_success( result );
 			}
 		};
 		var on_error = function( context ) {
-			console.log( 'N.prototype.neuron.add error', context );
+			console.log( 'Public.prototype.neuron.add error', context );
 			if( 'function' === typeof request.on_error ) {
 				request.on_error( result );
 			}
 		};
 		var on_complete = function() {
-			console.log( 'N.prototype.neuron.add complete' );
+			console.log( 'Public.prototype.neuron.add complete' );
 			if( 'function' === typeof request.on_complete ) {
 				request.on_complete();
 			}
@@ -1264,7 +652,7 @@ var Neural = (function() {
 		}
 
 		for( var x = 0; x < nodes.length; x++ ) {
-			N.prototype.synapse.add( { 'synapses': nodes[ x ], 'on_success': on_success, 'on_error': on_error } );
+			Public.prototype.synapse.add( { 'synapses': nodes[ x ], 'on_success': on_success, 'on_error': on_error } );
 		}
 		if( 'undefined' !== typeof on_complete ) {
 			on_complete();
@@ -1277,11 +665,11 @@ var Neural = (function() {
 
 	/* queries a network for active output neurons
 	 * takes an input and weight matrix and returns a normalized score */
-	N.prototype.queryNetwork = function( weight_matrix, on_success, on_error ) {
+	Public.prototype.queryNetwork = function( weight_matrix, on_success, on_error ) {
 
 		var success_callback = function( value ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.queryNetwork success', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.queryNetwork success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -1289,8 +677,8 @@ var Neural = (function() {
 		};
 
 		var error_callback = function( context ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.queryNetwork error', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.queryNetwork error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -1305,11 +693,11 @@ var Neural = (function() {
 	/* builds an in memory representation of relevant 
 	 * neurons and their connections of an MLP such
 	 * that it can be queried */
-	N.prototype.buildNetwork = function( on_success, on_error ) {
+	Public.prototype.buildNetwork = function( on_success, on_error ) {
 
 		var success_callback = function( value ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.buildNetwork success', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.buildNetwork success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -1317,8 +705,8 @@ var Neural = (function() {
 		};
 
 		var error_callback = function( context ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.buildNetwork error', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.buildNetwork error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -1331,11 +719,11 @@ var Neural = (function() {
 	};
 
 	/* */
-	N.prototype.buildWeightMatrix = function( on_success, on_error ) {
+	Public.prototype.buildWeightMatrix = function( on_success, on_error ) {
 
 		var success_callback = function( value ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.buildWeightMatrix success', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.buildWeightMatrix success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -1343,8 +731,8 @@ var Neural = (function() {
 		};
 
 		var error_callback = function( context ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.buildWeightMatrix error', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.buildWeightMatrix error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -1357,11 +745,11 @@ var Neural = (function() {
 	};
 
 	/* trains an MLP using the standard 'backpropigation' algo */
-	N.prototype.trainNetwork = function( on_success, on_error ) {
+	Public.prototype.trainNetwork = function( on_success, on_error ) {
 
 		var success_callback = function( value ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.trainNetwork success', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.trainNetwork success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -1369,8 +757,8 @@ var Neural = (function() {
 		};
 
 		var error_callback = function( context ) {
-			if( !!N.prototype.debug ) {
-				console.log( 'N.prototype.trainNetwork error', value );
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.trainNetwork error', value );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -1387,7 +775,7 @@ var Neural = (function() {
 
 	/* Shorthand Map */
 
-	N.prototype.synapses.shorthand_map = {
+	Public.prototype.synapses.shorthand_map = {
 		'id': 'i',
 		'to': 't',
 		'from': 'f',
@@ -1397,7 +785,7 @@ var Neural = (function() {
 		'payload': 'p'
 	};
 
-	N.prototype.neurons.shorthand_map = {
+	Public.prototype.neurons.shorthand_map = {
 		'id': 'i',
 		'display': 'd',
 		'display_alternatives': 'a',
@@ -1406,7 +794,7 @@ var Neural = (function() {
 		'parents': 'p'
 	};
 
-	N.prototype.neurons.install = function ( ) {
+	Public.prototype.neurons.install = function ( ) {
 
 		var indexes = {
 			'primary': {
@@ -1423,14 +811,14 @@ var Neural = (function() {
 			console.log( 'Neural_neurons_install', indexes );
 		}
 
-		N.prototype.install( { 'store': 'neurons', 'indexes': indexes, 'on_success': function( context ) {
+		Public.prototype.install( { 'store': 'neurons', 'indexes': indexes, 'on_success': function( context ) {
 			console.log( 'Neural neurons installed', context );
 		} } );
 
 	}
 
 	/* Synapses */
-	N.prototype.synapses.install = function ( ) {
+	Public.prototype.synapses.install = function ( ) {
 
 		var indexes = {
 			'primary': {
@@ -1446,7 +834,7 @@ var Neural = (function() {
 
 		console.log( 'Neural_synapses_install', indexes );
 
-		N.prototype.install( { 'store': 'synapses', 'indexes': indexes, 'on_success': function( context ) {
+		Public.prototype.install( { 'store': 'synapses', 'indexes': indexes, 'on_success': function( context ) {
 			console.log( 'Neural neurons installed', context );
 		} } );
 
@@ -1457,11 +845,11 @@ var Neural = (function() {
 	//global that stores the maps for various dbs
 	var shorthand_maps = {};
 
-	N.prototype.shorthand = N.prototype.shorthand || {};
-	N.prototype.shorthand.map = N.prototype.shorthand.map || {};
+	Public.prototype.shorthand = Public.prototype.shorthand || {};
+	Public.prototype.shorthand.map = Public.prototype.shorthand.map || {};
 
 	// Private object setter
-	N.prototype.shorthand.map.set = function( request ) {
+	Public.prototype.shorthand.map.set = function( request ) {
 		var on_error = request.on_error;
 		var on_success = request.on_success;
 		if( 'undefined' === shorthand_maps ) {
@@ -1487,22 +875,22 @@ var Neural = (function() {
 	};
 
 	// Private object getter
-	N.prototype.shorthand.map.get = function( store ) {
+	Public.prototype.shorthand.map.get = function( store ) {
 		if( 'undefined' == shorthand_maps ) return null;
 		var result = shorthand_maps[ store ]; 
 		return ( 'undefined' == typeof result ) ? null : result;
 	};
 
-	N.prototype.shorthand.get = function ( request ) {
+	Public.prototype.shorthand.get = function ( request ) {
 
 		/* Setup */
 
-		var shorthand_map = N.prototype.shorthand.map.get( request.network );
+		var shorthand_map = Public.prototype.shorthand.map.get( request.network );
 
 		/* Debug */
 
-		if( !!N.prototype.debug ) {
-			console.log("N.prototype.shorthand.get map", shorthand_map);
+		if( !!Public.prototype.debug ) {
+			console.log("Public.prototype.shorthand.get map", shorthand_map);
 		}
 
 		/* Work */
@@ -1516,13 +904,13 @@ var Neural = (function() {
 	};
 
 
-	N.prototype.shorthand.reverse = function ( request ) {
+	Public.prototype.shorthand.reverse = function ( request ) {
 		var k = request.key;
 		var reversed = {};
-		var shorthand_map = N.prototype.shorthand.map.get( request.databaes );
+		var shorthand_map = Public.prototype.shorthand.map.get( request.databaes );
 		for( var item in shorthand_map ) {
 			if( shorthand_map.hasOwnProperty( item ) ) {
-				reversed[ N.prototype.shorthand.get( item ) ] = item;
+				reversed[ Public.prototype.shorthand.get( item ) ] = item;
 			}
 		}
 		if( 'undefined' !== typeof reversed[ k ] ) {
@@ -1534,7 +922,7 @@ var Neural = (function() {
 
 
 //recursive
-	N.prototype.shorthand.decode = function( request ) {
+	Public.prototype.shorthand.decode = function( request ) {
 		var encoded = {};
 		var total = 0;
 		var object = request.data;
@@ -1544,10 +932,10 @@ var Neural = (function() {
 				//base case: string value
 				var value = object[ itemobj ];
 				if( 'object' === typeof value ) {
-					encoded[ N.prototype.shorthand.reverse( { 'store': request.network, 'data': itemobj } ) ] = N.prototype.shorthand.decode( { 'database': request.database, 'data': value } );
+					encoded[ Public.prototype.shorthand.reverse( { 'store': request.network, 'data': itemobj } ) ] = Public.prototype.shorthand.decode( { 'database': request.database, 'data': value } );
 					delete value;
 				} else { 
-					encoded[ N.prototype.shorthand.reverse( { 'store': request.network, 'data': itemobj } ) ] = value;
+					encoded[ Public.prototype.shorthand.reverse( { 'store': request.network, 'data': itemobj } ) ] = value;
 					delete value;
 				}
 			}
@@ -1562,7 +950,7 @@ var Neural = (function() {
 
 
 	//recursive
-	N.prototype.shorthand.encode = function( request ) {
+	Public.prototype.shorthand.encode = function( request ) {
 		var encoded = {};
 		var object = request.data;
 		for( var item in object ) {
@@ -1571,9 +959,9 @@ var Neural = (function() {
 				//base case: string value
 
 				if( 'object' === typeof object[ item ] ) {
-					encoded[ N.prototype.shorthand.get( { 'store': request.network, 'key': item } ) ] = N.prototype.shorthand.encode( { 'store': request.network, 'data': object[ item ] } );	
+					encoded[ Public.prototype.shorthand.get( { 'store': request.network, 'key': item } ) ] = Public.prototype.shorthand.encode( { 'store': request.network, 'data': object[ item ] } );	
 				} else { 
-					encoded[ N.prototype.shorthand.get( { 'store': request.network, 'key': item } ) ] = object[ item ];
+					encoded[ Public.prototype.shorthand.get( { 'store': request.network, 'key': item } ) ] = object[ item ];
 				}
 			}
 		}
@@ -1584,26 +972,26 @@ var Neural = (function() {
 	/* Bridge methods */
 
 	// Adds one or more neuron neurons to the network
-	N.prototype.neurons = N.prototype.neurons || {};
+	Public.prototype.neurons = Public.prototype.neurons || {};
 
-	N.prototype.neurons.add = function( request ) {
+	Public.prototype.neurons.add = function( request ) {
 		var neurons = request.neurons || request.neuron;
 		var nodes = [];
 
 		var on_success = function( result ) {
-			console.log( 'N.prototype.neuron.add success', result );
+			console.log( 'Public.prototype.neuron.add success', result );
 			if( 'function' === typeof request.on_success ) {
 				request.on_success( result );
 			}
 		};
 		var on_error = function( context ) {
-			console.log( 'N.prototype.neuron.add error', context );
+			console.log( 'Public.prototype.neuron.add error', context );
 			if( 'function' === typeof request.on_error ) {
 				request.on_error( result );
 			}
 		};
 		var on_complete = function() {
-			console.log( 'N.prototype.neuron.add complete' );
+			console.log( 'Public.prototype.neuron.add complete' );
 			if( 'function' === typeof request.on_complete ) {
 				request.on_complete();
 			}
@@ -1635,7 +1023,7 @@ var Neural = (function() {
 		}
 
 		for( var x = 0; x < nodes.length; x++ ) {
-			N.prototype.neuron.add( { 'neurons': nodes[ x ], 'on_success': on_success, 'on_error': on_error } );
+			Public.prototype.neuron.add( { 'neurons': nodes[ x ], 'on_success': on_success, 'on_error': on_error } );
 		}
 		if( 'undefined' !== typeof on_complete ) {
 			on_complete();
