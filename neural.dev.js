@@ -801,7 +801,7 @@ var Neural = (function() {
 				'key': 'id'
 				, 'incrementing': true
 				, 'unique': true
-			}, 'id': true
+			}, 'id': false
 			, 'display': false
 			, 'type': false
 			, 'slug': false
