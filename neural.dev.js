@@ -377,7 +377,6 @@ var Neural = (function() {
 
 	};
 
-
 	/* Synapse */
 
 	Public.prototype.synapse = Public.prototype.synapse || {};
@@ -600,27 +599,27 @@ var Neural = (function() {
 	/* End Primitives */
 
 
-	// Adds one or more neuron synapses to the network
+	// Adds one or more synapse synapses to the network
 	Public.prototype.synapses = Public.prototype.synapses || {};
 
 	Public.prototype.synapses.add = function( request ) {
-		var synapses = request.neurons || request.neuron;
+		var synapses = request.synapses || request.synapse;
 		var nodes = [];
 
 		var on_success = function( result ) {
-			console.log( 'Public.prototype.neuron.add success', result );
+			console.log( 'Public.prototype.synapses.add success', result );
 			if( 'function' === typeof request.on_success ) {
 				request.on_success( result );
 			}
 		};
 		var on_error = function( context ) {
-			console.log( 'Public.prototype.neuron.add error', context );
+			console.log( 'Public.prototype.synapses.add error', context );
 			if( 'function' === typeof request.on_error ) {
 				request.on_error( result );
 			}
 		};
 		var on_complete = function() {
-			console.log( 'Public.prototype.neuron.add complete' );
+			console.log( 'Public.prototype.synapses.add complete' );
 			if( 'function' === typeof request.on_complete ) {
 				request.on_complete();
 			}
@@ -629,7 +628,7 @@ var Neural = (function() {
 		if( 'undefined' === typeof synapses.length ) {
 			var next = {};
 			if( 'undefined' === typeof synapses || 'undefined' === typeof synapses.data ) {
-				on_error( new Error( 'neuron data cannot be empty' ) );
+				on_error( new Error( 'synapses data cannot be empty' ) );
 				return;
 			}
 			for( attr in synapses.data ) {
@@ -641,7 +640,7 @@ var Neural = (function() {
 				var synapse = synapses[ x ];
 				var next = {};
 				if( 'undefined' === typeof synapse || 'undefined' === typeof synapse.data ) {
-					on_error( new Error( 'neuron data cannot be empty' ) );
+					on_error( new Error( 'synapses data cannot be empty' ) );
 					return;
 				}
 				for( attr in synapse.data ) {
