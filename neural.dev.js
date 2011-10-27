@@ -801,10 +801,10 @@ var Neural = (function() {
 				'key': 'id'
 				, 'incrementing': true
 				, 'unique': true
-			}, 'id': true,
-			'display': true,
-			'type': true,
-			'slug': true
+			}, 'id': true
+			, 'display': false
+			, 'type': false
+			, 'slug': false
 		};
 
 		if( !!Neural.install ) {
