@@ -811,7 +811,7 @@ var Neural = (function() {
 			console.log( 'Neural_neurons_install', indexes );
 		}
 
-		Public.prototype.install( { 'store': 'neurons', 'indexes': indexes, 'on_success': function( context ) {
+		Private.install( { 'store': 'neurons', 'indexes': indexes, 'on_success': function( context ) {
 			console.log( 'Neural neurons installed', context );
 		} } );
 
@@ -834,7 +834,7 @@ var Neural = (function() {
 
 		console.log( 'Neural_synapses_install', indexes );
 
-		Public.prototype.install( { 'store': 'synapses', 'indexes': indexes, 'on_success': function( context ) {
+		Private.install( { 'store': 'synapses', 'indexes': indexes, 'on_success': function( context ) {
 			console.log( 'Neural neurons installed', context );
 		} } );
 
