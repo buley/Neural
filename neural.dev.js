@@ -803,6 +803,7 @@ var Neural = (function() {
 				, 'unique': true
 			}
 			, 'display': false
+			, 'id': true
 			, 'type': false
 			, 'slug': false
 		};
@@ -826,9 +827,10 @@ var Neural = (function() {
 				, 'incrementing': true
 				, 'unique': true
 			}
+			, 'from': false
+			, 'id': true
 			, 'type': false
 			, 'to': false
-			, 'from': false
 			, 'strength': false
 		};
 
