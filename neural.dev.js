@@ -8,7 +8,6 @@ var Neural = (function() {
 
 	/* PRIVATE */
 
-
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
 	
@@ -38,7 +37,9 @@ var Neural = (function() {
 	/* Namespaces */
 
 	Public.prototype = {};
+	Public.prototype.neuron = {};
 	Public.prototype.neurons = {};
+	Public.prototype.synapse = {};
 	Public.prototype.synapses = {};
 	Public.prototype.utilities = {};
 
