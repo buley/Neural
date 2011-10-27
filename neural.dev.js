@@ -1030,7 +1030,7 @@ var Neural = (function() {
 		return this;
 	};
 
-	return N;
+	return Public;
 
 } )();
 
