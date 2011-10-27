@@ -826,10 +826,10 @@ var Neural = (function() {
 				, 'incrementing': true
 				, 'unique': true
 			}
-			'type': false,
-			'to': false,
-			'from': false,
-			'strength': false
+			, 'type': false
+			, 'to': false
+			, 'from': false
+			, 'strength': false
 		};
 
 		console.log( 'Neural_synapses_install', indexes );
