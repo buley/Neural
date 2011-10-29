@@ -803,7 +803,7 @@ var Neural = (function() {
 			'primary': {
 				'key': 'id'
 				, 'incrementing': true
-				, 'unique': true
+				, 'unique': false
 			}
 			, 'display': false
 			, 'id': false
@@ -828,10 +828,10 @@ var Neural = (function() {
 			'primary': {
 				'key': 'id'
 				, 'incrementing': true
-				, 'unique': true
+				, 'unique': false
 			}
 			, 'from': false
-			, 'id': false
+			, 'id': true
 			, 'type': false
 			, 'to': false
 			, 'strength': false
