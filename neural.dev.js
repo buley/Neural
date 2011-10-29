@@ -113,9 +113,12 @@ var Neural = (function() {
 			}
 		};
 
+		var data = {};
+		data[ key ] = value;
+
 		Public.prototype.filterUpdate( {
-			'key': key
-			, 'store': 'synapses'
+			'store': 'synapses'
+			, 'data': data
 			, 'index': 'id'
 			, 'expecting': ( 'undefined' !== typeof expecting ) ? expecting : null
 			, 'on_success': function( value ) {
