@@ -831,7 +831,7 @@ var Neural = (function() {
 				, 'unique': true
 			}
 			, 'from': false
-			, 'id': FALSE
+			, 'id': false
 			, 'type': false
 			, 'to': false
 			, 'strength': false
