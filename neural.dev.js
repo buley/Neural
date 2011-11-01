@@ -43,101 +43,55 @@ var Neural = (function() {
 	Public.prototype.synapses = {};
 	Public.prototype.utilities = {};
 
-	/* Bridges */
-
-	/* gets the strength of a synapse */
-	/* arguments: 
-	 * 	key (string) - required - unique numerical id for the synapse
-	 * 	on_success (function) - optional - success callback
-	 * 	on_error (function) - optional - error callback
-	 */
-	Public.prototype.synapses.getStrength = function( key, on_success, on_error ) {
-
-		var success_callback = function( value ) {
-			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.synapses.filterGet error', value );
-			}
-			if( 'function' == typeof on_success ) {
-				on_success( value );
-			}
-		};
-
-		var error_callback = function( context ) {
-			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.synapses.filterGet success', value );
-			}
-			if( 'function' == typeof on_error ) {
-				on_error( context );
-			}
-		};
-
-		Public.prototype.filterGet( {
-			'key': key
-			, 'store': 'synapses'
-			, 'index': 'id'
-			, 'on_success': function( value ) {
-				if( 'function' == typeof success_callback ) {
-					var result = ( 'undefined' !== value && 'undefined' !== value.strength ) ? value.strength : null;
-					success_callback( result );
-				}
-			}, 'on_error': function( context ) {
-				if( 'function' == typeof error_callback ) {
-					error_callback( context );
-				}		
-			}
-		} );
-
-		return this;
-
-	};
-
-
-	/* sets the strength of a synapse */
-	Public.prototype.synapses.setStrength = function( key, value, expecting, on_success, on_error ) {
-
-		var success_callback = function( value ) {
-			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.synapses.setStrength success', value );
-			}
-			if( 'function' == typeof on_success ) {
-				on_success( value );
-			}
-		};
-
-		var error_callback = function( context ) {
-			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.synapses.setStrength error', value );
-			}
-			if( 'function' == typeof on_error ) {
-				on_error( context );
-			}
-		};
-
-		var data = {};
-		data[ key ] = value;
-
-		Public.prototype.filterUpdate( {
-			'store': 'synapses'
-			, 'data': data
-			, 'index': 'id'
-			, 'expecting': ( 'undefined' !== typeof expecting ) ? expecting : null
-			, 'on_success': function( value ) {
-				if( 'function' == typeof success_callback ) {
-					success_callback( value );
-				}
-			}, 'on_error': function( context ) {
-				if( 'function' == typeof error_callback ) {
-					error_callback( context );
-				}		
-			}
-		} );
-
-		return this;
-
-	};
-
 	/* gets a hidden neuron */
-	Public.prototype.neurons.getHidden = function( key, on_success, on_error ) {
+	/* {
+	 *	'
+	 * } 
+	 */
+	Public.prototype.neurons.getHidden = function( request ) {
+
+		/* Setup */
+
+		var req = new Object();
+		for( attr in request ) {
+			req[ attr ] = request[ attr ];
+		}
+
+		var on_success = request.on_success;
+		var on_error = request.on_error;
+		
+		req.expecting = request.expecting || {};
+		req.type = hidden;
+
+		req.on_success = function( value ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getHidden success', value );
+			}
+
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		req.on_error = function( context ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getHidden error', context );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		req.on_complete = function() {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getHidden complete' );
+			}
+			if( 'function' == typeof on_complete ) {
+				on_complete();
+			}
+		};
+
+		Public.prototype.neurons.get( req );
 
 		return this;
 
@@ -146,12 +100,96 @@ var Neural = (function() {
 	/* gets an output neuron */
 	Public.prototype.neurons.getOutput = function( key, on_success, on_error ) {
 
+		var on_success = request.on_success;
+		var on_error = request.on_error;
+
+		var req = new Object();
+		for( attr in request ) {
+			req[ attr ] = request[ attr ];
+		}
+
+		req.expecting = {
+			'type': 'output'
+		};
+
+		req.on_success = function( value ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getOutput success', value );
+			}
+
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		req.on_error = function( context ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getOutput error', context );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		req.on_complete = function() {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getOutput complete' );
+			}
+			if( 'function' == typeof on_complete ) {
+				on_complete();
+			}
+		};
+
+		Public.prototype.neurons.get( req );
+
 		return this;
 
 	};
 
 	/* gets an input neuron */
 	Public.prototype.neurons.getInput = function( key, on_success, on_error ) {
+
+		var on_success = request.on_success;
+		var on_error = request.on_error;
+
+		var req = new Object();
+		for( attr in request ) {
+			req[ attr ] = request[ attr ];
+		}
+
+		req.expecting = {
+			'type': 'input'
+		};
+
+		req.on_success = function( value ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getInput success', value );
+			}
+
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		req.on_error = function( context ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getInput error', context );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		req.on_complete = function() {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.neurons.getInput complete' );
+			}
+			if( 'function' == typeof on_complete ) {
+				on_complete();
+			}
+		};
+
+		Public.prototype.neurons.get( req );
 
 		return this;
 
@@ -265,37 +303,6 @@ var Neural = (function() {
 
 	};
 
-	/* Get Attributes */
-
-	/* Strength */
-
-	/* Decorates Private.cursor.filterGet */
-	Public.prototype.neurons.filterGet = function( request ) {
-		
-		/* Setup */
-
-		request.attributes = [ 'strength' ];
-
-		Private.cursor.filterGet( request );		
-
-		return this;
-
-	};
-
-	/* Decorates Private.filterGet */
-	Public.prototype.neuron.filterGet = function( request ) {
-		
-		/* Setup */
-
-		request.attributes = [ 'strength' ];
-
-		Private.filterGet( request );		
-
-		return this;
-
-	};
-
-
 	/* Update */
 
 	/* Decorates Private.cursor.update */
@@ -306,19 +313,6 @@ var Neural = (function() {
 		request.store = 'neurons';
 
 		Private.cursor.update( request );		
-
-		return this;
-
-	};
-
-	/* Decorates Private.cursor.update */
-	Public.prototype.neurons.filterUpdate = function( request ) {
-			
-		/* Setup */
-
-		request.store = 'neurons';
-
-		Private.cursor.filterUpdate( request );		
 
 		return this;
 
@@ -338,20 +332,6 @@ var Neural = (function() {
 		return this;
 
 	};
-
-	/* Decorates Private.filterUpdate */
-	Public.prototype.neuron.filterUpdate = function( request ) {
-		
-		/* Setup */
-
-		request.store = 'neurons';
-
-		Private.filterUpdate( request );		
-
-		return this;
-
-	};
-
 
 
 	/* Delete */
@@ -409,18 +389,40 @@ var Neural = (function() {
 
 	};
 
+
 	/* Decorates Private.add */
+	/*
+	 * Arguments:
+	 *	request.to ( requred )
+	 *	request.from ( required )
+	 *	request.type ( required )
+	 *	request.stength ( required )
+	 *	request.on_success ( optional )
+	 *	request.on_error ( optional )
+	 *	request.* ( optional )
+	 */
 	Public.prototype.synapse.add = function( request ) {
 		
 		/* Setup */
 
-		request.store = 'synapses';
+		var req = {};
 
-		Private.add( request );		
+		var on_success = request.on_success;
+		delete request.on_success;
+
+		var on_error = request.on_error;
+		delete request.on_error;
+
+		req.data = request;
+
+		req.store = 'synapses';
+
+		Private.add( req );		
 
 		return this;
 
 	};
+
 
 	/* Decorates Private.put */
 	Public.prototype.synapses.put = function( request ) {
@@ -443,6 +445,7 @@ var Neural = (function() {
 		return this;
 
 	};
+
 
 	/* Decorates Private.put */
 	Public.prototype.synapse.put = function( request ) {
@@ -473,6 +476,7 @@ var Neural = (function() {
 
 	};
 
+
 	/* Decorates Private.get */
 	Public.prototype.synapse.get = function( request ) {
 		
@@ -486,38 +490,9 @@ var Neural = (function() {
 
 	};
 
-	/* Get Attributes */
-
-	/* Strength */
-
-	/* Decorates Private.cursor.filterGet */
-	Public.prototype.synapses.filterGet = function( request ) {
-		
-		/* Setup */
-
-		request.attributes = [ 'strength' ];
-
-		Private.cursor.filterGet( request );		
-
-		return this;
-
-	};
-
-	/* Decorates Private.filterGet */
-	Public.prototype.synapse.filterGet = function( request ) {
-		
-		/* Setup */
-
-		request.attributes = [ 'strength' ];
-
-		Private.filterGet( request );		
-
-		return this;
-
-	};
-
 
 	/* Update */
+
 
 	/* Decorates Private.cursor.update */
 	Public.prototype.synapses.update = function( request ) {
@@ -532,19 +507,7 @@ var Neural = (function() {
 
 	};
 
-	/* Decorates Private.cursor.update */
-	Public.prototype.synapses.filterUpdate = function( request ) {
-		
-		/* Setup */
-
-		request.store = 'synapses';
-
-		Private.cursor.filterUpdate( request );		
-
-		return this;
-
-	};
-
+	
 	/* Single Synapse */
 
 	/* Decorates Private.update */
@@ -560,19 +523,7 @@ var Neural = (function() {
 
 	};
 
-	/* Decorates Private.filterUpdate */
-	Public.prototype.synapse.filterUpdate = function( request ) {
-		
-		/* Setup */
-
-		request.store = 'synapses';
-
-		Private.filterUpdate( request );		
-
-		return this;
-
-	};
-
+	
 	/* Delete */
 	/* Decorates Private.cursor.delete */
 	Public.prototype.synapses.delete = function( request ) {
@@ -587,6 +538,7 @@ var Neural = (function() {
 
 	};
 
+
 	/* Decorates Private.delete */
 	Public.prototype.synapse.delete = function( request ) {
 		
@@ -600,71 +552,190 @@ var Neural = (function() {
 
 	};
 
+
 	/* End Primitives */
 
+	/* Conveniences */
 
-	// Adds one or more synapse synapses to the network
-	Public.prototype.synapses = Public.prototype.synapses || {};
+	/* Single */
 
-	Public.prototype.synapses.add = function( request ) {
-		var synapses = request.synapses || request.synapse;
-		var nodes = [];
+	/* Gets the strength of a synapse */
+	/* Decorates Public.prototype.synapses.get */
+	Public.prototype.synapse.getStrength = function( request ) {
 
-		var on_success = function( result ) {
-			console.log( 'Public.prototype.synapses.add success', result );
-			if( 'function' === typeof request.on_success ) {
-				request.on_success( result );
-			}
-		};
-		var on_error = function( context ) {
-			console.log( 'Public.prototype.synapses.add error', context );
-			if( 'function' === typeof request.on_error ) {
-				request.on_error( result );
-			}
-		};
-		var on_complete = function() {
-			console.log( 'Public.prototype.synapses.add complete' );
-			if( 'function' === typeof request.on_complete ) {
-				request.on_complete();
-			}
-		};
+		var key = request.key;
+		var on_success = request.on_success;
+		var on_error = request.on_error;
 
-		if( 'undefined' === typeof synapses.length ) {
-			var next = {};
-			if( 'undefined' === typeof synapses || 'undefined' === typeof synapses.data ) {
-				on_error( new Error( 'synapses data cannot be empty' ) );
-				return;
-			}
-			for( attr in synapses.data ) {
-				next[ attr ] = synapses.data[ attr ];
-			}
-			nodes.push( next );
-		} else {
-			for( var x = 0; x < synapses.length; x++ ) {
-				var synapse = synapses[ x ];
-				var next = {};
-				if( 'undefined' === typeof synapse || 'undefined' === typeof synapse.data ) {
-					on_error( new Error( 'synapses data cannot be empty' ) );
-					return;
-				}
-				for( attr in synapse.data ) {
-					next[ attr ] = synapse.data[ attr ];
-				}
-				nodes.push( next );
-			}
+		var req = new Object();
+		for( attr in request ) {
+			req[ attr ] = request[ attr ];
 		}
 
-		for( var x = 0; x < nodes.length; x++ ) {
-			Public.prototype.synapse.add( { 'synapses': nodes[ x ], 'on_success': on_success, 'on_error': on_error } );
-		}
-		if( 'undefined' !== typeof on_complete ) {
-			on_complete();
-		}
+		req.on_success = function( value ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		req.on_error = function( context ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength error', context );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+	
+		Public.prototype.synapse.get( req );
+
 		return this;
+		
 	};
 
 
+	/* Sets the strength of a synapse */	
+	/* Decorates Public.prototype.synapse.update */
+	Public.prototype.synapse.setStrength = function( request ) {
 
+		var value = request.value;
+		var on_success = request.on_success;
+		var on_error = request.on_error;
+
+		var req = new Object();
+		for( attr in request ) {
+			req[ attr ] = request[ attr ];
+		}
+
+		req.on_success = function( value ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength success', value );
+			}
+
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		req.on_error = function( context ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength error', context );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		req.data = { 'strength': value };
+
+		Public.prototype.synapse.update( req );
+
+		return this;
+
+	};
+
+	/* Multi */
+
+	/* Gets the strength of a synapse */
+	/* Decorates Public.prototype.synapses.get */
+	Public.prototype.synapses.getStrength = function( request ) {
+
+		var key = request.key;
+		var on_success = request.on_success;
+		var on_error = request.on_error;
+		var on_complete = request.on_complete;
+
+		var req = new Object();
+		for( attr in request ) {
+			req[ attr ] = request[ attr ];
+		}
+
+		req.on_success = function( value ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength success', value );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		req.on_error = function( context ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength error', context );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		req.on_complete = function() {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength complete' );
+			}
+			if( 'function' == typeof on_complete ) {
+				on_complete();
+			}
+		}
+		
+		Public.prototype.synapses.get( req );
+
+		return this;
+		
+	};
+
+
+	/* Sets the strength of a synapse */
+	/* Decorates Public.prototype.synapses.update */
+	Public.prototype.synapses.setStrength = function( request ) {
+
+		var value = request.value;
+		var on_success = request.on_success;
+		var on_error = request.on_error;
+		var on_complete = request.on_complete;
+
+		var req = new Object();
+		for( attr in request ) {
+			req[ attr ] = request[ attr ];
+		}
+
+		req.on_success = function( value ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength success', value );
+			}
+
+			if( 'function' == typeof on_success ) {
+				on_success( value );
+			}
+		};
+
+		req.on_error = function( context ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength error', context );
+			}
+			if( 'function' == typeof on_error ) {
+				on_error( context );
+			}
+		};
+
+		req.on_complete = function() {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.synapses.setStrength complete' );
+			}
+			if( 'function' == typeof on_complete ) {
+				on_complete();
+			}
+		}
+	
+		req.data = { 'strength': value };
+
+		Public.prototype.synapses.update( req );
+
+		return this;
+
+	};
 
 	/* queries a network for active output neurons
 	 * takes an input and weight matrix and returns a normalized score */
@@ -689,7 +760,6 @@ var Neural = (function() {
 		};
 
 		return this;
-
 
 	};
 
@@ -717,7 +787,6 @@ var Neural = (function() {
 		};
 
 		return this;
-
 
 	};
 
