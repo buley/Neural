@@ -104,28 +104,6 @@
 
 				return this;
 			}
-
-			TopicNetwork.prototype.utils = TopicNetwork.prototype.utils || {};
-
-			TopicNetwork.prototype.utils.alphaSortArray = function( unsorted ) {
-				return unsorted.sort( TopicNetwork.prototype.utils.alphaSort );
-			};
-
-			TopicNetwork.prototype.utils.alphaSort = function( a, b ) {
-				// http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
-				var reA = /[^a-zA-Z]/g;
-				var reN = /[^0-9]/g;
-				var aA = a.replace(reA, "");
-				var bA = b.replace(reA, "");
-				if(aA === bA) {
-					var aN = parseInt(a.replace(reN, ""), 10);
-					var bN = parseInt(b.replace(reN, ""), 10);
-					return aN === bN ? 0 : aN > bN ? 1 : -1;
-				} else {
-					return aA > bA ? 1 : -1;
-				}
-			}
-		
 			// Takes an array of topic_ids and returns a unique hash
 			TopicNetwork.prototype.utils.topicsToId = function( topics ) {
 				var sorted_topics = TopicNetwork.prototype.utils.alphaSortArray( topics );
