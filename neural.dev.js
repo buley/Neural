@@ -1004,15 +1004,15 @@ var Neural = (function() {
 			}
 		};
 
-		if( 'synapses' === 'type' ) {
+		if( 'synapses' === type ) {
 			req.on_complete = on_complete;
 			Public.prototype.synapses.add( req );
-		} else if( 'synapse' === 'type' ) {
+		} else if( 'synapse' === type ) {
 			Public.prototype.synapse.add( req );
-		} else if( 'neurons' === 'type' ) {
+		} else if( 'neurons' === type ) {
 			req.on_complete = on_complete;
 			Public.prototype.neurons.add( req );
-		} else if( 'neuron' === 'type' ) {
+		} else if( 'neuron' === type ) {
 			Public.prototype.neuron.add( req );
 		}
 
@@ -1064,15 +1064,15 @@ var Neural = (function() {
 			}
 		};
 
-		if( 'synapses' === 'type' ) {
+		if( 'synapses' === type ) {
 			req.on_complete = on_complete;
 			Public.prototype.synapses.put( req );
-		} else if( 'synapse' === 'type' ) {
+		} else if( 'synapse' === type ) {
 			Public.prototype.synapse.put( req );
-		} else if( 'neurons' === 'type' ) {
+		} else if( 'neurons' === type ) {
 			req.on_complete = on_complete;
 			Public.prototype.neurons.put( req );
-		} else if( 'neuron' === 'type' ) {
+		} else if( 'neuron' === type ) {
 			Public.prototype.neuron.put( req );
 		}
 
@@ -1124,15 +1124,15 @@ var Neural = (function() {
 			}
 		};
 
-		if( 'synapses' === 'type' ) {
+		if( 'synapses' === type ) {
 			req.on_complete = on_complete;
 			Public.prototype.synapses.get( req );
-		} else if( 'synapse' === 'type' ) {
+		} else if( 'synapse' === type ) {
 			Public.prototype.synapse.get( req );
-		} else if( 'neurons' === 'type' ) {
+		} else if( 'neurons' === type ) {
 			req.on_complete = on_complete;
 			Public.prototype.neurons.get( req );
-		} else if( 'neuron' === 'type' ) {
+		} else if( 'neuron' === type ) {
 			Public.prototype.neuron.get( req );
 		}
 
@@ -1242,15 +1242,15 @@ var Neural = (function() {
 			}
 		};
 
-		if( 'synapses' === 'type' ) {
+		if( 'synapses' === type ) {
 			req.on_complete = on_complete;
 			Public.prototype.synapses.delete( req );
-		} else if( 'synapse' === 'type' ) {
+		} else if( 'synapse' === type ) {
 			Public.prototype.synapse.delete( req );
-		} else if( 'neurons' === 'type' ) {
+		} else if( 'neurons' === type ) {
 			req.on_complete = on_complete;
 			Public.prototype.neurons.delete( req );
-		} else if( 'neuron' === 'type' ) {
+		} else if( 'neuron' === type ) {
 			Public.prototype.neuron.delete( req );
 		}
 
@@ -1264,11 +1264,11 @@ var Neural = (function() {
 
 	Public.prototype.utils = TopicNetwork.prototype.utils || {};
 
-	Public.prototype.utils.alphaSortArray = function( unsorted ) {
-		return unsorted.sort( Public.prototype.utils.alphaSort );
+	Public.prototype.utilities.alphaSortArray = function( unsorted ) {
+		return unsorted.sort( Public.prototype.utilities.alphaSort );
 	};
 
-	Public.prototype.utils.alphaSort = function( a, b ) {
+	Public.prototype.utilities.alphaSort = function( a, b ) {
 		// http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
 		var reA = /[^a-zA-Z]/g;
 		var reN = /[^0-9]/g;
@@ -1295,7 +1295,7 @@ var Neural = (function() {
 	 * Released under the BSD license
 	 * http://www.opensource.org/licenses/bsd-license
 	 */
-	Public.prototype.utils.md5 = (function() {
+	Public.prototype.utilities.md5 = (function() {
 		function md5cycle(x, k) {
 			var a = x[0], b = x[1], c = x[2], d = x[3];
 
