@@ -1025,7 +1025,7 @@ var Neural = (function() {
 	/* Decorates Public.prototype.synapse(s)/neuron(s).put */
 	Public.prototype.put = function( request ) {
 
-		var req = new Object(),
+		var req = new Object()
 		    , data = request.data || new Object()
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
@@ -1085,7 +1085,7 @@ var Neural = (function() {
 	/* Decorates Public.prototype.synapse(s)/neuron(s).get */
 	Public.prototype.get = function( request ) {
 
-		var req = new Object(),
+		var req = new Object()
 		    , data = request.data || new Object()
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
@@ -1143,7 +1143,7 @@ var Neural = (function() {
 	/* Decorates Public.prototype.synapse/neuron.update */
 	Public.prototype.update = function( request ) {
 
-		var req = new Object(),
+		var req = new Object()
 		    , property = request.property || {}
 		    , value = request.value || {}
 		    , type = request.type || {}
@@ -1204,7 +1204,7 @@ var Neural = (function() {
 	/* Decorates Public.prototype.synapse(s)/neuron(s).get */
 	Public.prototype.delete = function( request ) {
 
-		var req = new Object(),
+		var req = new Object()
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
