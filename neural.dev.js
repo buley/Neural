@@ -967,7 +967,7 @@ var Neural = (function() {
 
 		var req = new Object()
 		    , data = request.data || new Object()
-		    , type = request.type || throw new Error( 'Requires a request type (e.g. neurons or synapses)' )
+		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
 		    , on_complete = function()
@@ -1027,7 +1027,7 @@ var Neural = (function() {
 
 		var req = new Object(),
 		    , data = request.data || new Object()
-		    , type = request.type || throw new Error( 'Requires a request type (e.g. neurons or synapses)' )
+		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
 		    , on_complete = function()
@@ -1087,7 +1087,7 @@ var Neural = (function() {
 
 		var req = new Object(),
 		    , data = request.data || new Object()
-		    , type = request.type || throw new Error( 'Requires a request type (e.g. neurons or synapses)' )
+		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
 		    , on_complete = function()
@@ -1144,9 +1144,9 @@ var Neural = (function() {
 	Public.prototype.update = function( request ) {
 
 		var req = new Object(),
-		    , property = request.property || throw new Error( 'Public.prototype.set: request.property is required' )
-		    , value = request.value || throw new Error( 'Public.prototype.set: request.value is required' )
-		    , type = request.type || throw new Error( 'Requires a request type (e.g. neurons or synapses)' )
+		    , property = request.property || {}
+		    , value = request.value || {}
+		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
 		    , on_complete = function()
@@ -1205,7 +1205,7 @@ var Neural = (function() {
 	Public.prototype.delete = function( request ) {
 
 		var req = new Object(),
-		    , type = request.type || throw new Error( 'Requires a request type (e.g. neurons or synapses)' )
+		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
 		    , on_complete = function()
