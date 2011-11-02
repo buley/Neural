@@ -970,7 +970,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = function()
+		    , on_complete = null
 		    , attr = new String();
 
 		for( attr in request ) {
@@ -1030,7 +1030,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = function()
+		    , on_complete = null
 		    , attr = new String();
 
 		for( attr in request ) {
@@ -1090,7 +1090,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = function()
+		    , on_complete = null
 		    , attr = new String();
 
 		for( attr in request ) {
@@ -1149,7 +1149,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = function()
+		    , on_complete = null
 		    , attr = new String();
 
 		for( attr in request ) {
@@ -1208,7 +1208,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = function()
+		    , on_complete = null
 		    , attr = new String();
 
 		for( attr in request ) {
