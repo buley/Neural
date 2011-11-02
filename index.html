@@ -104,6 +104,7 @@
 
 				return this;
 			}
+			TopicNetwork.prototype.utils = TopicNetwork.prototype.utils || {};
 			// Takes an array of topic_ids and returns a unique hash
 			TopicNetwork.prototype.utils.topicsToId = function( topics ) {
 				var sorted_topics = TopicNetwork.prototype.utils.alphaSortArray( topics );
