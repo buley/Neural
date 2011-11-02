@@ -966,7 +966,6 @@ var Neural = (function() {
 	Public.prototype.add = function( request ) {
 
 		var req = new Object()
-		    , data = request.data || new Object()
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
@@ -978,14 +977,13 @@ var Neural = (function() {
 		delete request.on_error;
 		delete request.on_complete;
 
-
 		for( attr in request ) {
 			req[ attr ] = request[ attr ];
 		}
 
 		req.on_success = function( value ) {
 			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.getAttr success', value );
+				console.log( 'Public.prototype.add success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -994,7 +992,7 @@ var Neural = (function() {
 
 		req.on_error = function( context ) {
 			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.getAttr error', context );
+				console.log( 'Public.prototype.add error', context );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -1003,7 +1001,7 @@ var Neural = (function() {
 
 		on_complete = function() {
 			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.getAttr complete' );
+				console.log( 'Public.prototype.complete complete' );
 			}
 			if( 'function' == typeof on_complete ) {
 				on_complete();
@@ -1032,7 +1030,6 @@ var Neural = (function() {
 	Public.prototype.put = function( request ) {
 
 		var req = new Object()
-		    , data = request.data || new Object()
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
@@ -1097,7 +1094,6 @@ var Neural = (function() {
 	Public.prototype.get = function( request ) {
 
 		var req = new Object()
-		    , data = request.data || new Object()
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
@@ -1160,8 +1156,6 @@ var Neural = (function() {
 	Public.prototype.update = function( request ) {
 
 		var req = new Object()
-		    , property = request.property || {}
-		    , value = request.value || {}
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
