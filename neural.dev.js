@@ -965,7 +965,7 @@ var Neural = (function() {
 	/* Decorates Public.prototype.synapse(s)/neuron(s).add */
 	Public.prototype.add = function( request ) {
 
-		var req = new Object(),
+		var req = new Object()
 		    , data = request.data || new Object()
 		    , type = request.type || throw new Error( 'Requires a request type (e.g. neurons or synapses)' )
 		    , on_success = request.on_success || null
