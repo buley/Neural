@@ -403,7 +403,6 @@ var Neural = (function() {
 	 */
 	Public.prototype.synapse.add = function( request ) {
 		
-	console.log("HONEYMOON",request);	
 		/* Setup */
 
 		var req = {};
@@ -414,7 +413,7 @@ var Neural = (function() {
 		var on_error = request.on_error;
 		delete request.on_error;
 
-		req.data = request;
+		req.data = request.data || {};
 
 		req.store = 'synapses';
 
