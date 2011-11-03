@@ -1114,7 +1114,7 @@ var Neural = (function() {
 				console.log( 'Public.prototype.getAttr success', value );
 			}
 			if( 'function' == typeof on_success ) {
-				on_success( value );
+				//on_success( value );
 			}
 		};
 
