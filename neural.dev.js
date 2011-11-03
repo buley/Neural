@@ -206,7 +206,7 @@ var Neural = (function() {
 
 	/* Decorates Private.add */
 	Public.prototype.neurons.add = function( request ) {
-	console.log("HONEYMOON",request);	
+
 		var data = request.data;
 		var on_complete = function() {
 			if( 'function' == typeof request.on_complete ) {
@@ -403,6 +403,7 @@ var Neural = (function() {
 	 */
 	Public.prototype.synapse.add = function( request ) {
 		
+	console.log("HONEYMOON",request);	
 		/* Setup */
 
 		var req = {};
