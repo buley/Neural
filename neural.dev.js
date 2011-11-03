@@ -1097,7 +1097,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = null
+		    , on_complete = request.on_complete || null
 		    , attr = new String();
 
 		delete request.type;
@@ -1114,7 +1114,7 @@ var Neural = (function() {
 				console.log( 'Public.prototype.getAttr success', value );
 			}
 			if( 'function' == typeof on_success ) {
-				//on_success( value );
+				on_success( value );
 			}
 		};
 
@@ -1132,7 +1132,7 @@ var Neural = (function() {
 				console.log( 'Public.prototype.getAttr complete' );
 			}
 			if( 'function' == typeof on_complete ) {
-				on_complete();
+				//on_complete();
 			}
 		};
 
