@@ -969,7 +969,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = null
+		    , on_complete = request.on_complete || null
 		    , attr = new String();
 
 		delete request.type;
@@ -999,7 +999,7 @@ var Neural = (function() {
 			}
 		};
 
-		on_complete = function() {
+		req.on_complete = function() {
 			if( !!Public.prototype.debug ) {
 				console.log( 'Public.prototype.complete complete' );
 			}
@@ -1009,14 +1009,14 @@ var Neural = (function() {
 		};
 
 		if( 'synapses' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.synapses.add( req );
 		} else if( 'synapse' === type ) {
+			delete req.on_complete;
 			Public.prototype.synapse.add( req );
 		} else if( 'neurons' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.neurons.add( req );
 		} else if( 'neuron' === type ) {
+			delete req.on_complete;
 			Public.prototype.neuron.add( req );
 		}
 
@@ -1063,7 +1063,7 @@ var Neural = (function() {
 			}
 		};
 
-		on_complete = function() {
+		req.on_complete = function() {
 			if( !!Public.prototype.debug ) {
 				console.log( 'Public.prototype.getAttr complete' );
 			}
@@ -1073,14 +1073,14 @@ var Neural = (function() {
 		};
 
 		if( 'synapses' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.synapses.put( req );
 		} else if( 'synapse' === type ) {
+			delete req.on_complete;
 			Public.prototype.synapse.put( req );
 		} else if( 'neurons' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.neurons.put( req );
 		} else if( 'neuron' === type ) {
+			delete req.on_complete;
 			Public.prototype.neuron.put( req );
 		}
 
@@ -1127,7 +1127,7 @@ var Neural = (function() {
 			}
 		};
 
-		on_complete = function() {
+		req.on_complete = function() {
 			if( !!Public.prototype.debug ) {
 				console.log( 'Public.prototype.getAttr complete' );
 			}
@@ -1137,14 +1137,14 @@ var Neural = (function() {
 		};
 
 		if( 'synapses' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.synapses.get( req );
 		} else if( 'synapse' === type ) {
+			delete req.on_complete;
 			Public.prototype.synapse.get( req );
 		} else if( 'neurons' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.neurons.get( req );
 		} else if( 'neuron' === type ) {
+			delete req.on_complete;
 			Public.prototype.neuron.get( req );
 		}
 
@@ -1159,7 +1159,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = null
+		    , on_complete = request.on_complete || null
 		    , attr = new String();
 
 		delete request.type;
@@ -1190,7 +1190,7 @@ var Neural = (function() {
 			}
 		};
 	
-		on_complete = function() {
+		req.on_complete = function() {
 			if( !!Public.prototype.debug ) {
 				console.log( 'Public.prototype.getAttr complete' );
 			}
@@ -1200,14 +1200,14 @@ var Neural = (function() {
 		};
 
 		if( 'synapses' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.synapses.update( req );
 		} else if( 'synapse' === type ) {
+			delete req.on_complete;
 			Public.prototype.synapse.update( req );
 		} else if( 'neurons' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.neurons.update( req );
 		} else if( 'neuron' === type ) {
+			delete req.on_complete;
 			Public.prototype.neuron.update( req );
 		}
 
@@ -1223,7 +1223,7 @@ var Neural = (function() {
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
-		    , on_complete = null
+		    , on_complete = request.on_complete || null
 		    , attr = new String();
 
 		delete request.type;
@@ -1253,7 +1253,7 @@ var Neural = (function() {
 			}
 		};
 
-		on_complete = function() {
+		req.on_complete = function() {
 			if( !!Public.prototype.debug ) {
 				console.log( 'Public.prototype.getAttr complete' );
 			}
@@ -1263,14 +1263,14 @@ var Neural = (function() {
 		};
 
 		if( 'synapses' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.synapses.delete( req );
 		} else if( 'synapse' === type ) {
+			delete req.on_complete;
 			Public.prototype.synapse.delete( req );
 		} else if( 'neurons' === type ) {
-			req.on_complete = on_complete;
 			Public.prototype.neurons.delete( req );
 		} else if( 'neuron' === type ) {
+			delete req.on_complete;
 			Public.prototype.neuron.delete( req );
 		}
 
