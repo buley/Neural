@@ -206,7 +206,7 @@ var Neural = (function() {
 
 	/* Decorates Private.add */
 	Public.prototype.neurons.add = function( request ) {
-		
+	console.log("HONEYMOON",request);	
 		var data = request.data;
 		var on_complete = function() {
 			if( 'function' == typeof request.on_complete ) {
@@ -214,7 +214,7 @@ var Neural = (function() {
 			}
 		};
 		delete request.on_complete;
-
+	
 		for( var x = 0; x < data.length; x++ ) {
 			request.data = data[ x ];
 			Private.add( request );
@@ -964,7 +964,7 @@ var Neural = (function() {
 	/* Adds an object or series of them given a type and request */
 	/* Decorates Public.prototype.synapse(s)/neuron(s).add */
 	Public.prototype.add = function( request ) {
-		console.log("HIGHROAD",request);
+		
 		var req = new Object()
 		    , type = request.type || {}
 		    , on_success = request.on_success || null
