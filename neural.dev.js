@@ -967,12 +967,14 @@ var Neural = (function() {
 
 		var req = new Object()
 		    , type = request.type || {}
+		    , data = request.data || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
 		    , on_complete = request.on_complete || null
 		    , attr = new String();
 
 		delete request.type;
+		delete request.delete;
 		delete request.on_success;
 		delete request.on_error;
 		delete request.on_complete;
@@ -980,6 +982,8 @@ var Neural = (function() {
 		for( attr in request ) {
 			req[ attr ] = request[ attr ];
 		}
+
+		req.data = data;
 
 		req.on_success = function( value ) {
 			if( !!Public.prototype.debug ) {
@@ -1007,7 +1011,6 @@ var Neural = (function() {
 				on_complete();
 			}
 		};
-		console.log('do me the favor', req );
 		if( 'synapses' === type ) {
 			Public.prototype.synapses.add( req );
 		} else if( 'synapse' === type ) {
