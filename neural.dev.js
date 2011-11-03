@@ -1132,7 +1132,7 @@ var Neural = (function() {
 				console.log( 'Public.prototype.getAttr complete' );
 			}
 			if( 'function' == typeof on_complete ) {
-				//on_complete();
+				on_complete();
 			}
 		};
 
