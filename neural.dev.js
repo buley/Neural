@@ -1007,7 +1007,7 @@ var Neural = (function() {
 				on_complete();
 			}
 		};
-
+		console.log('do me the favor', req );
 		if( 'synapses' === type ) {
 			Public.prototype.synapses.add( req );
 		} else if( 'synapse' === type ) {
