@@ -964,17 +964,15 @@ var Neural = (function() {
 	/* Adds an object or series of them given a type and request */
 	/* Decorates Public.prototype.synapse(s)/neuron(s).add */
 	Public.prototype.add = function( request ) {
-
+		console.log("HIGHROAD",request);
 		var req = new Object()
 		    , type = request.type || {}
-		    , data = request.data || {}
 		    , on_success = request.on_success || null
 		    , on_error = request.on_error || null
 		    , on_complete = request.on_complete || null
 		    , attr = new String();
 
 		delete request.type;
-		delete request.delete;
 		delete request.on_success;
 		delete request.on_error;
 		delete request.on_complete;
@@ -982,8 +980,6 @@ var Neural = (function() {
 		for( attr in request ) {
 			req[ attr ] = request[ attr ];
 		}
-
-		req.data = data;
 
 		req.on_success = function( value ) {
 			if( !!Public.prototype.debug ) {
