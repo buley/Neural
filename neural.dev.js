@@ -217,7 +217,6 @@ var Neural = (function() {
 	
 		for( var x = 0; x < data.length; x++ ) {
 			request.data = data[ x ];
-			console.log("LOOFA", request );
 			Private.add( request );
 		}
 
@@ -408,12 +407,12 @@ var Neural = (function() {
 
 		var req = {};
 
-		var on_success = request.on_success;
+		req.on_success = request.on_success;
 		delete request.on_success;
 
-		var on_error = request.on_error;
+		req.on_error = request.on_error;
 		delete request.on_error;
-
+		//xxx
 		req.data = request.data || {};
 
 		req.store = 'synapses';
