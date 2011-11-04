@@ -217,6 +217,7 @@ var Neural = (function() {
 	
 		for( var x = 0; x < data.length; x++ ) {
 			request.data = data[ x ];
+			console.log("LOOFA", request );
 			Private.add( request );
 		}
 
@@ -1006,9 +1007,8 @@ var Neural = (function() {
 			if( 'function' == typeof on_complete ) {
 				on_complete();
 			}
-		};
-		//xxx
-		console.log("SPLOCK",req.on_success);
+		};		
+		
 		if( 'synapses' === type ) {
 			Public.prototype.synapses.add( req );
 		} else if( 'synapse' === type ) {
