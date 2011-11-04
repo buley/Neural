@@ -643,54 +643,86 @@ var Neural = (function() {
 	};
 
 	/* queries a network for active output neurons
-	 * takes an input and weight matrix and returns a normalized score */
-	Public.prototype.queryNetwork = function( weight_matrix, on_success, on_error ) {
+	 * takes a tokens input (one or more tokens) and network (neuron/connection weight matrix) and returns a normalized score */
+	Public.prototype.queryNetwork = function( tokens, network, on_success, on_error ) {
 
-		var success_callback = function( value ) {
-			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.queryNetwork success', value );
-			}
-			if( 'function' == typeof on_success ) {
-				on_success( value );
-			}
-		};
+		/* How many tokens? If single, make it the only item in an array */
+		if( 'string' === typeof tokens ) {
+			tokens = [ tokens ];
+		}
 
-		var error_callback = function( context ) {
-			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.queryNetwork error', value );
-			}
-			if( 'function' == typeof on_error ) {
-				on_error( context );
-			}
-		};
+		var sum = 0;
+		// For each neuron id in network 
+			// For each 
+			// xxx
+			// TODO: go back and figure out how to do this right. three types? network = neurons + connections; also need neurons by type (for each input)
 
 		return this;
 
 	};
 
-	/* builds an in memory representation of relevant 
+	/* takes a token or tokens and builds an in memory representation of relevant 
 	 * neurons and their connections of an MLP such
 	 * that it can be queried */
-	Public.prototype.buildNetwork = function( on_success, on_error ) {
+	Public.prototype.buildNetwork = function( tokens, layers, on_success, on_error ) {
 
-		var success_callback = function( value ) {
-			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.buildNetwork success', value );
-			}
-			if( 'function' == typeof on_success ) {
-				on_success( value );
-			}
-		};
+		/*
+		 * var network = {
+		 *	neuron_id (string): {
+		 *		'from': {
+		 *			synapse_id (int): strength (number)
+		 *			, ...
+		 *		}, 'to': {
+		 *			synapse_id: strength
+		 *			, ...
+		 *		}
+		 *	}
+		 *	, neuron_id: { ... }
+		 *	...
+		 * };
+		 *
+		 * var neurons = {
+		 *	'id': {
+		 *		'attr': value
+		 *		, ...
+		 *	}, 'id': { ... }
+		 * };
+		 *
+		 * var synapses = {
+		 *	'id': {
+		 *		'attr': value
+		 *		, ...
+		 *	}, 'id': { ... }
+		 * };
+		 *
+		 */
 
-		var error_callback = function( context ) {
-			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.buildNetwork error', value );
-			}
-			if( 'function' == typeof on_error ) {
-				on_error( context );
-			}
-		};
+		var network = {};
 
+		/* How many tokens? If single, make it the only item in an array */
+		if( 'string' === typeof tokens ) {
+			tokens = [ tokens ];
+		}
+
+		/* Alpha order words */
+
+		/* How many input neurons? For each token in tokens, get all input layer node
+		 * where the neuron hash is equal to the md5 of the token (i.e. the token id).
+		 * If no neuron exists for the token id, create one.  */
+		
+			// Add nodes to in-memory network
+			
+			/* How many layers? For each layer, get synapses
+			 * where to is an input layer node equal to the input layer id
+			 * and from is a hidden layer node */
+		
+				/* How many synapses? For each synapse get neurons
+				 * where neuron primary key is equal to the synapse from id.
+				 * If no synapse exists, create one with default strength. */
+
+					// Add synapses to in-memory network
+
+				
 		return this;
 
 	};
@@ -807,6 +839,7 @@ var Neural = (function() {
 			, 'from_type': false
 			, 'to': false
 			, 'to_type': false
+			, 'type': false
 			, 'strength': false
 		};
 
