@@ -402,22 +402,12 @@ var Neural = (function() {
 	 *	request.* ( optional )
 	 */
 	Public.prototype.synapse.add = function( request ) {
-		
+			
 		/* Setup */
 
-		var req = {};
+		request.store = 'synapses';
 
-		req.on_success = request.on_success;
-		delete request.on_success;
-
-		req.on_error = request.on_error;
-		delete request.on_error;
-		//xxx
-		req.data = request.data || {};
-
-		req.store = 'synapses';
-
-		Private.add( req );		
+		Private.add( request );		
 
 		return this;
 
