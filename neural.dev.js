@@ -690,6 +690,10 @@ var Neural = (function() {
 
 	};
 
+	//TODO: Figure out why new tokens are non staying unique
+	//do we need to add type to md5 and then make hash unique?
+	//currently can't be unique b/c hidden and input nodes can be the
+	//same value
 	Public.prototype.addTokens = function( tokens, on_success, on_error ) {
 		if( 'string' === tokens ) {
 			tokens = [ tokens ];
