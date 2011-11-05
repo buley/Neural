@@ -642,6 +642,21 @@ var Neural = (function() {
 
 	};
 
+	Public.prototype.activation = function( request ) {
+
+		var value,
+		    activated;
+		//hyperbolic tangent (tan h)
+		if( true === activated ) {
+			
+		} else {
+
+		}
+
+		return this;
+
+	};
+
 	/* queries a network for active output neurons
 	 * takes a tokens input (one or more tokens) and network (neuron/connection weight matrix) and returns a normalized score */
 	Public.prototype.queryNetwork = function( tokens, network, on_success, on_error ) {
@@ -657,7 +672,79 @@ var Neural = (function() {
 			// xxx
 			// TODO: go back and figure out how to do this right. three types? network = neurons + connections; also need neurons by type (for each input)
 
+		// sum of weights times inputs + bias
 		return this;
+
+	};
+
+	Public.prototype.addTokens = function( tokens, on_success, on_error ) {
+		if( 'string' === tokens ) {
+			tokens = [ tokens ];
+		}
+
+		var neurons = [],
+		    x = 0,
+		    tokens_length = tokens.length,
+		    tokens_hash = Public.prototype.utils.getId( tokens );
+
+		// Add the hidden node for the group of tokens	
+		Network.put( {  'type': 'neuron', 'on_success': function( value ) {
+
+			console.log( 'Public.prototype.add > Network.put success', value );
+			var hidden_id = value;
+
+			//begin for each token
+			for( x = 0; x < tokens_length; x++ ) {
+				var token = tokens[ x ]
+				    , token_hash = Public.prototype.utils.getId( token )
+				    , neuron = {
+					'hash': token_hash
+					, 'display': token
+				    };
+
+				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
+				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
+					console.log( 'Public.prototype.add Network.put success', value );
+
+					var token_id = value;
+					var strength_data = function( current ) {
+						var next;
+						if( 'number' === typeof current ) {
+							next += 1;
+						} else {
+							next = 1;
+						}
+						return next;
+					};
+
+					Network.put( { 'type': 'synapse', 'on_success': function( value ) {
+						console.log( 'Public.prototype.add > Network.put success > Network.put success', value );
+					}, 'on_error': function( context ) {
+						console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
+					}, 'data': {
+						'from_type': 'input'
+						, 'from': token_id
+						, 'to_type': 'hidden'
+						, 'to': hidden_id 
+						, 'strength': strength_data
+					} } );
+
+				}, 'on_error': function( context ) {
+					console.log( 'Public.prototype.add Network.put error', context );
+				}, 'data': neuron } );
+
+			}
+			//end for each token
+
+		}, 'on_error': function( context ) {
+				console.log( 'Public.prototype.add Network.put error', context );
+		}, 'data': {
+			'type': 'hidden'
+			, 'hash': hidden_hash
+			, 'display': tokens
+		} } );
+
+		return this;	
 
 	};
 
@@ -697,7 +784,8 @@ var Neural = (function() {
 		 *
 		 */
 
-		var network = {};
+		var network = {},
+		    x = 0;
 
 		/* How many tokens? If single, make it the only item in an array */
 		if( 'string' === typeof tokens ) {
@@ -709,7 +797,40 @@ var Neural = (function() {
 		/* How many input neurons? For each token in tokens, get all input layer node
 		 * where the neuron hash is equal to the md5 of the token (i.e. the token id).
 		 * If no neuron exists for the token id, create one.  */
+		var token_length = tokens.length;
+		for( x = token_length; x > 0; x -= 1 ) {
+
+			var token = tokens[ x ];
+
+			if( !!debug ) {
+				console.log( 'Public.prototype.buildNetwork', x, tokens[ x ] );
+			}
 		
+			var token_hash = Public.prototype.utils.toId( token );
+
+			/* Get Single Neuron With Primary Index */ 
+			Network.get( {  'type': 'neuron', 'on_success': function( value ) {
+
+				console.log( 'Network.get single success', value );
+				var from_ids = [];
+
+				/* Get Cursor Neurons With Secondary Index on From */
+				Network.get( {  'type': 'neurons', 'on_success': function( value ) {
+					console.log( 'Public.prototype.buildNetwork Network.get cursor success', value );
+					from_ids.push( value );
+				}, 'on_error': function( context ) {
+					console.log( 'Public.prototype.buildNetwork Network.get cursor error', context );
+				}, 'on_complete': function() {
+					console.log( 'Public.prototype.buildNetwork Network.get cursor complete' );
+					console.log( 'Public.prototype.buildNetwork Network.get cursor complete ids', from_ids );
+				}, 'index': 'from', 'key': token_id, 'properties': [ 'from' ]  } );
+
+			}, 'on_error': function( context ) {
+				console.log( 'Public.prototype.buildNetwork Network.get error', context );
+			}, 'index': 'hash', 'key': token_hash } );
+
+		}
+
 			// Add nodes to in-memory network
 			
 			/* How many layers? For each layer, get synapses
@@ -722,7 +843,8 @@ var Neural = (function() {
 
 					// Add synapses to in-memory network
 
-				
+			
+
 		return this;
 
 	};
@@ -1304,7 +1426,7 @@ var Neural = (function() {
 	/* Convenience Methods */
 
 
-	Public.prototype.utils = TopicNetwork.prototype.utils || {};
+	Public.prototype.utils = Public.prototype.utils || {};
 
 	Public.prototype.utilities.alphaSortArray = function( unsorted ) {
 		return unsorted.sort( Public.prototype.utilities.alphaSort );
@@ -1324,6 +1446,15 @@ var Neural = (function() {
 			return aA > bA ? 1 : -1;
 		}
 	}
+
+	Public.prototype.utils.getId = function( topics ) {
+		if( 'string' === typeof topics ) {
+			topics = [ topics ];
+		}
+		var sorted_topics = Public.prototype.utils.alphaSortArray( topics );
+		return md5( sorted_topics.join("|") );
+	};
+
 
 	/* Begin MD5 (non-original work; see https://github.com/wbond/md5-js/blob/master/md5.js) */
 	/*!
