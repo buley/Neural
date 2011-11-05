@@ -11,7 +11,7 @@ var Neural = (function() {
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
 
-	var defaults {
+	var defaults = {
 		'strength': 0
 	};
 
