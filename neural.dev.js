@@ -719,7 +719,11 @@ var Neural = (function() {
 			//begin for each token
 			for( x = 0; x < tokens_length; x++ ) {
 				var token = tokens[ x ]
-				    , token_hash = Public.prototype.utilities.getId( token );
+				    , token_hash = ''
+				    , token_copy = token
+				
+				token_copy.push( 'input' );
+				token_hash = Public.prototype.utilities.getId( token_copy );
 
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
 				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
