@@ -682,10 +682,12 @@ var Neural = (function() {
 			tokens = [ tokens ];
 		}
 
+		tokens = Public.prototype.utilities.alphaSortArray( tokens );
+
 		var neurons = [],
 		    x = 0,
 		    tokens_length = tokens.length,
-		    tokens_hash = Public.prototype.utils.getId( tokens );
+		    tokens_hash = Public.prototype.utilities.getId( tokens );
 
 		// Add the hidden node for the group of tokens	
 		Network.put( {  'type': 'neuron', 'on_success': function( value ) {
@@ -696,7 +698,7 @@ var Neural = (function() {
 			//begin for each token
 			for( x = 0; x < tokens_length; x++ ) {
 				var token = tokens[ x ]
-				    , token_hash = Public.prototype.utils.getId( token )
+				    , token_hash = Public.prototype.utilities.getId( token )
 				    , neuron = {
 					'hash': token_hash
 					, 'display': token
@@ -829,7 +831,7 @@ var Neural = (function() {
 				console.log( 'Public.prototype.buildNetwork', x, tokens[ x ] );
 			}
 		
-			var token_hash = Public.prototype.utils.toId( token );
+			var token_hash = Public.prototype.utilities.toId( token );
 
 			/* Get Single Neuron With Primary Index */ 
 			Network.get( {  'type': 'neuron', 'on_success': function( value ) {
@@ -1449,7 +1451,7 @@ var Neural = (function() {
 	/* Convenience Methods */
 
 
-	Public.prototype.utils = Public.prototype.utils || {};
+	Public.prototype.utilities = Public.prototype.utilities || {};
 
 	Public.prototype.utilities.alphaSortArray = function( unsorted ) {
 		return unsorted.sort( Public.prototype.utilities.alphaSort );
@@ -1470,11 +1472,11 @@ var Neural = (function() {
 		}
 	}
 
-	Public.prototype.utils.getId = function( topics ) {
+	Public.prototype.utilities.getId = function( topics ) {
 		if( 'string' === typeof topics ) {
 			topics = [ topics ];
 		}
-		var sorted_topics = Public.prototype.utils.alphaSortArray( topics );
+		var sorted_topics = Public.prototype.utilities.alphaSortArray( topics );
 		return md5( sorted_topics.join("|") );
 	};
 
