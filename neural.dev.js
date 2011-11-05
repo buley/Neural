@@ -781,9 +781,12 @@ var Neural = (function() {
 		};
 
 	    // Add the hidden node for the group of tokens	
-		Network.put( {  'type': 'neuron', 'on_success': function( value ) {
+		Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
-			var hidden_id = value;
+			if( 'undefined' !== typeof on_success ) {
+				on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': hidden_id } );
+			}
+
 			hidden_layer_callback( hidden_id );
 
 		}, 'on_error': function( context ) {
@@ -795,6 +798,9 @@ var Neural = (function() {
 
 			Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
 				console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
+				if( 'undefined' !== typeof on_success ) {
+					on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id } );
+				}
 
 				hidden_layer_callback( hidden_id );
 
