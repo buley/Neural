@@ -717,7 +717,7 @@ var Neural = (function() {
 				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
 					console.log( 'Public.prototype.add Network.put success', value );
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'neuron', 'value': value } );
+						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'value': value, 'action': 'put' } );
 					}
 
 					synapse_callback( hidden_id, value );
@@ -731,6 +731,10 @@ var Neural = (function() {
 
 					Network.get( {  'type': 'neurons', 'on_success': function( value ) {
 						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', value );
+
+						if( 'undefined' !== typeof on_success ) {
+							on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id } );
+						}
 
 						synapse_callback( hidden_id, value );
 
@@ -755,7 +759,7 @@ var Neural = (function() {
 
 		synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
 
-			var dynamic_data = { 'from_type': 'input'
+			var data = { 'from_type': 'input'
 				, 'from': input_neuron_id
 				, 'to_type': 'hidden'
 				, 'to': hidden_neuron_id 
@@ -766,7 +770,7 @@ var Neural = (function() {
 				console.log( 'Public.prototype.add > Network.put success > Network.put success', value );
 
 				if( 'undefined' !== typeof on_success ) {
-					on_success( { 'type': 'synapse', 'value': value } );
+					on_success( { 'type': 'synapse', 'action': 'put', 'value': value } );
 				}
 
 			}, 'on_error': function( context ) {
@@ -776,7 +780,7 @@ var Neural = (function() {
 					on_error( context );
 				}
 
-			}, 'data': dynamic_data } );
+			}, 'data': data } );
 
 		};
 
