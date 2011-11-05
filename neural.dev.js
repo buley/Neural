@@ -706,7 +706,7 @@ var Neural = (function() {
 				    };
 
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
-				Network.add( {  'type': 'neuron', 'on_success': function( value ) {
+				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
 					console.log( 'Public.prototype.add Network.put success', value );
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'neuron', 'value': value } );
@@ -741,7 +741,7 @@ var Neural = (function() {
 
 		};
 
-		var synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
+		synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
 
 			var strength_data = function( current ) {
 				var next;
