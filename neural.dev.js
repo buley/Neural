@@ -705,6 +705,9 @@ var Neural = (function() {
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
 				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
 					console.log( 'Public.prototype.add Network.put success', value );
+					if( 'undefined' !== typeof on_success ) {
+						on_success( { 'type': 'neuron', 'value': value } );
+					}
 
 					var token_id = value;
 					var strength_data = function( current ) {
@@ -719,8 +722,19 @@ var Neural = (function() {
 
 					Network.put( { 'type': 'synapse', 'on_success': function( value ) {
 						console.log( 'Public.prototype.add > Network.put success > Network.put success', value );
+
+
+						if( 'undefined' !== typeof on_success ) {
+							on_success( { 'type': 'synapse', 'value': value } );
+						}
+
 					}, 'on_error': function( context ) {
 						console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
+						
+						if( 'undefined' !== typeof on_error ) {
+							on_error( context );
+						}
+
 					}, 'data': {
 						'from_type': 'input'
 						, 'from': token_id
@@ -731,13 +745,22 @@ var Neural = (function() {
 
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.add Network.put error', context );
+
+					if( 'undefined' !== typeof on_error ) {
+						on_error( context );
+					}
+
 				}, 'data': neuron } );
 
 			}
 			//end for each token
 
 		}, 'on_error': function( context ) {
-				console.log( 'Public.prototype.add Network.put error', context );
+			console.log( 'Public.prototype.add Network.put error', context );
+
+			if( 'undefined' !== typeof on_error ) {
+				on_error( context );
+			}
 		}, 'data': {
 			'type': 'hidden'
 			, 'hash': hidden_hash
