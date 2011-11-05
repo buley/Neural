@@ -688,7 +688,7 @@ var Neural = (function() {
 		    x = 0,
 		    tokens_length = tokens.length,
 		    hidden_hash = Public.prototype.utilities.getId( tokens );
-
+i		console.log('I definitely dont want to be here', tokens, hidden_hash );
 		// Add the hidden node for the group of tokens	
 		Network.put( {  'type': 'neuron', 'on_success': function( value ) {
 
@@ -767,7 +767,7 @@ var Neural = (function() {
 			'type': 'hidden'
 			, 'hash': hidden_hash
 			, 'display': tokens
-		} );
+		} } );
 
 		return this;	
 
