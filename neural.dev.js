@@ -720,7 +720,7 @@ var Neural = (function() {
 			for( x = 0; x < tokens_length; x++ ) {
 				var token = tokens[ x ]
 				    , token_hash = ''
-				    , token_copy = token
+				    , token_copy = token;
 				
 				token_copy.push( 'input' );
 				token_hash = Public.prototype.utilities.getId( token_copy );
