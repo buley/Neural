@@ -687,12 +687,12 @@ var Neural = (function() {
 		var neurons = [],
 		    x = 0,
 		    tokens_length = tokens.length,
-		    hidden_hash = Public.prototype.utilities.getId( tokens );
-		// Add the hidden node for the group of tokens	
-		Network.put( {  'type': 'neuron', 'on_success': function( value ) {
+		    hidden_hash = Public.prototype.utilities.getId( tokens ),
+		    hidden_layer_callback = function() {};
+
+		hidden_layer_callback = function( hidden_id ) {
 
 			console.log( 'Public.prototype.add > Network.put success', value );
-			var hidden_id = value;
 
 			//begin for each token
 			for( x = 0; x < tokens_length; x++ ) {
@@ -757,12 +757,37 @@ var Neural = (function() {
 			}
 			//end for each token
 
+
+		};
+
+	    // Add the hidden node for the group of tokens	
+		Network.put( {  'type': 'neuron', 'on_success': function( value ) {
+
+			var hidden_id = value;
+			hidden_layer_callback( hidden_id );
+
 		}, 'on_error': function( context ) {
 			console.log( 'Public.prototype.add Network.put error', context );
 
-			if( 'undefined' !== typeof on_error ) {
-				on_error( context );
-			}
+			/* Either there was some sort of data error or,
+			 * more likely, it's already added and the new one 
+			 * was not unique. In case of the latter, try to get the hidden layer id by hash */
+
+			Network.get( {  'type': 'neuron', 'on_success': function( value ) {
+				console.log( 'Public.prototype.add Network.put error > Network.get success', value );
+
+				var hidden_id = value;	
+				hidden_layer_callback( hidden_id );
+
+			}, 'on_error': function( context ) {
+				console.log( 'Public.prototype.add Network.put error > Network.get error', context );
+
+				if( 'undefined' !== typeof on_error ) {
+					on_error( context );
+				}
+
+			}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash } );
+
 		}, 'data': {
 			'type': 'hidden'
 			, 'hash': hidden_hash
