@@ -701,15 +701,17 @@ var Neural = (function() {
 
 		tokens = Public.prototype.utilities.alphaSortArray( tokens );
 
+		// TODO: comma forward
 		var neurons = [],
 		    x = 0,
+		    hidden_hash = '',
 		    tokens_copy = tokens,
-		    tokens_copy.push( 'hidden' )
 		    tokens_length = tokens.length,
-		    hidden_hash = Public.prototype.utilities.getId( tokens_copy ),
 		    hidden_layer_callback = function() {},
 		    synapse_callback = function() {};
 
+		tokens_copy.push( 'hidden' )
+		hidden_hash = Public.prototype.utilities.getId( tokens_copy ),
 		hidden_layer_callback = function( hidden_id ) {
 
 			console.log( 'Public.prototype.add > Network.put success', hidden_id );
