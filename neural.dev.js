@@ -988,7 +988,6 @@ var Neural = (function() {
 			, 'from_type': false
 			, 'to': false
 			, 'to_type': false
-			, 'type': false
 			, 'strength': false
 		};
 
