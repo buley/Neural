@@ -17,7 +17,7 @@
 			
 			var TopicNetwork = function() {
 				var request = {};
-				request.database = "Neural-038";
+				request.database = "Neural-039";
 				request.description = "Basic MLP neural network.";
 				Network = new Neural( request );
 				//TODO: extend shorthand
@@ -106,6 +106,17 @@
 			}
 			TopicNetwork.prototype.utils = TopicNetwork.prototype.utils || {};
 			// Takes an array of topic_ids and returns a unique hash
+			TopicNetwork.prototype.utils.topicsToId = function( topics ) {
+				var sorted_topics = TopicNetwork.prototype.utils.alphaSortArray( topics );
+				return md5( sorted_topics.join("|") );
+			};
+	
+			// Takes an array of topic_ids and returns a unique hash
+			TopicNetwork.prototype.utils.topicToId = function( topic_id ) {
+				return md5( topic_id );
+			};
+
+
 
 		</script>
 		<script type="text/javascript" src="http://github.com/editor/InDB/raw/master/indb.dev.js"></script>

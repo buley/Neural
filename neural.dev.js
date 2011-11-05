@@ -746,7 +746,7 @@ var Neural = (function() {
 					} } );
 
 				}, 'on_error': function( context ) {
-					console.log( 'Public.prototype.add Network.put error', context );
+					console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
 
 					if( 'undefined' !== typeof on_error ) {
 						on_error( context );
@@ -961,6 +961,7 @@ var Neural = (function() {
 				, 'unique': true
 			}
 			, 'display': false
+			, 'hash': true
 			, 'type': false
 		};
 
