@@ -10,7 +10,11 @@ var Neural = (function() {
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
-	
+
+	var defaults {
+		'strength': 0
+	};
+
 	/* PUBLIC */
 
 	var Public = function ( request ) {
@@ -42,6 +46,15 @@ var Neural = (function() {
 	Public.prototype.synapse = {};
 	Public.prototype.synapses = {};
 	Public.prototype.utilities = {};
+	Public.prototype.defaults = {};
+
+	Public.prototype.defaults.get = function( type ) {
+		return defaults[ type ];
+	}
+	Public.prototype.defaults.set = function( type, value ) {
+		defaults[ type ] = value;
+	}
+
 
 	/* gets a hidden neuron */
 	/* {
@@ -698,12 +711,7 @@ var Neural = (function() {
 			//begin for each token
 			for( x = 0; x < tokens_length; x++ ) {
 				var token = tokens[ x ]
-				    , token_hash = Public.prototype.utilities.getId( token )
-				    , neuron = {
-					'type': 'input'
-					, 'hash': token_hash
-					, 'display': token
-				    };
+				    , token_hash = Public.prototype.utilities.getId( token );
 
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
 				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
@@ -734,7 +742,11 @@ var Neural = (function() {
 
 					}, 'index': 'hash', 'key': token_hash, 'properties': [ 'id' ], 'expecting': { 'type': 'input' }  } );
 
-				}, 'data': neuron } );
+				}, 'data': {
+					'type': 'input'
+					, 'hash': token_hash
+					, 'display': token
+				} } );
 
 			}
 			//end for each token
@@ -743,15 +755,13 @@ var Neural = (function() {
 
 		synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
 
-			var strength_data = function( current ) {
-				var next;
-				if( 'number' === typeof current ) {
-					next += 1;
-				} else {
-					next = 1;
-				}
-				return next;
-			};
+			var dynamic_data = function() {
+				return { 'from_type': 'input'
+				, 'from': input_neuron_id
+				, 'to_type': 'hidden'
+				, 'to': hidden_neuron_id 
+				, 'strength': Public.prototype.defaults.get( 'strength' )
+			} };
 
 			Network.put( { 'type': 'synapse', 'on_success': function( value ) {
 				console.log( 'Public.prototype.add > Network.put success > Network.put success', value );
@@ -768,13 +778,7 @@ var Neural = (function() {
 					on_error( context );
 				}
 
-			}, 'data': {
-				'from_type': 'input'
-				, 'from': input_neuron_id
-				, 'to_type': 'hidden'
-				, 'to': hidden_neuron_id 
-				, 'strength': strength_data
-			} } );
+			}, 'data': dynamic_data } );
 
 		};
 
