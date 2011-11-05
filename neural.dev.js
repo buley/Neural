@@ -732,7 +732,7 @@ var Neural = (function() {
 							on_error( context );
 						}
 
-					}, 'index': 'hash', 'key': token_hash } );
+					}, 'index': 'hash', 'key': token_hash, 'properties': [ 'id' ] } );
 
 				}, 'data': neuron } );
 
