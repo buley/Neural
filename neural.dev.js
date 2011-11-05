@@ -704,7 +704,7 @@ var Neural = (function() {
 		var neurons = [],
 		    x = 0,
 		    tokens_copy = tokens,
-		    tokens_copy = tokens_copy.push( 'hidden' )
+		    tokens_copy.push( 'hidden' )
 		    tokens_length = tokens.length,
 		    hidden_hash = Public.prototype.utilities.getId( tokens_copy ),
 		    hidden_layer_callback = function() {},
