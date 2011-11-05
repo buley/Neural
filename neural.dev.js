@@ -688,7 +688,6 @@ var Neural = (function() {
 		    x = 0,
 		    tokens_length = tokens.length,
 		    hidden_hash = Public.prototype.utilities.getId( tokens );
-		console.log('I definitely dont want to be here', tokens, hidden_hash );
 		// Add the hidden node for the group of tokens	
 		Network.put( {  'type': 'neuron', 'on_success': function( value ) {
 
@@ -933,6 +932,7 @@ var Neural = (function() {
 
 	Public.prototype.synapses.shorthand_map = {
 		'id': 'i',
+		'hash': 'h',
 		'to': 't',
 		'to_type': 'a',
 		'from': 'f',
@@ -945,6 +945,7 @@ var Neural = (function() {
 
 	Public.prototype.neurons.shorthand_map = {
 		'id': 'i',
+		'hash': 'h',
 		'display': 'd',
 		'display_alternatives': 'a',
 		'type': 't',
@@ -960,7 +961,6 @@ var Neural = (function() {
 				, 'incrementing': true
 				, 'unique': true
 			}
-			, 'display': false
 			, 'hash': true
 			, 'type': false
 		};
