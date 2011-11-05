@@ -934,7 +934,9 @@ var Neural = (function() {
 	Public.prototype.synapses.shorthand_map = {
 		'id': 'i',
 		'to': 't',
+		'to_type': 'a',
 		'from': 'f',
+		'from_type': 'b',
 		'strength': 's',
 		'type': 'y',
 		'votes': 'v',
@@ -960,7 +962,6 @@ var Neural = (function() {
 			}
 			, 'display': false
 			, 'type': false
-			, 'slug': false
 		};
 
 		if( !!Neural.install ) {
