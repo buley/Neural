@@ -688,7 +688,8 @@ var Neural = (function() {
 		    x = 0,
 		    tokens_length = tokens.length,
 		    hidden_hash = Public.prototype.utilities.getId( tokens ),
-		    hidden_layer_callback = function() {};
+		    hidden_layer_callback = function() {},
+		    synapse_callback = function() {};
 
 		hidden_layer_callback = function( hidden_id ) {
 
@@ -711,52 +712,69 @@ var Neural = (function() {
 						on_success( { 'type': 'neuron', 'value': value } );
 					}
 
-					var token_id = value;
-					var strength_data = function( current ) {
-						var next;
-						if( 'number' === typeof current ) {
-							next += 1;
-						} else {
-							next = 1;
-						}
-						return next;
-					};
-
-					Network.put( { 'type': 'synapse', 'on_success': function( value ) {
-						console.log( 'Public.prototype.add > Network.put success > Network.put success', value );
-
-
-						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'synapse', 'value': value } );
-						}
-
-					}, 'on_error': function( context ) {
-						console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
-						
-						if( 'undefined' !== typeof on_error ) {
-							on_error( context );
-						}
-
-					}, 'data': {
-						'from_type': 'input'
-						, 'from': token_id
-						, 'to_type': 'hidden'
-						, 'to': hidden_id 
-						, 'strength': strength_data
-					} } );
+					synapse_callback( hidden_id, value );
 
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
 
-					if( 'undefined' !== typeof on_error ) {
-						on_error( context );
-					}
+					/* Either there was some sort of data error, or,
+					 * more likely, the neuron already exists. Before actually throwing the error,
+					 * try to look up the neuron by its hash. If not found, then throw the error. */
+
+					Network.get( {  'type': 'neuron', 'on_success': function( value ) {
+						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', value );
+
+						synapse_callback( hidden_id, value );
+
+					}, 'on_error': function( context ) {
+						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
+						if( 'undefined' !== typeof on_error ) {
+							on_error( context );
+						}
+
+					}, 'index': 'hash', 'key': token_hash } );
 
 				}, 'data': neuron } );
 
 			}
 			//end for each token
 
+		};
+
+		var synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
+
+			var strength_data = function( current ) {
+				var next;
+				if( 'number' === typeof current ) {
+					next += 1;
+				} else {
+					next = 1;
+				}
+				return next;
+			};
+
+			Network.put( { 'type': 'synapse', 'on_success': function( value ) {
+				console.log( 'Public.prototype.add > Network.put success > Network.put success', value );
+
+
+				if( 'undefined' !== typeof on_success ) {
+					on_success( { 'type': 'synapse', 'value': value } );
+				}
+
+			}, 'on_error': function( context ) {
+				console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
+				
+				if( 'undefined' !== typeof on_error ) {
+					on_error( context );
+				}
+
+			}, 'data': {
+				'from_type': 'input'
+				, 'from': input_neuron_id
+				, 'to_type': 'hidden'
+				, 'to': hidden_neuron_id 
+				, 'strength': strength_data
+			} } );
 
 		};
 
