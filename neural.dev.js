@@ -721,7 +721,7 @@ var Neural = (function() {
 					 * more likely, the neuron already exists. Before actually throwing the error,
 					 * try to look up the neuron by its hash. If not found, then throw the error. */
 
-					Network.get( {  'type': 'neuron', 'on_success': function( value ) {
+					Network.get( {  'type': 'neurons', 'on_success': function( value ) {
 						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', value );
 
 						synapse_callback( hidden_id, value );
@@ -732,7 +732,7 @@ var Neural = (function() {
 							on_error( context );
 						}
 
-					}, 'index': 'hash', 'key': token_hash, 'properties': [ 'id' ] } );
+					}, 'index': 'hash', 'key': token_hash, 'properties': [ 'id' ], 'expecting': { 'type': 'input' }  } );
 
 				}, 'data': neuron } );
 
@@ -791,10 +791,9 @@ var Neural = (function() {
 			 * more likely, it's already added and the new one 
 			 * was not unique. In case of the latter, try to get the hidden layer id by hash */
 
-			Network.get( {  'type': 'neuron', 'on_success': function( value ) {
-				console.log( 'Public.prototype.add Network.put error > Network.get success', value );
+			Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
+				console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
 
-				var hidden_id = value;	
 				hidden_layer_callback( hidden_id );
 
 			}, 'on_error': function( context ) {
@@ -804,7 +803,7 @@ var Neural = (function() {
 					on_error( context );
 				}
 
-			}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash } );
+			}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
 
 		}, 'data': {
 			'type': 'hidden'
