@@ -703,6 +703,8 @@ var Neural = (function() {
 
 		var neurons = [],
 		    x = 0,
+		    tokens_copy = tokens,
+		    tokens_copy = tokens_copy.push( 'hidden' )
 		    tokens_length = tokens.length,
 		    hidden_hash = Public.prototype.utilities.getId( tokens ),
 		    hidden_layer_callback = function() {},
@@ -1532,6 +1534,7 @@ var Neural = (function() {
 		}
 	}
 
+	//TODO: rename topics to tokens here
 	Public.prototype.utilities.getId = function( topics ) {
 		if( 'string' === typeof topics ) {
 			topics = [ topics ];
