@@ -687,7 +687,7 @@ var Neural = (function() {
 		var neurons = [],
 		    x = 0,
 		    tokens_length = tokens.length,
-		    tokens_hash = Public.prototype.utilities.getId( tokens );
+		    hidden_hash = Public.prototype.utilities.getId( tokens );
 
 		// Add the hidden node for the group of tokens	
 		Network.put( {  'type': 'neuron', 'on_success': function( value ) {
