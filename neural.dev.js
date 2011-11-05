@@ -700,7 +700,7 @@ var Neural = (function() {
 				    , token_hash = Public.prototype.utilities.getId( token )
 				    , neuron = {
 					'type': 'input'
-					'hash': token_hash
+					, 'hash': token_hash
 					, 'display': token
 				    };
 
