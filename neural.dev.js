@@ -699,6 +699,7 @@ var Neural = (function() {
 				var token = tokens[ x ]
 				    , token_hash = Public.prototype.utilities.getId( token )
 				    , neuron = {
+					'type': 'input'
 					'hash': token_hash
 					, 'display': token
 				    };
