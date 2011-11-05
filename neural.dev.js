@@ -767,7 +767,7 @@ var Neural = (function() {
 			'type': 'hidden'
 			, 'hash': hidden_hash
 			, 'display': tokens
-		} } );
+		} );
 
 		return this;	
 
