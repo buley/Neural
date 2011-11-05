@@ -692,7 +692,7 @@ var Neural = (function() {
 
 		hidden_layer_callback = function( hidden_id ) {
 
-			console.log( 'Public.prototype.add > Network.put success', value );
+			console.log( 'Public.prototype.add > Network.put success', hidden_id );
 
 			//begin for each token
 			for( x = 0; x < tokens_length; x++ ) {
