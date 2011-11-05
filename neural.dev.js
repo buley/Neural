@@ -755,17 +755,15 @@ var Neural = (function() {
 
 		synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
 
-			var dynamic_data = function() {
-				return { 'from_type': 'input'
+			var dynamic_data = { 'from_type': 'input'
 				, 'from': input_neuron_id
 				, 'to_type': 'hidden'
 				, 'to': hidden_neuron_id 
 				, 'strength': Public.prototype.defaults.get( 'strength' )
-			} };
+			};
 
 			Network.put( { 'type': 'synapse', 'on_success': function( value ) {
 				console.log( 'Public.prototype.add > Network.put success > Network.put success', value );
-
 
 				if( 'undefined' !== typeof on_success ) {
 					on_success( { 'type': 'synapse', 'value': value } );
@@ -1008,7 +1006,7 @@ var Neural = (function() {
 				, 'incrementing': true
 				, 'unique': true
 			}
-			, 'hash': true
+			, 'hash': false
 			, 'type': false
 		};
 
