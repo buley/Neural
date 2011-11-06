@@ -723,25 +723,28 @@ var Neural = (function() {
 				    , token_copy = [ token, 'input' ];
 				
 				token_hash = Public.prototype.utilities.getId( token_copy );
-
+console.log("C1");
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
 				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
 					console.log( 'Public.prototype.add Network.put success', value );
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'value': value, 'action': 'put' } );
 					}
+console.log("C2");
 
 					synapse_callback( hidden_id, value );
 
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
 
+console.log("C3");
 					/* Either there was some sort of data error, or,
 					 * more likely, the neuron already exists. Before actually throwing the error,
 					 * try to look up the neuron by its hash. If not found, then throw the error. */
-
+					//xxx
 					Network.get( {  'type': 'neurons', 'on_success': function( input_neuron_id ) {
 						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', input_neuron_id );
+console.log("C4");
 
 						if( 'undefined' !== typeof on_success ) {
 							on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': input_neuron_id } );
