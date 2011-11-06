@@ -12,6 +12,8 @@ var Neural = (function() {
 		var self = function() {
 
 		}
+		
+		var cache = {};
 
 		self.prototype.set = function( request ) {
 		
@@ -48,6 +50,70 @@ var Neural = (function() {
 
 		};
 
+		self.prototype.pop = function( request ) {
+
+			var request.value = function( previous ) {
+				return updateAndReturn( reqest.key, previous.pop() );
+			};
+
+			return self.prototype.update( request );
+
+		};
+
+		self.prototype.slice = function( request ) {
+
+			var request.value = function( previous ) {
+				return updateAndReturn( reqest.key, previous.slice( request.begin, request.end ) );
+			};
+
+			return self.prototype.update( request );
+
+		};
+
+		// key, property
+		self.prototype.remove = function( request ) {
+
+			var request.value = function( previous ) {
+				delete previous[ request.property ] 
+				return updateAndReturn( reqest.key, previous );
+			};
+
+			return self.prototype.update( request );
+
+		};
+
+		self.prototype.prepend = function( request ) {
+
+			var request.value = function( previous ) {
+				previous.unshift( request.value );
+				return updateAndReturn( reqest.key, previous );
+			};
+
+			return self.prototype.update( request );
+
+		};
+
+		self.prototype.append = function( request ) {
+
+			var request.value = function( previous ) {
+				return updateAndReturn( reqest.key, previous.slice( request.begin, request.end ) );
+			};
+
+			return self.prototype.update( request );
+
+		};
+
+		self.prototype.increment = function( request ) {
+	
+			var request.value = function( previous ) {
+				return updateAndReturn( reqest.key, previous.slice( request.begin, request.end ) );
+			};
+
+
+			return self.prototype.update( request );
+
+		};
+
 		self.prototype.update = function( request ) {
 
 			var key = request.key || null
@@ -59,6 +125,40 @@ var Neural = (function() {
 				value = value( previous );
 			}
 
+		};
+	
+		self.prototype.setExpires( request ) {
+
+			var key = request.key || null
+			    , timestamp = request.timestamp || 0;
+
+			if( 'undefined' !== typeof cache[ key ] ) {
+				cache[ key ][ 'timestamp' ] = timestamp;
+			}
+
+		};
+
+
+		self.prototype.getExpires( request ) {
+
+			var key = request.key || null
+			    , result = cache[ key ];
+
+			if( 'undefined' !== typeof result ) {
+				return result.timestamp;
+			}
+		
+		};
+
+	
+		var updateAndReturn = function( request ) {
+			var key = request.key || null;
+			  , value = request.value || null
+			  , timestamp = getExpires( { 'key': key } );
+
+			self.prototype.update( { 'key': key, 'value': value, 'timestamp': timestamp } );
+			
+			return value;
 		};
 
 		var blockStale = function( key, request ) {
