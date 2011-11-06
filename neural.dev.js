@@ -782,10 +782,8 @@ var Neural = (function() {
 			new_synapse_data[ 'hash' ] = synapse_hash;
 			new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
 
-			console.log("B1", new_synapse_data);
 			Network.put( { 'type': 'synapse', 'on_success': function( synapse_id ) {
 				console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
-				console.log("B2", synapse_id );
 
 				if( 'undefined' !== typeof on_success ) {
 					on_success( { 'type': 'synapse', 'action': 'put', 'data': new_synapse_data, 'result': synapse_id } );
@@ -793,14 +791,12 @@ var Neural = (function() {
 
 			}, 'on_error': function( context ) {
 				console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
-				console.log("B0", synapse_hash );
 
 				/* Either there was some sort of data or database error, or 
 				 * the synapse just already exists. If that's the case, emit it as a success. 
 				 * Else, throw the error */
 				Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse_data ) {
-					console.log("B3", returned_synapse_data );
-					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', synapse_data );
+					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned synapse_data );
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'synapse', 'action': 'get', 'data': new_synapse_data, 'result': returned_synapse_data } );
 					}
