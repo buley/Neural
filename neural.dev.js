@@ -771,7 +771,6 @@ var Neural = (function() {
 		synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
 				
 
-			console.log('GOT HASH?', synapse_hash, ( "" + hidden_neuron_id.toString() + "" + input_neuron_id.toString() ) );
 			var new_synapse_data = { 'from_type': 'input'
 				, 'from': input_neuron_id
 				, 'to_type': 'hidden'
@@ -791,7 +790,6 @@ var Neural = (function() {
 
 			}, 'on_error': function( context ) {
 				console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
-
 				/* Either there was some sort of data or database error, or 
 				 * the synapse just already exists. If that's the case, emit it as a success. 
 				 * Else, throw the error */
