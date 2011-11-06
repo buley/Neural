@@ -723,7 +723,7 @@ var Neural = (function() {
 				    , token_copy = [ token, 'input' ];
 				
 				token_hash = Public.prototype.utilities.getId( token_copy );
-				console.log( 'turn it off', token_copy, token_hash );
+
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
 				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
 					console.log( 'Public.prototype.add Network.put success', value );
@@ -1027,7 +1027,7 @@ var Neural = (function() {
 				, 'incrementing': true
 				, 'unique': true
 			}
-			, 'hash': false
+			, 'hash': true
 			, 'type': false
 		};
 
