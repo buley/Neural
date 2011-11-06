@@ -769,9 +769,12 @@ var Neural = (function() {
 		};
 
 		synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
+				
+			var synapse_hash = Public.prototype.utilities.getId( [ hidden_neuron_id, input_neuron_id ] );
 
 			var data = { 'from_type': 'input'
 				, 'from': input_neuron_id
+				, 'hash': synapse_hash
 				, 'to_type': 'hidden'
 				, 'to': hidden_neuron_id 
 				, 'strength': Public.prototype.defaults.get( 'strength' )
@@ -1052,6 +1055,7 @@ var Neural = (function() {
 			}
 			, 'from': false
 			, 'from_type': false
+			, 'hash': true
 			, 'to': false
 			, 'to_type': false
 			, 'strength': false
