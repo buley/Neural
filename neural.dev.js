@@ -772,20 +772,20 @@ var Neural = (function() {
 				
 			var synapse_hash = Public.prototype.utilities.getId( [ hidden_neuron_id, input_neuron_id ] );
 
-			var data = { 'from_type': 'input'
+			var new_synapse_data = { 'from_type': 'input'
 				, 'from': input_neuron_id
 				, 'hash': synapse_hash
 				, 'to_type': 'hidden'
 				, 'to': hidden_neuron_id 
 				, 'strength': Public.prototype.defaults.get( 'strength' )
 			};
-			console.log("B1", data);
-			Network.put( { 'type': 'synapse', 'on_success': function( value ) {
-				console.log( 'Public.prototype.add > Network.put success > Network.put success', value );
-				console.log("B2", value);
+			console.log("B1", new_synapse_data);
+			Network.put( { 'type': 'synapse', 'on_success': function( synapse_id ) {
+				console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
+				console.log("B2", synpase_id );
 
 				if( 'undefined' !== typeof on_success ) {
-					on_success( { 'type': 'synapse', 'action': 'put', 'data': data, 'result': value } );
+					on_success( { 'type': 'synapse', 'action': 'put', 'data': new_synapse_data, 'result': synapse_id } );
 				}
 
 			}, 'on_error': function( context ) {
@@ -795,22 +795,22 @@ var Neural = (function() {
 					console.log("B3", synapse_data );
 				 * the synapse just already exists. If that's the case, emit it as a success. 
 				 * Else, throw the error */
-				Network.get( {  'type': 'neuron', 'on_success': function( synapse_data ) {
-					console.log("B3", synapse_data );
+				Network.get( {  'type': 'neuron', 'on_success': function( returned_synapse_data ) {
+					console.log("B3", returned_synapse_data );
 					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', synapse_data );
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'synapse', 'action': 'get', 'data': data, 'result': synapse_data } );
+						on_success( { 'type': 'synapse', 'action': 'get', 'data': data, 'result': returned_synapse_data } );
 					}
 
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
-				console.log("B5",'data',data);
+				console.log("B5 errored getting", synapse_hash );
 					if( 'undefined' !== typeof on_error ) {
 						on_error( context );
 					}
 
 				}, 'index': 'hash', 'key': synapse_hash } );
-			}, 'data': data } );
+			}, 'data': new_synapse_data } );
 
 		};
 
