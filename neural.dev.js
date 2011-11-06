@@ -782,7 +782,7 @@ var Neural = (function() {
 			console.log("B1", new_synapse_data);
 			Network.put( { 'type': 'synapse', 'on_success': function( synapse_id ) {
 				console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
-				console.log("B2", synpase_id );
+				console.log("B2", synapse_id );
 
 				if( 'undefined' !== typeof on_success ) {
 					on_success( { 'type': 'synapse', 'action': 'put', 'data': new_synapse_data, 'result': synapse_id } );
