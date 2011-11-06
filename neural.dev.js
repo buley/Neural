@@ -744,7 +744,7 @@ var Neural = (function() {
 						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', value );
 
 						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id } );
+							on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': value } );
 						}
 
 						synapse_callback( hidden_id, value );
