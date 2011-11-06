@@ -7,6 +7,80 @@
 var Neural = (function() {
 
 	/* PRIVATE */
+	var Cache = ( function () {
+
+		var self = function() {
+
+		}
+
+		self.prototype.set = function( request ) {
+		
+			var key = request.key || null
+			    , value = request.value || null,
+	    		    , ttl = request.ttl || null;
+
+			if( 'function' === typeof value ) {
+				value = value()
+			}	
+
+			cache[ key ] = {
+				'timestamp': ttl
+				, 'data': value
+			};
+
+		};
+
+		self.prototype.get = function( request ) {
+
+			var key = request.key || null;
+
+			var result = cache[ key ];
+
+			return blockStale( key, result );
+
+		};
+
+		self.prototype.delete = function( request ) {
+
+			var key = request.key || null;
+
+			delete cache[ key ];
+
+		};
+
+		self.prototype.update = function( request ) {
+
+			var key = request.key || null
+			  , value = request.value || null;
+
+			var previous = self.prototype.get( key );
+
+			if( 'function' === typeof value ) {
+				value = value( previous );
+			}
+
+		};
+
+		var blockStale = function( key, request ) {
+			var timestamp = parseInt( request.timestamp, 10 ) || 0,
+			    data = request.data || null,
+			    key = request.key || null, 
+			    current_date = new Date(),
+			    current_time = current_data.getTime();
+			var stale = ( timestamp > current_time ) ? false : true; 
+			if( 0 === timestamp || stale ) ) {
+				if( stale ) {
+					self.prototype.delete( { 'key': key } );
+				}
+				return data;
+			} else {
+				return null;
+			}
+		};
+
+		return self;
+
+	})();
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
