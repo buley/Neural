@@ -710,8 +710,9 @@ var Neural = (function() {
 		    hidden_layer_callback = function() {},
 		    synapse_callback = function() {};
 
-		tokens_copy.push( 'hidden' )
-		hidden_hash = Public.prototype.utilities.getId( tokens_copy ),
+		tokens_copy.push( 'hidden' );
+		hidden_hash = Public.prototype.utilities.getId( tokens_copy );
+
 		hidden_layer_callback = function( hidden_id ) {
 
 			console.log( 'Public.prototype.add > Network.put success', hidden_id );
