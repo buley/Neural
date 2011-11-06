@@ -249,18 +249,19 @@ var Neural = (function() {
 		};
 
 		var blockStale = function( key, request ) {
-			var timestamp = parseInt( request.timestamp, 10 ) || 0,
-			    data = request.data || null,
-			    key = request.key || null, 
-			    current_date = new Date(),
-			    current_time = current_data.getTime();
-			var stale = ( timestamp > current_time ) ? false : true; 
-			if( 0 === timestamp || stale ) ) {
+			var timestamp = parseInt( request.timestamp, 10 ) || 0
+			    , data = request.data || null
+			    , key = request.key || null
+			    , current_date = new Date()
+			    , current_time = current_data.getTime()
+			    , stale = ( timestamp > current_time ) ? false : true;
+
+			if( 0 === timestamp || !stale ) ) {
+				return data;
+			} else {
 				if( stale ) {
 					self.prototype.delete( { 'key': key } );
 				}
-				return data;
-			} else {
 				return null;
 			}
 		};
