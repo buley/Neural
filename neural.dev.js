@@ -793,7 +793,6 @@ var Neural = (function() {
 				console.log("B0");
 
 				/* Either there was some sort of data or database error, or 
-					console.log("B3", synapse_data );
 				 * the synapse just already exists. If that's the case, emit it as a success. 
 				 * Else, throw the error */
 
@@ -814,7 +813,7 @@ var Neural = (function() {
 
 				}, 'index': 'hash', 'key': synapse_hash } 
 
-				console.log("JUST WANT TO MATTER", request_obj );
+				console.log("JUST WANT TO MATTER", JSON.stringify( request_obj ), request_obj );
 
 				Network.get( request_obj );
 
