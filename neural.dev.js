@@ -791,11 +791,14 @@ var Neural = (function() {
 			}, 'on_error': function( context ) {
 				console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
 				console.log("B0");
+
 				/* Either there was some sort of data or database error, or 
 					console.log("B3", synapse_data );
 				 * the synapse just already exists. If that's the case, emit it as a success. 
 				 * Else, throw the error */
-				Network.get( {  'type': 'neuron', 'on_success': function( returned_synapse_data ) {
+
+					
+				var request_obj = {  'type': 'neuron', 'on_success': function( returned_synapse_data ) {
 					console.log("B3", returned_synapse_data );
 					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', synapse_data );
 					if( 'undefined' !== typeof on_success ) {
@@ -804,12 +807,17 @@ var Neural = (function() {
 
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
-				console.log("B5 errored getting", synapse_hash );
+					console.log("B5 errored getting", synapse_hash );
 					if( 'undefined' !== typeof on_error ) {
 						on_error( context );
 					}
 
-				}, 'index': 'hash', 'key': synapse_hash } );
+				}, 'index': 'hash', 'key': synapse_hash } 
+
+				console.log("JUST WANT TO MATTER", request_obj );
+
+				Network.get( request_obj );
+
 			}, 'data': new_synapse_data } );
 
 		};
