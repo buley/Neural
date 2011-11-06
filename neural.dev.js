@@ -19,14 +19,15 @@ var Neural = (function() {
 		
 			var key = request.key || null
 			    , value = request.value || null,
-	    		    , ttl = request.ttl || null;
-
+	    		    , ttl = request.ttl || null, //in seconds
+	    		    , current_date = new Date()
+			    , timestamp = current_date.getTime() + ( ttl * 1000 ) );
 			if( 'function' === typeof value ) {
 				value = value()
 			}	
 
 			cache[ key ] = {
-				'timestamp': ttl
+				'timestamp': timestamp
 				, 'data': value
 			};
 
@@ -197,6 +198,45 @@ var Neural = (function() {
 			}
 		
 		};
+
+		self.prototype.extendTTL = function( request ) {
+
+			var key = request.key || null
+			    , current = self.prototype.getExpires( { 'key': key }
+			    , timestamp = currrent + request.value;
+
+		    	self.prototype.setExpires( { 'key': key, 'timestamp': timestamp } );
+
+			return this;			    
+
+		};
+
+		self.prototype.shortenTTL = function( request ) {
+	
+			var key = request.key || null
+			    , current = self.prototype.getExpires( { 'key': key }
+			    , timestamp = currrent + request.value;
+			
+		    	self.prototype.setExpires( { 'key': key, 'timestamp': timestamp } );
+
+			return this;
+
+		};
+
+
+		self.prototype.increment = function( request ) {
+	
+			var request.value = function( previous ) {
+				previous += request.value;
+				return updateAndReturn( request.key, previous );
+			};
+
+			self.prototype.update( request );
+
+			return this;
+
+		};
+
 
 	
 		var updateAndReturn = function( request ) {
