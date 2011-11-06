@@ -1532,8 +1532,18 @@ var Neural = (function() {
 		// http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
 		var reA = /[^a-zA-Z]/g;
 		var reN = /[^0-9]/g;
-		var aA = a.replace(reA, "");
-		var bA = b.replace(reA, "");
+		var aA, bA;
+		if( a.replace ) {
+			aA = a.replace(reA, "");
+		} else {
+			aA = a;
+		}
+		if( b.replace ) {
+			bA = b.replace(reA, "");
+		} else {
+			bA = b;
+		}
+
 		if(aA === bA) {
 			var aN = parseInt(a.replace(reN, ""), 10);
 			var bN = parseInt(b.replace(reN, ""), 10);
