@@ -740,14 +740,14 @@ var Neural = (function() {
 					 * more likely, the neuron already exists. Before actually throwing the error,
 					 * try to look up the neuron by its hash. If not found, then throw the error. */
 
-					Network.get( {  'type': 'neurons', 'on_success': function( value ) {
-						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', value );
+					Network.get( {  'type': 'neurons', 'on_success': function( input_neuron_id ) {
+						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', input_neuron_id );
 
 						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': value } );
+							on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': input_neuron_id } );
 						}
 
-						synapse_callback( hidden_id, value );
+						synapse_callback( hidden_id, input_neuron_id );
 
 					}, 'on_error': function( context ) {
 						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
