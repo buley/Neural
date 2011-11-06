@@ -795,7 +795,7 @@ var Neural = (function() {
 				Network.get( {  'type': 'neuron', 'on_success': function( synapse_data ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', synapse_data );
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'synapse', 'action': 'put', 'data': data, 'result': synapse_data } );
+						on_success( { 'type': 'synapse', 'action': 'get', 'data': data, 'result': synapse_data } );
 					}
 
 				}, 'on_error': function( context ) {
