@@ -30,6 +30,8 @@ var Neural = (function() {
 				, 'data': value
 			};
 
+			return this;
+
 		};
 
 		self.prototype.get = function( request ) {
@@ -48,26 +50,44 @@ var Neural = (function() {
 
 			delete cache[ key ];
 
+			return this;
+
 		};
 
 		self.prototype.pop = function( request ) {
 
 			var request.value = function( previous ) {
-				return updateAndReturn( reqest.key, previous.pop() );
+				return updateAndReturn( request.key, previous.pop() );
 			};
 
-			return self.prototype.update( request );
+			self.prototype.update( request );
+
+			return this;
 
 		};
+
+		self.prototype.head = function( request ) {
+
+			var request.value = function( previous ) {
+				return updateAndReturn( request.key, previous.shift() );
+			};
+
+			self.prototype.update( request );
+
+			return this;
+
+		};
+
 
 		self.prototype.slice = function( request ) {
 
 			var request.value = function( previous ) {
-				return updateAndReturn( reqest.key, previous.slice( request.begin, request.end ) );
+				return updateAndReturn( request.key, previous.slice( request.begin, request.end ) );
 			};
 
-			return self.prototype.update( request );
+			self.prototype.update( request );
 
+			return this;
 		};
 
 		// key, property
@@ -75,42 +95,62 @@ var Neural = (function() {
 
 			var request.value = function( previous ) {
 				delete previous[ request.property ] 
-				return updateAndReturn( reqest.key, previous );
+				return updateAndReturn( request.key, previous );
 			};
 
 			return self.prototype.update( request );
+			
+			return this;
 
 		};
 
 		self.prototype.prepend = function( request ) {
 
 			var request.value = function( previous ) {
-				previous.unshift( request.value );
-				return updateAndReturn( reqest.key, previous );
+				var value = request.value;
+				if( 'string' === typeof previous ) {
+					previous = value + previous;
+				} else {
+					previous.unshift( request.value );
+				}
+				return updateAndReturn( request.key, previous );
 			};
 
-			return self.prototype.update( request );
+			self.prototype.update( request );
+
+			return this;
 
 		};
 
 		self.prototype.append = function( request ) {
 
 			var request.value = function( previous ) {
-				return updateAndReturn( reqest.key, previous.slice( request.begin, request.end ) );
+				var value = request.value;
+				if( 'string' === typeof previous ) {
+					previous = previous + value;
+				} else {
+					previous.push( request.value );
+				}
+
+				return updateAndReturn( request.key, previous );
 			};
 
-			return self.prototype.update( request );
+			self.prototype.update( request );
+
+			return this;
 
 		};
 
 		self.prototype.increment = function( request ) {
 	
 			var request.value = function( previous ) {
-				return updateAndReturn( reqest.key, previous.slice( request.begin, request.end ) );
+				previous += request.value;
+				return updateAndReturn( request.key, previous );
 			};
 
+			self.prototype.update( request );
 
-			return self.prototype.update( request );
+			return this;
 
 		};
 
@@ -125,6 +165,13 @@ var Neural = (function() {
 				value = value( previous );
 			}
 
+			cache[ key ] = {
+				'timestamp': self.prototype.getExpires( { 'key': key } )
+				, 'data': value
+			};
+
+			return this;
+
 		};
 	
 		self.prototype.setExpires( request ) {
@@ -136,6 +183,7 @@ var Neural = (function() {
 				cache[ key ][ 'timestamp' ] = timestamp;
 			}
 
+			return this;
 		};
 
 
