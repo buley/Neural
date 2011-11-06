@@ -725,14 +725,14 @@ var Neural = (function() {
 				token_hash = Public.prototype.utilities.getId( token_copy );
 console.log("C1");
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
-				Network.put( {  'type': 'neuron', 'on_success': function( value ) {
-					console.log( 'Public.prototype.add Network.put success', value );
+				Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
+					console.log( 'Public.prototype.add Network.put success', neuron_id );
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'value': value, 'action': 'put' } );
+						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'value': neuron_id, 'action': 'put' } );
 					}
-console.log("C2");
+console.log("C2 calling synapse_callback", hidden_id, neuron_id );
 
-					synapse_callback( hidden_id, value );
+					synapse_callback( hidden_id, neuron_id );
 
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put error', context );
