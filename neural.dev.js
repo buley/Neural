@@ -771,7 +771,7 @@ var Neural = (function() {
 		synapse_callback = function( hidden_neuron_id, input_neuron_id ) {
 				
 			var synapse_hash = Public.prototype.utilities.getId( [ hidden_neuron_id, input_neuron_id ] );
-			console.log('GOT HASH?', synapse_hash, ( hidden_neuron_id.toString() + input_neuron_id.toString() ) );
+			console.log('GOT HASH?', synapse_hash, ( "" + hidden_neuron_id.toString() + "" + input_neuron_id.toString() ) );
 			var new_synapse_data = { 'from_type': 'input'
 				, 'from': input_neuron_id
 				, 'hash': synapse_hash
