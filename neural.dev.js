@@ -804,7 +804,7 @@ var Neural = (function() {
 
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
-				console.log("B5");
+				console.log("B5",'data',data);
 					if( 'undefined' !== typeof on_error ) {
 						on_error( context );
 					}
