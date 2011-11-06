@@ -802,7 +802,7 @@ var Neural = (function() {
 					console.log("B3", returned_synapse_data );
 					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', synapse_data );
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'synapse', 'action': 'get', 'data': new_synapse_data, 'result': returned_synapse_data } );
+						on_success( { 'type': 'synapse', 'action': 'get', 'data': data, 'result': returned_synapse_data } );
 					}
 
 				}, 'on_error': function( context ) {
