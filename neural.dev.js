@@ -800,7 +800,7 @@ var Neural = (function() {
 				 * Else, throw the error */
 				Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse_data ) {
 					console.log("B3", returned_synapse_data );
-					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', synapse_data );
+					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned_synapse_data );
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'synapse', 'action': 'get', 'data': data, 'result': returned_synapse_data } );
 					}
