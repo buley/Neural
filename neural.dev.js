@@ -794,7 +794,7 @@ var Neural = (function() {
 				 * the synapse just already exists. If that's the case, emit it as a success. 
 				 * Else, throw the error */
 				Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse_data ) {
-					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned synapse_data );
+					console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned_synapse_data );
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'synapse', 'action': 'get', 'data': new_synapse_data, 'result': returned_synapse_data } );
 					}
