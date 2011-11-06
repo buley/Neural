@@ -750,6 +750,7 @@ var Neural = (function() {
 						synapse_callback( hidden_id, input_neuron_id );
 
 					}, 'on_error': function( context ) {
+						console.log("Extention 777");
 						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
 						if( 'undefined' !== typeof on_error ) {
 							on_error( context );
