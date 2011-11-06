@@ -22,6 +22,7 @@ var Neural = (function() {
 	    		    , ttl = request.ttl || null, //in seconds
 	    		    , current_date = new Date()
 			    , timestamp = current_date.getTime() + ( ttl * 1000 ) );
+
 			if( 'function' === typeof value ) {
 				value = value()
 			}	
@@ -236,8 +237,6 @@ var Neural = (function() {
 			return this;
 
 		};
-
-
 	
 		var updateAndReturn = function( request ) {
 			var key = request.key || null;
