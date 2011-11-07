@@ -80,7 +80,7 @@ var Neural = (function() {
 					var keys = key.split( '.' );
 					key = keys.shift();
 					var res = result[ key ];
-					if( res[ 'data' ] ) {
+					if( 'undefined' !== typeof res && res[ 'data' ] ) {
 						result = rest[ 'data' ];
 					} else {
 						result = res;
