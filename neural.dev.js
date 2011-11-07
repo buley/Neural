@@ -211,7 +211,7 @@ var Neural = (function() {
 
 			var key = request.key || null
 			    , current = self.prototype.getExpires( { 'key': key } )
-			    , timestamp = ( currrent + request.value );
+			    , timestamp = ( current + request.value );
 
 		    	self.prototype.setExpires( { 'key': key, 'timestamp': timestamp } );
 
