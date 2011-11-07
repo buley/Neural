@@ -29,17 +29,12 @@ var Neural = (function() {
 			if( -1 !== key.indexOf( '.' ) ) {
 				var obj = {};
 				var precount = key.split('.').length;
-				while( -1 !== key.indexOf( '.' ) ) {
+				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
 					key = keys.pop();
 					if( 'undefined' === typeof key ) {
 						break;
 					}
-					new_obj = {};
-					new_obj[ key ] = obj[ key ] || {
-						'timestamp': timestamp
-						, 'data': obj
-					};
 					if( ( precount - 1 ) === keys.length ) {
 						obj[ key ] = {
 							'timestamp': timestamp
@@ -47,6 +42,11 @@ var Neural = (function() {
 						};
 						key = null;
 					} else {
+						new_obj = {};
+						new_obj[ key ] = obj[ key ] || {
+							'timestamp': timestamp
+							, 'data': obj
+						};
 						key = keys.join( '.' );
 						obj = new_obj;
 					}		
