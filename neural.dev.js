@@ -298,19 +298,14 @@ var Neural = (function() {
 
 
 		var removeMeta = function( incoming ) {
-			var result = {};
-			for( attr in incoming ) {
+			var result = {};console.log('incoming',incoming);
+			if( 'string' === typeof incoming ) { return incoming; } for( attr in incoming ) {
 				if( incoming.hasOwnProperty( attr ) ) {
-					var data = incoming[ attr ];
-					if( 'undefined' !== typeof data.data ) {
-						result = data.data;
-						if( 'undefined' !== typeof result.data ) {
-							result[ attr ] = removeMeta( result );
-						}
-					} 
+					var data = incoming[ attr ];console.log("DATA", attr, incoming[attr]);
+					result[ attr ] = ( 'undefined' !== data.data ) ? removeMeta( data.data ) : data;
 				}
+				console.log('added',result);
 			}
-				
 			return result;
 		};
 
