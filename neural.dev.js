@@ -28,6 +28,7 @@ var Neural = (function() {
 
 			if( -1 !== key.indexOf( '.' ) ) {
 				var obj = {};
+				var precount = key.split('.').length;
 				while( -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
 					key = keys.pop();
@@ -39,7 +40,7 @@ var Neural = (function() {
 						'timestamp': timestamp
 						, 'data': obj
 					};
-					if( 1 === keys.length ) {
+					if( ( precount - 1 ) === keys.length ) {
 						obj[ key ] = {
 							'timestamp': timestamp
 							, 'data': value
