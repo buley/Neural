@@ -4,6 +4,7 @@
  **/
 
 var Cache = {};
+var cache;
 var Neural = (function() {
 
 	/* PRIVATE */
@@ -13,7 +14,7 @@ var Neural = (function() {
 
 		}
 		
-		var cache = {};
+		//var cache = {};
 		self.prototype.set = function( request ) {
 		
 			var key = request.key || null
@@ -78,7 +79,6 @@ var Neural = (function() {
 
 			var result = {};
 			if( -1 !== key.indexOf( '.' ) ) {
-				result = cache;
 				console.log('CACHE',cache);
 				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
