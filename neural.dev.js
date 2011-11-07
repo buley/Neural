@@ -82,16 +82,15 @@ var Neural = (function() {
 				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
 					key = keys.shift();
-					console.log('KEY',key,result[ key ]);
 					result = result[ key ][ 'data' ];
-					console.log('really me',result);
 					key = keys.join( '.' );
 				}
 				result = result[ key ];
 			} else {
 				result = cache[ key ];
 			}
-			return blockStale( key, result );
+			return result;
+			//return blockStale( key, result );
 
 		};
 
