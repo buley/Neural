@@ -27,7 +27,7 @@ var Neural = (function() {
 			}	
 
 			if( -1 !== key.indexOf( '.' ) ) {
-
+				var obj {};
 				while( -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
 					key = keys.pop();
@@ -39,22 +39,25 @@ var Neural = (function() {
 						'timestamp': timestamp
 						, 'data': obj
 					};
-					cache = new_obj;
+					obj = new_obj;
 					if( 1 === keys.length ) {
 						obj[ key ] = {
 							'timestamp': timestamp
 							, 'data': value
 						};
-					}
-					key = keys.join( '.' );				
+						key = null;
+					} else {
+						key = keys.join( '.' );
+					}		
 				}
+				//merge w/cache
+				cache = Public.prototype.utilities.merge( cache, obj );
+				console.log("CACHE",cache);
 			} else {
-
 				cache[ key ] = {
 					'timestamp': timestamp
 					, 'data': value
 				};
-
 			}
 			console.log("Denial and bargaining",cache);
 			return this;
@@ -1849,6 +1852,24 @@ var Neural = (function() {
 	Public.prototype.utilities.hashedJSON = function( obj ) {
 		return md5( JSON.stringify( obj ) );
 	};
+
+	//http://stackoverflow.com/questions/171251/how-can-i-merge-properties-of-two-javascript-objects-dynamically
+	Public.prototype.utilities.merge = function(obj1, obj2) {
+		for (var p in obj2) {
+			try {
+				if ( obj2[p].constructor==Object ) {
+					obj1[p] = Public.prototype.utilities.merge(obj1[p], obj2[p]);
+				} else {
+					obj1[p] = obj2[p];
+				}
+			} catch(e) {
+				obj1[p] = obj2[p];
+			}
+		}
+		return obj1;
+	}
+
+
 
 	Public.prototype.utilities.alphaSortArray = function( unsorted ) {
 		return unsorted.sort( Public.prototype.utilities.alphaSort );
