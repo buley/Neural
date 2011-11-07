@@ -78,6 +78,7 @@ var Neural = (function() {
 			var result = {};
 			if( -1 !== key.indexOf( '.' ) ) {
 				console.log('CACHE',cache);
+				result = cache;
 				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
 					key = keys.shift();
