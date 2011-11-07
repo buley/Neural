@@ -31,25 +31,28 @@ var Neural = (function() {
 				var precount = key.split('.').length;
 				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
+					new_obj = {};
 					key = keys.pop();
 					if( 'undefined' === typeof key ) {
 						break;
 					}
 					if( ( precount - 1 ) === keys.length ) {
-						obj[ key ] = {
+						new_obj[ key ] = {
 							'timestamp': timestamp
 							, 'data': value
 						};
 						key = null;
 					} else {
-						new_obj = {};
+
 						new_obj[ key ] = obj[ key ] || {
 							'timestamp': timestamp
 							, 'data': obj
 						};
 						key = keys.join( '.' );
-						obj = new_obj;
+
 					}		
+					obj = new_obj;
+					
 
 				}
 				//merge w/cache
