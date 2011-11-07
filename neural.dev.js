@@ -37,7 +37,6 @@ var Neural = (function() {
 					if( 'undefined' === typeof key ) {
 						break;
 					}
-
 					if( ( precount - 1 )=== keys.length ) {
 						new_obj[ key ] = {
 							'timestamp': timestamp
@@ -48,7 +47,6 @@ var Neural = (function() {
 							'timestamp': timestamp
 							, 'data': obj
 						};
-
 					}
 					console.log('old',obj);console.log('new',new_obj);
 					obj = new_obj;
@@ -83,7 +81,7 @@ var Neural = (function() {
 				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
 					key = keys.shift();
-					console.log('KEY',key,result);
+					console.log('KEY',key,result[ key ]);
 					result = result[ key ][ 'data' ];
 					console.log('really me',result);
 					key = keys.join( '.' );
