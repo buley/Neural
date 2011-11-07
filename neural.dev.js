@@ -304,7 +304,6 @@ var Neural = (function() {
 					var data = incoming[ attr ];console.log("DATA", attr, incoming[attr]);
 					result[ attr ] = ( 'undefined' !== data.data ) ? removeMeta( data.data ) : data;
 				}
-				console.log('added',result);
 			}
 			return result;
 		};
@@ -316,7 +315,7 @@ var Neural = (function() {
 			    , current_date = new Date()
 			    , current_time = current_date.getTime()
 			    , stale = ( timestamp < current_time ) ? false : true;
-			console.log("REMOVING META",timestamp,current_time);
+			
 			if( 0 === timestamp || !stale ) {
 				return removeMeta( data );
 			} else {
