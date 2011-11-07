@@ -48,12 +48,24 @@ var Neural = (function() {
 						};
 					} else {
 						obj = new_obj;
-					}		
+					}
 					key = keys.join( '.' );
+					if( -1 === key.indexOf( '.' ) ) {
+						obj[ key ] = {
+							'timestamp': timestamp
+							, 'data': obj 
+						};	
+					} 	
+
 
 				}
 				//merge w/cache
+				obj[ key ] = {
+					'timestamp': timestamp
+					, 'data': value
+				};
 				cache = Public.prototype.utilities.merge( cache, obj );
+
 			} else {
 				cache[ key ] = {
 					'timestamp': timestamp
