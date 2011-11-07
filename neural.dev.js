@@ -65,7 +65,7 @@ var Neural = (function() {
 
 		self.prototype.pop = function( request ) {
 
-			var request.value = function( previous ) {
+			request.value = function( previous ) {
 				return updateAndReturn( request.key, previous.pop() );
 			};
 
@@ -77,7 +77,7 @@ var Neural = (function() {
 
 		self.prototype.head = function( request ) {
 
-			var request.value = function( previous ) {
+			request.value = function( previous ) {
 				return updateAndReturn( request.key, previous.shift() );
 			};
 
@@ -90,7 +90,7 @@ var Neural = (function() {
 
 		self.prototype.slice = function( request ) {
 
-			var request.value = function( previous ) {
+			request.value = function( previous ) {
 				return updateAndReturn( request.key, previous.slice( request.begin, request.end ) );
 			};
 
@@ -102,7 +102,7 @@ var Neural = (function() {
 		// key, property
 		self.prototype.remove = function( request ) {
 
-			var request.value = function( previous ) {
+			request.value = function( previous ) {
 				delete previous[ request.property ] 
 				return updateAndReturn( request.key, previous );
 			};
@@ -115,7 +115,7 @@ var Neural = (function() {
 
 		self.prototype.prepend = function( request ) {
 
-			var request.value = function( previous ) {
+			request.value = function( previous ) {
 				var value = request.value;
 				if( 'string' === typeof previous ) {
 					previous = value + previous;
@@ -133,7 +133,7 @@ var Neural = (function() {
 
 		self.prototype.append = function( request ) {
 
-			var request.value = function( previous ) {
+			request.value = function( previous ) {
 				var value = request.value;
 				if( 'string' === typeof previous ) {
 					previous = previous + value;
@@ -152,7 +152,7 @@ var Neural = (function() {
 
 		self.prototype.increment = function( request ) {
 	
-			var request.value = function( previous ) {
+			request.value = function( previous ) {
 				previous += request.value;
 				return updateAndReturn( request.key, previous );
 			};
@@ -234,7 +234,7 @@ var Neural = (function() {
 
 		self.prototype.increment = function( request ) {
 	
-			var request.value = function( previous ) {
+			request.value = function( previous ) {
 				previous += request.value;
 				return updateAndReturn( request.key, previous );
 			};
