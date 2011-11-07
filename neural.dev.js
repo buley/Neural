@@ -1916,7 +1916,7 @@ var Neural = (function() {
 				var existing = obj2[ attr ];
 				var next = obj2[ attr ];
 				if( 'undefined' !== typeof next ) {
-					obj3[ attr ] = Public.prototype.utilities.merge( existing, next );
+					obj3[ attr ] = next;//Public.prototype.utilities.merge( existing, next );
 				}
 			}
 		}
@@ -1925,7 +1925,7 @@ var Neural = (function() {
 				var existing = obj1[ attr ];
 				var next = obj1[ attr ];
 				if( 'undefined' !== typeof next ) {
-					obj3[ attr ] = Public.prototype.utilities.merge( existing, next );
+					obj3[ attr ] = next;//Public.prototype.utilities.merge( existing, next );
 				}
 			}
 		}
