@@ -33,7 +33,6 @@ var Neural = (function() {
 					var keys = key.split( '.' );
 					new_obj = {};
 					key = keys.pop();
-
 					if( 'undefined' === typeof key ) {
 						break;
 					}
@@ -49,15 +48,14 @@ var Neural = (function() {
 					} else {
 						obj = new_obj;
 					}
-					key = keys.join( '.' );
-					if( -1 === key.indexOf( '.' ) ) {
+
+					if( 1 === keys.length ) {
 						obj[ key ] = {
 							'timestamp': timestamp
 							, 'data': obj 
 						};	
 					} 	
-
-
+					key = keys.join( '.' );
 				}
 				//merge w/cache
 				obj[ key ] = {
