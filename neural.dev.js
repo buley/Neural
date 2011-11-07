@@ -26,22 +26,37 @@ var Neural = (function() {
 				value = value()
 			}	
 
-			var obj = {};
-			while( -1 !== key.indexOf( '.' ) ) {
-				var keys = key.split( '.' );
-				key = keys.pop();
-				if( 'undefined' === typeof key ) {
-					break;
-				}
-				new_obj = {};
-				new_obj[ key ] = obj[ key ] || {
-					'timestamp': timestamp
+			if( -1 !== key.indexOf( '.' ) ) {
+
+				while( -1 !== key.indexOf( '.' ) ) {
+					var keys = key.split( '.' );
+					key = keys.pop();
+					if( 'undefined' === typeof key ) {
+						break;
+					}
+					new_obj = {};
+					new_obj[ key ] = obj[ key ] || {
+						'timestamp': timestamp
 						, 'data': obj
+					};
+					cache = new_obj;
+					if( 1 === keys.length ) {
+						obj[ key ] = {
+							'timestamp': timestamp
+							, 'data': value
+						};
+					}
+					key = keys.join( '.' );				
+				}
+			} else {
+
+				cache[ key ] = {
+					'timestamp': timestamp
+					, 'data': value
 				};
-				obj = new_obj;
-				key = keys.join( '.' );				
+
 			}
-			console.log("Denial and bargaining",obj);
+			console.log("Denial and bargaining",cache);
 			return this;
 
 		};
