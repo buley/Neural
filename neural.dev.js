@@ -324,7 +324,11 @@ var Neural = (function() {
 
 		var removeMeta = function( incoming ) {
 			var result = {};
-			if( 'string' === typeof incoming ) { return incoming; } for( attr in incoming ) {
+
+			if( Object !== typeof incoming.constructor ) {
+				return incoming;
+			}
+			for( attr in incoming ) {
 				if( incoming.hasOwnProperty( attr ) ) {
 					var data = incoming[ attr ];
 					if( !isStale( data ) ) {
