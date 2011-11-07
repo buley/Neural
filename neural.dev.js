@@ -316,8 +316,7 @@ var Neural = (function() {
 			    , current_date = new Date()
 			    , current_time = current_date.getTime()
 			    , stale = ( timestamp > current_time ) ? false : true;
-
-			console.log("THEATER",data);
+			console.log("REMOVING META",timestamp);
 			if( 0 === timestamp || !stale ) {
 				return removeMeta( data );
 			} else {
