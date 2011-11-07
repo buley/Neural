@@ -90,7 +90,7 @@ var Neural = (function() {
 				result = cache[ key ];
 			}
 
-			return blockStale( key, result );
+			return filterOutput( key, result );
 
 		};
 
@@ -296,7 +296,24 @@ var Neural = (function() {
 			return value;
 		};
 
-		var blockStale = function( key, request ) {
+
+		var removeMeta = function( incoming ) {
+			var result = {};
+			for( attr in incoming ) {
+				if( incoming.hasOwnProperty( attr ) ) {
+					var data = incoming[ attr ];
+					if( 'undefined' !== typeof data.data ) {
+						result = data.data;
+						if( 'undefined' !== typeof result.data ) {
+							result = removeMeta( result );
+						}
+					} 
+				}
+			}
+			return result;
+		};
+
+		var filterOutput = function( key, request ) {
 			var timestamp = parseInt( request.timestamp, 10 ) || 0
 			    , data = request.data || null
 			    , key = request.key || null
@@ -304,8 +321,9 @@ var Neural = (function() {
 			    , current_time = current_date.getTime()
 			    , stale = ( timestamp > current_time ) ? false : true;
 
+
 			if( 0 === timestamp || !stale ) {
-				return data;
+				return removeMeta( data );
 			} else {
 				if( stale ) {
 					self.prototype.delete( { 'key': key } );
