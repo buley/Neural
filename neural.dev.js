@@ -1924,14 +1924,18 @@ var Neural = (function() {
 				var next = obj1[ attr ];
 				if( 'undefined' !== typeof next && Object === next.constructor ) {
 					obj3[ attr ] = Public.prototype.utilities.merge( obj3[ attr ], next );
+				} else {
+					obj3[ attr ] = next;
 				}
 			}
 		}
 		for( attr in obj2 ) {
 			if( obj2.hasOwnProperty( attr ) ) {
 				var next = obj2[ attr ];
-				if( 'undefined' !== typeof next && 'String' !== next.constructor ) {
+				if( 'undefined' !== typeof next && Object === next.constructor ) {
 					obj3[ attr ] = Public.prototype.utilities.merge( obj3[ attr ], next );
+				} else {
+					obj3[ attr ] = next;
 				}
 			}
 		}
