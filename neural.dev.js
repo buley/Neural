@@ -1919,25 +1919,22 @@ var Neural = (function() {
 		var obj3 = {}
 		  , attr = '';
 
-		for( attr in obj2 ) {
-			if( obj2.hasOwnProperty( attr ) ) {
-				var existing = obj2[ attr ];
-				var next = obj2[ attr ];
-				if( 'undefined' !== typeof next ) {
-					obj3[ attr ] = next;//Public.prototype.utilities.merge( existing, next );
-				}
-			}
-		}
 		for( attr in obj1 ) {
 			if( obj1.hasOwnProperty( attr ) ) {
-				var existing = obj1[ attr ];
-				var next = obj1[ attr ];
 				if( 'undefined' !== typeof next ) {
-					obj3[ attr ] = next;//Public.prototype.utilities.merge( existing, next );
+					obj3[ attr ] = next;
 				}
 			}
 		}
-		return obj1;
+		for( attr in obj2 ) {
+			if( obj2.hasOwnProperty( attr ) ) {
+				var next = obj2[ attr ];
+				if( 'undefined' !== typeof next ) {
+					obj3[ attr ] = next;
+				}
+			}
+		}
+		return obj3;
 	}
 
 	Public.prototype.utilities.alphaSortArray = function( unsorted ) {
