@@ -305,7 +305,7 @@ var Neural = (function() {
 					if( 'undefined' !== typeof data.data ) {
 						result = data.data;
 						if( 'undefined' !== typeof result.data ) {
-							result = removeMeta( result );
+							result[ attr ] = removeMeta( result );
 						}
 					} 
 				}
