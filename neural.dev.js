@@ -121,8 +121,19 @@ var Neural = (function() {
 
 			var key = request.key || null;
 
-			var result = cache[ key ];
-
+			var result = {};
+			if( -1 !== key.indexOf( '.' ) ) {
+				result = cache;
+				while( key && -1 !== key.indexOf( '.' ) ) {
+					var keys = key.split( '.' );
+					key = keys.shift();
+					result = result[ key ];
+					key = keys.join( '.' );
+				}
+				result = result[ key ];
+			} else {
+				result = cache[ key ];
+			}
 			return blockStale( key, result );
 
 		};
