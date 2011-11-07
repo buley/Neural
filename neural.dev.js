@@ -28,7 +28,7 @@ var Neural = (function() {
 
 			var obj = {};
 			while( -1 !== key.indexOf( '.' ) ) {
-				var keys = key.split(".' ;
+				var keys = key.split( '.' );
 				key = keys.shift();
 				new_obj = {};
 				new_obj[ key ] = {
