@@ -263,7 +263,7 @@ var Neural = (function() {
 			    , current_time = current_data.getTime()
 			    , stale = ( timestamp > current_time ) ? false : true;
 
-			if( 0 === timestamp || !stale ) ) {
+			if( 0 === timestamp || !stale ) {
 				return data;
 			} else {
 				if( stale ) {
