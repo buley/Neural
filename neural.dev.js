@@ -41,23 +41,17 @@ var Neural = (function() {
 							'timestamp': timestamp
 							, 'data': value
 						};
-						key = null;
 					} else {
-
 						new_obj[ key ] = obj[ key ] || {
 							'timestamp': timestamp
 							, 'data': obj
 						};
 						key = keys.join( '.' );
-
 					}		
 					obj = new_obj;
-					
-
 				}
 				//merge w/cache
 				cache = Public.prototype.utilities.merge( cache, obj );
-
 			} else {
 				cache[ key ] = {
 					'timestamp': timestamp
