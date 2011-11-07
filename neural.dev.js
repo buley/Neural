@@ -1910,7 +1910,9 @@ var Neural = (function() {
 		if( 'undefined' === typeof obj2 ) {
 			obj2 = {};
 		}
-		var obj3 = {};
+		var obj3 = {}
+		  , attr = '';
+
 		for( attr in obj2 ) {
 			if( obj2.hasOwnProperty( attr ) ) {
 				var existing = obj2[ attr ];
