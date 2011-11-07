@@ -89,7 +89,7 @@ var Neural = (function() {
 			} else {
 				result = cache[ key ];
 			}
-
+			console.log( 'getting filtered',result);
 			return filterOutput( key, result );
 
 		};
