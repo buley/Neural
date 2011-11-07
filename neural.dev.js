@@ -83,7 +83,8 @@ var Neural = (function() {
 					var keys = key.split( '.' );
 					key = keys.shift();
 					console.log('KEY',key,result);
-					result = result[ key ];
+					result = result[ key ][ 'data' ];
+					console.log('really me',result);
 					key = keys.join( '.' );
 				}
 				result = result[ key ];
