@@ -42,7 +42,7 @@ var Neural = (function() {
 						, 'data': obj
 					};
 					if( ( precount - 1 ) === keys.length ) {
-						new_obj[ key ] = {
+						obj[ key ] = {
 							'timestamp': timestamp
 							, 'data': value
 						};
@@ -61,7 +61,6 @@ var Neural = (function() {
 				};
 			}
 			console.log("CACHE",cache);
-			console.log("Denial and bargaining",cache);
 			return this;
 
 		};
