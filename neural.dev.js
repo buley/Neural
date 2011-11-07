@@ -64,6 +64,7 @@ var Neural = (function() {
 					, 'data': obj
 				};
 			}
+			console.log('mergin',cache,'with',obj);
 			cache = Public.prototype.utilities.merge( cache, obj );
 			return this;
 
