@@ -27,7 +27,7 @@ var Neural = (function() {
 			}	
 
 			if( -1 !== key.indexOf( '.' ) ) {
-				var obj {};
+				var obj = {};
 				while( -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
 					key = keys.pop();
@@ -52,13 +52,14 @@ var Neural = (function() {
 				}
 				//merge w/cache
 				cache = Public.prototype.utilities.merge( cache, obj );
-				console.log("CACHE",cache);
+
 			} else {
 				cache[ key ] = {
 					'timestamp': timestamp
 					, 'data': value
 				};
 			}
+			console.log("CACHE",cache);
 			console.log("Denial and bargaining",cache);
 			return this;
 
