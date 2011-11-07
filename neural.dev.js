@@ -305,7 +305,6 @@ var Neural = (function() {
 					if( 'undefined' !== typeof data.data ) {
 						result = data.data;
 						if( 'undefined' !== typeof result.data ) {
-							console.log("LEt me GET WHERE",attr );
 							result[ attr ] = removeMeta( result );
 						}
 					} 
