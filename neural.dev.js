@@ -1922,6 +1922,12 @@ var Neural = (function() {
 		}
 		var obj3 = {}
 		  , attr = '';
+		if ( 'string' === typeof obj2 ) {
+			return obj2;
+		}
+		if ( 'string' === typeof obj1 ) {
+			return obj1;
+		}
 
 		for( attr in obj1 ) {
 			if( obj1.hasOwnProperty( attr ) ) {
