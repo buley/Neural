@@ -33,22 +33,24 @@ var Neural = (function() {
 					var keys = key.split( '.' );
 					new_obj = {};
 					key = keys.pop();
+
 					if( 'undefined' === typeof key ) {
 						break;
 					}
+					new_obj[ key ] = {
+						'timestamp': timestamp
+						, 'data': obj
+					};
 					if( ( precount - 1 ) === keys.length ) {
 						new_obj[ key ] = {
 							'timestamp': timestamp
 							, 'data': value
 						};
 					} else {
-						new_obj[ key ] = obj[ key ] || {
-							'timestamp': timestamp
-							, 'data': obj
-						};
-						key = keys.join( '.' );
+						obj = new_obj;
 					}		
-					obj = new_obj;
+					key = keys.join( '.' );
+
 				}
 				//merge w/cache
 				cache = Public.prototype.utilities.merge( cache, obj );
