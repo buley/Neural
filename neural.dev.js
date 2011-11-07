@@ -1913,6 +1913,7 @@ var Neural = (function() {
 		var obj3 = {};
 		for( attr in obj2 ) {
 			if( obj2.hasOwnProperty( attr ) ) {
+				var existing = obj2[ attr ];
 				var next = obj2[ attr ];
 				if( 'undefined' !== typeof next ) {
 					obj3[ attr ] = Public.prototype.utilities.merge( existing, next );
@@ -1921,6 +1922,7 @@ var Neural = (function() {
 		}
 		for( attr in obj1 ) {
 			if( obj1.hasOwnProperty( attr ) ) {
+				var existing = obj1[ attr ];
 				var next = obj1[ attr ];
 				if( 'undefined' !== typeof next ) {
 					obj3[ attr ] = Public.prototype.utilities.merge( existing, next );
