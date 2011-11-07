@@ -17,8 +17,8 @@ var Neural = (function() {
 		self.prototype.set = function( request ) {
 		
 			var key = request.key || null
-			    , value = request.value || null,
-	    		    , ttl = request.ttl || null, //in seconds
+			    , value = request.value || null
+	    		    , ttl = request.ttl || null //in seconds
 	    		    , current_date = new Date()
 			    , timestamp = current_date.getTime() + ( ttl * 1000 ) );
 
