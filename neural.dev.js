@@ -321,7 +321,7 @@ var Neural = (function() {
 			if( 'string' === typeof incoming ) { return incoming; } for( attr in incoming ) {
 				if( incoming.hasOwnProperty( attr ) ) {
 					var data = incoming[ attr ];
-					if( !isStale( data ) {
+					if( !isStale( data ) ) {
 						result[ attr ] = ( 'undefined' !== data.data ) ? removeMeta( data.data ) : data;
 					}
 				}
