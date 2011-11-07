@@ -82,7 +82,7 @@ var Neural = (function() {
 					key = keys.shift();
 					var res = result[ key ];
 					if( 'undefined' !== typeof res && res[ 'data' ] ) {
-						result = rest[ 'data' ];
+						result = res[ 'data' ];
 					} else {
 						result = res;
 					}
