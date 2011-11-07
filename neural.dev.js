@@ -14,7 +14,6 @@ var Neural = (function() {
 		}
 		
 		var cache = {};
-
 		self.prototype.set = function( request ) {
 		
 			var key = request.key || null
@@ -27,11 +26,19 @@ var Neural = (function() {
 				value = value()
 			}	
 
-			cache[ key ] = {
-				'timestamp': timestamp
-				, 'data': value
-			};
-
+			var obj = {};
+			while( -1 !== key.indexOf( '.' ) ) {
+				var keys = key.split(".' ;
+				key = keys.shift();
+				new_obj = {};
+				new_obj[ key ] = {
+					'timestamp': timestamp
+					, 'data': obj
+				};
+				obj = new_obj;
+				key = keys.join( '.' );				
+			}
+			console.log("Denial and bargaining",obj);
 			return this;
 
 		};
@@ -1621,6 +1628,18 @@ var Neural = (function() {
 		    , on_complete = request.on_complete || null
 		    , attr = new String();
 
+		var request_id = Public.prototype.utilities.hashedJSON( request );
+		var cached_request = Cache.get( { 'key': request_id } );
+		if( null !== cached_request ) {
+			if( !!Public.prototype.debug ) {
+				console.log( 'Public.prototype.get success', cached_request );
+			}
+			if( 'function' == typeof on_success ) {
+				on_success( cached_request );
+			}
+			return this;
+		}
+
 		delete request.type;
 		delete request.on_success;
 		delete request.on_error;
@@ -1631,8 +1650,12 @@ var Neural = (function() {
 		}
 
 		req.on_success = function( value ) {
+
+			var obj_key = type + '.' + value.id;
+			Cache.set( { 'key': obj_key, 'value': value, 'ttl': 300 } );
+
 			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.getAttr success', value );
+				console.log( 'Public.prototype.get success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -1641,7 +1664,7 @@ var Neural = (function() {
 
 		req.on_error = function( context ) {
 			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.getAttr error', context );
+				console.log( 'Public.prototype.get error', context );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -1650,7 +1673,7 @@ var Neural = (function() {
 
 		req.on_complete = function() {
 			if( !!Public.prototype.debug ) {
-				console.log( 'Public.prototype.getAttr complete' );
+				console.log( 'Public.prototype.get complete' );
 			}
 			if( 'function' == typeof on_complete ) {
 				on_complete();
@@ -1804,6 +1827,10 @@ var Neural = (function() {
 
 
 	Public.prototype.utilities = Public.prototype.utilities || {};
+
+	Public.prototype.utilities.hashedJSON = function( obj ) {
+		return md5( JSON.stringify( obj ) );
+	};
 
 	Public.prototype.utilities.alphaSortArray = function( unsorted ) {
 		return unsorted.sort( Public.prototype.utilities.alphaSort );
