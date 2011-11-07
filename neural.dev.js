@@ -40,15 +40,16 @@ var Neural = (function() {
 						, 'data': obj
 					};
 					if( 1 === keys.length ) {
-						new_obj = {
+						obj[ key ] = {
 							'timestamp': timestamp
 							, 'data': value
 						};
 						key = null;
 					} else {
 						key = keys.join( '.' );
+						obj = new_obj;
 					}		
-					obj = new_obj;
+
 				}
 				//merge w/cache
 				cache = Public.prototype.utilities.merge( cache, obj );
