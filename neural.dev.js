@@ -29,7 +29,10 @@ var Neural = (function() {
 			var obj = {};
 			while( -1 !== key.indexOf( '.' ) ) {
 				var keys = key.split( '.' );
-				key = keys.shift();
+				key = keys.pop();
+				if( 'undefined' === typeof key ) {
+					break;
+				}
 				new_obj = {};
 				new_obj[ key ] = {
 					'timestamp': timestamp
