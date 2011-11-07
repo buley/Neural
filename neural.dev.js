@@ -65,7 +65,6 @@ var Neural = (function() {
 				};
 			}
 			cache = Public.prototype.utilities.merge( cache, obj );
-			console.log("CACHE",cache);
 			return this;
 
 		};
@@ -76,7 +75,6 @@ var Neural = (function() {
 
 			var result = {};
 			if( -1 !== key.indexOf( '.' ) ) {
-				console.log('CACHE',cache);
 				result = cache;
 				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
@@ -96,7 +94,20 @@ var Neural = (function() {
 
 			var key = request.key || null;
 
-			delete cache[ key ];
+			var result = {};
+			if( -1 !== key.indexOf( '.' ) ) {
+				result = cache;
+				while( key && -1 !== key.indexOf( '.' ) ) {
+					var keys = key.split( '.' );
+					key = keys.shift();
+					result = result[ key ][ 'data' ];
+					key = keys.join( '.' );
+				}
+				delete result[ key ];
+				cache = result;
+			} else {
+				delete cache[ key ];
+			}
 
 			return this;
 
@@ -321,10 +332,9 @@ var Neural = (function() {
 		var filterOutput = function( key, request ) {
 			var timestamp = parseInt( request.timestamp, 10 ) || 0
 			    , data = request.data || null
-			    , key = request.key || null
-			    , stale = sStale( request );
-			
-			if( 0 === timestamp || !stale ) {
+			    , key = request.key || null;
+
+			if( 'undefined' !== typeof data && null !== data ) {
 				return removeMeta( data );
 			} else {
 				if( stale ) {
@@ -1893,11 +1903,9 @@ var Neural = (function() {
 		return md5( JSON.stringify( obj ) );
 	};
 
-	//http://stackoverflow.com/questions/171251/how-can-i-merge-properties-of-two-javascript-objects-dynamically
 	Public.prototype.utilities.merge = function(obj1, obj2) {
 		for( attr in obj2 ) {
 			if( obj2.hasOwnProperty( attr ) ) {
-				//
 				var val = obj1[ attr ];
 				if( 'undefined' === typeof val ) {
 					obj1[ attr ] = obj2[ attr ];
@@ -1908,8 +1916,6 @@ var Neural = (function() {
 		}
 		return obj1;
 	}
-
-
 
 	Public.prototype.utilities.alphaSortArray = function( unsorted ) {
 		return unsorted.sort( Public.prototype.utilities.alphaSort );
