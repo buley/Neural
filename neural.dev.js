@@ -39,9 +39,8 @@ var Neural = (function() {
 						'timestamp': timestamp
 						, 'data': obj
 					};
-					obj = new_obj;
 					if( 1 === keys.length ) {
-						obj[ key ] = {
+						new_obj = {
 							'timestamp': timestamp
 							, 'data': value
 						};
@@ -49,6 +48,7 @@ var Neural = (function() {
 					} else {
 						key = keys.join( '.' );
 					}		
+					obj = new_obj;
 				}
 				//merge w/cache
 				cache = Public.prototype.utilities.merge( cache, obj );
@@ -1856,15 +1856,15 @@ var Neural = (function() {
 
 	//http://stackoverflow.com/questions/171251/how-can-i-merge-properties-of-two-javascript-objects-dynamically
 	Public.prototype.utilities.merge = function(obj1, obj2) {
-		for (var p in obj2) {
-			try {
-				if ( obj2[p].constructor==Object ) {
-					obj1[p] = Public.prototype.utilities.merge(obj1[p], obj2[p]);
+		for( attr in obj2 ) {
+			if( obj2.hasOwnProperty( attr ) ) {
+				//
+				var val = obj1[ attr ];
+				if( 'undefined' === typeof val ) {
+					obj1[ attr ] = obj2[ attr ];
 				} else {
-					obj1[p] = obj2[p];
+					obj1[ attr ] = Public.prototype.utilities.merge( val, obj2[ attr ] );
 				}
-			} catch(e) {
-				obj1[p] = obj2[p];
 			}
 		}
 		return obj1;
