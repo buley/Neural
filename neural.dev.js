@@ -1923,9 +1923,11 @@ var Neural = (function() {
 		var obj3 = {}
 		  , attr = '';
 		if ( 'string' === typeof obj2 ) {
+			console.log("RETURNING COO",obj2);
 			return obj2;
 		}
 		if ( 'string' === typeof obj1 ) {
+			console.log("RETURNING COO1",obj1);
 			return obj1;
 		}
 
