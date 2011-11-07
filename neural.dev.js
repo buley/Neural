@@ -79,7 +79,12 @@ var Neural = (function() {
 				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
 					key = keys.shift();
-					result = result[ key ][ 'data' ];
+					var res = result[ key ];
+					if( res[ 'data' ] ) {
+						result = rest[ 'data' ];
+					} else {
+						result = res;
+					}
 					key = keys.join( '.' );
 				}
 				result = result[ key ];
