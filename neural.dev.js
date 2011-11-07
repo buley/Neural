@@ -294,13 +294,25 @@ var Neural = (function() {
 			return value;
 		};
 
+		var isStale = function( request ) {
+			var current_date = new Date()
+			  , current_time = current_date.getTime()
+			  , timestamp = request.timestamp;
+
+			if( 'undefined' === timestamp || null === timestamp) {
+				return false;
+			}
+			return ( timestamp < current_time ) ? false : true;
+		}
 
 		var removeMeta = function( incoming ) {
 			var result = {};
 			if( 'string' === typeof incoming ) { return incoming; } for( attr in incoming ) {
 				if( incoming.hasOwnProperty( attr ) ) {
 					var data = incoming[ attr ];
-					result[ attr ] = ( 'undefined' !== data.data ) ? removeMeta( data.data ) : data;
+					if( !isStale( data ) {
+						result[ attr ] = ( 'undefined' !== data.data ) ? removeMeta( data.data ) : data;
+					}
 				}
 			}
 			return result;
@@ -310,9 +322,7 @@ var Neural = (function() {
 			var timestamp = parseInt( request.timestamp, 10 ) || 0
 			    , data = request.data || null
 			    , key = request.key || null
-			    , current_date = new Date()
-			    , current_time = current_date.getTime()
-			    , stale = ( timestamp < current_time ) ? false : true;
+			    , stale = sStale( request );
 			
 			if( 0 === timestamp || !stale ) {
 				return removeMeta( data );
