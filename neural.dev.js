@@ -222,7 +222,7 @@ var Neural = (function() {
 		self.prototype.shortenTTL = function( request ) {
 	
 			var key = request.key || null
-			    , current = self.prototype.getExpires( { 'key': key }
+			    , current = self.prototype.getExpires( { 'key': key } )
 			    , timestamp = currrent + request.value;
 			
 		    	self.prototype.setExpires( { 'key': key, 'timestamp': timestamp } );
