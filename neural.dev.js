@@ -48,7 +48,6 @@ var Neural = (function() {
 							, 'data': obj
 						};
 					}
-					console.log('old',obj);console.log('new',new_obj);
 					obj = new_obj;
 					key = keys.join( '.' );
 				}
