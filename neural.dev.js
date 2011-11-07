@@ -89,8 +89,8 @@ var Neural = (function() {
 			} else {
 				result = cache[ key ];
 			}
-			return result;
-			//return blockStale( key, result );
+
+			return blockStale( key, result );
 
 		};
 
@@ -301,7 +301,7 @@ var Neural = (function() {
 			    , data = request.data || null
 			    , key = request.key || null
 			    , current_date = new Date()
-			    , current_time = current_data.getTime()
+			    , current_time = current_date.getTime()
 			    , stale = ( timestamp > current_time ) ? false : true;
 
 			if( 0 === timestamp || !stale ) {
