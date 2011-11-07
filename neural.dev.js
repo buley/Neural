@@ -246,7 +246,7 @@ var Neural = (function() {
 		};
 	
 		var updateAndReturn = function( request ) {
-			var key = request.key || null;
+			var key = request.key || null
 			  , value = request.value || null
 			  , timestamp = getExpires( { 'key': key } );
 
