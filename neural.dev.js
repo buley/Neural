@@ -34,10 +34,10 @@ var Neural = (function() {
 					break;
 				}
 				new_obj = {};
-				new_obj[ key ] = {
-					'timestamp': timestamp
-					, 'data': obj
+				new_obj[ key ] = obj[ key ] || {
+					'data': obj
 				};
+				new_obj[ 'timestamp' ] = timestamp;
 				obj = new_obj;
 				key = keys.join( '.' );				
 			}
