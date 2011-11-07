@@ -89,7 +89,6 @@ var Neural = (function() {
 			} else {
 				result = cache[ key ];
 			}
-			console.log( 'getting filtered',result);
 			return filterOutput( key, result );
 
 		};
@@ -298,7 +297,7 @@ var Neural = (function() {
 
 
 		var removeMeta = function( incoming ) {
-			var result = {};console.log('incoming',incoming);
+			var result = {};
 			if( 'string' === typeof incoming ) { return incoming; } for( attr in incoming ) {
 				if( incoming.hasOwnProperty( attr ) ) {
 					var data = incoming[ attr ];
