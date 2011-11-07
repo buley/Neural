@@ -1930,8 +1930,7 @@ var Neural = (function() {
 		for( attr in obj2 ) {
 			if( obj2.hasOwnProperty( attr ) ) {
 				var next = obj2[ attr ];
-				console.log("GALAT",next,next.constructor);
-				if( 'undefined' !== typeof next ) {
+				if( 'undefined' !== typeof next && 'String' !== next.constructor ) {
 					obj3[ attr ] = Public.prototype.utilities.merge( obj3[ attr ], next );
 				}
 			}
