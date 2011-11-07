@@ -3,11 +3,11 @@
  * Basic MLP neural network.
  **/
 
-
+var Cache = {};
 var Neural = (function() {
 
 	/* PRIVATE */
-	var Cache = ( function () {
+	Cache = ( function () {
 
 		var self = function() {
 
