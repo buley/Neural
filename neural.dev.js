@@ -1904,6 +1904,9 @@ var Neural = (function() {
 	};
 
 	Public.prototype.utilities.merge = function(obj1, obj2) {
+		if( 'undefined' === typeof obj1 ) {
+			obj1 = {};
+		}
 		for( attr in obj2 ) {
 			if( obj2.hasOwnProperty( attr ) ) {
 				var existing = obj1[ attr ];
