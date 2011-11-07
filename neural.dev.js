@@ -26,8 +26,8 @@ var Neural = (function() {
 				value = value()
 			}	
 
+			var obj = {};
 			if( -1 !== key.indexOf( '.' ) ) {
-				var obj = {};
 				var precount = key.split('.').length;
 				while( key && -1 !== key.indexOf( '.' ) ) {
 					var keys = key.split( '.' );
@@ -36,82 +36,37 @@ var Neural = (function() {
 					if( 'undefined' === typeof key ) {
 						break;
 					}
-					new_obj[ key ] = {
-						'timestamp': timestamp
-						, 'data': obj
-					};
-					if( ( precount - 1 ) === keys.length ) {
-						obj[ key ] = {
+
+					if( ( precount - 1 )=== keys.length ) {
+						new_obj[ key ] = {
 							'timestamp': timestamp
 							, 'data': value
 						};
 					} else {
-						obj = new_obj;
-					}
-
-					if( 1 === keys.length ) {
-						obj[ key ] = {
+						new_obj[ key ] = {
 							'timestamp': timestamp
-							, 'data': obj 
-						};	
-					} 	
+							, 'data': obj
+						};
+
+					}
+					console.log('old',obj);console.log('new',new_obj);
+					obj = new_obj;
 					key = keys.join( '.' );
 				}
-				//merge w/cache
-				obj[ key ] = {
+				new_obj = {};
+				new_obj[ key ] = {
 					'timestamp': timestamp
-					, 'data': value
+					, 'data': obj
 				};
-
-
-				var obj = {};
-				if( -1 !== key.indexOf( '.' ) ) {
-					var precount = key.split('.').length;
-					while( key && -1 !== key.indexOf( '.' ) ) {
-						var keys = key.split( '.' );
-						new_obj = {};
-						key = keys.pop();
-						if( 'undefined' === typeof key ) {
-							break;
-						}
-
-						if( ( precount - 1 )=== keys.length ) {
-							new_obj[ key ] = {
-								'timestamp': timestamp
-								, 'data': value
-							};
-						} else {
-							new_obj[ key ] = {
-								'timestamp': timestamp
-								, 'data': obj
-							};
-
-						}
-						console.log('old',obj);console.log('new',new_obj);
-						obj = new_obj;
-						key = keys.join( '.' );
-					}
-					new_obj = {};
-					new_obj[ key ] = {
-						'timestamp': timestamp
-						, 'data': obj
-					};
-					obj = new_obj;
-
-				} else {
-					cache[ key ] = {
-						'timestamp': timestamp
-						, 'data': obj
-					};
-				}
-				cache = Public.prototype.utilities.merge( cache, obj );
+				obj = new_obj;
 
 			} else {
 				cache[ key ] = {
 					'timestamp': timestamp
-					, 'data': value
+					, 'data': obj
 				};
 			}
+			cache = Public.prototype.utilities.merge( cache, obj );
 			console.log("CACHE",cache);
 			return this;
 
