@@ -1906,7 +1906,7 @@ var Neural = (function() {
 	Public.prototype.utilities.merge = function(obj1, obj2) {
 		for( attr in obj2 ) {
 			if( obj2.hasOwnProperty( attr ) ) {
-				var val = obj1[ attr ];
+				var val = obj2[ attr ];
 				if( 'object' !== typeof val ) {
 					obj1[ attr ] = obj2[ attr ];
 				} else {
