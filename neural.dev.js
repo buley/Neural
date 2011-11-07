@@ -183,7 +183,7 @@ var Neural = (function() {
 
 		};
 	
-		self.prototype.setExpires( request ) {
+		self.prototype.setExpires = function( request ) {
 
 			var key = request.key || null
 			    , timestamp = request.timestamp || 0;
@@ -196,7 +196,7 @@ var Neural = (function() {
 		};
 
 
-		self.prototype.getExpires( request ) {
+		self.prototype.getExpires = function( request ) {
 
 			var key = request.key || null
 			    , result = cache[ key ];
