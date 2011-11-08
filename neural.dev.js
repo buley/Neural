@@ -893,9 +893,10 @@ var Neural = (function() {
 
 				}
 				hidden_layer_callback( cached_val );
+		
 			}
 
-		}
+		};
 
 		return this;	
 
