@@ -8,7 +8,7 @@ var Neural = (function() {
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
-	var Cache = new CREAM();
+	Cache = new CREAM();
 
 	var defaults = {
 		'strength': 0
