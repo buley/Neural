@@ -730,7 +730,6 @@ var Neural = (function() {
 				
 				token_hash = Public.prototype.utilities.getId( token_copy );
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
-
 				var cached_hidden_neuron = Cache.set( { 'key': ( 'synapses.hidden.' + hidden_hash ), 'value': hidden_id } );
 				if( 'undefined' === typeof cached_hidden_neuron ) {
 
