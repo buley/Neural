@@ -798,13 +798,14 @@ var Neural = (function() {
 			new_synapse_data[ 'hash' ] = synapse_hash;
 			new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
 
-			var cached_synapse = Cache.get( { 'key': ( 'synapses.' + synapse_id + '.data' ) } );
+			var cached_synapse = Cache.get( { 'key': ( 'data.synapases.' + synapse_id ) } );
 			if( 'undefined' === typeof cached_synapse ) {
 
 				Network.put( { 'type': 'synapse', 'on_success': function( synapse_id ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
 					Cache.add( { 'key': ( 'neurons.' + neuron_id + '.synapses' ), 'value': synapse_id } );
-					Cache.set( { 'key': ( 'synapses.' + synapse_id + '.data' ), 'value': new_synapse_data } );
+					Cache.set( { 'key': ( 'data.synapases.' + synapse_id ), 'value': new_synapse_data } );
+					Cache.set( { 'key': ( 'synapses.' + new_synapse_data.hash  ), 'value': synapse_id } );
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'synapse', 'action': 'put', 'data': new_synapse_data, 'result': synapse_id } );
 					}
@@ -816,7 +817,7 @@ var Neural = (function() {
 					 * Else, throw the error */
 					Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse_data ) {
 						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned_synapse_data );
-						Cache.set( { 'key': ( 'synapses.' + synapse_id + '.data' ), 'value': returned_synapse_data } );
+						Cache.set( { 'key': ( 'data.synapases.' + synapse_id ), 'value': returned_synapse_data } );
 						if( 'undefined' !== typeof on_success ) {
 							on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': false } );
 						}
@@ -833,7 +834,7 @@ var Neural = (function() {
 				}, 'data': new_synapse_data } );
 			} else {
 				if( 'undefined' !== typeof on_success ) {
-					on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': true } );
+					on_success( { 'type': 'synapse', 'action': 'get', 'result': cached_synapse, 'cached': true } );
 				}
 			}
 		};
@@ -846,9 +847,10 @@ var Neural = (function() {
 			, 'display': tokens
 		};
 
+		
 		Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
-			Cache.set( { 'key': ( 'neurons.' + hidden_id + '.data' ), 'value': neuron_data } );
+			Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data } );
 			if( 'undefined' !== typeof on_success ) {
 				on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': hidden_id } );
 			}
@@ -862,14 +864,15 @@ var Neural = (function() {
 			 * more likely, it's already added and the new one 
 			 * was not unique. In case of the latter, try to get the hidden layer id by hash */
 
-			cached_val = Cache.get( { 'key': ( 'synapses.hidden.' + hidden_hash ) } );
+			cached_val = Cache.get( { 'key': ( 'synapses.hashes.' + hidden_hash + '' ) } );
 			
 			if( 'undefined' === typeof cached_val ) {
 
 				Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
 					console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
 
-					Cache.set( { 'key': ( 'synapses.hidden.' + hidden_hash ), 'value': hidden_id } );
+					Cache.set( { 'key': ( 'synapses.data.' + hidden_id + '.hash' ), 'value': hidden_hash } );
+					Cache.set( { 'key': ( 'synapses.hashes' + hidden_hash ), 'value': hidden_id } );
 
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id, 'cached': false } );
@@ -890,7 +893,6 @@ var Neural = (function() {
 			} else {
 				if( 'undefined' !== typeof on_success ) {
 					on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': cached_val, 'cached': true } );
-
 				}
 				hidden_layer_callback( cached_val );
 		
