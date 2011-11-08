@@ -802,14 +802,14 @@ var Neural = (function() {
 			new_synapse_data[ 'hash' ] = synapse_hash;
 			new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
 
-			var cached_synapse = Cache.get( { 'key': ( 'data.synapases.' + synapse_id ) } );
-			if( 'undefined' === typeof cached_synapse ) {
+			var cached_synapse = Cache.get( { 'key': ( 'synapses.data.' + synapse_id ) } );
+			if( new_synapse_data !== cached_synapse ) {
 
 				Network.put( { 'type': 'synapse', 'on_success': function( synapse_id ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
-					Cache.add( { 'key': ( 'neurons.' + neuron_id + '.synapses' ), 'value': synapse_id } );
-					Cache.set( { 'key': ( 'data.synapases.' + synapse_id ), 'value': new_synapse_data } );
-					Cache.set( { 'key': ( 'synapses.' + new_synapse_data.hash  ), 'value': synapse_id } );
+					Cache.set( { 'key': ( 'neurons.data.' + neuron_id + '.synapses.' + synapse_id ), 'value': new_synapse_data } );
+					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': new_synapse_data } );
+					Cache.set( { 'key': ( 'synapses.hashes' + new_synapse_data.hash  ), 'value': synapse_id } );
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'synapse', 'action': 'put', 'data': new_synapse_data, 'result': synapse_id } );
 					}
@@ -819,22 +819,29 @@ var Neural = (function() {
 					/* Either there was some sort of data or database error, or 
 					 * the synapse just already exists. If that's the case, emit it as a success. 
 					 * Else, throw the error */
-					Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse_data ) {
-						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned_synapse_data );
-						Cache.set( { 'key': ( 'data.synapases.' + synapse_id ), 'value': returned_synapse_data } );
+					var cached_synapse_data = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
+					if( 'undefined' === typeof cached_synapse_data ) {
+						Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse_data ) {
+							console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned_synapse_data );
+							Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data } );
+							Cache.set( { 'key': ( 'synapses.hashes.' + synapse_hash ), 'value': returned_synapse_data.id } );
+							if( 'undefined' !== typeof on_success ) {
+								on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': false } );
+							}
+
+						}, 'on_error': function( context ) {
+							console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
+							Cache.delete( { 'key': ( 'synapses.' + synapse_id + '.data' ) } );
+							if( 'undefined' !== typeof on_error ) {
+								on_error( context );
+							}
+
+						}, 'index': 'hash', 'key': synapse_hash } );
+					} else {
 						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': false } );
+							on_success( { 'type': 'synapse', 'action': 'get', 'result': cached_synapse_data, 'cached': true } );
 						}
-
-					}, 'on_error': function( context ) {
-						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
-						Cache.delete( { 'key': ( 'synapses.' + synapse_id + '.data' ) } );
-						if( 'undefined' !== typeof on_error ) {
-							on_error( context );
-						}
-
-					}, 'index': 'hash', 'key': synapse_hash } );
-
+					}
 				}, 'data': new_synapse_data } );
 			} else {
 				if( 'undefined' !== typeof on_success ) {
