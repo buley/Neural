@@ -729,9 +729,14 @@ var Neural = (function() {
 				    , token_copy = [ token, 'input' ];
 				
 				token_hash = Public.prototype.utilities.getId( token_copy );
+				var new_neuron_data = {
+					'type': 'input'
+					, 'hash': token_hash
+					, 'display': token
+				};
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
 				var cached_hidden_neuron = Cache.set( { 'key': ( 'synapses.hidden.' + hidden_hash ), 'value': hidden_id } );
-				if( 'undefined' === typeof cached_hidden_neuron ) {
+				if( cached_hidden_neuron !== typeof new_neuron_data ) {
 
 					Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
 						console.log( 'Public.prototype.add Network.put success', neuron_id );
@@ -771,14 +776,10 @@ var Neural = (function() {
 							}
 							synapse_callback( hidden_id, cached_input_neuron );
 						}
-					}, 'data': {
-						'type': 'input'
-						, 'hash': token_hash
-						, 'display': token
-					} } );
+					}, 'data': new_neuron_data } );
 				} else {
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': input_neuron_id, 'cached': true } );
+						on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_hidden_neuron, 'cached': true } );
 					}
 					synapse_callback( hidden_id, cached_hidden_neuron );
 				}
