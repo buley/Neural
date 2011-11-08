@@ -1,11 +1,15 @@
 /* Cache.js */
 var Cache = ( function () {
 
-	var self = function() {
+	var cache = {};
 
+	var self = function( cache ) {
+		if( cache ) {
+			this.cache = preheatCache( cache );
+		}
 	}
 	
-	//var cache = {};
+	//
 	self.prototype.set = function( request ) {
 	
 		var key = request.key || null
@@ -274,7 +278,6 @@ var Cache = ( function () {
 
 	};
 
-
 	self.prototype.increment = function( request ) {
 
 		request.value = function( previous ) {
@@ -286,6 +289,45 @@ var Cache = ( function () {
 
 		return this;
 
+	};
+
+	var hasAttributes = function() {
+		var answer = false;
+		for( attr in question ) {
+			if( question.hasOwnPropery( answer ) ) {
+				answer = true;
+				break;
+			}
+		}
+		return answer;
+	};
+
+	var preheat = function( incoming, ttl = null ) {
+	
+		if( 'undefined' === typeof incoming ) {
+			throw Error( 'The oven can\'t be empty.' );
+		}
+		var outgoing = {}
+		  , item = {}
+		  , current_date = new Date()
+		  , ttl = ( 'number' === typeof ttl ) ? ttl : 0
+		  , item_timestamp = ( 0 === ttl ) ? 0 : current_date.getTime() + ttl;
+		
+		for( attr in incoming ) {
+			item = incoming[ attr ];
+			if( incoming.hasOwnProperty( attr ) ) {
+				if( true === hasAttributes( item ) ) {
+					outgoing[ attr ] = preheat( incoming, ttl );	
+				}	
+			} else {
+				outgoing[ attr ] = {
+					'data': item
+					, 'timestamp': item_timestamp	
+				};
+			}
+		}
+		
+		return outgoing;
 	};
 
 	var updateAndReturn = function( request ) {
