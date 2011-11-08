@@ -896,7 +896,7 @@ var Neural = (function() {
 		
 			}
 		
-		} } );
+		}, 'data': neuron_data } );
 
 		return this;	
 
