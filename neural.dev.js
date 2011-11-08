@@ -819,7 +819,7 @@ var Neural = (function() {
 						console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned_synapse_data );
 						Cache.set( ( { 'key': ( 'synapses.' + synapse_id + '.data' ), 'value': returned_synapse_data } );
 						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data } );
+							on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': false } );
 						}
 
 					}, 'on_error': function( context ) {
@@ -834,7 +834,7 @@ var Neural = (function() {
 				}, 'data': new_synapse_data } );
 			} else {
 				if( 'undefined' !== typeof on_success ) {
-					on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data } );
+					on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': true } );
 				}
 			}
 		};
