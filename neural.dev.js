@@ -735,11 +735,13 @@ var Neural = (function() {
 					, 'display': token
 				};
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
-				var cached_hidden_neuron = Cache.set( { 'key': ( 'synapses.hidden.' + hidden_hash ), 'value': hidden_id } );
+				var cached_hidden_neuron = Cache.get( { 'key': ( 'synapses.hashes.' + hidden_hash ) } );
 				if( cached_hidden_neuron !== typeof new_neuron_data ) {
 
 					Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
 						console.log( 'Public.prototype.add Network.put success', neuron_id );
+						Cache.set( { 'key': ( 'synapses.data.' + hidden_id + '.hash' ), 'value': hidden_hash } );
+						Cache.set( { 'key': ( 'synapses.hashes.' + hidden_hash ), 'value': hidden_id } );
 
 						if( 'undefined' !== typeof on_success ) {
 							on_success( { 'type': 'neuron', 'subtype': 'hidden', 'value': neuron_id, 'action': 'put' } );
@@ -761,7 +763,8 @@ var Neural = (function() {
 								if( 'undefined' !== typeof on_success ) {
 									on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': input_neuron_id, 'cached': false } );
 								}
-								Cache.set( { 'key': ( 'neurons.input.' + token_hash ), 'value': input_neuron_id } );
+								Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': input_neuron_id } );
+								Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.hash' ), 'value': token_hash } );
 								synapse_callback( hidden_id, input_neuron_id );
 							}, 'on_error': function( context ) {
 								console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
@@ -772,7 +775,7 @@ var Neural = (function() {
 							}, 'index': 'hash', 'key': token_hash, 'properties': [ 'id' ], 'expecting': { 'type': 'input' }  } );
 						} else {
 							if( 'undefined' !== typeof on_success ) {
-								on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': input_neuron_id, 'cached': false } );
+								on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_input_neuron, 'cached': false } );
 							}
 							synapse_callback( hidden_id, cached_input_neuron );
 						}
