@@ -798,7 +798,7 @@ var Neural = (function() {
 			new_synapse_data[ 'hash' ] = synapse_hash;
 			new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
 
-			var cached_synapse = Cache.get( { 'key': ( 'synapses.' + synapse_id + '.data' ) );
+			var cached_synapse = Cache.get( { 'key': ( 'synapses.' + synapse_id + '.data' ) } );
 			if( 'undefined' === typeof cached_synapse ) {
 
 				Network.put( { 'type': 'synapse', 'on_success': function( synapse_id ) {
