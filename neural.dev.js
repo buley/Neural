@@ -896,7 +896,7 @@ var Neural = (function() {
 		
 			}
 
-		};
+		} );
 
 		return this;	
 
