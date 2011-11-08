@@ -1562,47 +1562,6 @@ var Neural = (function() {
 		return md5( JSON.stringify( obj ) );
 	};
 
-	Public.prototype.utilities.merge = function(obj1, obj2) {
-		if( 'undefined' === typeof obj1 ) {
-			obj1 = {};
-		}
-		if( 'undefined' === typeof obj2 ) {
-			obj2 = {};
-		}
-		var obj3 = {}
-		  , attr = '';
-		if ( 'string' === typeof obj2 ) {
-			console.log("RETURNING COO",obj2);
-			return obj1;
-		}
-		if ( 'string' === typeof obj1 ) {
-			console.log("RETURNING COO1",obj1);
-			return obj2;
-		}
-
-		for( attr in obj1 ) {
-			if( obj1.hasOwnProperty( attr ) ) {
-				var next = obj1[ attr ];
-				if( 'undefined' !== typeof next && Object === next.constructor && 'string' !== typeof next ) {
-					obj3[ attr ] = Public.prototype.utilities.merge( obj3[ attr ], next );
-				} else {
-					obj3[ attr ] = next;
-				}
-			}
-		}
-		for( attr in obj2 ) {
-			if( obj2.hasOwnProperty( attr ) ) {
-				var next = obj2[ attr ];
-				if( 'undefined' !== typeof next && Object === next.constructor && 'string' !== typeof next ) {
-					obj3[ attr ] = Public.prototype.utilities.merge( obj3[ attr ], next );
-				} else {
-					obj3[ attr ] = next;
-				}
-			}
-		}
-		return obj3;
-	}
-
 	Public.prototype.utilities.alphaSortArray = function( unsorted ) {
 		return unsorted.sort( Public.prototype.utilities.alphaSort );
 	};
