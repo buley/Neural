@@ -739,7 +739,7 @@ var Neural = (function() {
 				if( 'undefined' !== typeof cached_hidden_id ) {
 					var cached_hidden_neuron = Cache.get( { 'key': ( 'synapses.data.' + cached_hidden_id ) } );
 				}
-				if( cached_hidden_neuron !== new_neuron_data && ( 'undefined' === typeof cached_hidden_id || null === cached_hidden_id || 'undefined' === cached_hidden_neuron || null === cached_hidden_neuron ) {
+				if( cached_hidden_neuron !== new_neuron_data && ( 'undefined' === typeof cached_hidden_id || null === cached_hidden_id || 'undefined' === cached_hidden_neuron || null === cached_hidden_neuron ) ) {
 
 					Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
 						console.log( 'Public.prototype.add Network.put success', neuron_id );
