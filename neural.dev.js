@@ -787,7 +787,7 @@ var Neural = (function() {
 					}, 'data': new_neuron_data } );
 				} else {
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_hidden_neuron, 'cached': true } );
+						on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_input_neuron, 'cached': true } );
 					}
 					synapse_callback( hidden_id, input_id );
 				}
