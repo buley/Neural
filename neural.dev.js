@@ -868,60 +868,70 @@ var Neural = (function() {
 			, 'display': tokens
 		};
 
-		
-		Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
+		var cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+		if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
+			var cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
+		}
+		if( neuron_data !== cached_hidden_neuron && ( 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
 
-			Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data } );
+			Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
-			if( 'undefined' !== typeof on_success ) {
-				on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': hidden_id } );
-			}
+				Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data } );
+				Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id } );
 
-			hidden_layer_callback( hidden_id );
-
-		}, 'on_error': function( context ) {
-			console.log( 'Public.prototype.add Network.put error', context );
-
-			/* Either there was some sort of data error or,
-			 * more likely, it's already added and the new one 
-			 * was not unique. In case of the latter, try to get the hidden layer id by hash */
-
-			cached_val = Cache.get( { 'key': ( 'synapses.hashes.' + hidden_hash + '' ) } );
-			
-			if( 'undefined' === typeof cached_val ) {
-
-				Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
-					console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
-
-					Cache.set( { 'key': ( 'synapses.data.' + hidden_id + '.hash' ), 'value': hidden_hash, 'ttl': 300 } );
-					Cache.set( { 'key': ( 'synapses.hashes' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
-
-					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id, 'cached': false } );
-					}
-
-					hidden_layer_callback( hidden_id );
-
-				}, 'on_error': function( context ) {
-					console.log( 'Public.prototype.add Network.put error > Network.get error', context );
-					Cache.delete( { 'key': ( 'synapses.hidden.' + hidden_hash ) } );
-
-					if( 'undefined' !== typeof on_error ) {
-						on_error( context );
-					}
-
-				}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
-
-			} else {
 				if( 'undefined' !== typeof on_success ) {
-					on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': cached_val, 'cached': true } );
+					on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': hidden_id } );
 				}
-				hidden_layer_callback( cached_val );
-		
-			}
-		
-		}, 'data': neuron_data } );
 
+				hidden_layer_callback( hidden_id );
+
+			}, 'on_error': function( context ) {
+				console.log( 'Public.prototype.add Network.put error', context );
+
+				/* Either there was some sort of data error or,
+				 * more likely, it's already added and the new one 
+				 * was not unique. In case of the latter, try to get the hidden layer id by hash */
+
+				cached_val = Cache.get( { 'key': ( 'synapses.hashes.' + hidden_hash + '' ) } );
+				
+				if( 'undefined' === typeof cached_val ) {
+
+					Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
+						console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
+
+						Cache.set( { 'key': ( 'synapses.data.' + hidden_id + '.hash' ), 'value': hidden_hash, 'ttl': 300 } );
+						Cache.set( { 'key': ( 'synapses.hashes' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
+
+						if( 'undefined' !== typeof on_success ) {
+							on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id, 'cached': false } );
+						}
+
+						hidden_layer_callback( hidden_id );
+
+					}, 'on_error': function( context ) {
+						console.log( 'Public.prototype.add Network.put error > Network.get error', context );
+						Cache.delete( { 'key': ( 'synapses.hidden.' + hidden_hash ) } );
+
+						if( 'undefined' !== typeof on_error ) {
+							on_error( context );
+						}
+
+					}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
+
+				} else {
+					if( 'undefined' !== typeof on_success ) {
+						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': cached_val, 'cached': true } );
+					}
+					hidden_layer_callback( cached_val );
+			
+				}
+			
+			}, 'data': neuron_data } );
+
+		} else {
+
+
+		}
 		return this;	
 
 	};
