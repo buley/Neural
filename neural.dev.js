@@ -763,8 +763,8 @@ var Neural = (function() {
 								if( 'undefined' !== typeof on_success ) {
 									on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': input_neuron_id, 'cached': false } );
 								}
-								Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': input_neuron_id } );
-								Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.hash' ), 'value': token_hash } );
+								Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': input_neuron_id, 'ttl': 300 } );
+								Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.hash' ), 'value': token_hash, 'ttl': 300 } );
 								synapse_callback( hidden_id, input_neuron_id );
 							}, 'on_error': function( context ) {
 								console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
