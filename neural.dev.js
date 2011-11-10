@@ -757,7 +757,7 @@ var Neural = (function() {
 
 						var cached_input_neuron = Cache.get( { 'key': ( 'neurons.hashes.' + token_hash ) } );
 						
-						if( 'undefined' === typeof cached_input_neuron && null !== cached_input_neuron ) {
+						if( 'undefined' === typeof cached_input_neuron || null === cached_input_neuron ) {
 							/* Either there was some sort of data error, or,
 							 * more likely, the neuron already exists. Before actually throwing the error,
 							 * try to look up the neuron by its hash. If not found, then throw the error. */
@@ -809,7 +809,7 @@ var Neural = (function() {
 			if( 'undefined' !== typeof cached_synapse_id ) {
 				var cached_synapse = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
 			}
-			if( 'undefined' === typeof cached_synapse && new_synapse_data !== cached_synapse ) {
+			if( ( 'undefined' === typeof cached_synapse || null === cached_synapse ) && new_synapse_data !== cached_synapse ) {
 
 				Network.put( { 'type': 'synapse', 'on_success': function( synapse_id ) {
 					console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
