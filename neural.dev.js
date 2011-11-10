@@ -738,7 +738,7 @@ var Neural = (function() {
 				var cached_input_id = Cache.get( { 'key': ( 'neurons.hashes.' + token_hash ) } );
 				var cached_input_neuron;
 				if( 'undefined' !== typeof cached_input_id ) {
-					cached_input_neuron = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_id ) } );
+					cached_input_neuron = Cache.get( { 'key': ( 'neurons.data.' + cached_input_id ) } );
 				}
 				if( cached_input_neuron !== new_neuron_data && ( 'undefined' === typeof cached_input_id || null === cached_input_id || 'undefined' === cached_input_neuron || null === cached_input_neuron ) ) {
 
