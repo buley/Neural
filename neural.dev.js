@@ -736,8 +736,9 @@ var Neural = (function() {
 				};
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
 				var cached_hidden_id = Cache.get( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+				var cached_hidden_neuron;
 				if( 'undefined' !== typeof cached_hidden_id ) {
-					var cached_hidden_neuron = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_id ) } );
+					cached_hidden_neuron = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_id ) } );
 				}
 				if( cached_hidden_neuron !== new_neuron_data && ( 'undefined' === typeof cached_hidden_id || null === cached_hidden_id || 'undefined' === cached_hidden_neuron || null === cached_hidden_neuron ) ) {
 
