@@ -720,7 +720,7 @@ var Neural = (function() {
 
 		hidden_layer_callback = function( hidden_id ) {
 
-			console.log( 'Public.prototype.add > Network.put success', hidden_id );
+			console.log( 'Public.prototype.add > hidden_layer_callback success', hidden_id );
 
 			//begin for each token
 			for( x = 0; x < tokens_length; x++ ) {
@@ -815,7 +815,7 @@ var Neural = (function() {
 
 					console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
 
-					Cache.set( { 'key': ( 'neurons.data.' + neuron_id + '.synapses.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
+					Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.synapses.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.hashes.' + new_synapse_data.hash  ), 'value': synapse_id, 'ttl': 300 } );
 					if( 'undefined' !== typeof on_success ) {
@@ -872,6 +872,7 @@ var Neural = (function() {
 		Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
 			Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data } );
+
 			if( 'undefined' !== typeof on_success ) {
 				on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': hidden_id } );
 			}
