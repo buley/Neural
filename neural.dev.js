@@ -757,7 +757,7 @@ var Neural = (function() {
 
 						var cached_input_neuron = Cache.get( { 'key': ( 'neurons.hashes.' + token_hash ) } );
 						
-						if( 'undefined' === typeof cached_input_neuron ) {
+						if( 'undefined' === typeof cached_input_neuron && null !== cached_input_neuron ) {
 							/* Either there was some sort of data error, or,
 							 * more likely, the neuron already exists. Before actually throwing the error,
 							 * try to look up the neuron by its hash. If not found, then throw the error. */
