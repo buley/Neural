@@ -868,12 +868,13 @@ var Neural = (function() {
 			, 'hash': hidden_hash
 			, 'display': tokens
 		};
+		var cached_hidden_neuron_data;
 
 		var cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
 		if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
-			var cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
+			cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
 		}
-		if( neuron_data !== cached_hidden_neuron && ( 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
+		if( neuron_data !== cached_hidden_neuron_data && ( 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
 
 			Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
