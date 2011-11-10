@@ -775,7 +775,7 @@ var Neural = (function() {
 								if( 'undefined' !== typeof on_error ) {
 									on_error( context );
 								}
-								Cache.delete( { 'key': ( 'neurons.input.' + token_hash ) } );
+								Cache.delete( { 'key': ( 'neurons.hashes.' + token_hash ) } );
 							}, 'index': 'hash', 'key': token_hash, 'properties': [ 'id' ], 'expecting': { 'type': 'input' }  } );
 						} else {
 							if( 'undefined' !== typeof on_success ) {
@@ -901,8 +901,9 @@ var Neural = (function() {
 					Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
 						console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
 
-						Cache.set( { 'key': ( 'synapses.data.' + hidden_id + '.hash' ), 'value': hidden_hash, 'ttl': 300 } );
-						Cache.set( { 'key': ( 'synapses.hashes' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
+						Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data } );
+						Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id } );
+
 
 						if( 'undefined' !== typeof on_success ) {
 							on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id, 'cached': false } );
@@ -912,7 +913,7 @@ var Neural = (function() {
 
 					}, 'on_error': function( context ) {
 						console.log( 'Public.prototype.add Network.put error > Network.get error', context );
-						Cache.delete( { 'key': ( 'synapses.hidden.' + hidden_hash ) } );
+						Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
 
 						if( 'undefined' !== typeof on_error ) {
 							on_error( context );
