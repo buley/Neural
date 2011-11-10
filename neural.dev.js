@@ -806,13 +806,15 @@ var Neural = (function() {
 			new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
 
 			var cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
-			if( 'undefined' !== typeof cached_synapse_id ) {
+			if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
 				var cached_synapse = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
 			}
 			if( ( 'undefined' === typeof cached_synapse || null === cached_synapse ) && new_synapse_data !== cached_synapse ) {
 
 				Network.put( { 'type': 'synapse', 'on_success': function( synapse_id ) {
+
 					console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
+
 					Cache.set( { 'key': ( 'neurons.data.' + neuron_id + '.synapses.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.hashes.' + new_synapse_data.hash  ), 'value': synapse_id, 'ttl': 300 } );
@@ -829,7 +831,9 @@ var Neural = (function() {
 					if( 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) {
 						Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse_data ) {
 							console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned_synapse_data );
-							Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
+							if( 'undefined' !== typeof returned_synapse_data && 'undefined' !== typeof returned_synapse_data.id ) {
+								Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
+							}
 							Cache.set( { 'key': ( 'synapses.hashes.' + synapse_hash ), 'value': returned_synapse_data.id, 'ttl': 300 } );
 							if( 'undefined' !== typeof on_success ) {
 								on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': false } );
