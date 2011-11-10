@@ -792,7 +792,7 @@ var Neural = (function() {
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_hidden_neuron, 'cached': true } );
 					}
-					synapse_callback( hidden_id, cached_hidden_neuron_id );
+					synapse_callback( hidden_id, cached_hidden_id );
 				}
 			}
 			//end for each token
