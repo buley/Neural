@@ -742,15 +742,19 @@ var Neural = (function() {
 				}
 				if( cached_hidden_neuron !== new_neuron_data && ( 'undefined' === typeof cached_hidden_id || null === cached_hidden_id || 'undefined' === cached_hidden_neuron || null === cached_hidden_neuron ) ) {
 
-					Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
-						console.log( 'Public.prototype.add Network.put success', neuron_id );
+					Network.put( {  'type': 'neuron', 'on_success': function( hidden_neuron ) {
+						console.log( 'Public.prototype.add Network.put success', hidden_neuron );
+						var hidden_id;
+						if( 'undefined' !== typeof hidden_neuron ) {
+							hidden_id = hidden_neuron.id;
+						}
 						Cache.set( { 'key': ( 'neurons.data.' + hidden_id + '.hash' ), 'value': hidden_hash, 'ttl': 300 } );
 						Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
 
 						if( 'undefined' !== typeof on_success ) {
 							on_success( { 'type': 'neuron', 'subtype': 'hidden', 'value': neuron_id, 'action': 'put' } );
 						}
-
+						
 						synapse_callback( hidden_id, neuron_id );
 
 					}, 'on_error': function( context ) {
@@ -788,7 +792,7 @@ var Neural = (function() {
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_hidden_neuron, 'cached': true } );
 					}
-					synapse_callback( hidden_id, cached_hidden_neuron );
+					synapse_callback( hidden_id, cached_hidden_neuron_id );
 				}
 			}
 			//end for each token
