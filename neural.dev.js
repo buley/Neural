@@ -735,8 +735,11 @@ var Neural = (function() {
 					, 'display': token
 				};
 				// Put neuron; on_success, id is returned; next add a add synapse from hidden to neuron
-				var cached_hidden_neuron = Cache.get( { 'key': ( 'synapses.hashes.' + hidden_hash ) } );
-				if( cached_hidden_neuron !== typeof new_neuron_data ) {
+				var cached_hidden_id = Cache.get( { 'key': ( 'synapses.hashes.' + hidden_hash ) } );
+				if( 'undefined' !== typeof cached_hidden_id ) {
+					var cached_hidden_neuron = Cache.get( { 'key': ( 'synapses.data.' + cached_hidden_id ) } );
+				}
+				if( cached_hidden_neuron !== new_neuron_data || null === cached_hidden_neuron ) {
 
 					Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
 						console.log( 'Public.prototype.add Network.put success', neuron_id );
