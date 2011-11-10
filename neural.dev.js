@@ -837,7 +837,7 @@ var Neural = (function() {
 
 						}, 'on_error': function( context ) {
 							console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
-							Cache.delete( { 'key': ( 'synapses.' + synapse_id + '.data' ) } );
+							Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
 							if( 'undefined' !== typeof on_error ) {
 								on_error( context );
 							}
