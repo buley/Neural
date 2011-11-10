@@ -874,7 +874,7 @@ var Neural = (function() {
 		if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
 			cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
 		}
-		if( neuron_data !== cached_hidden_neuron_data && ( 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
+		if( neuron_data !== cached_hidden_neuron_data && ( 'undefined' === typeof cached_hidden_neuron_id || null === cached_hidden_neuron_id || 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
 
 			Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
@@ -894,13 +894,11 @@ var Neural = (function() {
 				 * more likely, it's already added and the new one 
 				 * was not unique. In case of the latter, try to get the hidden layer id by hash */
 
-
 				Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
 					console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
 
 					Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data } );
 					Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id } );
-
 
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id, 'cached': false } );
