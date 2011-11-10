@@ -823,7 +823,7 @@ var Neural = (function() {
 					 * the synapse just already exists. If that's the case, emit it as a success. 
 					 * Else, throw the error */
 					var cached_synapse_data = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
-					if( 'undefined' === typeof cached_synapse_data ) {
+					if( 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) {
 						Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse_data ) {
 							console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', returned_synapse_data );
 							Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
