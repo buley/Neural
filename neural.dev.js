@@ -842,7 +842,7 @@ var Neural = (function() {
 						}, 'index': 'hash', 'key': synapse_hash } );
 					} else {
 						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'synapse', 'action': 'get', 'result': cached_synapse_data, 'cached': true } );
+							on_success( { 'type': 'synapse', 'action': 'get', 'value': cached_synapse_data, 'cached': true } );
 						}
 					}
 				}, 'data': new_synapse_data } );
