@@ -1145,9 +1145,9 @@ var Neural = (function() {
 		 *
 		 */
 		var network = {}
-		  , own_network;
+		  , own_network
 		  , x = 0
-		  , synapses_length = synapses.length;
+		  , synapses_length = synapses.length
 		  , synapse
 		  , input_length = inputs.length
 		  , input
