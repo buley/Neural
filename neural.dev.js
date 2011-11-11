@@ -1016,7 +1016,7 @@ var Neural = (function() {
 				} else {
 					
 					input_neurons.push( cached_neuron );
-					if( input_length === input_neurons.length ) {
+					if( expected_input_length === input_neurons.length ) {
 						get_synapses( input_neurons );
 					}
 				}
@@ -1073,13 +1073,13 @@ var Neural = (function() {
 
 						synapses.push( cached_input_neuron );
 
-						if( synapse_count === synapses.length ) {
+						if( expected_synapses_count === synapses.length ) {
 							get_ouput_neurons( input_neurons, synapses );
 						}
 
 					}
 				} else {
-					expected_count -+ 1;
+					expected_synapses_count -+ 1;
 				}
 
 			}
@@ -1127,7 +1127,7 @@ var Neural = (function() {
 
 				} else {
 					output_neurons.push( cached_synapse );
-					if( synapses_length === output_neurons.length ) {
+					if( expected_output_count === output_neurons.length ) {
 						own_on_complete( input_neurons, synapses, output_neurons );
 					}
 				}
