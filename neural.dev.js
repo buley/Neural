@@ -1359,9 +1359,9 @@ var Neural = (function() {
 				, 'incrementing': true
 				, 'unique': true
 			}
+			, 'hash': true
 			, 'from': false
 			, 'from_type': false
-			, 'hash': true
 			, 'to': false
 			, 'to_type': false
 			, 'strength': false
