@@ -1030,6 +1030,7 @@ var Neural = (function() {
 
 						console.log('input_neurons', input_neurons.length );
 						console.log('expected_input_neurons', expected_input_length );
+					
 						if( expected_input_length === input_neurons.length ) {
 							Public.prototype.getSynapses( input_neurons, on_success, on_error, on_complete );
 						}
@@ -1093,15 +1094,14 @@ var Neural = (function() {
 							expected_synapses_count -= 1;
 						}
 
-					}, 'on_error': function( context ) {
-						console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor error', context );
-					}, 'on_complete': function() {
-
 						if( expected_synapses_count === synapses.length ) {
 							Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
 						}
 
+					}, 'on_error': function( context ) {
+						console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor error', context );
 					}, 'key': input_id, 'index': 'from' } );
+
 
 				} else {
 
