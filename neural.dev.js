@@ -1249,20 +1249,21 @@ var Neural = (function() {
 	};
 
 
-Public.prototype.returnNeuron = function( type, key ) {
-	var result_to_return;
-	switch( type ) {
-		case 'inputs': 
-			result_to_return = inputs[ key ][ 'to' ]; 
-			break;	
-		case 'outputs': 
-			result_to_return = outputs[ key ][ 'from' ]; 
-			break;	
-		default: 
-			break;
+	Public.prototype.returnNeuron = function( type, key ) {
+		console.log( 'Public.prototype.returnNeuron', type, key );
+		var result_to_return;
+		switch( type ) {
+			case 'inputs': 
+				result_to_return = inputs[ key ][ 'to' ]; 
+				break;	
+			case 'outputs': 
+				result_to_return = outputs[ key ][ 'from' ]; 
+				break;	
+			default: 
+				break;
+		};
+		return result_to_return;
 	};
-	return result_to_return;
-};
 
 
 	/* */
