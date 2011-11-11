@@ -1192,7 +1192,7 @@ var Neural = (function() {
 		 *
 		 */
 		var network = {}
-		  , own_network
+		  , own_network = {}
 		  , x = 0
 		  , synapses_length = synapses.length
 		  , synapse
@@ -1212,19 +1212,23 @@ var Neural = (function() {
 			to_id = synapse.to;
 			to_neuron = Public.prototype.returnNeuron( synapse.to_type, to_id );
 
-			own_network[ to_id ] = {
-				'data': to_neuron
-				, 'from': [ from_id ]
-			};
+			if( 'undefined' !== to_id && null !== to_id ) {
+				own_network[ to_id ] = {
+					'data': to_neuron
+					, 'from': [ from_id ]
+				};
+			}
 
 			// Handle from
 			from_id = synapse.from;
 			from_neuron = Public.prototype.returnNeuron( synapse.from_type, from_id );
 
-			own_network[ from_id ] = {
-				'data': to_neuron
-				, 'to': [ to_id ]
-			};
+			if( 'undefined' !== from_id && null !== from_id ) {
+				own_network[ from_id ] = {
+					'data': to_neuron
+					, 'to': [ to_id ]
+				};
+			}
 
 			network = Public.prototype.mergeObjects( network, own_network );
 
