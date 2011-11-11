@@ -1070,7 +1070,7 @@ var Neural = (function() {
 
 						}, 'on_error': function( context ) {
 							console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor error', context );
-						}, 'key': input_id } );
+						}, 'key': input_id, 'index': from } );
 
 					} else {
 
