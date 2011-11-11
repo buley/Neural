@@ -962,12 +962,12 @@ var Neural = (function() {
 			result = {};
 		}
 		
-		if( null === start_layer ) {
-			total_layers = 0;
+		if( null === current_layer ) {
+			current_layers = 0;
 		}
 
 		if( null === total_layers ) {
-			total_layers = start_layer + 1;
+			total_layers = current_layer + 1;
 		}
 
 		var own_on_complete = function( completed_input, completed_synapses, completed_output ) {
