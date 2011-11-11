@@ -1017,10 +1017,12 @@ var Neural = (function() {
 
 				} else {
 	
+					input_neurons.push( cached_neuron );
 						console.log('input_neurons', input_neurons.length );
 						console.log('expected_input_neurons', expected_input_length );				
-					input_neurons.push( cached_neuron );
+				
 					if( expected_input_length === input_neurons.length ) {
+						console.log('getting synapses',input_neurons);
 						get_synapses( input_neurons );
 					}
 				}
