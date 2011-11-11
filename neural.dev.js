@@ -1007,7 +1007,7 @@ var Neural = (function() {
 			  , input_neuron_id
 			  , z = 0
 			  , input_length = input_ids.length
-			  , expected_input_length = input_length;
+			  , expected_input_count = input_length;
 
 			// For each input_id in input_ids
 			for( z = 0; z < input_length; z += 1 ) {
@@ -1025,20 +1025,20 @@ var Neural = (function() {
 						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value ) {
 							input_neurons.push( input_neuron_value );
 						} else {
-							expected_input_length -= 1;
+							expected_input_count -= 1;
 						}
 
 						console.log('input_neurons', input_neurons.length );
-						console.log('expected_input_neurons', expected_input_length );
+						console.log('expected_input_neurons', expected_input_count );
 					
-						if( expected_input_length === input_neurons.length ) {
+						if( expected_input_count === input_neurons.length ) {
 							Public.prototype.getSynapses( input_neurons, on_success, on_error, on_complete );
 						}
 
 					}, 'on_error': function( context ) {
 						
 						//TODO: good error (not in index) or bad error (e.g. missing store)?
-						expected_synapses_count -= 1;
+						expected_input_count -= 1;
 						
 						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor error', context );
 					}, 'key': input_neuron_id } );
@@ -1049,7 +1049,7 @@ var Neural = (function() {
 				
 					console.log('Public.prototype.getTokens > get_input_neurons > cache success', cached_neuron );
 
-					if( expected_input_length === input_neurons.length ) {
+					if( expected_input_count === input_neurons.length ) {
 						console.log('Public.prototype.getTokens > get_input_neurons > getting synapses',input_neurons);
 						Public.prototype.getSynapses( input_neurons, on_success, on_error, on_complete );
 					}
