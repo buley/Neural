@@ -1210,7 +1210,7 @@ var Neural = (function() {
 
 			// Handle to
 			to_id = synapse.to;
-			to_neuron = return_neuron( synapse.to_type, to_id );
+			to_neuron = Public.prototype.returnNeuron( synapse.to_type, to_id );
 
 			own_network[ to_id ] = {
 				'data': to_neuron
@@ -1219,7 +1219,7 @@ var Neural = (function() {
 
 			// Handle from
 			from_id = synapse.from;
-			from_neuron = return_neuron( synapse.from_type, from_id );
+			from_neuron = Public.prototype.returnNeuron( synapse.from_type, from_id );
 
 			own_network[ from_id ] = {
 				'data': to_neuron
@@ -1229,25 +1229,26 @@ var Neural = (function() {
 			network = Public.prototype.mergeObjects( network, own_network );
 
 		}
-
-		return_neuron = function( type, key ) {
-			var result_to_return;
-			switch( type ) {
-				case 'inputs': 
-					result_to_return = inputs[ key ][ 'to' ]; 
-					break;	
-				case 'outputs': 
-					result_to_return = outputs[ key ][ 'from' ]; 
-					break;	
-				default: 
-					break;
-			};
-			return result_to_return;
-		};
-
 		return network;
 
 	};
+
+
+Public.prototype.returnNeuron = function( type, key ) {
+	var result_to_return;
+	switch( type ) {
+		case 'inputs': 
+			result_to_return = inputs[ key ][ 'to' ]; 
+			break;	
+		case 'outputs': 
+			result_to_return = outputs[ key ][ 'from' ]; 
+			break;	
+		default: 
+			break;
+	};
+	return result_to_return;
+};
+
 
 	/* */
 	Public.prototype.buildWeightMatrix = function( on_success, on_error ) {
