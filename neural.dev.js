@@ -1248,6 +1248,10 @@ var Neural = (function() {
 
 	};
 
+	Public.prototype.mergeObjects = function( obj1, obj2 ) {
+
+		return obj2;
+	};
 
 	Public.prototype.returnNeuron = function( type, key ) {
 		console.log( 'Public.prototype.returnNeuron', type, key );
