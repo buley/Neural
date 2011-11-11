@@ -1006,7 +1006,7 @@ var Neural = (function() {
 						}
 
 						console.log('input_neurons', input_neurons.length );
-						console.log('expected_input_neurons', expected_input_neurons );
+						console.log('expected_input_neurons', expected_input_length );
 						if( expected_input_length === input_neurons.length ) {
 							get_synapses( input_neurons );
 						}
