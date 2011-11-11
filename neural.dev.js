@@ -1107,6 +1107,8 @@ var Neural = (function() {
 
 					synapses.push( cached_input_neuron );
 
+					console.log('Public.prototype.getOutputNeurons cache check', expected_synapses_count, synapses.length );
+					
 					if( expected_synapses_count === synapses.length ) {
 						Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
 					}
