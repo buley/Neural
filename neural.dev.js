@@ -1027,17 +1027,17 @@ var Neural = (function() {
 			  , y = 0
 			  , synapse_count = 0
 			  , synapses = []
-			  , synapse = {}
+			  , input_neuron = {}
 			  , cached_synapse;
 			
 			for( y = 0; y < input_neuron_length; y += 1 ) {
 
-				synapse = input_neurons[ y ];
+				input_neuron = input_neurons[ y ];
 
-				cached_synapse = Cache.get( { 'key': ( 'neurons.synapses.' + input_neuron.id ) } );
+				cached_input_neuron = Cache.get( { 'key': ( 'neurons.synapses.' + input_neuron.id ) } );
 
 				// If it exists in the cache, no need to get it from the database
-				if( 'undefined' === typeof cached_synapse || null === cached_synapse ) {
+				if( 'undefined' === typeof cached_input_neuron || null === cached_input_neuron ) {
 				
 					// Else get it from the database
 					Network.get( {  'type': 'synapse', 'on_success': function( value ) {
