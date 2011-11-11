@@ -1146,7 +1146,7 @@ var Neural = (function() {
 			
 				// Else get it from the database
 				Network.get( {  'type': 'neuron', 'on_success': function( output_neuron_value ) {
-					console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor success', value );
+					console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor success', output_neuron_value );
 					Cache.set( { 'key': ( 'neurons.data.' + output_id ), 'value': output_neuron_value, 'ttl': 300 } );
 					if( 'undefined' !== typeof output_neuron_value && null !== output_neuron_value ) {
 						output_neurons.push( output_neuron_value );
