@@ -952,7 +952,7 @@ var Neural = (function() {
 	
 
 	/* input array of string tokens e.g. [ 'this', 'that', 'the_other' ]  */
-	Public.prototype.getNetwork = function( result, input_ids, start_layer, total_layers, on_success, on_error, on_complete ) {
+	Public.prototype.getNetwork = function( result, input_ids, current_layer, total_layers, on_success, on_error, on_complete ) {
 
 		if( 'string' === typeof input_ids ) {
 			input_ids = [ input_ids ];
