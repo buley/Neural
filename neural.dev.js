@@ -749,7 +749,7 @@ var Neural = (function() {
 						Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': neuron_id, 'ttl': 300 } );
 
 						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'neuron', 'subtype': 'input', 'value': neuron_id, 'action': 'put' } );
+							on_success( { 'type': 'neuron', 'subtype': 'input', 'value': neuron_id, 'action': 'put', 'cached': false } );
 						}
 						
 						synapse_callback( hidden_id, neuron_id );
@@ -763,13 +763,14 @@ var Neural = (function() {
 							/* Either there was some sort of data error, or,
 							 * more likely, the neuron already exists. Before actually throwing the error,
 							 * try to look up the neuron by its hash. If not found, then throw the error. */
-							Network.get( {  'type': 'neurons', 'on_success': function( input_neuron_id ) {
+							Network.get( {  'type': 'neurons', 'on_success': function( input_neuron_result ) {
 								console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', input_neuron_id );
-								if( 'undefined' !== typeof on_success ) {
+								var input_neuron_id = input_neuron_result.id;
+								if( 'undefined' !== typeof oni_success ) {
 									on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': input_neuron_id, 'cached': false } );
 								}
 								Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': input_neuron_id, 'ttl': 300 } );
-								Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.hash' ), 'value': token_hash, 'ttl': 300 } );
+								Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': input_neuron_result, 'ttl': 300 } );
 								synapse_callback( hidden_id, input_neuron_id );
 							}, 'on_error': function( context ) {
 								console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
@@ -777,7 +778,7 @@ var Neural = (function() {
 									on_error( context );
 								}
 								Cache.delete( { 'key': ( 'neurons.hashes.' + token_hash ) } );
-							}, 'index': 'hash', 'key': token_hash, 'properties': [ 'id' ], 'expecting': { 'type': 'input' }  } );
+							}, 'index': 'hash', 'key': token_hash, 'expecting': { 'type': 'input' }  } );
 						} else {
 							if( 'undefined' !== typeof on_success ) {
 								on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_input_neuron, 'cached': true } );
@@ -879,8 +880,8 @@ var Neural = (function() {
 
 			Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
-				Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data } );
-				Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id } );
+				Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
+				Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
 
 				if( 'undefined' !== typeof on_success ) {
 					on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': hidden_id } );
@@ -934,6 +935,27 @@ var Neural = (function() {
 		return this;	
 
 	};
+
+	/* */
+	Public.prototype.getTokens = function( layers, on_success, on_error ) {
+
+		//
+		//
+				/* Get Cursor Neurons With Secondary Index on From */
+				Network.get( {  'type': 'neurons', 'on_success': function( value ) {
+					console.log( 'Public.prototype.buildNetwork Network.get cursor success', value );
+					from_ids.push( value );
+				}, 'on_error': function( context ) {
+					console.log( 'Public.prototype.buildNetwork Network.get cursor error', context );
+				}, 'on_complete': function() {
+					console.log( 'Public.prototype.buildNetwork Network.get cursor complete' );
+					console.log( 'Public.prototype.buildNetwork Network.get cursor complete ids', from_ids );
+				}, 'index': 'from', 'key': token_id, 'properties': [ 'from' ]  } );
+
+
+
+
+	}
 
 	/* takes a token or tokens and builds an in memory representation of relevant 
 	 * neurons and their connections of an MLP such
