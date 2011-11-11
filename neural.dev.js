@@ -1023,6 +1023,7 @@ var Neural = (function() {
 
 					if( expected_input_length === input_neurons.length ) {
 						console.log('Public.prototype.getTokens > get_input_neurons > getting synapses',input_neurons);
+						console.log("GETING",get_synapses);
 						get_synapses( input_neurons );
 					}
 				}
