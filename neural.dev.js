@@ -975,7 +975,7 @@ var Neural = (function() {
 		  , get_synapses = function() {}
 		  , own_on_complete = function() {};
 
-		get_input_neurons = function( input_ids ) {
+		get_input_neurons = ( function( input_ids ) {
 
 			var input_neurons = []
 			  , input_count = 0
@@ -1014,7 +1014,7 @@ var Neural = (function() {
 
 			}
 
-		};
+		}( input_ids ) );
 
 		// takes an array of input neuron objects
 		get_synapses = function( input_neurons ) {
