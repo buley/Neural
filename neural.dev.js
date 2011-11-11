@@ -1036,6 +1036,10 @@ var Neural = (function() {
 						}
 
 					}, 'on_error': function( context ) {
+						
+						//TODO: good error (not in index) or bad error (e.g. missing store)?
+						expected_synapses_count -= 1;
+						
 						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor error', context );
 					}, 'key': input_neuron_id } );
 
@@ -1069,7 +1073,6 @@ var Neural = (function() {
 		  , input_id
 		  , input_neuron = {}
 		  , cached_synapse;
-	console.log("COUNT AND OBS",intput_neuron_length,input_neurons);	
 		for( y = 0; y < input_neuron_length; y += 1 ) {
 
 			input_neuron = input_neurons[ y ];
@@ -1100,6 +1103,9 @@ var Neural = (function() {
 
 					}, 'on_error': function( context ) {
 						console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor error', context );
+						//TODO: Inspect what kind of error this is
+						expected_synapses_count -= 1;
+
 					}, 'key': input_id, 'index': 'from' } );
 
 
@@ -1159,6 +1165,8 @@ var Neural = (function() {
 					}
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor error', context );
+					//TODO: Inspect error and do maybe do something
+					expected_synapses_count -= 1;
 				}, 'key': output_id } );
 
 			} else {
