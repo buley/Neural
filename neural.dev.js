@@ -1064,13 +1064,15 @@ var Neural = (function() {
 								expected_synapses_count -= 1;
 							}
 
+						}, 'on_error': function( context ) {
+							console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor error', context );
+						}, 'on_complete': function() {
+
 							if( expected_synapses_count === synapses.length ) {
 								get_ouput_neurons( input_neurons, synapses );
 							}
 
-						}, 'on_error': function( context ) {
-							console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor error', context );
-						}, 'key': input_id, 'index': from } );
+						}, 'key': input_id, 'index': 'from' } );
 
 					} else {
 
