@@ -1215,8 +1215,13 @@ var Neural = (function() {
 			if( 'undefined' !== to_id && null !== to_id ) {
 				own_network[ to_id ] = {
 					'data': to_neuron
-					, 'from': [ from_id ]
 				};
+				if( 'undefined' !== typeof from_id && null !== from_id ) {
+					if( 'undefined' === typeof own_network[ to_id ][ 'from' ] ) {
+						own_network[ to_id ][ 'from' ] = [];
+					}
+					own_network[ to_id ][ 'from' ].push( from_id );
+				}
 			}
 
 			// Handle from
@@ -1225,9 +1230,15 @@ var Neural = (function() {
 
 			if( 'undefined' !== from_id && null !== from_id ) {
 				own_network[ from_id ] = {
-					'data': to_neuron
-					, 'to': [ to_id ]
+					'data': from_neuron
 				};
+				if( 'undefined' !== typeof to_id && null !== to_id ) {
+					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
+						own_network[ from_id ][ 'to' ] = [];
+					}
+					own_network[ from_id ][ 'to' ].push( to_id );
+				}
+
 			}
 
 			network = Public.prototype.mergeObjects( network, own_network );
