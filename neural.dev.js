@@ -1069,7 +1069,7 @@ var Neural = (function() {
 		  , input_id
 		  , input_neuron = {}
 		  , cached_synapse;
-		
+	console.log("COUNT AND OBS",intput_neuron_length,input_neurons);	
 		for( y = 0; y < input_neuron_length; y += 1 ) {
 
 			input_neuron = input_neurons[ y ];
