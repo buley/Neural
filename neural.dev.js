@@ -1186,10 +1186,10 @@ var Neural = (function() {
 		return_neuron = function( type, key ) {
 			var result_to_return;
 			switch( type ) {
-				'inputs': 
+				case 'inputs': 
 					result_to_return = inputs[ key ][ 'to' ]; 
 					break;	
-				'outputs': 
+				case 'outputs': 
 					result_to_return = outputs[ key ][ 'from' ]; 
 					break;	
 				default: 
