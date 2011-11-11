@@ -979,7 +979,7 @@ var Neural = (function() {
 			  , completed_output_ids = []
 			  , completed_output_ids_length = 0
 			  , b = 0;
-
+			console.log('ownoncomplete',current_layer,total_layers);
 			if( ( current_layer + 1 ) < total_layers ) {
 
 				for( b = 0; b < completed_output_ids_length; b += 1 ) {
