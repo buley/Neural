@@ -1043,6 +1043,9 @@ var Neural = (function() {
 			for( y = 0; y < input_neuron_length; y += 1 ) {
 
 				input_neuron = input_neurons[ y ];
+				if( 'undefined' === typeof input_neuron || null === input_neuron || {} === input_neuron || 'undefined' === typeof input_neuron.id ) {
+					break;
+				}
 				input_id = input_neuron.id;
 
 				if( 'undefined' !== typeof input_id ) {
