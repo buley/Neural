@@ -973,9 +973,9 @@ var Neural = (function() {
 		var get_input_neurons = function() {}
 		  , get_synapses = function() {}
 		  , get_output_neurons = function() {}
-		  , own_on_complete = function() {};
-
-		get_input_neurons = function( input_ids ) {
+		  , own_on_complete = function() {}
+  
+		  , get_input_neurons = function( input_ids ) {
 
 			console.log( 'Public.prototype.getNetwork get_input_neurons()', input_ids );
 			var input_neurons = []
@@ -1029,10 +1029,10 @@ var Neural = (function() {
 
 			}
 
-		};
+		}
 
 		// takes an array of input neuron objects
-		get_synapses = function( input_neurons ) {
+		, get_synapses = function( input_neurons ) {
 
 			console.log( 'Public.prototype.getNetwork get_synapses()', input_neurons );
 
@@ -1095,9 +1095,9 @@ var Neural = (function() {
 
 			}
 			
-		};
-
-		get_output_neurons = function( input_neurons, synapses ) {
+		}
+		// 
+		, get_output_neurons = function( input_neurons, synapses ) {
 
 			console.log( 'Public.prototype.getNetwork get_output_neurons()', input_neurons, synapses );
 			
@@ -1145,11 +1145,10 @@ var Neural = (function() {
 
 
 			}
-			
-
-		};
-
-		own_on_complete = function( completed_input, completed_synapses, completed_output ) {
+		
+		}
+		//
+		, own_on_complete = function( completed_input, completed_synapses, completed_output ) {
 	
 			console.log( 'Public.prototype.getNetwork own_on_complete()', completed_input, completed_synapses, completed_output );
 	
