@@ -1113,7 +1113,7 @@ var Neural = (function() {
 					completed_output_ids.push( completed_output[ b ].id );
 				}
 				
-				Public.prototype.getTokens( result, completed_output_ids, ( current layer + 1 ), ( total_layers - 1 ), on_success, on_error, own_on_complete );
+				Public.prototype.getTokens( result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, own_on_complete );
 
 			} else {
 				if( 'function' === typeof on_complete ) {
