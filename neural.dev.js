@@ -1018,11 +1018,11 @@ var Neural = (function() {
 				} else {
 	
 					input_neurons.push( cached_neuron );
-						console.log('input_neurons', input_neurons.length );
+						console.log('Public.prototype.getTokens > get_input_neurons > cache success', cached_neuron );
 						console.log('expected_input_neurons', expected_input_length );				
 				
 					if( expected_input_length === input_neurons.length ) {
-						console.log('getting synapses',input_neurons);
+						console.log('Public.prototype.getTokens > get_input_neurons > getting synapses',input_neurons);
 						get_synapses( input_neurons );
 					}
 				}
