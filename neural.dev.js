@@ -1061,7 +1061,7 @@ var Neural = (function() {
 		get_output_neurons = function( input_neurons, synapses ) {
 
 			//For each input neuron, get it's synapses 
-			var synapses_length = synapses.length;
+			var synapses_length = synapses.length
 			  , a = 0
 			  , output_id
 			  , output_neurons = []
