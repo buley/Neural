@@ -936,125 +936,269 @@ var Neural = (function() {
 
 	};
 
-	/* */
-	Public.prototype.getTokens = function( layers, on_success, on_error ) {
+	/*
+	 * Pre(Get layer n neuron ids from display tokens)
+	 *
+	 * For each layer n id, get the layer n neuron
+	 * For each layer n neuron, get all of its n->n+1 synapses
+	 * For each synapse of each layer n id, get all n+1 neurons
+	 * if ( start layer n + 1 < number of layers ) {
+	 *	result = self( result, n + 1, t - 1, on_success, on_error, null );
+	 * }
+	 * on_complete( result );
+	 */
 
-		//
-		//
-				/* Get Cursor Neurons With Secondary Index on From */
-				Network.get( {  'type': 'neurons', 'on_success': function( value ) {
-					console.log( 'Public.prototype.buildNetwork Network.get cursor success', value );
-					from_ids.push( value );
-				}, 'on_error': function( context ) {
-					console.log( 'Public.prototype.buildNetwork Network.get cursor error', context );
-				}, 'on_complete': function() {
-					console.log( 'Public.prototype.buildNetwork Network.get cursor complete' );
-					console.log( 'Public.prototype.buildNetwork Network.get cursor complete ids', from_ids );
-				}, 'index': 'from', 'key': token_id, 'properties': [ 'from' ]  } );
+	//
+	
+
+	/* input array of string tokens e.g. [ 'this', 'that', 'the_other' ]  */
+	Public.prototype.getNetwork = function( result, input_ids, start_layer, total_layers, on_success, on_error, on_complete ) {
+
+		if( 'string' === typeof input_ids ) {
+			input_ids = [ input_ids ];
+		}
+
+		if( null === result ) {
+			result = {};
+		}
+		
+		if( null === start_layer ) {
+			total_layers = 0;
+		}
+
+		if( null === total_layers ) {
+			total_layers = start_layer + 1;
+		}
+
+		var get_input_neurons = function() {}
+		  , get_output_neurons = function() {}
+		  , get_synapses = function() {}
+		  , own_on_complete = function() {};
+
+		get_input_neurons = function( input_ids ) {
+
+			var input_neurons = []
+			  , input_count = 0
+			  , input_id
+			  , z = 0
+			  , input_length = input_ids.length;
 
 
+			// For each input_id in input_ids
+			for( z = 0; z < input_length; z += 1 ) {
+
+				input_id = input_ids[ z ];
+				// Get the cached neuron
+				cached_neuron = Cache.get( { 'key': ( 'neurons.data.' + input_id ) } );
+				// Else get it from the database
+				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
+				
+					/* Get Cursor Neurons With Secondary Index on From */
+					Network.get( {  'type': 'neurons', 'on_success': function( value ) {
+						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor success', value );
+						cached_neuron = Cache.set( { 'key': ( 'neurons.data.' + input_id ), 'value': value, 'ttl': 300 } );
+						input_neurons.push( value );
+					}, 'on_error': function( context ) {
+						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor error', context );
+					}, 'on_complete': function() {
+						input_count += 1;
+						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor complete' );
+						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor complete input_neurons', input_neurons );
+						if( input_length === input_neurons.length ) {
+							get_synapses( input_neurons );
+						}
+
+					}, 'index': 'from', 'key': input_id } );
+
+				}
+
+			}
+
+		};
+
+		// takes an array of input neuron objects
+		get_synapses = function( input_neurons ) {
+
+			//For each input neuron, get it's synapses 
+			var input_neuron_length = input_neurons.length;
+			  , y = 0
+			  , synapse_count = 0
+			  , synapses = []
+			  , input_neuron = {};
+			
+			for( y = 0; y < input_neuron_length; y += 1 ) {
+
+				input_neuron = input_neurons[ y ];
+
+				cached_neuron = Cache.get( { 'key': ( 'neurons.synapses.' + input_neuron.id ) } );
+
+				// If it exists in the cache, no need to get it from the database
+				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
+				
+					// Else get it from the database
+					Network.get( {  'type': 'neurons', 'on_success': function( value ) {
+						console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor success', value );
+						Cache.set( { 'key': ( 'neurons.synapses.' + input_neuron.id ), 'value': value, 'ttl': 300 } );
+						synapses.push( value );
+					}, 'on_error': function( context ) {
+						console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor error', context );
+					}, 'on_complete': function() {
+						console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor complete' );
+						console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor complete synapses', synapses );
+
+						if( synapse_count === synapses.length ) {
+							get_ouput_neurons( input_neurons, synapses );
+						}
+					}, 'index': 'from', 'key': input_id } );
+
+				}
 
 
+			}
+			
+		};
+
+		get_output_neurons = function( input_neurons, synapses ) {
+
+			//For each input neuron, get it's synapses 
+			var synapses_length = synapses.length;
+			  , a = 0
+			  , output_id
+			  , output_neurons = []
+			  , synapse = {};
+
+			for( a = 0; a < synapses_length; a += 1 ) {
+
+				synapse = synapses[ a ];
+
+				output_id = synapse.to;
+
+				cached_synapse = Cache.get( { 'key': ( 'neurons.data.' + output_id ) } );
+
+				// If it exists in the cache, no need to get it from the database
+				if( 'undefined' === typeof cached_synapse || null === cached_synapse ) {
+				
+					// Else get it from the database
+					Network.get( {  'type': 'neurons', 'on_success': function( value ) {
+						console.log( 'Public.prototype.getTokens Network.get cursor success', value );
+						Cache.set( { 'key': ( 'neurons.data.' + output_id ), 'value': value, 'ttl': 300 } );
+						output_neurons.push( value );
+					}, 'on_error': function( context ) {
+						console.log( 'Public.prototype.getTokens Network.get cursor error', context );
+					}, 'on_complete': function() {
+						console.log( 'Public.prototype.getTokens Network.get cursor complete' );
+						console.log( 'Public.prototype.getTokens Network.get cursor complete ids', input_ids );
+						own_on_complete( input_neurons, synapses, output_neurons );
+					}, 'index': 'to', 'key': output_id } );
+
+				}
+
+
+			}
+			
+
+		};
+
+		own_on_complete = function( completed_input, completed_synapses, completed_output ) {
+	
+			var own_result = Public.prototype.buildNetwork( completed_input, completed_synapses, completed_output )
+			  , own_result = Public.prototype.mergeObjects( result, own_result )
+			  , completed_output_ids = []
+			  , completed_pitput_ids_length = 0
+			  , b = 0;
+
+			if( ( current_layer + 1 ) < total_layers ) {
+
+				for( b = 0; b < completed_output_ids_length; b += 1 ) {
+					completed_output_ids.push( completed_output[ b ].id );
+				}
+				
+				Public.prototype.getTokens( result, completed_output_ids, ( current layer + 1 ), ( total_layers - 1 ), on_success, on_error, own_on_complete );
+
+			} else {
+				if( 'function' === typeof on_complete ) {
+					on_complete( result );
+				}
+			}
+		};
+
+		return this;
 	}
+
 
 	/* takes a token or tokens and builds an in memory representation of relevant 
 	 * neurons and their connections of an MLP such
 	 * that it can be queried */
-	Public.prototype.buildNetwork = function( tokens, layers, on_success, on_error ) {
+	Public.prototype.buildNetwork = function( inputs, synapses, outputs ) {
 
 		/*
-		 * var network = {
-		 *	neuron_id (string): {
-		 *		'from': {
-		 *			synapse_id (int): strength (number)
-		 *			, ...
-		 *		}, 'to': {
-		 *			synapse_id: strength
-		 *			, ...
+		 *
+		 * var network {
+		 *	'input_id': {
+		 *		'data': { ... } 
+		 *		, 'to': {
+		 *			id (int): strength (number)
+		 *		}, 'from': {
+		 *			id (int): strength (number)
 		 *		}
-		 *	}
-		 *	, neuron_id: { ... }
-		 *	...
-		 * };
-		 *
-		 * var neurons = {
-		 *	'id': {
-		 *		'attr': value
-		 *		, ...
-		 *	}, 'id': { ... }
-		 * };
-		 *
-		 * var synapses = {
-		 *	'id': {
-		 *		'attr': value
-		 *		, ...
-		 *	}, 'id': { ... }
-		 * };
+		 * }
 		 *
 		 */
+		var network = {}
+		  , own_network;
+		  , x = 0
+		  , synapses_length = synapses.length;
+		  , synapse
+		  , input_length = inputs.length
+		  , input
+		  , output_length = outputs.length
+		  , output
+		  , to_id
+		  , from_id
+		  , return_neuron;
 
-		var network = {},
-		    x = 0;
+		for( x = 0; x < synapses_length; x += 1 ) {
 
-		/* How many tokens? If single, make it the only item in an array */
-		if( 'string' === typeof tokens ) {
-			tokens = [ tokens ];
-		}
+			synapse = synapses[ x ];
 
-		/* Alpha order words */
+			// Handle to
+			to_id = synapse.to;
+			to_neuron = return_neuron( synapse.to_type, to_id );
 
-		/* How many input neurons? For each token in tokens, get all input layer node
-		 * where the neuron hash is equal to the md5 of the token (i.e. the token id).
-		 * If no neuron exists for the token id, create one.  */
-		var token_length = tokens.length;
-		for( x = token_length; x > 0; x -= 1 ) {
+			own_network[ to_id ] = {
+				'data': to_neuron
+				, 'from': [ from_id ]
+			};
 
-			var token = tokens[ x ];
+			// Handle from
+			from_id = synapse.from;
+			from_neuron = return_neuron( synapse.from_type, from_id );
 
-			if( !!debug ) {
-				console.log( 'Public.prototype.buildNetwork', x, tokens[ x ] );
-			}
-		
-			var token_hash = Public.prototype.utilities.toId( token );
+			own_network[ from_id ] = {
+				'data': to_neuron
+				, 'to': [ to_id ]
+			};
 
-			/* Get Single Neuron With Primary Index */ 
-			Network.get( {  'type': 'neuron', 'on_success': function( value ) {
-
-				console.log( 'Network.get single success', value );
-				var from_ids = [];
-
-				/* Get Cursor Neurons With Secondary Index on From */
-				Network.get( {  'type': 'neurons', 'on_success': function( value ) {
-					console.log( 'Public.prototype.buildNetwork Network.get cursor success', value );
-					from_ids.push( value );
-				}, 'on_error': function( context ) {
-					console.log( 'Public.prototype.buildNetwork Network.get cursor error', context );
-				}, 'on_complete': function() {
-					console.log( 'Public.prototype.buildNetwork Network.get cursor complete' );
-					console.log( 'Public.prototype.buildNetwork Network.get cursor complete ids', from_ids );
-				}, 'index': 'from', 'key': token_id, 'properties': [ 'from' ]  } );
-
-			}, 'on_error': function( context ) {
-				console.log( 'Public.prototype.buildNetwork Network.get error', context );
-			}, 'index': 'hash', 'key': token_hash } );
+			network = Public.prototype.mergeObjects( network, own_network );
 
 		}
 
-			// Add nodes to in-memory network
-			
-			/* How many layers? For each layer, get synapses
-			 * where to is an input layer node equal to the input layer id
-			 * and from is a hidden layer node */
-		
-				/* How many synapses? For each synapse get neurons
-				 * where neuron primary key is equal to the synapse from id.
-				 * If no synapse exists, create one with default strength. */
+		return_neuron = function( type, key ) {
+			var result_to_return;
+			switch( type ) {
+				'inputs': 
+					result_to_return = inputs[ key ][ 'to' ]; 
+					break;	
+				'outputs': 
+					result_to_return = outputs[ key ][ 'from' ]; 
+					break;	
+				default: 
+					break;
+			};
+			return result_to_return;
+		};
 
-					// Add synapses to in-memory network
-
-			
-
-		return this;
+		return network;
 
 	};
 
