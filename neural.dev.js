@@ -989,9 +989,8 @@ var Neural = (function() {
 				Public.prototype.getNetwork( result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, own_on_complete );
 
 			} else {
-				console.log("CITy IS LOUD",on_complete);
-				if( 'function' === typeof on_complete ) {
-					on_complete( result );
+				if( 'function' === typeof on_success ) {
+					on_success( result );
 				}
 			}
 		};
