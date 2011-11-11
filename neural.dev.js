@@ -982,7 +982,8 @@ var Neural = (function() {
 			  , input_count = 0
 			  , input_neuron_id
 			  , z = 0
-			  , input_length = input_ids.length;
+			  , input_length = input_ids.length
+			  , expected_input_length = input_length;
 
 
 			// For each input_id in input_ids
@@ -998,9 +999,13 @@ var Neural = (function() {
 					Network.get( {  'type': 'neuron', 'on_success': function( value ) {
 						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor success', value );
 						cached_neuron = Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': value, 'ttl': 300 } );
-						input_neurons.push( value );
+						if( 'undefined' !== typeof value && null !== value ) {
+							input_neurons.push( value );
+						} else {
+							expected_input_length -= 1;
+						}
 
-						if( input_length === input_neurons.length ) {
+						if( expected_input_length === input_neurons.length ) {
 							get_synapses( input_neurons );
 						}
 
@@ -1029,7 +1034,7 @@ var Neural = (function() {
 			var input_neuron_length = input_neurons.length
 			  , y = 0
 			  , synapse_count = 0
-			  , expected_count = input_neuron_length
+			  , expected_synapses_count = input_neuron_length
 			  , synapses = []
 			  , input_id
 			  , input_neuron = {}
@@ -1050,9 +1055,13 @@ var Neural = (function() {
 						Network.get( {  'type': 'synapse', 'on_success': function( value ) {
 							console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor success', value );
 							Cache.set( { 'key': ( 'neurons.synapses.' + input_id ), 'value': value, 'ttl': 300 } );
-							synapses.push( value );
+							if( 'undefined' !== typeof value && null !== typeof value ) {
+								synapses.push( value );
+							} else {
+								expected_synapses_count -= 1;
+							}
 
-							if( synapse_count === synapses.length ) {
+							if( expected_synapses_count === synapses.length ) {
 								get_ouput_neurons( input_neurons, synapses );
 							}
 
@@ -1083,6 +1092,7 @@ var Neural = (function() {
 			
 			//For each input neuron, get it's synapses 
 			var synapses_length = synapses.length
+			  , expected_output_count = synapses_length
 			  , a = 0
 			  , output_id
 			  , output_neurons = []
@@ -1103,8 +1113,12 @@ var Neural = (function() {
 					Network.get( {  'type': 'neuron', 'on_success': function( value ) {
 						console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor success', value );
 						Cache.set( { 'key': ( 'neurons.data.' + output_id ), 'value': value, 'ttl': 300 } );
-						output_neurons.push( value );
-						if( synapses_length === output_neurons.length ) {
+						if( 'undefined' !== typeof value && null !== value ) {
+							output_neurons.push( value );
+						} else {
+							expected_output_count -= 1;
+						}
+						if( expected_output_count === output_neurons.length ) {
 							own_on_complete( input_neurons, synapses, output_neurons );
 						}
 					}, 'on_error': function( context ) {
