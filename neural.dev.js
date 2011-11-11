@@ -1016,7 +1016,9 @@ var Neural = (function() {
 					}, 'key': input_neuron_id } );
 
 				} else {
-					
+	
+						console.log('input_neurons', input_neurons.length );
+						console.log('expected_input_neurons', expected_input_length );				
 					input_neurons.push( cached_neuron );
 					if( expected_input_length === input_neurons.length ) {
 						get_synapses( input_neurons );
