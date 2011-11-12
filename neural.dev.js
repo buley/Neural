@@ -1099,7 +1099,7 @@ var Neural = (function() {
 						
 						cached_neuron = Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': input_neuron_value, 'ttl': 300 } );
 						
-						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value ) {
+						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && Public.prototype.hasAttributes( cached_neuron ) ) {
 							input_neurons.push( input_neuron_value );
 						} else {
 							expected_input_count -= 1;
@@ -1126,8 +1126,12 @@ var Neural = (function() {
 					}, 'key': input_neuron_id } );
 
 				} else {
-	
-					input_neurons.push( cached_neuron );
+
+					if( Public.prototype.hasAttributes( cached_neuron ) ) {
+						input_neurons.push( cached_neuron );
+					} else {
+						expected_input_count -= 1;
+					}	
 				
 					console.log('Public.prototype.getTokens > get_input_neurons > cache success', cached_neuron );
 
@@ -1212,7 +1216,11 @@ var Neural = (function() {
 
 					} else {
 
-						synapses.push( cached_input_neuron );
+						if( Public.prototype.hasAttributes( cached_input_neuron ) ) {
+							synapses.push( cached_input_neuron );
+						} else {
+							expected_synapses_count -= 1;
+						}
 
 						console.log('Public.prototype.getSynapses cache check', expected_synapses_count, synapses.length );
 
