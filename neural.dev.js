@@ -1180,7 +1180,7 @@ var Neural = (function() {
 						} else {
 							expected_synapses_count -= 1;
 						}
-						console.log('Public.prototype.getOutputNeurons check', expected_synapses_count, synapses.length );
+						console.log('Public.prototype.getSynapses check', expected_synapses_count, synapses.length );
 						if( expected_synapses_count === synapses.length ) {
 							Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
 						}
@@ -1201,7 +1201,7 @@ var Neural = (function() {
 
 					synapses.push( cached_input_neuron );
 
-					console.log('Public.prototype.getOutputNeurons cache check', expected_synapses_count, synapses.length );
+					console.log('Public.prototype.getSynapses cache check', expected_synapses_count, synapses.length );
 
 					if( expected_synapses_count === synapses.length ) {
 						Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
