@@ -1157,10 +1157,14 @@ var Neural = (function() {
 		  , cached_synapse;
 
 		if( 0 === input_neuron_length ) {
+
 			Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
+
 		}
+
 		for( y = 0; y < input_neuron_length; y += 1 ) {
 
+			console.log('Public.prototype.getNetwork loop', y );
 			input_neuron = input_neurons[ y ];
 			if( 'undefined' === typeof input_neuron || null === input_neuron || {} === input_neuron || 'undefined' === typeof input_neuron.id ) {
 				break;
