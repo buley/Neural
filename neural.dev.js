@@ -1099,9 +1099,10 @@ var Neural = (function() {
 						
 						cached_neuron = Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': input_neuron_value, 'ttl': 300 } );
 						
-						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && Public.prototype.hasAttributes( cached_neuron ) ) {
+						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && Public.prototype.hasAttributes( input_neuron_value ) ) {
 							input_neurons.push( input_neuron_value );
 						} else {
+							console.log('input neuron bad or not attr',input_neuron_value);
 							expected_input_count -= 1;
 						}
 
@@ -1130,6 +1131,7 @@ var Neural = (function() {
 					if( Public.prototype.hasAttributes( cached_neuron ) ) {
 						input_neurons.push( cached_neuron );
 					} else {
+						console.log('cached neuron does not have attributes',cached_neuron);
 						expected_input_count -= 1;
 					}	
 				
@@ -1187,7 +1189,7 @@ var Neural = (function() {
 						Network.get( {  'type': 'synapse', 'on_success': function( synapse_value ) {
 							console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor success', synapse_value );
 							Cache.set( { 'key': ( 'neurons.synapses.' + input_id ), 'value': synapse_value, 'ttl': 300 } );
-							if( 'undefined' !== typeof synapse_value && null !== typeof synapse_value ) {
+							if( 'undefined' !== typeof synapse_value && null !== typeof synapse_value && Public.prototype.hasAttributes( synapse_value ) ) {
 								synapses.push( synapse_value );
 							} else {
 								expected_synapses_count -= 1;
