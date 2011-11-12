@@ -1149,6 +1149,10 @@ var Neural = (function() {
 		  , input_id
 		  , input_neuron = {}
 		  , cached_synapse;
+
+		if( 0 === input_neuron_length ) {
+			Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
+		}
 		for( y = 0; y < input_neuron_length; y += 1 ) {
 
 			input_neuron = input_neurons[ y ];
