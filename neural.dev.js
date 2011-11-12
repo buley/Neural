@@ -954,14 +954,11 @@ var Neural = (function() {
 	/* input array of string tokens e.g. [ 'this', 'that', 'the_other' ]  */
 	Public.prototype.getNetwork = function( result, input_ids, current_layer, total_layers, on_success, on_error, on_complete ) {
 
+		console.log( 'Public.prototype.getNetwork', result, input_ids, current_layer, total_layers );
 		if( 'string' === typeof input_ids ) {
 			input_ids = [ input_ids ];
 		}
 
-		if( null === result ) {
-			result = {};
-		}
-		
 		if( null === current_layer ) {
 			current_layers = 0;
 		}
@@ -970,12 +967,12 @@ var Neural = (function() {
 			total_layers = current_layer + 1;
 		}
 
-		var own_on_complete = function( completed_input, completed_synapses, completed_output ) {
+		var own_on_complete = function( passed_result, completed_input, completed_synapses, completed_output ) {
 	
 			console.log( 'Public.prototype.getNetwork own_on_complete()', completed_input, completed_synapses, completed_output );
 			var own_result = Public.prototype.buildNetwork( completed_input, completed_synapses, completed_output )
-			  , result = Public.prototype.mergeObjects( result, own_result )
-			  , completed_output_ids = []
+			  , own_result = Public.prototype.mergeObjects( passed_result, own_result );
+			var completed_output_ids = []
 			  , completed_output_length = completed_output.length
 			  , b = 0;
 
@@ -986,14 +983,14 @@ var Neural = (function() {
 						completed_output_ids.push( completed_output[ b ].id );
 					}
 				}
-				console.log("PREDONEZO",JSON.stringify(result));
-				Public.prototype.getNetwork( result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, on_complete );
+				console.log("PREDONEZO",JSON.stringify(passed_result), completed_output_ids );
+				Public.prototype.getNetwork( own_result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, on_complete );
 
 			} else {
-				console.log("DONEZO",result);
+				console.log("DONEZO",passed_result);
 				
 				if( 'function' === typeof on_complete ) {
-					on_complete( result );
+					on_complete( passed_result );
 				}
 
 			}
@@ -1074,7 +1071,7 @@ var Neural = (function() {
 		return obj3;
 	}
 
-	Public.prototype.getInputNeurons = function( input_ids, on_success, on_error, on_complete ) {
+	Public.prototype.getInputNeurons = function( results, input_ids, on_success, on_error, on_complete ) {
 
 			console.log( 'Public.prototype.getNetwork get_input_neurons()', input_ids );
 			var input_neurons = []
@@ -1110,7 +1107,7 @@ var Neural = (function() {
 						console.log('expected_input_neurons', expected_input_count );
 					
 						if( expected_input_count === input_neurons.length ) {
-							Public.prototype.getSynapses( input_neurons, on_success, on_error, on_complete );
+							Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
 						}
 
 					}, 'on_error': function( context ) {
@@ -1119,7 +1116,7 @@ var Neural = (function() {
 						expected_input_count -= 1;
 							
 						if( expected_input_count === input_neurons.length ) {
-							Public.prototype.getSynapses( input_neurons, on_success, on_error, on_complete );
+							Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
 						}
 
 						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor error', context );
@@ -1133,7 +1130,7 @@ var Neural = (function() {
 
 					if( expected_input_count === input_neurons.length ) {
 						console.log('Public.prototype.getTokens > get_input_neurons > getting synapses',input_neurons);
-						Public.prototype.getSynapses( input_neurons, on_success, on_error, on_complete );
+						Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
 					}
 				}
 
@@ -1142,7 +1139,7 @@ var Neural = (function() {
 		}
 
 	// takes an array of input neuron objects
-	Public.prototype.getSynapses = function( input_neurons, on_success, on_error, on_complete ) {
+	Public.prototype.getSynapses = function( results, input_neurons, on_success, on_error, on_complete ) {
 
 		console.log( 'Public.prototype.getNetwork get_synapses()', JSON.stringify( input_neurons ) );
 
@@ -1157,7 +1154,7 @@ var Neural = (function() {
 		  , cached_synapse;
 
 		if( 0 === input_neuron_length ) {
-			Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
+			Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
 		}
 		for( y = 0; y < input_neuron_length; y += 1 ) {
 
@@ -1184,7 +1181,7 @@ var Neural = (function() {
 						}
 						console.log('Public.prototype.getOutputNeurons check', expected_synapses_count, synapses.length );
 						if( expected_synapses_count === synapses.length ) {
-							Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
+							Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
 						}
 
 					}, 'on_error': function( context ) {
@@ -1193,7 +1190,7 @@ var Neural = (function() {
 						expected_synapses_count -= 1;
 
 						if( expected_synapses_count === synapses.length ) {
-							Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
+							Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
 						}
 
 					}, 'key': input_id, 'index': 'from' } );
@@ -1206,7 +1203,7 @@ var Neural = (function() {
 					console.log('Public.prototype.getOutputNeurons cache check', expected_synapses_count, synapses.length );
 
 					if( expected_synapses_count === synapses.length ) {
-						Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
+						Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
 					}
 
 				}
@@ -1218,7 +1215,7 @@ var Neural = (function() {
 		
 	};
 
-	Public.prototype.getOutputNeurons = function( input_neurons, synapses, on_success, on_error, on_complete ) {
+	Public.prototype.getOutputNeurons = function( results, input_neurons, synapses, on_success, on_error, on_complete ) {
 
 		console.log( 'Public.prototype.getNetwork getOutputNeurons()', input_neurons, synapses );
 		
@@ -1268,7 +1265,7 @@ var Neural = (function() {
 			} else {
 				output_neurons.push( cached_synapse );
 				if( expected_output_count === output_neurons.length ) {
-					on_complete( input_neurons, synapses, output_neurons );
+					on_complete( results, input_neurons, synapses, output_neurons );
 				}
 			}
 
