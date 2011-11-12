@@ -1138,7 +1138,7 @@ var Neural = (function() {
 	// takes an array of input neuron objects
 	Public.prototype.getSynapses = function( input_neurons, on_success, on_error, on_complete ) {
 
-		console.log( 'Public.prototype.getNetwork get_synapses()', input_neurons );
+		console.log( 'Public.prototype.getNetwork get_synapses()', JSON.stringify( input_neurons ) );
 
 		//For each input neuron, get it's synapses 
 		var input_neuron_length = input_neurons.length
