@@ -1339,7 +1339,7 @@ var Neural = (function() {
 				}
 
 			}
-
+			console.log("MERGING NETWORK",network,own_network);
 			network = Public.prototype.mergeObjects( network, own_network );
 
 		}
