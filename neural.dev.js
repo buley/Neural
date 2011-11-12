@@ -1358,7 +1358,7 @@ var Neural = (function() {
 			// Handle to
 			to_id = synapse.to;
 			to_neuron = Public.prototype.returnNeuron( to_id );
-			console.log("TO NEURON",to_id, to_neuron);
+			console.log("TO NEURON",to_neuron);
 
 			if( 'undefined' !== to_id && null !== to_id ) {
 				if( 'undefined' !== typeof to_id && null !== to_id && 'undefined' === typeof own_network[ to_id ] ) {
@@ -1389,7 +1389,7 @@ var Neural = (function() {
 					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
 						own_network[ from_id ][ 'to' ] = {};
 					}
-					own_network[ from_id ][ 'to' ][ to_id ] = synapses.to_type;
+					own_network[ from_id ][ 'to' ][ to_id ] = synapse.to_type;
 				}
 			}
 		
