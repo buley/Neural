@@ -1323,9 +1323,9 @@ var Neural = (function() {
 				};
 				if( 'undefined' !== typeof from_id && null !== from_id ) {
 					if( 'undefined' === typeof own_network[ to_id ][ 'from' ] ) {
-						own_network[ to_id ][ 'from' ] = {};
+						own_network[ to_id ][ 'from' ] = [];
 					}
-					own_network[ to_id ][ 'from' ][ from_id ] = synapse.from_type;
+					own_network[ to_id ][ 'from' ].push( { 'id': from_id, 'type': synapse.from_type } );
 				}
 			}
 
@@ -1339,9 +1339,9 @@ var Neural = (function() {
 				};
 				if( 'undefined' !== typeof to_id && null !== to_id ) {
 					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
-						own_network[ from_id ][ 'to' ] = {};
+						own_network[ from_id ][ 'to' ] = [];
 					}
-					own_network[ from_id ][ 'to' ][ to_id ] = synapse.to_type;
+					own_network[ from_id ][ 'to' ].push( { 'id': to_id, 'type': synapse.to_type } );
 				}
 
 			}
