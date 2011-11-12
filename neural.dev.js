@@ -1278,7 +1278,7 @@ var Neural = (function() {
 			synapse = synapses[ a ];
 
 			output_id = synapse.to;
-
+			console.log("SYNAPSE TO",synapse.to,synapse);
 			cached_synapse = Cache.get( { 'key': ( 'neurons.data.' + output_id ) } );
 
 			// If it exists in the cache, no need to get it from the database
