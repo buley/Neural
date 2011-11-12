@@ -1003,8 +1003,11 @@ var Neural = (function() {
 		return this;
 	}
 
-	Public.prototype.mergeObjects = function( obj1, obj2 ) {
-		
+	Public.prototype.mergeObjects = function( obj1, obj2, replace ) {
+	
+		if( true !== replace ) {
+			replace = false;
+		}	
 		if( 'undefined' === typeof obj1 ) {
 			obj1 = {};
 		}
@@ -1012,8 +1015,31 @@ var Neural = (function() {
 			obj2 = {};
 		}
 		var obj3 = {}
-		  , attr = '';
-		if ( false === hasAttributes( obj2 ) ) {
+		  , attr = ''
+		  , x = 0
+		  , obj1_length
+		  , obj2_length
+		  , obj2_type;
+
+		if( 'function' === typeof obj1.join ) {
+			obj1_length = obj1.length;
+			for( x = 0; x < obj1_length; x += 1 ) {
+				obj3.push( obj1[ x ] );
+			}
+			obj2_type = typeof obj2.join;
+			if( true === replace ) {
+				obj3 = obj2;
+			} else if( 'function' === obj2_type && true !== replace ) {					
+				for( x = 0; x < obj2_length; x += 1 ) {
+					obj3.push( obj2[ x ] );
+				}
+			} else if( 'function' === obj2_type ) {
+				obj3.push( obj2 );
+			}
+			return obj3;
+		}
+
+  		if ( false === hasAttributes( obj2 ) ) {
 			return obj1;
 		}
 		if ( false === hasAttributes( obj1 ) ) {
