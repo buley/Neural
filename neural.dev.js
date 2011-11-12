@@ -988,7 +988,9 @@ var Neural = (function() {
 				Public.prototype.getNetwork( result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, on_complete );
 
 			} else {
-				console.log("FINISHED", own_result );
+
+				console.log( "FINISHED", own_result );
+				
 				if( 'function' === typeof on_complete ) {
 					on_complete( result );
 				}
