@@ -1177,7 +1177,10 @@ var Neural = (function() {
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor error', context );
 					//TODO: Inspect error and do maybe do something
-					expected_synapses_count -= 1;
+					expected_output_count -= 1;
+					if( expected_ouput_count === output_neurons.length ) {
+						on_complete( input_neurons, synapses, output_neurons );
+					}
 				}, 'key': output_id } );
 
 			} else {
