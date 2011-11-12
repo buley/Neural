@@ -1197,6 +1197,8 @@ var Neural = (function() {
 						expected_synapses_count -= 1;
 
 						console.log('expected_synapses_count', expected_synapses_count );
+						console.log( 'expected_synapses_count ante synapses.length', synapses.length );
+						
 						if( expected_synapses_count === synapses.length ) {
 							console.log( 'expected_synapses_count synapses.length', synapses.length );
 							Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
