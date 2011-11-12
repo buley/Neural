@@ -693,7 +693,7 @@ var Neural = (function() {
 	//do we need to add type to md5 and then make hash unique?
 	//currently can't be unique b/c hidden and input nodes can be the
 	//same value
-	Public.prototype.addTokens = function( req ) {
+	Public.prototype.activate = function( req ) {
 
 		var tokens = req.tokens
 		    , on_success = req.on_success || null
@@ -928,8 +928,6 @@ var Neural = (function() {
 			}
 
 			hidden_layer_callback( cached_hidden_neuron_id );
-
-
 
 		}
 		return this;	
