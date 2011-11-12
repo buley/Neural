@@ -973,12 +973,13 @@ var Neural = (function() {
 		var own_on_complete = function( completed_input, completed_synapses, completed_output ) {
 	
 			console.log( 'Public.prototype.getNetwork own_on_complete()', completed_input, completed_synapses, completed_output );
-	
+
 			var own_result = Public.prototype.buildNetwork( completed_input, completed_synapses, completed_output )
 			  , own_result = Public.prototype.mergeObjects( result, own_result )
 			  , completed_output_ids = []
 			  , completed_output_length = completed_output.length
 			  , b = 0;
+
 			if( ( current_layer + 1 ) < total_layers ) {
 
 				for( b = 0; b < completed_output_length; b += 1 ) {
