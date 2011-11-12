@@ -1022,6 +1022,7 @@ var Neural = (function() {
 		  , obj2_type;
 
 		if( 'function' === typeof obj1.join ) {
+			obj3 = [];
 			obj1_length = obj1.length;
 			for( x = 0; x < obj1_length; x += 1 ) {
 				obj3.push( obj1[ x ] );
