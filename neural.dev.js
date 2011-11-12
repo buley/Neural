@@ -1014,6 +1014,7 @@ var Neural = (function() {
 		if( 'undefined' === typeof obj2 ) {
 			obj2 = {};
 		}
+
 		var obj3 = {}
 		  , attr = ''
 		  , x = 0
@@ -1040,9 +1041,11 @@ var Neural = (function() {
 		}
 
   		if ( false === hasAttributes( obj2 ) ) {
+			console.log('returning obj1',obj1);
 			return obj1;
 		}
 		if ( false === hasAttributes( obj1 ) ) {
+			console.log('returning obj2',obj2);
 			return obj2;
 		}	
 		for( attr in obj1 ) {
@@ -1065,6 +1068,7 @@ var Neural = (function() {
 				}
 			}
 		}
+		console.log('returning obj3',obj1);
 		return obj3;
 	}
 
@@ -1339,7 +1343,6 @@ var Neural = (function() {
 				}
 
 			}
-			console.log("MERGING NETWORK",network,own_network);
 			network = Public.prototype.mergeObjects( network, own_network );
 
 		}
