@@ -974,7 +974,7 @@ var Neural = (function() {
 	
 			console.log( 'Public.prototype.getNetwork own_on_complete()', completed_input, completed_synapses, completed_output );
 			var own_result = Public.prototype.buildNetwork( completed_input, completed_synapses, completed_output )
-			  , own_result = Public.prototype.mergeObjects( result, own_result )
+			  , result = Public.prototype.mergeObjects( result, own_result )
 			  , completed_output_ids = []
 			  , completed_output_length = completed_output.length
 			  , b = 0;
@@ -989,7 +989,7 @@ var Neural = (function() {
 				Public.prototype.getNetwork( result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, on_complete );
 
 			} else {
-
+				console.log("DONEZO",result);
 				
 				if( 'function' === typeof on_complete ) {
 					on_complete( own_result );
