@@ -1027,6 +1027,7 @@ var Neural = (function() {
 			for( x = 0; x < obj1_length; x += 1 ) {
 				obj3.push( obj1[ x ] );
 			}
+			console.log("NO COOKIES",obj3);
 			obj2_type = typeof obj2.join;
 			if( true === replace ) {
 				obj3 = obj2;
