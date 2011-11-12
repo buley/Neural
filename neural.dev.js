@@ -996,7 +996,7 @@ var Neural = (function() {
 			}
 		};
 
-		Public.prototype.getInputNeurons( input_ids, on_success, on_error, own_on_complete );
+		Public.prototype.getInputNeurons( result, input_ids, on_success, on_error, own_on_complete );
 
 		return this;
 	}
