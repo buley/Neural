@@ -1380,23 +1380,20 @@ var Neural = (function() {
 			from_neuron = Public.prototype.returnNeuron( from_id );
 
 			if( 'undefined' !== from_id && null !== from_id ) {
-				own_network = function( own_to_id, own_to_type, own_from_id, own_from_neuron ) {
-
-					var new_obj = {};
-					new_obj[ own_from_id ] = {
-						'data': own_from_neuron
+				
+				if( 'undefined' === typeof own_network[ from_id ] ) {
+					own_network[ from_id ] = {
+						'data': from_neuron
 					};
-					if( 'undefined' !== typeof own_to_id && null !== own_to_id ) {
-						if( 'undefined' === typeof new_obj[ own_from_id ][ 'to' ] ) {
-							new_obj[ own_from_id ][ 'to' ] = {};
-						}
-						new_obj[ own_from_id ][ 'to' ][ own_to_id ] = own_to_type;
+				}
+				if( 'undefined' !== typeof to_id && null !== to_id ) {
+					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
+						own_network[ from_id ][ 'to' ] = {};
 					}
-					return new_obj;
-
-				}( to_id, synapse.to_type, from_id, from_neuron );
-
+					own_network[ from_id ][ 'to' ][ to_id ] = to_type;
+				}
 			}
+		
 			console.log('MERING OWN NETWORK',JSON.stringify(own_network),'WITH NETWORK',JSON.stringify( network ) );
 			network = Public.prototype.mergeObjects( network, own_network );
 
