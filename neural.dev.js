@@ -1344,16 +1344,12 @@ var Neural = (function() {
 				}
 
 			}
+			console.log('MERING OWN NETWORK',JSON.stringify(own_network),'WITH NETWORK',JSON.stringify( network ) );
 			network = Public.prototype.mergeObjects( network, own_network );
 
 		}
 		return network;
 
-	};
-
-	Public.prototype.mergeObjects = function( obj1, obj2 ) {
-		console.log('Public.prototype.mergeObjects', obj1,obj2);
-		return obj2;
 	};
 
 	Public.prototype.returnNeuron = function( neuron_id ) {
