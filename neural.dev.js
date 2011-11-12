@@ -1105,10 +1105,11 @@ var Neural = (function() {
 							expected_input_count -= 1;
 						}
 
-						console.log('input_neurons', input_neurons.length );
-						console.log('expected_input_neurons', expected_input_count );
-					
 						if( expected_input_count === input_neurons.length ) {
+						
+							console.log('input_neurons', input_neurons.length );
+							console.log('expected_input_neurons', expected_input_count );
+					
 							Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
 						}
 
