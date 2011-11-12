@@ -990,10 +990,9 @@ var Neural = (function() {
 
 			} else {
 
-				console.log( "FINISHED", own_result );
 				
 				if( 'function' === typeof on_complete ) {
-					on_complete( result );
+					on_complete( own_result );
 				}
 
 			}
