@@ -1369,11 +1369,7 @@ var Neural = (function() {
 					if( 'undefined' === typeof own_network[ to_id ][ 'from' ] ) {
 						own_network[ to_id ][ 'from' ] = {};
 					}
-					own_network[ to_id ][ 'from' ] =  function( from_id, from_type ) {
-						var obj = {};
-						obj[ from_id ] = from_type;
-						return obj;
-					}( from_id, synapse.from_type );
+					own_network[ to_id ][ 'from' ][ from_id ] = synapse.from_type;
 				}
 			}
 
