@@ -1003,6 +1003,45 @@ var Neural = (function() {
 		return this;
 	}
 
+	Public.prototype.mergeObjects = function( obj1, obj2 ) {
+		
+		if( 'undefined' === typeof obj1 ) {
+			obj1 = {};
+		}
+		if( 'undefined' === typeof obj2 ) {
+			obj2 = {};
+		}
+		var obj3 = {}
+		  , attr = '';
+		if ( false === hasAttributes( obj2 ) ) {
+			return obj1;
+		}
+		if ( false === hasAttributes( obj1 ) ) {
+			return obj2;
+		}	
+		for( attr in obj1 ) {
+			if( obj1.hasOwnProperty( attr ) ) {
+				var next = obj1[ attr ];
+				if( 'undefined' !== typeof next && hasAttributes( next ) ) {
+					obj3[ attr ] = mergeObjects( obj3[ attr ], next );
+				} else {
+					obj3[ attr ] = next;
+				}
+			}
+		}
+		for( attr in obj2 ) {
+			if( obj2.hasOwnProperty( attr ) ) {
+				var next = obj2[ attr ];
+				if( 'undefined' !== typeof next && hasAttributes( next ) ) {
+					obj3[ attr ] = mergeObjects( obj3[ attr ], next );
+				} else {
+					obj3[ attr ] = next;
+				}
+			}
+		}
+		return obj3;
+	}
+
 	Public.prototype.getInputNeurons = function( input_ids, on_success, on_error, on_complete ) {
 
 			console.log( 'Public.prototype.getNetwork get_input_neurons()', input_ids );
