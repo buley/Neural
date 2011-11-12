@@ -1073,7 +1073,7 @@ var Neural = (function() {
 
 	Public.prototype.getInputNeurons = function( results, input_ids, on_success, on_error, on_complete ) {
 
-			console.log( 'Public.prototype.getNetwork get_input_neurons()', input_ids );
+			console.log( 'Public.prototype.getNetwork get_input_neurons()', results, input_ids );
 			var input_neurons = []
 			  , input_count = 0
 			  , input_neuron_id
