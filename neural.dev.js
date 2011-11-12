@@ -1227,7 +1227,7 @@ var Neural = (function() {
 		  , output_neurons = []
 		  , synapse = {};
 		if( 0 === synapses_length ) {
-			on_complete( input_neurons, synapses, output_neurons );
+			on_complete( results, input_neurons, synapses, output_neurons );
 			return;
 		}
 		for( a = 0; a < synapses_length; a += 1 ) {
@@ -1251,14 +1251,14 @@ var Neural = (function() {
 						expected_output_count -= 1;
 					}
 					if( expected_output_count === output_neurons.length ) {
-						on_complete( input_neurons, synapses, output_neurons );
+						on_complete( results, input_neurons, synapses, output_neurons );
 					}
 				}, 'on_error': function( context ) {
 					console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor error', context );
 					//TODO: Inspect error and do maybe do something
 					expected_output_count -= 1;
 					if( expected_ouput_count === output_neurons.length ) {
-						on_complete( input_neurons, synapses, output_neurons );
+						on_complete( results, input_neurons, synapses, output_neurons );
 					}
 				}, 'key': output_id } );
 
