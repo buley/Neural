@@ -1195,6 +1195,7 @@ var Neural = (function() {
 					}, 'on_error': function( context ) {
 						console.log( 'Public.prototype.getTokens > get_synapses > Network.get cursor error', context );
 						//TODO: Inspect what kind of error this is
+						console.log('expected_synapses_count predecrease', expected_synapses_count );
 						expected_synapses_count -= 1;
 
 						console.log('expected_synapses_count', expected_synapses_count );
