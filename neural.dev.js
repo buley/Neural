@@ -1020,8 +1020,11 @@ var Neural = (function() {
 				
 					/* Get Cursor Neurons With Secondary Index on From */
 					Network.get( {  'type': 'neuron', 'on_success': function( input_neuron_value ) {
+						
 						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor success', input_neuron_value );
+						
 						cached_neuron = Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': input_neuron_value, 'ttl': 300 } );
+						
 						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value ) {
 							input_neurons.push( input_neuron_value );
 						} else {
@@ -1039,7 +1042,11 @@ var Neural = (function() {
 						
 						//TODO: good error (not in index) or bad error (e.g. missing store)?
 						expected_input_count -= 1;
-						
+							
+						if( expected_input_count === input_neurons.length ) {
+							Public.prototype.getSynapses( input_neurons, on_success, on_error, on_complete );
+						}
+
 						console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor error', context );
 					}, 'key': input_neuron_id } );
 
@@ -1106,6 +1113,10 @@ var Neural = (function() {
 						//TODO: Inspect what kind of error this is
 						expected_synapses_count -= 1;
 
+						if( expected_synapses_count === synapses.length ) {
+							Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
+						}
+
 					}, 'key': input_id, 'index': 'from' } );
 
 
@@ -1114,7 +1125,7 @@ var Neural = (function() {
 					synapses.push( cached_input_neuron );
 
 					console.log('Public.prototype.getOutputNeurons cache check', expected_synapses_count, synapses.length );
-					
+
 					if( expected_synapses_count === synapses.length ) {
 						Public.prototype.getOutputNeurons( input_neurons, synapses, on_success, on_error, on_complete );
 					}
