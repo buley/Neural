@@ -1170,6 +1170,7 @@ var Neural = (function() {
 			console.log('Public.prototype.getNetwork loop', y );
 			input_neuron = input_neurons[ y ];
 			if( 'undefined' === typeof input_neuron || null === input_neuron || {} === input_neuron || 'undefined' === typeof input_neuron.id ) {
+				console.log('breaking for lack of input neuron', input_neurons, y );
 				break;
 			}
 			input_id = input_neuron.id;
