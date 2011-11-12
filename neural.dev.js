@@ -1220,8 +1220,8 @@ var Neural = (function() {
 		  , output_neurons = []
 		  , synapse = {};
 		if( 0 === synapses_length ) {
-			console.log( 'NO LENGTH!' );
 			on_complete( input_neurons, synapses, output_neurons );
+			return;
 		}
 		for( a = 0; a < synapses_length; a += 1 ) {
 
