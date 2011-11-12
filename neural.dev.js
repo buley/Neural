@@ -1228,6 +1228,7 @@ var Neural = (function() {
 		  , output_neurons = []
 		  , synapse = {};
 		if( 0 === synapses_length ) {
+			console.log("NO RESULTS IN GETOUTPUT ENRUONS",results);
 			on_complete( results, input_neurons, synapses, output_neurons );
 			return;
 		}
