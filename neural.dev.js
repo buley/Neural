@@ -986,6 +986,7 @@ var Neural = (function() {
 						completed_output_ids.push( completed_output[ b ].id );
 					}
 				}
+				console.log("PREDONEZO",JSON.strinify(result));
 				Public.prototype.getNetwork( result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, on_complete );
 
 			} else {
