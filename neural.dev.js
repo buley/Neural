@@ -1224,7 +1224,7 @@ var Neural = (function() {
 
 					}
 				} else {
-					expected_synapses_count -+ 1;
+					expected_synapses_count -= 1;
 					if( expected_synapses_count === synapses.length ) {
 
 						console.log('expected_synapses_count synapses.length error', synapses.length );
@@ -1233,7 +1233,7 @@ var Neural = (function() {
 
 				}
 			} else {
-				expected_synapses_count -+ 1;
+				expected_synapses_count -= 1;
 				if( expected_synapses_count === synapses.length ) {
 
 					console.log('expected_synapses_count synapses.length error', synapses.length );
