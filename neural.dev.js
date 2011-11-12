@@ -1052,7 +1052,7 @@ var Neural = (function() {
 			if( obj1.hasOwnProperty( attr ) ) {
 				var next = obj1[ attr ];
 				if( 'undefined' !== typeof next && hasAttributes( next ) ) {
-					obj3[ attr ] = mergeObjects( obj3[ attr ], next );
+					obj3[ attr ] = Public.prototype.mergeObjects( obj3[ attr ], next );
 				} else {
 					obj3[ attr ] = next;
 				}
@@ -1062,7 +1062,7 @@ var Neural = (function() {
 			if( obj2.hasOwnProperty( attr ) ) {
 				var next = obj2[ attr ];
 				if( 'undefined' !== typeof next && hasAttributes( next ) ) {
-					obj3[ attr ] = mergeObjects( obj3[ attr ], next );
+					obj3[ attr ] = Public.prototype.mergeObjects( obj3[ attr ], next );
 				} else {
 					obj3[ attr ] = next;
 				}
