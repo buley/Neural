@@ -1338,19 +1338,21 @@ var Neural = (function() {
 			from_neuron = Public.prototype.returnNeuron( from_id );
 
 			if( 'undefined' !== from_id && null !== from_id ) {
-				own_network[ from_id ] = {
-					'data': from_neuron
-				};
-				if( 'undefined' !== typeof to_id && null !== to_id ) {
-					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
-						own_network[ from_id ][ 'to' ] = {};
+				own_network = function( own_to_id, own_to_type, own_from_id, own_from_neuron ) {
+
+					var new_obj = {};
+					new_obj[ own_from_id ] = {
+						'data': own_from_neuron
+					};
+					if( 'undefined' !== typeof own_to_id && null !== own_to_id ) {
+						if( 'undefined' === typeof new_obj[ own_from_id ][ 'to' ] ) {
+							new_obj[ own_from_id ][ 'to' ] = {};
+						}
+						new_obj[ own_from_id ][ 'to' ][ own_to_id ] = own_to_type;
 					}
-					own_network[ from_id ][ 'to' ] =  function( to_id, to_type ) {
-						var obj = {};
-						obj[ to_id ] = to_type;
-						return obj;
-					}( to_id, synapse.to_type );
-				}
+					return new_obj;
+
+				}( to_id, synapse.to_type, from_id, from_neuron );
 
 			}
 			console.log('MERING OWN NETWORK',JSON.stringify(own_network),'WITH NETWORK',JSON.stringify( network ) );
