@@ -1020,7 +1020,7 @@ var Neural = (function() {
 		  , obj1_length
 		  , obj2_length
 		  , obj2_type;
-
+/*
 		if( 'function' === typeof obj1.join ) {
 			obj1_length = obj1.length;
 			for( x = 0; x < obj1_length; x += 1 ) {
@@ -1039,7 +1039,7 @@ var Neural = (function() {
 			cconsole.log('returning array obj3' );
 			return obj3;
 		}
-
+*/
   		if ( false === Public.prototype.hasAttributes( obj2 ) ) {
 			console.log('returning obj1',obj1);
 			return obj1;
