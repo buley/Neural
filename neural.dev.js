@@ -1161,7 +1161,7 @@ var Neural = (function() {
 			Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
 
 		}
-
+		
 		for( y = 0; y < input_neuron_length; y += 1 ) {
 
 			console.log('Public.prototype.getNetwork loop', y );
@@ -1209,7 +1209,9 @@ var Neural = (function() {
 
 					console.log('Public.prototype.getSynapses cache check', expected_synapses_count, synapses.length );
 
+					console.log('expected_synapses_count', expected_synapses_count );
 					if( expected_synapses_count === synapses.length ) {
+						console.log('expected_synapses_count synapses.length', synapses.length );
 						Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
 					}
 
