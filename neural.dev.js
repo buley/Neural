@@ -982,9 +982,10 @@ var Neural = (function() {
 			if( ( current_layer + 1 ) < total_layers ) {
 
 				for( b = 0; b < completed_output_length; b += 1 ) {
-					completed_output_ids.push( completed_output[ b ].id );
+					if( 'undefined' !== typeof completed_output[ b ] ) {
+						completed_output_ids.push( completed_output[ b ].id );
+					}
 				}
-				console.log("PASSSING",completed_output_ids);
 				Public.prototype.getNetwork( result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, on_complete );
 
 			} else {
