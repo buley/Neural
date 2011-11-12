@@ -1370,7 +1370,7 @@ var Neural = (function() {
 					if( 'undefined' === typeof own_network[ to_id ][ 'from' ] ) {
 						own_network[ to_id ][ 'from' ] = {};
 					}
-					own_network[ to_id ][ 'from' ][ from_id ] = synapse.from_type;
+					own_network[ to_id ][ 'from' ][ from_id ] = synapse.strength;
 				}
 			}
 
@@ -1389,7 +1389,7 @@ var Neural = (function() {
 					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
 						own_network[ from_id ][ 'to' ] = {};
 					}
-					own_network[ from_id ][ 'to' ][ to_id ] = synapse.to_type;
+					own_network[ from_id ][ 'to' ][ to_id ] = synapse.strength;
 				}
 			}
 		
