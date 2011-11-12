@@ -1021,7 +1021,27 @@ var Neural = (function() {
 		  , obj2_length
 		  , obj2_type;
 
-		if ( false === Public.prototype.hasAttributes( obj2 ) ) {
+		if( 'function' === typeof obj1.join ) {
+			obj3 = [];
+			obj1_length = obj1.length;
+			for( x = 0; x < obj1_length; x += 1 ) {
+				obj3.push( obj1[ x ] );
+			}
+			obj2_type = typeof obj2.join;
+			if( true === replace ) {
+				obj3 = obj2;
+			} else if( 'function' === obj2_type && true !== replace ) {					
+				for( x = 0; x < obj2_length; x += 1 ) {
+					obj3.push( obj2[ x ] );
+				}
+			} else if( 'function' === obj2_type ) {
+				obj3.push( obj2 );
+			}
+			console.log('returning array obj3' );
+			return obj3;
+		}
+
+  		if ( false === Public.prototype.hasAttributes( obj2 ) ) {
 			console.log('returning obj1',obj1);
 			return obj1;
 		}
@@ -1305,7 +1325,7 @@ var Neural = (function() {
 					if( 'undefined' === typeof own_network[ to_id ][ 'from' ] ) {
 						own_network[ to_id ][ 'from' ] = [];
 					}
-					own_network[ to_id ][ 'from' ].push( from_id );
+					own_network[ to_id ][ 'from' ].push( { 'id': from_id, 'type': synapse.from_type } );
 				}
 			}
 
@@ -1321,7 +1341,7 @@ var Neural = (function() {
 					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
 						own_network[ from_id ][ 'to' ] = [];
 					}
-					own_network[ from_id ][ 'to' ].push( to_id );
+					own_network[ from_id ][ 'to' ].push( { 'id': to_id, 'type': synapse.to_type } );
 				}
 
 			}
