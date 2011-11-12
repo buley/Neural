@@ -993,7 +993,7 @@ var Neural = (function() {
 				console.log("DONEZO",result);
 				
 				if( 'function' === typeof on_complete ) {
-					on_complete( own_result );
+					on_complete( result );
 				}
 
 			}
