@@ -1041,18 +1041,18 @@ var Neural = (function() {
 			return obj3;
 		}
 
-  		if ( false === hasAttributes( obj2 ) ) {
+  		if ( false === Public.prototype.hasAttributes( obj2 ) ) {
 			console.log('returning obj1',obj1);
 			return obj1;
 		}
-		if ( false === hasAttributes( obj1 ) ) {
+		if ( false === Public.prototype.hasAttributes( obj1 ) ) {
 			console.log('returning obj2',obj2);
 			return obj2;
 		}	
 		for( attr in obj1 ) {
 			if( obj1.hasOwnProperty( attr ) ) {
 				var next = obj1[ attr ];
-				if( 'undefined' !== typeof next && hasAttributes( next ) ) {
+				if( 'undefined' !== typeof next && Public.prototype.hasAttributes( next ) ) {
 					obj3[ attr ] = Public.prototype.mergeObjects( obj3[ attr ], next );
 				} else {
 					obj3[ attr ] = next;
@@ -1062,7 +1062,7 @@ var Neural = (function() {
 		for( attr in obj2 ) {
 			if( obj2.hasOwnProperty( attr ) ) {
 				var next = obj2[ attr ];
-				if( 'undefined' !== typeof next && hasAttributes( next ) ) {
+				if( 'undefined' !== typeof next && Public.prototype.hasAttributes( next ) ) {
 					obj3[ attr ] = Public.prototype.mergeObjects( obj3[ attr ], next );
 				} else {
 					obj3[ attr ] = next;
@@ -1351,6 +1351,25 @@ var Neural = (function() {
 		return network;
 
 	};
+
+	Public.prototype.hasAttributes = function( question ) {
+		var question_type = typeof question;
+
+		if( 'undefined' === question_type || 'string' === question_type || 'number' === question_type ) {
+			return false;
+		}
+
+		for( attr in question ) {
+			if( question.hasOwnProperty( attr ) ) {
+				return true;
+				break;
+			}
+		}
+
+		return false;
+
+	};
+
 
 	Public.prototype.returnNeuron = function( neuron_id ) {
 		console.log( 'Public.prototype.returnNeuron > ', neuron_id );
