@@ -1360,9 +1360,11 @@ var Neural = (function() {
 			to_neuron = Public.prototype.returnNeuron( to_id );
 
 			if( 'undefined' !== to_id && null !== to_id ) {
-				own_network[ to_id ] = {
-					'data': to_neuron
-				};
+				if( 'undefined' !== typeof to_id && null !== to_id ) {
+					own_network[ to_id ] = {
+						'data': to_neuron
+					};
+				}
 				if( 'undefined' !== typeof from_id && null !== from_id ) {
 					if( 'undefined' === typeof own_network[ to_id ][ 'from' ] ) {
 						own_network[ to_id ][ 'from' ] = {};
@@ -1390,7 +1392,7 @@ var Neural = (function() {
 					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
 						own_network[ from_id ][ 'to' ] = {};
 					}
-					own_network[ from_id ][ 'to' ][ to_id ] = to_type;
+					own_network[ from_id ][ 'to' ][ to_id ] = synapses.to_type;
 				}
 			}
 		
