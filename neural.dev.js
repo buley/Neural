@@ -1360,7 +1360,7 @@ var Neural = (function() {
 			to_neuron = Public.prototype.returnNeuron( to_id );
 
 			if( 'undefined' !== to_id && null !== to_id ) {
-				if( 'undefined' !== typeof to_id && null !== to_id 'undefined' === typeof own_network[ to_id ] ) {
+				if( 'undefined' !== typeof to_id && null !== to_id && 'undefined' === typeof own_network[ to_id ] ) {
 					own_network[ to_id ] = {
 						'data': to_neuron
 					};
