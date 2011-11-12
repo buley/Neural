@@ -1358,6 +1358,7 @@ var Neural = (function() {
 			// Handle to
 			to_id = synapse.to;
 			to_neuron = Public.prototype.returnNeuron( to_id );
+			console.log("TO NEURON",to_neuron);
 
 			if( 'undefined' !== to_id && null !== to_id ) {
 				if( 'undefined' !== typeof to_id && null !== to_id && 'undefined' === typeof own_network[ to_id ] ) {
