@@ -1346,7 +1346,7 @@ var Neural = (function() {
 	};
 
 	Public.prototype.returnNeuron = function( neuron_id ) {
-		console.log( 'Public.prototype.returnNeuron', neuron_id );
+		console.log( 'Public.prototype.returnNeuron > ', neuron_id );
 		return Cache.get( { 'key': 'neurons.data.' + neuron_id } );
 	};
 
@@ -1372,7 +1372,6 @@ var Neural = (function() {
 		};
 
 		return this;
-
 
 	};
 
