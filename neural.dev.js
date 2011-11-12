@@ -1004,7 +1004,8 @@ var Neural = (function() {
 	}
 
 	Public.prototype.mergeObjects = function( obj1, obj2, replace ) {
-	
+
+		console.log('Public.prototype.mergeObjects',obj1, obj2, replace);	
 		if( true !== replace ) {
 			replace = false;
 		}	
