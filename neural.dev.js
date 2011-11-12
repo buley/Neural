@@ -1224,6 +1224,12 @@ var Neural = (function() {
 				}
 			} else {
 				expected_synapses_count -+ 1;
+				if( expected_synapses_count === synapses.length ) {
+
+					console.log('expected_synapses_count synapses.length error', synapses.length );
+					Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
+				}
+
 			}
 
 		}
