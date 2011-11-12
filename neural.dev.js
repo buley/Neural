@@ -1036,6 +1036,7 @@ var Neural = (function() {
 			} else if( 'function' === obj2_type ) {
 				obj3.push( obj2 );
 			}
+			cconsole.log('returning array obj3' );
 			return obj3;
 		}
 
