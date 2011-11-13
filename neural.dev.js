@@ -1206,8 +1206,8 @@ var Neural = (function() {
 						if( 'undefined' !== typeof input_neuron_value && 'undefined' !== input_neuron_value.id ) {
 							Cache.set( { 'key': ( 'neurons.hashes.' + input_neuron_hash ), 'value': input_neuron_value.id, 'ttl': 300 } );
 						}
-						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && Public.prototype.hasAttributes( input_neuron_value ) ) {
-							input_ids.push( input_neuron_value );
+						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && 'undefined' !== input_neuron_value.id ) {
+							input_ids.push( input_neuron_value.id );
 					
 						} else {
 						
@@ -1236,7 +1236,7 @@ var Neural = (function() {
 							console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor error', context );
 						}
 
-					}, 'key': input_neuron_token, 'index': 'display', expecting: { 'type': 'input' }, properties: [ 'id' ] } );
+					}, 'key': input_neuron_token, 'index': 'display', expecting: { 'type': 'input' } } );
 
 				} else {
 
