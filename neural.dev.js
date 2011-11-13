@@ -1016,7 +1016,7 @@ var Neural = (function() {
 
 	//
 	
-
+var icount = 0;
 	/* input array of string tokens e.g. [ 'this', 'that', 'the_other' ]  */
 	Public.prototype.getNetwork = function( request ) {
 
@@ -1069,7 +1069,8 @@ console.log('DOING GET NETWORK',on_complete);
 
 
 			} else {
-				console.log("MADE IT", on_complete);	
+				console.log("MADE IT #", icount, on_complete);	
+				icount++;
 				if( true === debug ) {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
