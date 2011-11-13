@@ -1167,8 +1167,10 @@ var Neural = (function() {
 				// Get the cached neuron
 				cached_neuron = Cache.get( { 'key': ( 'neurons.data.' + input_neuron_id ) } );
 				// Else get it from the database
+console.log("CACHED RESULT",cached_neuron);
 				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
 				
+console.log("CACHED RESULT2",cached_neuron);
 					/* Get Cursor Neurons With Secondary Index on From */
 					Network.get( {  'type': 'neuron', 'on_success': function( input_neuron_value ) {
 						
