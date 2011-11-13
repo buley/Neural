@@ -1158,6 +1158,118 @@ var Neural = (function() {
 		return obj3;
 	}
 
+	//xxx
+
+	Public.prototype.getInputNeuronIds = function( input_tokens, on_success, on_error, on_complete ) {
+
+			if( true === debug ) {
+				console.log( 'Public.prototype.getNetwork getInputNeurons()', results, input_ids );
+			}
+
+			var input_ids = []
+			  , input_count = 0
+			  , input_neuron_id
+			  , z = 0
+			  , input_length = input_tokens.length
+			  , expected_input_count = input_length;
+
+			if( 0 === input_length ) {
+				if( 'function' === typeof on_success ) {
+					on_success( input_ids );
+				}
+				return this;
+			}
+			// For each input_id in input_ids
+			for( z = 0; z < input_length; z += 1 ) {
+
+				input_neuron_token = input_tokens[ z ];
+				// Get the cached neuron
+				//
+				cached_neuron = Cache.get( { 'key': ( 'neurons.display.' + input_neuron_token ) } );
+				// Else get it from the database
+
+				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
+
+					/* Get Cursor Neurons With Secondary Index on From */
+					Network.get( {  'type': 'neuron', 'on_success': function( input_neuron_value ) {
+					
+						if( true === debug ) {
+							console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor success', input_neuron_value );
+						}
+
+						Cache.set( { 'key': ( 'neurons.data.' + input_neuron_token ), 'value': input_neuron_value, 'ttl': 300 } );
+						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && Public.prototype.hasAttributes( input_neuron_value ) ) {
+							input_ids.push( input_neuron_value );
+					
+						} else {
+						
+							expected_input_count -= 1;
+						}
+
+						if( expected_input_count === input_neurons.length ) {
+						
+							if( 'function' === typeof on_success ) {
+								on_success( input_ids );
+							}
+						}
+
+					}, 'on_error': function( context ) {
+						
+						//TODO: good error (not in index) or bad error (e.g. missing store)?
+						expected_input_count -= 1;
+							
+						if( expected_input_count === input_ids.length ) {
+							if( 'function' === typeof on_success ) {
+								on_success( input_ids );
+							}
+						}
+
+						if( true === debug ) {
+							console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor error', context );
+						}
+
+					}, 'key': input_neuron_token, 'index': 'display', expecting: { 'type': 'input' }, properties: [ 'id' ] } );
+
+				} else {
+
+					if( 'undefined' !== typeof cached_neuron && Public.prototype.hasAttributes( cached_neuron ) ) {
+					
+						input_ids.push( cached_neuron );
+					
+					} else {
+
+						if( true === debug ) {
+							console.log('cached neuron does not have attributes',cached_neuron);
+						}
+						
+						expected_input_count -= 1;
+					
+					}	
+				
+					if( true === debug ) {
+						console.log('Public.prototype.getTokens > get_input_neurons > cache success', cached_neuron );
+					}
+
+					if( expected_input_count === input_ids.length ) {
+					
+						if( true === debug ) {
+							console.log('Public.prototype.getTokens > get_input_neurons > getting synapses',input_neurons);
+						}
+						
+						if( 'function' === typeof on_success ) {
+							on_success( input_ids );
+						}
+					
+					}
+				}
+
+			}
+
+		}
+
+
+
+
 	Public.prototype.getInputNeurons = function( results, input_ids, on_success, on_error, on_complete ) {
 
 			if( true === debug ) {
@@ -1588,6 +1700,7 @@ var Neural = (function() {
 			}
 			, 'hash': true
 			, 'type': false
+			, 'display': false
 		};
 
 		if( !!Neural.install ) {
