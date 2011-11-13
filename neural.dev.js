@@ -1071,7 +1071,6 @@ var layer_state = 0;
 
 
 			} else {
-				console.log("MADE IT #", layer_state, request);	
 				if( true === debug ) {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
