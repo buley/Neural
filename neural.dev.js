@@ -1061,6 +1061,7 @@ var Neural = (function() {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
 				
+				console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				if( 'function' === typeof on_complete ) {
 					on_complete( passed_result );
 				}
