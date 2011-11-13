@@ -1037,11 +1037,11 @@ var Neural = (function() {
 		}
 
 		if( null === current_layer ) {
-			//current_layers = 0;
+			current_layers = 0;
 		}
 
 		if( null === total_layers ) {
-			//total_layers = current_layer + 1;
+			total_layers = current_layer + 1;
 		}
 
 		var own_on_complete = function( passed_result, completed_input, completed_synapses, completed_output ) {
@@ -1056,7 +1056,8 @@ var Neural = (function() {
 			  , completed_output_length = completed_output.length
 			  , b = 0;
 			console.log("CURRE",current_layer,"TOTAL",total_layers);
-			if( current_layer < total_layers ) {
+			
+			if( current_layer < ( total_layers - 1 ) ) {
 
 				for( b = 0; b < completed_output_length; b += 1 ) {
 					if( 'undefined' !== typeof completed_output[ b ] ) {
