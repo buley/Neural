@@ -1086,8 +1086,7 @@ var Neural = (function() {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
 				
-				if( 0 === layer_state && 'function' === typeof on_complete ) {
-					layer_state = 0;
+				if( 'function' === typeof on_complete ) {
 					on_complete( passed_result );
 				} else {
 					layer_state--;
