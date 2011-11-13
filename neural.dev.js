@@ -1065,12 +1065,13 @@ console.log('DOING GET NETWORK',on_complete);
 					}
 				}
 
+				icount++;
 				Public.prototype.getNetwork( { 'result': own_result, 'input_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': ( total_layers - 1 ), 'on_success': on_success, 'on_error': on_error, 'on_complete': null } );
 
 
 			} else {
 				console.log("MADE IT #", icount, request);	
-				icount++;
+
 				if( true === debug ) {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
