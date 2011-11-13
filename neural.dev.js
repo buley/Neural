@@ -1058,8 +1058,8 @@ var Neural = (function() {
 			  , completed_output_length = completed_output.length
 			  , b = 0;
 			console.log('current',current_layer,'total',total_layers);
+
 			if( current_layer < total_layers ) {
-				console.log('layer state',layer_state);
 
 				for( b = 0; b < completed_output_length; b += 1 ) {
 					if( 'undefined' !== typeof completed_output[ b ] ) {
@@ -1071,7 +1071,6 @@ var Neural = (function() {
 				}
 
 				Public.prototype.getNetwork( { 'result': own_result, 'input_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': total_layers, 'on_success': on_success, 'on_error': on_error, 'on_complete': on_complete } );
-
 
 			} else {
 		
