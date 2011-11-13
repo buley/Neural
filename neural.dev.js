@@ -1182,20 +1182,11 @@ var Neural = (function() {
 					
 						} else {
 						
-							if( !!Public.prototype.debug ) {
-								console.log('input neuron bad or not attr',input_neuron_value);
-							}
-
 							expected_input_count -= 1;
 						}
 
 						if( expected_input_count === input_neurons.length ) {
 						
-							if( !!Public.prototype.debug ) {
-								console.log('input_neurons', input_neurons.length );
-								console.log('expected_input_neurons', expected_input_count );
-							}
-
 							Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
 						}
 
@@ -1216,7 +1207,7 @@ var Neural = (function() {
 
 				} else {
 
-					if( Public.prototype.hasAttributes( cached_neuron ) ) {
+					if( 'undefined' !== typeof cached_neuron && Public.prototype.hasAttributes( cached_neuron ) ) {
 					
 						input_neurons.push( cached_neuron );
 					
