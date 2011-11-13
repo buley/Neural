@@ -1152,7 +1152,7 @@ var Neural = (function() {
 	Public.prototype.getInputNeurons = function( results, input_ids, on_success, on_error, on_complete ) {
 
 			if( true === debug ) {
-				console.log( 'Public.prototype.getNetwork get_input_neurons()', results, input_ids );
+				console.log( 'Public.prototype.getNetwork getInputNeurons()', results, input_ids );
 			}
 
 			var input_neurons = []
@@ -1166,6 +1166,7 @@ var Neural = (function() {
 			for( z = 0; z < input_length; z += 1 ) {
 
 				input_neuron_id = input_ids[ z ];
+				console.log('input neuron id', input_ids[ z ] );
 				// Get the cached neuron
 				cached_neuron = Cache.get( { 'key': ( 'neurons.data.' + input_neuron_id ) } );
 				// Else get it from the database
