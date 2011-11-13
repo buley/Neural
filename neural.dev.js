@@ -1176,6 +1176,9 @@ var Neural = (function() {
 			  , input_length = input_ids.length
 			  , expected_input_count = input_length;
 
+			if( 0 === input_count ) {
+				Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
+			}
 			// For each input_id in input_ids
 			for( z = 0; z < input_length; z += 1 ) {
 
