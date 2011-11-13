@@ -1038,11 +1038,11 @@ var Neural = (function() {
 		}
 
 		if( 'undefined' === typeof layer_state || null === layer_state ) {
-			layer_state = 0;
+			layer_state = 1;
 		}
 
 		if( null === current_layer ) {
-			current_layers = 0;
+			current_layers = 1;
 		}
 
 		if( null === total_layers ) {
@@ -1061,7 +1061,7 @@ var Neural = (function() {
 			  , completed_output_length = completed_output.length
 			  , b = 0;
 			console.log('current',current_layer,'total',total_layers,'layer_state',layer_state);
-			if( current_layer < ( total_layers - 1 ) ) {
+			if( current_layer < total_layers ) {
 				console.log('layer state',layer_state);
 				for( b = 0; b < completed_output_length; b += 1 ) {
 					if( 'undefined' !== typeof completed_output[ b ] ) {
