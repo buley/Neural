@@ -1024,7 +1024,7 @@ var Neural = (function() {
 		    , input_ids = request.input_ids
 		    , current_layer = request.current_layer
 		    , total_layers = request.total_layers
-		    , layer_state = request.layer_state || 0
+		    , layer_state = request.layer_state
 		    , on_success = request.on_success 
 		    , on_error = request.on_error
 		    , on_complete = request.on_complete;
@@ -1035,6 +1035,10 @@ var Neural = (function() {
 
 		if( 'string' === typeof input_ids ) {
 			input_ids = [ input_ids ];
+		}
+
+		if( 'undefined' === typeof layer_state || null === layer_state ) {
+			layer_state = 1;
 		}
 
 		if( null === current_layer ) {
