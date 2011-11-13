@@ -1055,7 +1055,6 @@ var Neural = (function() {
 			var completed_output_ids = []
 			  , completed_output_length = completed_output.length
 			  , b = 0;
-			console.log('current',current_layer,'total',total_layers);
 
 			if( current_layer < total_layers ) {
 
