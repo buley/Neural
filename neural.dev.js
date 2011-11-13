@@ -1262,10 +1262,6 @@ var Neural = (function() {
 
 					if( expected_input_count === input_ids.length ) {
 					
-						if( true === debug ) {
-							console.log('Public.prototype.getTokens > get_input_neurons > getting synapses',input_ids);
-						}
-						
 						if( 'function' === typeof on_success ) {
 							on_success( input_ids );
 						}
