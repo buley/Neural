@@ -1038,6 +1038,7 @@ var Neural = (function() {
 		}
 
 		if( 'undefined' === typeof layer_state || null === layer_state ) {
+			console.log('SETTING DEFAULT ALYER STATE');
 			layer_state = 1;
 		}
 
