@@ -1043,7 +1043,7 @@ var Neural = (function() {
 		if( null === total_layers ) {
 			total_layers = current_layer + 1;
 		}
-console.log('DOING GET NETWORK",on_complete);
+console.log('DOING GET NETWORK',on_complete);
 		var own_on_complete = function( passed_result, completed_input, completed_synapses, completed_output ) {
 	
 			if( true === debug ) {
