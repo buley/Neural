@@ -40,6 +40,7 @@ var Neural = (function() {
 	/* Namespaces */
 
 	Public.prototype = {};
+	Public.prototype.debug = true;
 	Public.prototype.neuron = {};
 	Public.prototype.neurons = {};
 	Public.prototype.synapse = {};
