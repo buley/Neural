@@ -1078,6 +1078,8 @@ console.log('DOING GET NETWORK',on_complete);
 
 				if( 0 === icount && 'function' === typeof on_complete ) {
 					on_complete( passed_result );
+				} else {
+					icount = 0;
 				}
 
 			}
