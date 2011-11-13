@@ -1037,11 +1037,11 @@ var Neural = (function() {
 		}
 
 		if( null === current_layer ) {
-			current_layers = 0;
+			//current_layers = 0;
 		}
 
 		if( null === total_layers ) {
-			total_layers = current_layer + 1;
+			//total_layers = current_layer + 1;
 		}
 
 		var own_on_complete = function( passed_result, completed_input, completed_synapses, completed_output ) {
