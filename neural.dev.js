@@ -1076,9 +1076,7 @@ var Neural = (function() {
 					}
 				}
 
-				layer_state++;
-
-				Public.prototype.getNetwork( { 'result': own_result, 'input_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': total_layers, 'layer_state': layer_state, 'on_success': on_success, 'on_error': on_error, 'on_complete': on_complete } );
+				Public.prototype.getNetwork( { 'result': own_result, 'input_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': total_layers, 'layer_state': ( layer_state + 1 ), 'on_success': on_success, 'on_error': on_error, 'on_complete': on_complete } );
 
 
 			} else {
