@@ -1042,7 +1042,7 @@ var Neural = (function() {
 		}
 
 		if( null === current_layer || 'undefined' === typeof current_layer ) {
-			current_layers = 1;
+			current_layer = 1;
 		}
 
 		if( null === total_layers || 'undefined' === typeof total_layers ) {
