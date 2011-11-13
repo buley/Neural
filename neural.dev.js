@@ -1178,6 +1178,7 @@ var Neural = (function() {
 
 			if( 0 === input_count ) {
 				Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
+				return this;
 			}
 			// For each input_id in input_ids
 			for( z = 0; z < input_length; z += 1 ) {
@@ -1280,6 +1281,7 @@ var Neural = (function() {
 		if( 0 === input_neuron_length ) {
 
 			Public.prototype.getOutputNeurons( results, input_neurons, synapses, on_success, on_error, on_complete );
+			return this;
 
 		}
 		
@@ -1381,7 +1383,7 @@ var Neural = (function() {
 		  , synapse = {};
 		if( 0 === synapses_length ) {
 			on_complete( results, input_neurons, synapses, output_neurons );
-			return;
+			return this;
 		}
 		for( a = 0; a < synapses_length; a += 1 ) {
 
