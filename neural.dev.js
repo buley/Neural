@@ -1038,17 +1038,14 @@ var Neural = (function() {
 		}
 
 		if( 'undefined' === typeof layer_state || null === layer_state ) {
-			console.log('SETTING DEFAULT ALYER STATE');
 			layer_state = 1;
 		}
 
 		if( null === current_layer ) {
-			console.log('SETTING DEFAULT CURRENT LAYER');
 			current_layers = 0;
 		}
 
 		if( null === total_layers ) {
-			console.log('SETTING DEFAULT TOTAL LAYER');
 			total_layers = current_layer + 1;
 		}
 		
@@ -1084,12 +1081,10 @@ var Neural = (function() {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
 				
-				if( 1 === layer_state && 'function' === typeof on_complete ) {
+				if( 'function' === typeof on_complete ) {
 					on_complete( passed_result );
-				} else {
-					layer_state--;
 				}
-
+			
 			}
 		};
 
