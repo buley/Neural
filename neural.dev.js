@@ -1078,11 +1078,11 @@ var layer_state = 0;
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
 				
-
+				console.log('layer state',layer_state);
 				if( 0 === layer_state && 'function' === typeof on_complete ) {
 					on_complete( passed_result );
 				} else {
-					layer_state = 0;
+					layer_state--;
 				}
 
 			}
