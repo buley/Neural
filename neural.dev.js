@@ -1242,7 +1242,7 @@ var Neural = (function() {
 
 				} else {
 
-					if( 'undefined' !== typeof cached_neuron && Public.prototype.hasAttributes( cached_neuron ) ) {
+					if( 'undefined' !== typeof cached_neuron && cached_neuron ) {
 					
 						input_ids.push( cached_neuron );
 					
