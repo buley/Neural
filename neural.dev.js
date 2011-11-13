@@ -1145,7 +1145,6 @@ var Neural = (function() {
 				}
 			}
 		}
-		console.log('returning obj3',obj1);
 		return obj3;
 	}
 
@@ -1364,7 +1363,6 @@ var Neural = (function() {
 		  , output_neurons = []
 		  , synapse = {};
 		if( 0 === synapses_length ) {
-			console.log("NO RESULTS IN GETOUTPUT ENRUONS",results);
 			on_complete( results, input_neurons, synapses, output_neurons );
 			return;
 		}
@@ -1373,7 +1371,6 @@ var Neural = (function() {
 			synapse = synapses[ a ];
 
 			output_id = synapse.to;
-			console.log("SYNAPSE TO",synapse.to,synapse);
 			cached_synapse = Cache.get( { 'key': ( 'neurons.data.' + output_id ) } );
 
 			// If it exists in the cache, no need to get it from the database
