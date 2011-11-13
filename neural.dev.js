@@ -1187,11 +1187,11 @@ var Neural = (function() {
 
 	
 				input_neuron_token = input_tokens[ z ];	
-				input_neuron_token = Public.prototype.utilities.getId( [ input_neuron_token, 'input' ] );
+				input_neuron_hash = Public.prototype.utilities.getId( [ input_neuron_token, 'input' ] );
 				// Get the cached neuron
 				//
 	
-				cached_neuron = Cache.get( { 'key': ( 'neurons.hashes.' + input_neuron_token ) } );
+				cached_neuron = Cache.get( { 'key': ( 'neurons.display.' + input_neuron_token ) } );
 				// Else get it from the database
 
 				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
@@ -1203,7 +1203,9 @@ var Neural = (function() {
 							console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor success', input_neuron_value );
 						}
 
-						Cache.set( { 'key': ( 'neurons.hashes.' + input_neuron_token ), 'value': input_neuron_value, 'ttl': 300 } );
+						if( 'undefined' !== typeof input_neuron_value && 'undefined' !== input_neuron_value.id ) {
+							Cache.set( { 'key': ( 'neurons.hashes.' + input_neuron_hash ), 'value': input_neuron_value.id, 'ttl': 300 } );
+						}
 						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && Public.prototype.hasAttributes( input_neuron_value ) ) {
 							input_ids.push( input_neuron_value );
 					
