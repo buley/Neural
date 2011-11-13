@@ -1173,7 +1173,7 @@ var Neural = (function() {
 				// Else get it from the database
 
 				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
-				
+				console.log('doing a get');	
 					/* Get Cursor Neurons With Secondary Index on From */
 					Network.get( {  'type': 'neuron', 'on_success': function( input_neuron_value ) {
 				console.log('cached set',input_neuron_value);
