@@ -1061,7 +1061,10 @@ var layer_state = 0;
 
 				for( b = 0; b < completed_output_length; b += 1 ) {
 					if( 'undefined' !== typeof completed_output[ b ] ) {
-						completed_output_ids.push( completed_output[ b ].id );
+						var completed_id = completed_output[ b ].id;
+						if( 'undefined' !== typeof completed_id ) {
+							completed_output_ids.push( completed_id );
+						}
 					}
 				}
 
