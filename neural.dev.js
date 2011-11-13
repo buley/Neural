@@ -1043,10 +1043,12 @@ var Neural = (function() {
 		}
 
 		if( null === current_layer ) {
+			console.log('SETTING DEFAULT CURRENT LAYER');
 			current_layers = 0;
 		}
 
 		if( null === total_layers ) {
+			console.log('SETTING DEFAULT TOTAL LAYER');
 			total_layers = current_layer + 1;
 		}
 		
