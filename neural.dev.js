@@ -1197,6 +1197,7 @@ var Neural = (function() {
 						//TODO: good error (not in index) or bad error (e.g. missing store)?
 						expected_input_count -= 1;
 							
+					console.log('FUMBLE',expected_input_count, input_neurons.length);	
 						if( expected_input_count === input_neurons.length ) {
 							Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
 						}
