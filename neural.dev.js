@@ -1167,10 +1167,8 @@ var Neural = (function() {
 				// Get the cached neuron
 				cached_neuron = Cache.get( { 'key': ( 'neurons.data.' + input_neuron_id ) } );
 				// Else get it from the database
-console.log("CACHED RESULT",cached_neuron);
 				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
 				
-console.log("CACHED RESULT2",cached_neuron);
 					/* Get Cursor Neurons With Secondary Index on From */
 					Network.get( {  'type': 'neuron', 'on_success': function( input_neuron_value ) {
 						
@@ -1179,8 +1177,8 @@ console.log("CACHED RESULT2",cached_neuron);
 							console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor success', input_neuron_value );
 						}
 
-						cached_neuron = Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': input_neuron_value, 'ttl': 300 } );
-						
+						Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': input_neuron_value, 'ttl': 300 } );
+					console.log('INTERCEPTION',input_neuron_value,expected_input_count, input_neurons.length);	
 						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && Public.prototype.hasAttributes( input_neuron_value ) ) {
 							input_neurons.push( input_neuron_value );
 					
