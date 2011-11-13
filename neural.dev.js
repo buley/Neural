@@ -1236,7 +1236,7 @@ var Neural = (function() {
 							console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor error', context );
 						}
 
-					}, 'key': input_neuron_token, 'index': 'display', expecting: { 'type': 'input' } } );
+					}, 'key': input_neuron_hash, 'index': 'hash', expecting: { 'type': 'input' } } );
 
 				} else {
 
