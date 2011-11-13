@@ -1166,7 +1166,7 @@ var Neural = (function() {
 			  , on_complete = request.on_complete;
 	
 			if( true === debug ) {
-				console.log( 'Public.prototype.getNetwork getInputNeurons()', results, input_ids );
+				console.log( 'Public.prototype.getNetwork getInputNeurons()', request );
 			}
 
 			var input_ids = []
