@@ -7,6 +7,7 @@ var Cache = {};
 var Neural = (function() {
 
 	var debug = false;
+	var layer_state = 0;
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
@@ -1016,7 +1017,7 @@ var Neural = (function() {
 
 	//
 	
-var icount = 0;
+var layer_state = 0;
 	/* input array of string tokens e.g. [ 'this', 'that', 'the_other' ]  */
 	Public.prototype.getNetwork = function( request ) {
 
@@ -1043,7 +1044,7 @@ var icount = 0;
 		if( null === total_layers ) {
 			total_layers = current_layer + 1;
 		}
-console.log('DOING GET NETWORK',on_complete);
+		
 		var own_on_complete = function( passed_result, completed_input, completed_synapses, completed_output ) {
 	
 			if( true === debug ) {
@@ -1065,21 +1066,21 @@ console.log('DOING GET NETWORK',on_complete);
 					}
 				}
 
-				icount++;
+				layer_state++;
 				Public.prototype.getNetwork( { 'result': own_result, 'input_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': ( total_layers - 1 ), 'on_success': on_success, 'on_error': on_error, 'on_complete': on_complete } );
 
 
 			} else {
-				console.log("MADE IT #", icount, request);	
+				console.log("MADE IT #", layer_state, request);	
 				if( true === debug ) {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
 				
 
-				if( 0 === icount && 'function' === typeof on_complete ) {
+				if( 0 === layer_state && 'function' === typeof on_complete ) {
 					on_complete( passed_result );
 				} else {
-					icount = 0;
+					layer_state = 0;
 				}
 
 			}
