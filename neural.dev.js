@@ -1190,7 +1190,9 @@ var Neural = (function() {
 				input_neuron_hash = Public.prototype.utilities.getId( [ input_neuron_token, 'input' ] );
 				// Get the cached neuron
 				//
-	
+				if( true === debug ) {
+					console.log('Public.prototype.getInputNeuronIds hash', input_neuron_hash, 'token', input_neuron_token );
+				}	
 				cached_neuron = Cache.get( { 'key': ( 'neurons.display.' + input_neuron_token ) } );
 				// Else get it from the database
 
@@ -1708,7 +1710,6 @@ var Neural = (function() {
 			}
 			, 'hash': true
 			, 'type': false
-			, 'display': false
 		};
 
 		if( !!Neural.install ) {
