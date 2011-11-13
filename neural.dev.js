@@ -1328,7 +1328,7 @@ var layer_state = 0;
 
 					} else {
 
-						if( Public.prototype.hasAttributes( cached_input_neuron ) ) {
+						if( 'undefined' !== typeof cached_input_neuron && Public.prototype.hasAttributes( cached_input_neuron ) ) {
 							synapses.push( cached_input_neuron );
 						} else {
 							expected_synapses_count -= 1;
@@ -1419,7 +1419,9 @@ var layer_state = 0;
 				}, 'key': output_id } );
 
 			} else {
-				output_neurons.push( cached_synapse );
+				if( 'undefined' !== typeof cached_synapse ) {
+					output_neurons.push( cached_synapse );
+				}
 				if( expected_output_count === output_neurons.length ) {
 					on_complete( results, input_neurons, synapses, output_neurons );
 				}
