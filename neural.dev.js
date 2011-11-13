@@ -1171,7 +1171,7 @@ var Neural = (function() {
 			  , input_length = input_ids.length
 			  , expected_input_count = input_length;
 
-			if( 0 === input_count ) {
+			if( 0 === input_length ) {
 				Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
 				return this;
 			}
