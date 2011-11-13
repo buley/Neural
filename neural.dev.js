@@ -1068,7 +1068,7 @@ var Neural = (function() {
 
 
 			} else {
-			
+				console.log("MADE IT");	
 				if( true === debug ) {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
 				}
