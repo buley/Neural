@@ -1056,7 +1056,6 @@ var layer_state = 0;
 			var completed_output_ids = []
 			  , completed_output_length = completed_output.length
 			  , b = 0;
-			console.log("CURRE",current_layer,"TOTAL",total_layers);
 			
 			if( current_layer < ( total_layers - 1 ) ) {
 
@@ -1067,6 +1066,7 @@ var layer_state = 0;
 				}
 
 				layer_state++;
+
 				Public.prototype.getNetwork( { 'result': own_result, 'input_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': ( total_layers - 1 ), 'on_success': on_success, 'on_error': on_error, 'on_complete': on_complete } );
 
 
