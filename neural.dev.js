@@ -1024,7 +1024,6 @@ var Neural = (function() {
 		    , input_ids = request.input_ids
 		    , current_layer = request.current_layer
 		    , total_layers = request.total_layers
-		    , current_layer = request.current_layer
 		    , on_success = request.on_success 
 		    , on_error = request.on_error
 		    , on_complete = request.on_complete;
