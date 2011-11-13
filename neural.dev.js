@@ -1018,7 +1018,15 @@ var Neural = (function() {
 	
 
 	/* input array of string tokens e.g. [ 'this', 'that', 'the_other' ]  */
-	Public.prototype.getNetwork = function( result, input_ids, current_layer, total_layers, on_success, on_error, on_complete ) {
+	Public.prototype.getNetwork = function( request ) {
+
+		var result = request.result
+		    , input_ids = request.input_ids
+		    , current_layer = request.current_layer
+		    , total_layers = request.total_layers
+		    , on_success = request.on_success 
+		    , on_error = request.on_error
+		    , on_complete = request.on_complete;
 
 		if( true === debug ) {
 			console.log( 'Public.prototype.getNetwork', result, input_ids, current_layer, total_layers );
@@ -1056,7 +1064,7 @@ var Neural = (function() {
 					}
 				}
 
-				Public.prototype.getNetwork( own_result, completed_output_ids, ( current_layer + 1 ), ( total_layers - 1 ), on_success, on_error, on_complete );
+				Public.prototype.getNetwork( { 'result': own_result, 'output_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': ( total_layers - 1 ), 'on_success': on_success, 'on_error': on_error, 'on_complete': on_complete } );
 
 			} else {
 			
