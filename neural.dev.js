@@ -1216,7 +1216,7 @@ var Neural = (function() {
 							expected_input_count -= 1;
 						}
 
-						if( expected_input_count === input_neurons.length ) {
+						if( expected_input_count === input_ids.length ) {
 						
 							if( 'function' === typeof on_success ) {
 								on_success( input_ids );
