@@ -1160,8 +1160,12 @@ var Neural = (function() {
 
 	//xxx
 
-	Public.prototype.getInputNeuronIds = function( input_tokens, on_success, on_error, on_complete ) {
-
+	Public.prototype.getInputNeuronIds = function( request ) {
+			var input_tokens = request.input_tokens
+			  , on_success = request.on_success
+			  , on_error = request.on_error
+			  , on_complete = request.on_complete;
+	
 			if( true === debug ) {
 				console.log( 'Public.prototype.getNetwork getInputNeurons()', results, input_ids );
 			}
