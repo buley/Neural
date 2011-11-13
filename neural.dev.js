@@ -1171,11 +1171,13 @@ var Neural = (function() {
 				//
 				cached_neuron = Public.prototype.returnNeuron( input_neuron_id );
 				// Else get it from the database
-				console.log('cached flush',cached_neuron);
+
 				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
 				
 					/* Get Cursor Neurons With Secondary Index on From */
 					Network.get( {  'type': 'neuron', 'on_success': function( input_neuron_value ) {
+				console.log('cached set',input_neuron_value);
+					
 						
 			
 						if( true === debug ) {
@@ -1215,6 +1217,7 @@ var Neural = (function() {
 
 				} else {
 
+				console.log('cached flush',cached_neuron);
 					if( 'undefined' !== typeof cached_neuron && Public.prototype.hasAttributes( cached_neuron ) ) {
 					
 						input_neurons.push( cached_neuron );
