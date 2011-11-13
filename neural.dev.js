@@ -1069,7 +1069,7 @@ console.log('DOING GET NETWORK',on_complete);
 
 
 			} else {
-				console.log("MADE IT #", icount, on_complete);	
+				console.log("MADE IT #", icount, request);	
 				icount++;
 				if( true === debug ) {
 					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
