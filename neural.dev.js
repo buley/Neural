@@ -1061,7 +1061,7 @@ var Neural = (function() {
 			var completed_output_ids = []
 			  , completed_output_length = completed_output.length
 			  , b = 0;
-			console.log('current',current_layer,'total',total_layers);
+			console.log('current',current_layer,'total',total_layers,'layer_state',layer_state);
 			if( current_layer < ( total_layers - 1 ) ) {
 
 				console.log('layer state',layer_state);
