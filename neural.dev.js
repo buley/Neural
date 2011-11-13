@@ -1168,8 +1168,10 @@ var Neural = (function() {
 				input_neuron_id = input_ids[ z ];
 				console.log('input neuron id', input_ids[ z ] );
 				// Get the cached neuron
-				cached_neuron = Cache.get( { 'key': ( 'neurons.data.' + input_neuron_id ) } );
+				//
+				cached_neuron = Public.prototype.returnNeuron( input_neuron_id );
 				// Else get it from the database
+				console.log('cached flush',cached_neuron);
 				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
 				
 					/* Get Cursor Neurons With Secondary Index on From */
