@@ -1079,7 +1079,7 @@ var layer_state = 0;
 				}
 				
 				console.log('layer state',layer_state);
-				if( 0 === layer_state && 'function' === typeof on_complete ) {
+				if( 1 === layer_state && 'function' === typeof on_complete ) {
 					on_complete( passed_result );
 				} else {
 					layer_state--;
