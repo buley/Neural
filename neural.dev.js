@@ -1022,7 +1022,8 @@ var Neural = (function() {
 
 		var result = request.result
 		    , input_ids = request.input_ids
-		    , current_layer = request.current_layer
+		    , current_la
+		    yer = request.current_layer
 		    , total_layers = request.total_layers
 		    , layer_state = request.layer_state
 		    , on_success = request.on_success 
@@ -1035,10 +1036,6 @@ var Neural = (function() {
 
 		if( 'string' === typeof input_ids ) {
 			input_ids = [ input_ids ];
-		}
-
-		if( 'undefined' === typeof layer_state || null === layer_state ) {
-			layer_state = 1;
 		}
 
 		if( null === current_layer || 'undefined' === typeof current_layer ) {
@@ -1060,9 +1057,10 @@ var Neural = (function() {
 			var completed_output_ids = []
 			  , completed_output_length = completed_output.length
 			  , b = 0;
-			console.log('current',current_layer,'total',total_layers,'layer_state',layer_state);
+			console.log('current',current_layer,'total',total_layers);
 			if( current_layer < total_layers ) {
 				console.log('layer state',layer_state);
+
 				for( b = 0; b < completed_output_length; b += 1 ) {
 					if( 'undefined' !== typeof completed_output[ b ] ) {
 						var completed_id = completed_output[ b ].id;
@@ -1072,12 +1070,12 @@ var Neural = (function() {
 					}
 				}
 
-				Public.prototype.getNetwork( { 'result': own_result, 'input_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': total_layers, 'layer_state': ( layer_state + 1 ), 'on_success': on_success, 'on_error': on_error, 'on_complete': on_complete } );
+				Public.prototype.getNetwork( { 'result': own_result, 'input_ids': completed_output_ids, 'current_layer': ( current_layer + 1 ), 'total_layers': total_layers, 'on_success': on_success, 'on_error': on_error, 'on_complete': on_complete } );
 
 
 			} else {
 				if( true === debug ) {
-					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED",passed_result);
+					console.log("Public.prototype.getNetwork > own_on_complete > FINISHED", passed_result);
 				}
 				
 				if( 'function' === typeof on_complete ) {
