@@ -759,7 +759,6 @@ var Neural = (function() {
 			if( hiddens.hasOwnProperty( x ) ) {
 
 				var hidd = hiddens[ x ];	
-				console.log('FLOATING SPACE ROCKS',x,hidd);
 				var neuron_data = {
 					'type': 'hidden'
 					, 'hash': hidd.hash
@@ -785,9 +784,10 @@ var Neural = (function() {
 							on_success( hidden_id );
 						}				
 
-						if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
-							on_complete( hidden_ids );
-							return this;
+						if( hidden_ids.length >= expected_actions )
+							if( 'function' === typeof on_complete ) {
+								on_complete( hidden_ids );
+							}
 						}
 
 					}, 'on_error': function( context ) {
@@ -797,7 +797,7 @@ var Neural = (function() {
 						}
 
 						if( true === return_existing ) {
-
+console.log("HIDD",hidd.hash);
 							Network.get( {  'type': 'neuron', 'on_success': function( hidden_neuron ) {
 							
 								var hidden_id = hidden_neuron.id;
@@ -817,7 +817,6 @@ var Neural = (function() {
 								if( hidden_ids.length >= expected_actions ) {
 									if( 'function' === typeof on_complete ) {
 										on_complete( hidden_ids );
-										return;
 									}
 								}
 
@@ -842,7 +841,7 @@ var Neural = (function() {
 								}
 
 							}, 'index': 'hash', 'key': hidd.hash, 'expecting': { 'type': 'hidden' } } );
-						
+
 						} else {
 
 							Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
