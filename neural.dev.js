@@ -762,11 +762,10 @@ var Neural = (function() {
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 
-				hidd = hiddens[ x ];	
-				neuron_data = {
+				var neuron_data = {
 					'type': 'hidden'
-					, 'hash': hidd.hash
-					, 'display': hidd.display
+					, 'hash': hiddens[ x ].hash
+					, 'display': hiddens[ x ].display
 				};
 				cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
 				if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
