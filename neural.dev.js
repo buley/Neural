@@ -727,18 +727,26 @@ var Neural = (function() {
 			for( b = 0; b < tokens_length; b += 1 ) {
 			
 				bb = tokens[ b ];
-				arr = [ aa, bb ];
-				console.log(arr);
-				hidden_id = Public.prototype.utilities.getId( arr );
-			
-				for( c = 0; c < tokens_length; c += 1 ) {
-					cc = tokens[ c ];
-					arr = [ aa, bb, cc ];
+				if( aa !== bb ) {
+
+					arr = [ aa, bb ];
+					console.log(arr);
 					hidden_id = Public.prototype.utilities.getId( arr );
-					hiddens[ hidden_id ] = {
-						'display': arr
-						, 'hash': hidden_id
-					};
+				
+					for( c = 0; c < tokens_length; c += 1 ) {
+						cc = tokens[ c ];
+						if( aa !== cc ) {
+
+							arr = [ aa, bb, cc ];
+							hidden_id = Public.prototype.utilities.getId( arr );
+							hiddens[ hidden_id ] = {
+								'display': arr
+								, 'hash': hidden_id
+							};
+
+						}
+					}
+
 				}
 			}
 		}
