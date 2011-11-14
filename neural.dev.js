@@ -767,12 +767,7 @@ var Neural = (function() {
 					, 'hash': hiddens[ x ].hash
 					, 'display': hiddens[ x ].display
 				};
-				var neuron_data_copy = {}
-				for(var attr in neuron_data){
-					if(neuron_data.hasOwnProperty(attr) ) {
-						neuron_data_copy[ attr ] = neuron_data[ attr ];
-					}
-				}
+				var neuron_data_copy = JSON.parse( JSON.stringify( neuron_data ) );
 				cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
 				if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
 					cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
