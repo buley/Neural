@@ -721,23 +721,17 @@ var Neural = (function() {
 		  , hiddens_length = 0;
 		console.log('oktnes length',tokens_length);
 		for( a = 0; a < tokens_length; a += 1 ) {
-			
 			aa = tokens[ a ];
-			
 			for( b = 0; b < tokens_length; b += 1 ) {
-			
 				bb = tokens[ b ];
 				if( aa !== bb ) {
-
 					arr = [ aa, bb ];
 					console.log(arr);
 					hidden_id = Public.prototype.utilities.getId( arr );
-				
 					for( c = 0; c < tokens_length; c += 1 ) {
 						cc = tokens[ c ];
 						if( aa !== cc ) {
-
-							arr = [ aa, bb, cc ];
+							arr = Public.prototype.utilities.alphaSortArray( [ aa, bb, cc ] );
 							hidden_id = Public.prototype.utilities.getId( arr );
 							hiddens[ hidden_id ] = {
 								'display': arr
