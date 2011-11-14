@@ -820,7 +820,11 @@ var Neural = (function() {
 							}
 
 						}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
-					}, 'data': neuron_data } );
+
+
+					}
+
+				}, 'data': neuron_data } );
 				
 				} else {
 
