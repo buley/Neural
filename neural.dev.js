@@ -759,6 +759,7 @@ var Neural = (function() {
 			if( hiddens.hasOwnProperty( x ) ) {
 
 				var hidd = hiddens[ x ];	
+	console.log("HIDDDD",hidd);
 				var neuron_data = {
 					'type': 'hidden'
 					, 'hash': hidd.hash
