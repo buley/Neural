@@ -783,7 +783,7 @@ var Neural = (function() {
 								}
 								
 								if( 'undefined' !== typeof on_success ) {
-									on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': resuling_input_neuron_id, 'cached': false } );
+									on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': resulting_input_neuron_id, 'cached': false } );
 								}
 								Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': resulting_input_neuron_id, 'ttl': 300 } );
 								Cache.set( { 'key': ( 'neurons.data.' + resulting_input_neuron_id ), 'value': input_neuron_result, 'ttl': 300 } );
@@ -1303,9 +1303,7 @@ var Neural = (function() {
 				input_neuron_id = input_ids[ z ];
 				// Get the cached neuron
 				//
-				console.log('RETURNING NEURON FOR',input_neuron_id);
 				cached_neuron = Public.prototype.returnNeuron( input_neuron_id );
-				console.log('RETURNED NEURON FOR',input_neuron_id,cached_neuron);
 				// Else get it from the database
 
 				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
