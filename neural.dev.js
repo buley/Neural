@@ -1195,7 +1195,7 @@ var Neural = (function() {
 				if( true === debug ) {
 					console.log('Public.prototype.getInputNeuronIds hash', input_neuron_hash, 'token', input_neuron_token );
 				}	
-				cached_neuron = Cache.get( { 'key': ( 'neurons.hashes.' + input_neuron_hash ) } );
+				//cached_neuron = Cache.get( { 'key': ( 'neurons.hashes.' + input_neuron_hash ) } );
 				// Else get it from the database
 
 				if( 'undefined' === typeof cached_neuron || null === cached_neuron ) {
