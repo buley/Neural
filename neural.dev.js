@@ -784,7 +784,7 @@ var Neural = (function() {
 							on_success( hidden_id );
 						}				
 
-						if( hidden_ids.length >= expected_actions ) {
+						if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 							on_complete( hidden_ids );
 							return this;
 						}
@@ -812,7 +812,7 @@ var Neural = (function() {
 									on_success( hidden_id );
 								}				
 								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
-								if( hidden_ids.length >= expected_actions ) {
+								if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 									on_complete( hidden_ids );
 									return this;
 								}
@@ -832,7 +832,7 @@ var Neural = (function() {
 								expected_actions -= 1;
 
 								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
-								if( hidden_ids.length >= expected_actions ) {
+								if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 									on_complete( hidden_ids );
 									return this;
 								}
@@ -850,7 +850,7 @@ var Neural = (function() {
 							}
 
 								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
-							if( hidden_ids.length >= expected_actions ) {
+							if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 								on_complete( hidden_ids );
 								return this;
 							}
