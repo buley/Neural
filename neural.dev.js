@@ -724,12 +724,14 @@ var Neural = (function() {
 			aa = tokens[ a ];
 			for( b = 0; b < tokens_length; b += 1 ) {
 				bb = tokens[ b ];
-
-				console.log('com',aa,bb);
 				if( aa !== bb ) {
-					console.log('madcow',aa,bb);
 					arr = [ aa, bb ];
 					hidden_id = Public.prototype.utilities.getId( arr );
+					hiddens[ hidden_id ] = {
+						'display': arr	
+						, 'hash': hidden_id
+					};
+
 					for( c = 0; c < tokens_length; c += 1 ) {
 						cc = tokens[ c ];
 						if( aa !== cc && bb !== cc && aa !== bb ) {
