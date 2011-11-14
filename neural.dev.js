@@ -784,7 +784,7 @@ var Neural = (function() {
 							on_success( hidden_id );
 						}				
 
-						if( hidden_ids.length >= expected_actions )
+						if( hidden_ids.length >= expected_actions ) {
 							if( 'function' === typeof on_complete ) {
 								on_complete( hidden_ids );
 							}
