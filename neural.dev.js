@@ -703,13 +703,49 @@ var Neural = (function() {
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
-		    , x = 0;
-
+		    , a = 0
+		    , b = 0
+		    , c = 0
+		    , x = 0
+		    , hidden_hash = '';
+		  
 		if( false !== return_existing ) {
 			return_existing = false;
 		}
 
+		var hiddens = []
+		  , aa
+		  , bb
+		  , cc
+		  , arr = [];
+
+		for( a = 0; a < tokens_length; a += 1 ) {
+			
+			aa = tokens[ a ];
+			
+			for( b = 0; b < tokens_length; b += 1 ) {
+			
+				bb = tokens[ b ];
+				arr = [ aa, bb ];
+				hidden_id = Public.prototype.utilities.getId( arr );
+			
+				for( c = 0; c < tokens_length; c += 1 ) {
+					cc = tokens[ c ];
+					arr = [ aa, bb, cc ];
+					hidden_id = Public.prototype.utilities.getId( arr );
+					hiddens.push( hidden_id );	
+				}
+			}
+		}
+
 		for( x = 0; x < tokens_length; x += 1 ) {
+		
+			var tokens_copy = [];
+
+			tokens_copy.push( 'hidden' );
+			hidden_hash = Public.prototype.utilities.getId( tokens_copy );
+
+
 
 			var neuron_data = {
 				'type': 'hidden'
