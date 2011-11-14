@@ -713,7 +713,10 @@ var Neural = (function() {
 		    , cc
 		    , arr = []
 		    , hiddens_length = 0;
-
+		    , hidd
+	 	    , neuron_data
+		    , cached_hidden_neuron_data
+		    , cached_hidden_neuron_id;
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
@@ -758,16 +761,16 @@ var Neural = (function() {
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 
-				var hidd = hiddens[ x ];	
+				hidd = hiddens[ x ];	
 	console.log("HIDDDD",hidd);
-				var neuron_data = {
+				neuron_data = {
 					'type': 'hidden'
 					, 'hash': hidd.hash
 					, 'display': hidd.display
 				};
-				var cached_hidden_neuron_data;
+				cached_hidden_neuron_data;
 
-				var cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+				cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
 				if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
 					cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
 				}
