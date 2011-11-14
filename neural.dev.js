@@ -800,7 +800,7 @@ var Neural = (function() {
 
 						if( true === return_existing ) {
 
-							Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
+							Network.get( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 							
 								if( true === debug ) {
 									console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
@@ -816,9 +816,11 @@ var Neural = (function() {
 								}				
 								console.log('HIDDEN COMPAR3', expected_actions,hidden_ids.length);
 								console.log("BROWINE3",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
-								if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
-									on_complete( hidden_ids );
-									return this;
+								if( hidden_ids.length >= expected_actions ) {
+									if( 'function' === typeof on_complete ) {
+										on_complete( hidden_ids );
+										return;
+									}
 								}
 
 							}, 'on_error': function( context ) {
@@ -840,7 +842,6 @@ var Neural = (function() {
 								console.log("BROWINE2",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
 								if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 									on_complete( hidden_ids );
-									return this;
 								}
 
 							}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
