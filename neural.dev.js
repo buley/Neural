@@ -719,14 +719,13 @@ var Neural = (function() {
 		  , cc
 		  , arr = []
 		  , hiddens_length = 0;
-		console.log('oktnes length',tokens_length);
+
 		for( a = 0; a < tokens_length; a += 1 ) {
 			aa = tokens[ a ];
 			for( b = 0; b < tokens_length; b += 1 ) {
 				bb = tokens[ b ];
 				if( aa !== bb ) {
 					arr = [ aa, bb ];
-					console.log(arr);
 					hidden_id = Public.prototype.utilities.getId( arr );
 					for( c = 0; c < tokens_length; c += 1 ) {
 						cc = tokens[ c ];
@@ -744,8 +743,7 @@ var Neural = (function() {
 				}
 			}
 		}
-		console.log("CRAZY BITCH",hiddens);
-		hiddens_length = hiddens.length;
+		console.log('schuzez moi',hiddens);
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 
