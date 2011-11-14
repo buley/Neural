@@ -1601,41 +1601,42 @@ var Neural = (function() {
 			to_id = synapse.to;
 			to_neuron = Public.prototype.returnNeuron( to_id );
 
-			if( 'undefined' !== to_id && null !== to_id ) {
-				if( 'undefined' !== typeof to_id && null !== to_id && 'undefined' === typeof own_network[ to_id ] ) {
-					own_network[ to_id ] = {
-						'data': to_neuron
-					};
-				}
-				if( 'undefined' !== typeof from_id && null !== from_id ) {
-					if( 'undefined' === typeof own_network[ to_id ][ 'from' ] ) {
-						own_network[ to_id ][ 'from' ] = {};
-					}
-					own_network[ to_id ][ 'from' ][ from_id ] = synapse.strength;
-				}
-			}
-
 			// Handle from
 			from_id = synapse.from;
 			from_neuron = Public.prototype.returnNeuron( from_id );
 
-			if( 'undefined' !== from_id && null !== from_id ) {
+			if( 'undefined' !== to_id && null !== to_id && 'undefined' !== from_id && null !== from_id ) {
 				
 				if( 'undefined' === typeof own_network[ from_id ] ) {
 					own_network[ from_id ] = {
 						'data': from_neuron
 					};
 				}
-				if( 'undefined' !== typeof to_id && null !== to_id ) {
-					if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
-						own_network[ from_id ][ 'to' ] = {};
-					}
-					own_network[ from_id ][ 'to' ][ to_id ] = synapse.strength;
+
+				if( 'undefined' === typeof own_network[ to_id ] ) {
+					own_network[ to_id ] = {
+						'data': to_neuron
+					};
 				}
+
+				if( 'undefined' === typeof own_network[ to_id ][ 'from' ] ) {
+					own_network[ to_id ][ 'from' ] = {};
+				}
+
+				if( 'undefined' === typeof own_network[ from_id ][ 'to' ] ) {
+					own_network[ from_id ][ 'to' ] = {};
+				}	
+
+				own_network[ to_id ][ 'from' ][ from_id ] = synapse.strength;
+
+				own_network[ from_id ][ 'to' ][ to_id ] = synapse.strength;
+
 			}
+
 			network = Public.prototype.mergeObjects( network, own_network );
 
 		}
+
 		return network;
 
 	};
