@@ -717,7 +717,8 @@ var Neural = (function() {
 		  , aa
 		  , bb
 		  , cc
-		  , arr = [];
+		  , arr = []
+		  , hiddens_length = 0;
 
 		for( a = 0; a < tokens_length; a += 1 ) {
 			
@@ -733,24 +734,21 @@ var Neural = (function() {
 					cc = tokens[ c ];
 					arr = [ aa, bb, cc ];
 					hidden_id = Public.prototype.utilities.getId( arr );
-					hiddens.push( hidden_id );	
+					hiddens.push( {
+						'display': arr
+						, 'hash': hidden_id
+					} );
 				}
 			}
 		}
-
-		for( x = 0; x < tokens_length; x += 1 ) {
-		
-			var tokens_copy = [];
-
-			tokens_copy.push( 'hidden' );
-			hidden_hash = Public.prototype.utilities.getId( tokens_copy );
-
-
-
+		hiddens_length = hiddens.length;
+		for( x = 0; x < hiddens_length; x += 1 ) {
+	
+			var hidd = hiddens[ x ];	
 			var neuron_data = {
 				'type': 'hidden'
-				, 'hash': hidden_hash
-				, 'display': tokens
+				, 'hash': hidd.hash
+				, 'display': hidd.display
 			};
 			var cached_hidden_neuron_data;
 
