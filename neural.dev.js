@@ -767,6 +767,12 @@ var Neural = (function() {
 					, 'hash': hiddens[ x ].hash
 					, 'display': hiddens[ x ].display
 				};
+				var neuron_data_copy = {}
+				for(var attr in neuron_data){
+					if(neuron_data.hasOwnProperty(attr) ) {
+						neuron_data_copy[ attr ] = neuron_data[ attr ];
+					}
+				}
 				cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
 				if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
 					cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
@@ -774,7 +780,6 @@ var Neural = (function() {
 
 				if( neuron_data !== cached_hidden_neuron_data && ( 'undefined' === typeof cached_hidden_neuron_id || null === cached_hidden_neuron_id || 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
 
-					var neuron_data = neuron_data;
 					Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
 						Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
@@ -793,13 +798,14 @@ var Neural = (function() {
 						}
 
 					}, 'on_error': function( context ) {
-						
+					
+	
 						if( true === debug ) {
 							console.log( 'Public.prototype.add Network.put error', context );
 						}
 
 						if( true === return_existing ) {
-console.log("HIDDI",neuron_data.hash);
+console.log("HIDDI",neuron_data_copy.hash);
 							Network.get( {  'type': 'neuron', 'on_success': function( hidden_neuron ) {
 							
 								hidden_id = hidden_neuron.id;
@@ -862,7 +868,7 @@ console.log("HIDDI",neuron_data.hash);
 
 						}
 
-					}, 'data': neuron_data } );
+					}, 'data': neuron_data_copy } );
 
 				} else {
 
