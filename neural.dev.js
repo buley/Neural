@@ -811,6 +811,7 @@ var Neural = (function() {
 								if( 'function' === typeof on_success ) {
 									on_success( hidden_id );
 								}				
+								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
 								if( expected_actions >= hidden_ids.length ) {
 									on_complete( hidden_ids );
 									return this;
