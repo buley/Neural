@@ -758,7 +758,6 @@ var Neural = (function() {
 			}
 		}
 		expected_actions = Public.prototype.countAttributes( hiddens );
-		console.log('schuzez moi',hiddens, expected_actions);
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 
