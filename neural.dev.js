@@ -793,7 +793,7 @@ var Neural = (function() {
 
 							hidden_ids.push( hidden_id );
 			
-							if( 'function' === type on_success ) {
+							if( 'function' === typeof on_success ) {
 								on_success( hidden_id );
 							}				
 
