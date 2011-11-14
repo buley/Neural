@@ -698,7 +698,7 @@ var Neural = (function() {
 		var tokens = req.tokens
 		    , return_existing = req.return_existing
 		    , tokens_length = tokens.length
-		    , expected_actions = tokens_length
+		    , expected_actions = 0
 		    , hidden_ids = []
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
@@ -757,7 +757,8 @@ var Neural = (function() {
 				}
 			}
 		}
-		console.log('schuzez moi',hiddens);
+		expected_actions = Public.prototype.countAttributes( hiddens );
+		console.log('schuzez moi',hiddens, expected_actions);
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 
@@ -1841,6 +1842,25 @@ var Neural = (function() {
 		return network;
 
 	};
+
+	Public.prototype.countAttributes = function( question ) {
+		var question_type = typeof question
+		  , count = 0;
+
+		if( 'undefined' === question_type || 'string' === question_type || 'number' === question_type ) {
+			return false;
+		}
+
+		for( attr in question ) {
+			if( question.hasOwnProperty( attr ) ) {
+				count += 1;
+			}
+		}
+
+		return count;
+
+	};
+
 
 
 	Public.prototype.hasAttributes = function( question ) {
