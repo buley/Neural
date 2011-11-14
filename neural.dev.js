@@ -697,7 +697,7 @@ var Neural = (function() {
 
 		var tokens = req.tokens
 		    , return_existing = req.return_existing
-		    , tokens_length = tokens.legth
+		    , tokens_length = tokens.length
 		    , expected_actions = tokens_length
 		    , hidden_ids = []
 		    , on_success = req.on_success || null
