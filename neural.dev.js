@@ -852,9 +852,10 @@ var Neural = (function() {
 								on_error( context );
 							}
 
-							if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
-								on_complete( hidden_ids );
-								return this;
+							if( hidden_ids.length >= expected_actions ) {
+								if( 'function' === typeof on_complete ) {
+									on_complete( hidden_ids );
+								}
 							}
 
 						}
@@ -874,8 +875,9 @@ var Neural = (function() {
 					}
 
 					if( hidden_ids.length >= expected_actions ) {
-					
-						on_complete( hidden_ids );
+						if( 'function' === typeof on_complete ) {
+							on_complete( hidden_ids );
+						}
 						return this;
 
 					}
