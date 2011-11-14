@@ -721,7 +721,16 @@ var Neural = (function() {
 		  , hiddens_length = 0;
 
 		for( a = 0; a < tokens_length; a += 1 ) {
+
 			aa = tokens[ a ];
+
+			arr = [ aa ];
+			hidden_id = Public.prototype.utilities.getId( arr );
+			hiddens[ hidden_id ] = {
+				'display': arr	
+				, 'hash': hidden_id
+			};
+
 			for( b = 0; b < tokens_length; b += 1 ) {
 				bb = tokens[ b ];
 				if( aa !== bb ) {
@@ -879,7 +888,10 @@ var Neural = (function() {
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null;
 
+		
+		// Add/get hidden neuron ids
 		// Fetch the input neuron ids from tokens
+		//
 		// Get or create an output neuron
 
 	}
