@@ -769,6 +769,7 @@ var Neural = (function() {
 						, 'hash': hiddens[ x ].hash
 						, 'display': hiddens[ x ].display
 					};
+
 					cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
 					if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
 						cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
