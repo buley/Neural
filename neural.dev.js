@@ -715,6 +715,7 @@ var Neural = (function() {
 		    , hiddens_length = 0
 		    , hidd
 	 	    , neuron_data
+		    , hidden_id
 		    , cached_hidden_neuron_data
 		    , cached_hidden_neuron_id;
 		if( true !== return_existing ) {
@@ -802,7 +803,7 @@ var Neural = (function() {
 console.log("HIDD",hidd.hash);
 							Network.get( {  'type': 'neuron', 'on_success': function( hidden_neuron ) {
 							
-								var hidden_id = hidden_neuron.id;
+								hidden_id = hidden_neuron.id;
 
 								if( true === debug ) {
 									console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify(hidden_neuron) );
