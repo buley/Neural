@@ -1661,7 +1661,7 @@ var Neural = (function() {
 
 
 	Public.prototype.setNeuron = function( neuron_id, neuron ) {
-		return Cache.put( { 'key': ( 'neurons.data.' + neuron_id ), 'value', neuron, 'ttl': 300 } );
+		return Cache.put( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron, 'ttl': 300 } );
 	};
 
 
