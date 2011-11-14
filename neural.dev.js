@@ -692,7 +692,6 @@ var Neural = (function() {
 
 	};
 
-	//xxx
 	Public.prototype.addHiddenNeurons = function( req ) {
 
 		var tokens = req.tokens
@@ -795,6 +794,7 @@ var Neural = (function() {
 						if( true === debug ) {
 							console.log( 'Public.prototype.add Network.put error', context );
 						}
+
 						if( true === return_existing ) {
 
 							Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
@@ -812,7 +812,7 @@ var Neural = (function() {
 									on_success( hidden_id );
 								}				
 
-								if( expected_actions === hidden_ids.length ) {
+								if( expected_actions >= hidden_ids.length ) {
 									on_complete( hidden_ids );
 									return this;
 								}
