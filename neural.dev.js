@@ -1172,10 +1172,13 @@ var Neural = (function() {
 			var input_ids = []
 			  , input_count = 0
 			  , input_neuron_id
+			  , input_neuron_token
+			  , input_neuron_hash
 			  , z = 0
 			  , input_length = input_tokens.length
-			  , expected_input_count = input_length;
-
+			  , expected_input_count = input_length
+			  , cached_neuron;
+			
 			if( 0 === input_length ) {
 				if( 'function' === typeof on_success ) {
 					on_success( input_ids );
@@ -1185,7 +1188,6 @@ var Neural = (function() {
 			// For each input_id in input_ids
 			for( z = 0; z < input_length; z += 1 ) {
 
-	
 				input_neuron_token = input_tokens[ z ];	
 				input_neuron_hash = Public.prototype.utilities.getId( [ input_neuron_token, 'input' ] );
 				// Get the cached neuron
@@ -1243,7 +1245,6 @@ var Neural = (function() {
 				} else {
 
 					if( 'undefined' !== typeof cached_neuron && cached_neuron ) {
-						console.log("CACHED NEURON",cached_neuron);
 
 						input_ids.push( cached_neuron );
 					
