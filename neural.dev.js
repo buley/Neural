@@ -768,7 +768,7 @@ var Neural = (function() {
 					, 'hash': hidd.hash
 					, 'display': hidd.display
 				};
-				console.log('neuron_data',neuron_data,JSON.stringify(neuron_data));
+				console.log('neuron_data',neuron_data,JSON.stringify(hidd));
 				cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
 				if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
 					cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
