@@ -749,7 +749,6 @@ var Neural = (function() {
 								'display': arr
 								, 'hash': hidden_id
 							};
-
 						}
 					}
 
@@ -788,6 +787,7 @@ var Neural = (function() {
 
 						if( expected_actions === hidden_ids.length ) {
 							on_complete( hidden_ids );
+							return this;
 						}
 
 					}, 'on_error': function( context ) {
@@ -814,6 +814,7 @@ var Neural = (function() {
 
 								if( expected_actions === hidden_ids.length ) {
 									on_complete( hidden_ids );
+									return this;
 								}
 
 							}, 'on_error': function( context ) {
@@ -832,6 +833,7 @@ var Neural = (function() {
 
 								if( expected_actions === hidden_ids.length ) {
 									on_complete( hidden_ids );
+									return this;
 								}
 
 							}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
@@ -848,6 +850,7 @@ var Neural = (function() {
 
 							if( expected_actions === hidden_ids.length ) {
 								on_complete( hidden_ids );
+								return this;
 							}
 
 						}
@@ -869,7 +872,8 @@ var Neural = (function() {
 					if( expected_actions === hidden_ids.length ) {
 					
 						on_complete( hidden_ids );
-					
+						return this;
+
 					}
 
 				}
