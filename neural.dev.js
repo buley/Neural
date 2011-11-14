@@ -1304,7 +1304,7 @@ var Neural = (function() {
 				// Get the cached neuron
 				//
 				console.log('RETURNING NEURON FOR',input_neuron_id);
-				//cached_neuron = Public.prototype.returnNeuron( input_neuron_id );
+				cached_neuron = Public.prototype.returnNeuron( input_neuron_id );
 				console.log('RETURNED NEURON FOR',input_neuron_id,cached_neuron);
 				// Else get it from the database
 
