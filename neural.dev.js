@@ -814,8 +814,6 @@ var Neural = (function() {
 								if( 'function' === typeof on_success ) {
 									on_success( hidden_id );
 								}				
-								console.log('HIDDEN COMPAR3', expected_actions,hidden_ids.length);
-								console.log("BROWINE3",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
 								if( hidden_ids.length >= expected_actions ) {
 									if( 'function' === typeof on_complete ) {
 										on_complete( hidden_ids );
@@ -838,13 +836,11 @@ var Neural = (function() {
 								expected_actions -= 1;
 
 
-								console.log('HIDDEN COMPAR2', expected_actions,hidden_ids.length);
-								console.log("BROWINE2",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
 								if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 									on_complete( hidden_ids );
 								}
 
-							}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
+							}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidd.hash, 'expecting': { 'type': 'hidden' } } );
 						
 						} else {
 
@@ -856,8 +852,6 @@ var Neural = (function() {
 								on_error( context );
 							}
 
-							console.log('HIDDEN COMPAR1', expected_actions,hidden_ids.length);
-							console.log("BROWINE1",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
 							if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 								on_complete( hidden_ids );
 								return this;
