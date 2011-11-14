@@ -6,7 +6,7 @@
 var Cache = {};
 var Neural = (function() {
 
-	var debug = true;
+	var debug = false;
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
@@ -692,10 +692,154 @@ var Neural = (function() {
 
 	};
 
-	//TODO: Figure out why new tokens are non staying unique
-	//do we need to add type to md5 and then make hash unique?
-	//currently can't be unique b/c hidden and input nodes can be the
-	//same value
+	//xxx
+	Public.prototype.addHiddenNeurons = function( req ) {
+
+		var tokens = req.tokens
+		    , return_existing = req.return_existing
+		    , tokens_length = tokens.legth
+		    , expected_actions = tokens_length
+		    , hidden_ids = []
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , x = 0;
+
+		if( false !== return_existing ) {
+			return_existing = false;
+		}
+
+		for( x = 0; x < tokens_length; x += 1 ) {
+
+			var neuron_data = {
+				'type': 'hidden'
+				, 'hash': hidden_hash
+				, 'display': tokens
+			};
+			var cached_hidden_neuron_data;
+
+			var cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+			if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
+				cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
+			}
+
+			if( neuron_data !== cached_hidden_neuron_data && ( 'undefined' === typeof cached_hidden_neuron_id || null === cached_hidden_neuron_id || 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
+
+				Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
+
+					Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
+					Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
+
+					hidden_ids.push( hidden_id );
+	
+					if( 'function' === type on_success ) {
+						on_success( hidden_id );
+					}				
+
+					if( expected_actions === hidden_ids.length ) {
+						on_complete( hidden_ids );
+					}
+
+				}, 'on_error': function( context ) {
+					
+					if( true === debug ) {
+						console.log( 'Public.prototype.add Network.put error', context );
+					}
+
+					if( true === return_existing ) {
+
+						Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
+						
+							if( true === debug ) {
+								console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
+							}
+
+							Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
+							Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
+
+							hidden_ids.push( hidden_id );
+			
+							if( 'function' === type on_success ) {
+								on_success( hidden_id );
+							}				
+
+							if( expected_actions === hidden_ids.length ) {
+								on_complete( hidden_ids );
+							}
+
+						}, 'on_error': function( context ) {
+							
+							if( true === debug ) {
+								console.log( 'Public.prototype.add Network.put error > Network.get error', context );
+							}
+
+							Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+
+							if( 'undefined' !== typeof on_error ) {
+								on_error( context );
+							}
+
+							expected_actions -= 1;
+
+							if( expected_actions === hidden_ids.length ) {
+								on_complete( hidden_ids );
+							}
+
+						}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
+					}, 'data': neuron_data } );
+				
+				} else {
+
+					Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+
+					if( 'undefined' !== typeof on_error ) {
+						on_error( context );
+					}
+
+					expected_actions -= 1;
+
+					if( expected_actions === hidden_ids.length ) {
+						on_complete( hidden_ids );
+					}
+
+				}
+
+			} else {
+
+				if( true === return_existing ) {
+					hidden_ids.push( cached_hidden_neuron_id );
+				} else {
+					expected_actions -= 1;
+				}
+				if( expected_actions === hidden_ids.length ) {
+					on_complete( hidden_ids );
+				}
+
+			}
+		
+		}
+		
+		return this;	
+
+	}
+
+
+	
+	Public.prototype.train = function( req ) {
+
+		var tokens = req.tokens
+		    , output = req.output
+		    , strength = req.output
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null;
+
+		// Fetch the input neuron ids from tokens
+		// Get or create an output neuron
+
+	}
+
+	/* TODO: What is the role of this? */
 	Public.prototype.activate = function( req ) {
 
 		var tokens = req.tokens
