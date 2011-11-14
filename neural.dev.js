@@ -709,7 +709,7 @@ var Neural = (function() {
 		    , x = 0
 		    , hidden_hash = '';
 		  
-		if( false !== return_existing ) {
+		if( true !== return_existing ) {
 			return_existing = false;
 		}
 
@@ -796,7 +796,6 @@ var Neural = (function() {
 						if( true === debug ) {
 							console.log( 'Public.prototype.add Network.put error', context );
 						}
-						console.log("NORWAY",true===return_existing);
 						if( true === return_existing ) {
 
 							Network.get( {  'type': 'neurons', 'on_success': function( hidden_id ) {
