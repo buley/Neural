@@ -1314,8 +1314,9 @@ var Neural = (function() {
 						if( true === debug ) {
 							console.log( 'Public.prototype.getTokens > get_input_neurons > Network.get cursor success', input_neuron_value );
 						}
-
-						Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': input_neuron_value, 'ttl': 300 } );
+						if( null !== input_neuron_value && 'undefined' !== typeof input_neuron_value ) {
+							Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id ), 'value': input_neuron_value, 'ttl': 300 } );
+						}
 						if( 'undefined' !== typeof input_neuron_value && null !== input_neuron_value && Public.prototype.hasAttributes( input_neuron_value ) ) {
 							input_neurons.push( input_neuron_value );
 					
@@ -1328,6 +1329,7 @@ var Neural = (function() {
 						
 							Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
 						}
+
 
 					}, 'on_error': function( context ) {
 						
@@ -1631,7 +1633,6 @@ var Neural = (function() {
 					own_network[ from_id ][ 'to' ][ to_id ] = synapse.strength;
 				}
 			}
-			console.log("OWWWWN",own_network);	
 			network = Public.prototype.mergeObjects( network, own_network );
 
 		}
@@ -1656,6 +1657,11 @@ var Neural = (function() {
 
 		return false;
 
+	};
+
+
+	Public.prototype.setNeuron = function( neuron_id, neuron ) {
+		return Cache.set( { 'key': 'neurons.data.' + neuron_id, 'value', neuron, 'ttl': 300 } );
 	};
 
 
