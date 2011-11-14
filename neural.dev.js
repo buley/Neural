@@ -762,7 +762,7 @@ var Neural = (function() {
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 
-				var neuron_data = {
+				neuron_data = {
 					'type': 'hidden'
 					, 'hash': hiddens[ x ].hash
 					, 'display': hiddens[ x ].display
@@ -774,6 +774,7 @@ var Neural = (function() {
 
 				if( neuron_data !== cached_hidden_neuron_data && ( 'undefined' === typeof cached_hidden_neuron_id || null === cached_hidden_neuron_id || 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
 
+					var neuron_data = neuron_data;
 					Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
 						Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
