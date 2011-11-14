@@ -803,7 +803,7 @@ var Neural = (function() {
 								var hidden_id = hidden_neuron.id;
 
 								if( true === debug ) {
-									console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
+									console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify(hidden_neuron) );
 								}
 
 								Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': hidden_neuron, 'ttl': 300 } );
@@ -996,7 +996,7 @@ var Neural = (function() {
 								var resulting_input_neuron_id = input_neuron_result.id;
 								
 								if( true === debug ) {
-									console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', resulting_input_neuron_id );
+									console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', JSON.stringify(resulting_input_neuron_id) );
 								}
 								
 								if( 'undefined' !== typeof on_success ) {
