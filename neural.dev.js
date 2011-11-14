@@ -728,6 +728,7 @@ var Neural = (function() {
 			
 				bb = tokens[ b ];
 				arr = [ aa, bb ];
+				console.log(arr);
 				hidden_id = Public.prototype.utilities.getId( arr );
 			
 				for( c = 0; c < tokens_length; c += 1 ) {
