@@ -798,13 +798,15 @@ var Neural = (function() {
 
 						if( true === return_existing ) {
 
-							Network.get( {  'type': 'neuron', 'on_success': function( hidden_id ) {
+							Network.get( {  'type': 'neuron', 'on_success': function( hidden_neuron ) {
 							
+								var hidden_id = hidden_neuron.id;
+
 								if( true === debug ) {
 									console.log( 'Public.prototype.add Network.put error > Network.get success', hidden_id );
 								}
 
-								Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
+								Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': hidden_neuron, 'ttl': 300 } );
 								Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
 
 								hidden_ids.push( hidden_id );
@@ -839,7 +841,7 @@ var Neural = (function() {
 									}
 								}
 
-							}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidd.hash, 'expecting': { 'type': 'hidden' } } );
+							}, 'index': 'hash', 'key': hidd.hash, 'expecting': { 'type': 'hidden' } } );
 						
 						} else {
 
