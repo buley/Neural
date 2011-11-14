@@ -719,7 +719,7 @@ var Neural = (function() {
 		  , cc
 		  , arr = []
 		  , hiddens_length = 0;
-
+		console.log('oktnes length',tokens_length);
 		for( a = 0; a < tokens_length; a += 1 ) {
 			
 			aa = tokens[ a ];
