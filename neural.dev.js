@@ -825,7 +825,7 @@ var Neural = (function() {
 
 								Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
 
-								if( 'undefined' !== typeof on_error ) {
+								if( 'function' === typeof on_error ) {
 									on_error( context );
 								}
 
@@ -845,7 +845,7 @@ var Neural = (function() {
 
 							expected_actions -= 1;
 							
-							if( 'undefined' !== typeof on_error ) {
+							if( 'function' === typeof on_error ) {
 								on_error( context );
 							}
 
@@ -1108,7 +1108,7 @@ var Neural = (function() {
 							
 							Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
 						
-							if( 'undefined' !== typeof on_error ) {
+							if( 'function' === typeof on_error ) {
 								on_error( context );
 							}
 
@@ -1192,7 +1192,7 @@ var Neural = (function() {
 
 					Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
 
-					if( 'undefined' !== typeof on_error ) {
+					if( 'function' === typeof on_error ) {
 						on_error( context );
 					}
 
