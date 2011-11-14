@@ -1631,7 +1631,7 @@ var Neural = (function() {
 					own_network[ from_id ][ 'to' ][ to_id ] = synapse.strength;
 				}
 			}
-		
+			console.log("OWWWWN",own_network);	
 			network = Public.prototype.mergeObjects( network, own_network );
 
 		}
