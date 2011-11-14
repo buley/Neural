@@ -800,7 +800,7 @@ var Neural = (function() {
 						}
 
 						if( true === return_existing ) {
-console.log("HIDD",hidd.hash);
+console.log("HIDDI",neuron_data.hash);
 							Network.get( {  'type': 'neuron', 'on_success': function( hidden_neuron ) {
 							
 								hidden_id = hidden_neuron.id;
