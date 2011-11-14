@@ -759,6 +759,7 @@ var Neural = (function() {
 			if( hiddens.hasOwnProperty( x ) ) {
 
 				var hidd = hiddens[ x ];	
+				console.log('FLOATING SPACE ROCKS',x,hidd);
 				var neuron_data = {
 					'type': 'hidden'
 					, 'hash': hidd.hash
@@ -784,7 +785,8 @@ var Neural = (function() {
 							on_success( hidden_id );
 						}				
 
-								console.log("BROWINE3",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
+								console.log('HIDDEN COMPAR4', expected_actions,hidden_ids.length);
+								console.log("BROWINE4",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
 						if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 							on_complete( hidden_ids );
 							return this;
@@ -812,7 +814,7 @@ var Neural = (function() {
 								if( 'function' === typeof on_success ) {
 									on_success( hidden_id );
 								}				
-								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
+								console.log('HIDDEN COMPAR3', expected_actions,hidden_ids.length);
 								console.log("BROWINE3",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
 								if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 									on_complete( hidden_ids );
@@ -834,7 +836,7 @@ var Neural = (function() {
 								expected_actions -= 1;
 
 
-								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
+								console.log('HIDDEN COMPAR2', expected_actions,hidden_ids.length);
 								console.log("BROWINE2",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
 								if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 									on_complete( hidden_ids );
@@ -853,8 +855,8 @@ var Neural = (function() {
 								on_error( context );
 							}
 
-							console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
-							console.log("BROWINE",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
+							console.log('HIDDEN COMPAR1', expected_actions,hidden_ids.length);
+							console.log("BROWINE1",hidden_ids.length >= expected_actions, 'function' === typeof on_complete);
 							if( hidden_ids.length >= expected_actions && 'function' === typeof on_complete ) {
 								on_complete( hidden_ids );
 								return this;
