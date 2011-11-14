@@ -730,7 +730,7 @@ var Neural = (function() {
 					hidden_id = Public.prototype.utilities.getId( arr );
 					for( c = 0; c < tokens_length; c += 1 ) {
 						cc = tokens[ c ];
-						if( aa !== cc ) {
+						if( aa !== cc && bb !== cc && aa !== bb ) {
 							arr = Public.prototype.utilities.alphaSortArray( [ aa, bb, cc ] );
 							hidden_id = Public.prototype.utilities.getId( arr );
 							hiddens[ hidden_id ] = {
