@@ -1290,7 +1290,8 @@ var Neural = (function() {
 			  , input_neuron_id
 			  , z = 0
 			  , input_length = input_ids.length
-			  , expected_input_count = input_length;
+			  , expected_input_count = input_length
+			  , cached_neuron;
 
 			if( 0 === input_length ) {
 				Public.prototype.getSynapses( results, input_neurons, on_success, on_error, on_complete );
@@ -1303,7 +1304,7 @@ var Neural = (function() {
 				// Get the cached neuron
 				//
 				console.log('RETURNING NEURON FOR',input_neuron_id);
-				cached_neuron = Public.prototype.returnNeuron( input_neuron_id );
+				//cached_neuron = Public.prototype.returnNeuron( input_neuron_id );
 				console.log('RETURNED NEURON FOR',input_neuron_id,cached_neuron);
 				// Else get it from the database
 
