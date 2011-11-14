@@ -820,27 +820,24 @@ var Neural = (function() {
 							}
 
 						}, 'index': 'hash', 'properties': [ 'id' ], 'key': hidden_hash, 'expecting': { 'type': 'hidden' } } );
+					
+					} else {
 
+						Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+
+						if( 'undefined' !== typeof on_error ) {
+							on_error( context );
+						}
+
+						expected_actions -= 1;
+
+						if( expected_actions === hidden_ids.length ) {
+							on_complete( hidden_ids );
+						}
 
 					}
 
 				}, 'data': neuron_data } );
-				
-				} else {
-
-					Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
-
-					if( 'undefined' !== typeof on_error ) {
-						on_error( context );
-					}
-
-					expected_actions -= 1;
-
-					if( expected_actions === hidden_ids.length ) {
-						on_complete( hidden_ids );
-					}
-
-				}
 
 			} else {
 
