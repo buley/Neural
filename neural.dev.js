@@ -843,7 +843,7 @@ console.log("HIDD",hidd.hash);
 									}
 								}
 
-							}, 'index': 'hash', 'key': hidd.hash, 'expecting': { 'type': 'hidden' } } );
+							}, 'index': 'hash', 'key': neuron_data.hash, 'expecting': { 'type': 'hidden' } } );
 
 						} else {
 
