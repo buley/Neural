@@ -1243,7 +1243,8 @@ var Neural = (function() {
 				} else {
 
 					if( 'undefined' !== typeof cached_neuron && cached_neuron ) {
-					
+						console.log("CACHED NEURON",cached_neuron);
+
 						input_ids.push( cached_neuron );
 					
 					} else {
