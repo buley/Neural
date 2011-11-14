@@ -1659,10 +1659,10 @@ var Neural = (function() {
 
 	};
 
-
+	/*
 	Public.prototype.setNeuron = function( neuron_id, neuron ) {
 		Cache.put( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron, 'ttl': 300 } );
-	};
+	};*/
 
 
 	Public.prototype.returnNeuron = function( neuron_id ) {
