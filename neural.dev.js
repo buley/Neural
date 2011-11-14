@@ -741,6 +741,7 @@ var Neural = (function() {
 				}
 			}
 		}
+		console.log("CRAZY BITCH",hiddens);
 		hiddens_length = hiddens.length;
 		for( x = 0; x < hiddens_length; x += 1 ) {
 	
