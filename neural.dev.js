@@ -6,7 +6,7 @@
 var Cache = {};
 var Neural = (function() {
 
-	var debug = false;
+	var debug = true;
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
@@ -707,18 +707,17 @@ var Neural = (function() {
 		    , b = 0
 		    , c = 0
 		    , x = 0
-		    , hidden_hash = '';
-		  
+		    , hidden_hash = ''
+		    , hiddens = {}
+		    , aa
+		    , bb
+		    , cc
+		    , arr = []
+		    , hiddens_length = 0;
+
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
-
-		var hiddens = {}
-		  , aa
-		  , bb
-		  , cc
-		  , arr = []
-		  , hiddens_length = 0;
 
 		for( a = 0; a < tokens_length; a += 1 ) {
 
@@ -841,11 +840,11 @@ var Neural = (function() {
 
 							Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
 
+							expected_actions -= 1;
+							
 							if( 'undefined' !== typeof on_error ) {
 								on_error( context );
 							}
-
-							expected_actions -= 1;
 
 							if( expected_actions === hidden_ids.length ) {
 								on_complete( hidden_ids );
@@ -858,12 +857,19 @@ var Neural = (function() {
 				} else {
 
 					if( true === return_existing ) {
+					
 						hidden_ids.push( cached_hidden_neuron_id );
+					
 					} else {
+					
 						expected_actions -= 1;
+					
 					}
+
 					if( expected_actions === hidden_ids.length ) {
+					
 						on_complete( hidden_ids );
+					
 					}
 
 				}
