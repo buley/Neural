@@ -811,8 +811,8 @@ var Neural = (function() {
 								if( 'function' === typeof on_success ) {
 									on_success( hidden_id );
 								}				
-
-								if( expected_actions >= hidden_ids.length ) {
+								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
+								if( expected_actions === hidden_ids.length ) {
 									on_complete( hidden_ids );
 									return this;
 								}
@@ -831,6 +831,7 @@ var Neural = (function() {
 
 								expected_actions -= 1;
 
+								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
 								if( expected_actions === hidden_ids.length ) {
 									on_complete( hidden_ids );
 									return this;
@@ -848,6 +849,7 @@ var Neural = (function() {
 								on_error( context );
 							}
 
+								console.log('HIDDEN COMPAR', expected_actions,hidden_ids.length);
 							if( expected_actions === hidden_ids.length ) {
 								on_complete( hidden_ids );
 								return this;
