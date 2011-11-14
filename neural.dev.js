@@ -768,8 +768,7 @@ var Neural = (function() {
 					, 'hash': hidd.hash
 					, 'display': hidd.display
 				};
-				console.log('neuron_data',neuron_data,JSON.stringify(hidd));
-				cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+				cached_hidden_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
 				if( 'undefined' !== typeof cached_hidden_neuron_id && null !== cached_hidden_neuron_id ) {
 					cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_hidden_neuron_id ) } );
 				}
@@ -779,7 +778,7 @@ var Neural = (function() {
 					Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
 						Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
-						Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
+						Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': hidden_id, 'ttl': 300 } );
 
 						hidden_ids.push( hidden_id );
 		
@@ -810,7 +809,7 @@ console.log("HIDDI",neuron_data.hash);
 								}
 
 								Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': hidden_neuron, 'ttl': 300 } );
-								Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
+								Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': hidden_id, 'ttl': 300 } );
 
 								hidden_ids.push( hidden_id );
 				
