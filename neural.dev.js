@@ -816,6 +816,7 @@ var Neural = (function() {
 		    , arr = []
 		    , neurons_length = 0
 		    , neuron
+		    , request
 	 	    , neuron_data
 		    , cached_neuron_data
 		    , cached_neuron_id;
@@ -879,7 +880,8 @@ var Neural = (function() {
 				}
 				arr = [ neuron.display, 'output' ];
 				neuron.hash = Public.prototype.utilities.getId( arr );
-				Public.prototype.addOrGetNeuron( { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error } );
+				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error }; 
+				Public.prototype.addOrGetNeuron( request );
 			}
 		}
 		
