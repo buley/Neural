@@ -1017,13 +1017,13 @@ var Neural = (function() {
 					}
 				}
 		
-				neuron = {};
-				neuron.display = arr.slice( 0 );
+				var newest = {};
+				newest.display = arr.slice( 0 );
 				arr.push( 'hidden' );
-				neuron.hash = Public.prototype.utilities.getId( arr );
-				neuron.type = 'hidden';
+				newest.hash = Public.prototype.utilities.getId( arr );
+				newest.type = 'hidden';
 					
-				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
+				request = { 'value': newest, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
 		
 				Public.prototype.addOrGetNeuron( request );
 		
