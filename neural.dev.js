@@ -692,21 +692,15 @@ var Neural = (function() {
 
 	};
 		
+	Public.prototype.addNeuron = function( req ) {
 
-	Public.prototype.addOutputNeuron = function( req ) {
-
-		var output_neuron = req.value
-		    , additions = req.additions
+		var neuron_data = req.value || {}
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
-		    , on_complete = req.on_complete || null
-		    , tokens = req.tokens
 		    , return_existing = req.return_existing
 		    , tokens_length = tokens.length
-		    , expected_actions = 0
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
-		    , on_complete = req.on_complete || null
 		    , x = 0
 		    , neuron_hash = ''
 		    , neurons = []
@@ -716,145 +710,169 @@ var Neural = (function() {
 		    , cached_neuron_data
 		    , cached_neuron_id;
 
+		cached_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
+
+		if( 'undefined' !== typeof cached_neuron_id && null !== cached_neuron_id ) {
+			cached_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_neuron_id ) } );
+		}
+
+		if( neuron_data !== cached_neuron_data && ( 'undefined' === typeof cached_neuron_id || null === cached_neuron_id || 'undefined' === typeof cached_neuron_data || null === cached_neuron_data ) ) {
+
+			Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
+
+				Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron_data, 'ttl': 300 } );
+				Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
+
+				neurons.push( neuron_id );
+
+				if( 'function' === typeof on_success ) {
+					on_success( neuron_id );
+				}				
+
+			}, 'on_error': function( context ) {
+			
+
+				if( true === debug ) {
+					console.log( 'Public.prototype.add Network.put error', context );
+				}
+
+				if( true === return_existing ) {
+					Network.get( {  'type': 'neuron', 'on_success': function( returned_neuron ) {
+					
+						neuron_id = returned_neuron.id;
+
+						if( true === debug ) {
+							console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify( return_neuron ) );
+						}
+
+						Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': returned_neuron, 'ttl': 300 } );
+						Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
+
+						neurons.push( neuron_id );
+		
+						if( 'function' === typeof on_success ) {
+							on_success( returned_neuron );
+						}				
+
+					}, 'on_error': function( context ) {
+						
+						if( true === debug ) {
+							console.log( 'Public.prototype.add Network.put error > Network.get error', context );
+						}
+
+						Cache.delete( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
+
+						if( 'function' === typeof on_error ) {
+							on_error( context );
+						}
+
+					}, 'index': 'hash', 'key': neuron_data.hash, 'expecting': { 'type': 'hidden' } } );
+
+				} else {
+
+					Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+
+					if( 'function' === typeof on_error ) {
+						on_error();
+					}
+
+				}
+
+			}, 'data': neuron_data } );
+
+		} else {
+
+			if( true === return_existing ) {
+			
+				neurons.push( cached_neuron_id );
+			
+			}
+
+		}
+
+	};
+
+	Public.prototype.addOutputNeurons = function( req ) {
+
+		var additions = req.value
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , return_existing = req.return_existing
+		    , tokens_length = tokens.length
+		    , expected_actions = 0
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , own_on_success
+		    , own_on_error
+		    , own_on_complete
+		    , x = 0
+		    , neuron_hash = ''
+		    , neurons = []
+		    , arr = []
+		    , neurons_length = 0
+		    , neuron
+	 	    , neuron_data
+		    , cached_neuron_data
+		    , cached_neuron_id;
+
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
+		
+		own_on_success = function( returned_neuron ) {
+
+			neuron_id = returned_neuron.id;
+			neurons.push( neuron_id );
+
+			if( 'function' === typeof on_success ) {
+				on_success( returned_neuron );
+			}
+			
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( neurons );
+			}
+
+		};
+
+		own_on_error = function( context ) {
+			
+			expected_actions -= 1;
+			
+			if( 'function' === typeof on_error ) {
+				on_error( context );
+			}
+			
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( neurons );
+			}
+
+		};
+
+		own_on_complete = function( passed_neurons ) {
+			if( neurons.length >= expected_actions ) {
+				if( 'function' === typeof on_complete ) {
+					on_complete( passed_neurons );
+				}
+			}
+		};
 
 		expected_actions = Public.prototype.countAttributes( additions );
 
 		for( x in additions ) {
 			if( additions.hasOwnProperty( x ) ) {
-
-				( function() {
-					//yyy
-					//
-					var neuron_data = {
-						'type': 'hidden'
-						, 'hash': neuron_data.hash
-						, 'display': neuron_data.display
-					};
-
-					cached_neuron_id = Cache.get( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
-					if( 'undefined' !== typeof cached_neuron_id && null !== cached_neuron_id ) {
-						cached_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_neuron_id ) } );
-					}
-
-					if( neuron_data !== cached_neuron_data && ( 'undefined' === typeof cached_neuron_id || null === cached_neuron_id || 'undefined' === typeof cached_neuron_data || null === cached_neuron_data ) ) {
-
-						Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
-
-							Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron_data, 'ttl': 300 } );
-							Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
-
-							neurons.push( neuron_id );
-			
-							if( 'function' === typeof on_success ) {
-								on_success( neuron_id );
-							}				
-
-							if( neuron_ids.length >= expected_actions ) {
-								if( 'function' === typeof on_complete ) {
-									on_complete( hidden_ids );
-								}
-							}
-
-						}, 'on_error': function( context ) {
-						
-		
-							if( true === debug ) {
-								console.log( 'Public.prototype.add Network.put error', context );
-							}
-
-							if( true === return_existing ) {
-								Network.get( {  'type': 'neuron', 'on_success': function( returned_neuron ) {
-								
-									neuron_id = returned_neuron.id;
-
-									if( true === debug ) {
-										console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify(hidden_neuron) );
-									}
-
-									Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': returned_neuron, 'ttl': 300 } );
-									Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
-
-									neurons.push( neuron_id );
-					
-									if( 'function' === typeof on_success ) {
-										on_success( neuron_id );
-									}				
-									if( neurons.length >= expected_actions ) {
-										if( 'function' === typeof on_complete ) {
-											on_complete( neurons );
-										}
-									}
-
-								}, 'on_error': function( context ) {
-									
-									if( true === debug ) {
-										console.log( 'Public.prototype.add Network.put error > Network.get error', context );
-									}
-
-									Cache.delete( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
-
-									if( 'function' === typeof on_error ) {
-										on_error( context );
-									}
-
-									expected_actions -= 1;
-
-									if( neurons.length >= expected_actions ) {
-										if( 'function' === typeof on_complete ) {
-											on_complete( neurons );
-										}
-									}
-
-								}, 'index': 'hash', 'key': neuron_data.hash, 'expecting': { 'type': 'hidden' } } );
-
-							} else {
-
-								Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
-
-								expected_actions -= 1;
-								
-								if( 'function' === typeof on_error ) {
-									on_error();
-								}
-
-								if( hidden_ids.length >= expected_actions ) {
-									if( 'function' === typeof on_complete ) {
-										on_complete( hidden_ids );
-									}
-								}
-
-							}
-
-						}, 'data': neuron_data } );
-
-					} else {
-
-						if( true === return_existing ) {
-						
-							hidden_ids.push( cached_hidden_neuron_id );
-						
-						} else {
-						
-							expected_actions -= 1;
-						
-						}
-
-						if( hidden_ids.length >= expected_actions ) {
-							if( 'function' === typeof on_complete ) {
-								on_complete( hidden_ids );
-							}
-							return this;
-
-						}
-
-					}
-			
-				}() );
+				neuron = additions[ x ];
+				if( 'object' !== typeof neuron ) {
+					throw( 'Neuron must be an object' );
+				}
+				if( 'undefined' === typeof neuron.display ) {
+					throw( 'Neuron.display must be set' );
+				}
+				arr = [ neuron.display, 'output' ];
+				neuron.hash = Public.prototype.utilities.getId( arr );
+				Public.prototype.addNeuron( { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error } );
 			}
-
 		}
 		
 		return this;	
@@ -862,10 +880,6 @@ var Neural = (function() {
 	}
 
 
-	
-
-
-		
 	Public.prototype.addOutputNeurons = function( req ) {
 
 		var hidden_ids = req.hidden_ids
@@ -2689,10 +2703,14 @@ var Neural = (function() {
 	//TODO: rename topics to tokens here
 	Public.prototype.utilities.getId = function( topics ) {
 		if( 'string' === typeof topics ) {
-			topics = [ topics ];
+			return md5( topics );
+		} else { 
+			sorted_topics = Public.prototype.utilities.alphaSortArray( topics );
+			return md5( sorted_topics.join("|") );
+		} else if( Public.prototype.hasAttributes( topics ) ) {
+			topics = JSON.stringify( topics );
+			return md5( topics );
 		}
-		var sorted_topics = Public.prototype.utilities.alphaSortArray( topics );
-		return md5( sorted_topics.join("|") );
 	};
 
 
