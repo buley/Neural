@@ -720,6 +720,7 @@ var Neural = (function() {
 			Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
 
 				Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron_data, 'ttl': 300 } );
+
 				Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
 				neurons.push( neuron_id );
@@ -730,12 +731,12 @@ var Neural = (function() {
 
 			}, 'on_error': function( context ) {
 			
-
 				if( true === debug ) {
 					console.log( 'Public.prototype.add Network.put error', context );
 				}
 
 				if( true === return_existing ) {
+
 					Network.get( {  'type': 'neuron', 'on_success': function( returned_neuron ) {
 					
 						neuron_id = returned_neuron.id;
