@@ -994,14 +994,10 @@ var Neural = (function() {
 
 				display = hiddens[ x ];
 				
-				if( 'object' !== typeof neuron ) {
+				if( 'object' !== typeof display ) {
 					throw( 'Neuron must be an object' );
 				}
 		
-				if( 'undefined' === typeof display ) {
-					throw( 'Neuron.display must be set' );
-				}
-	
 				if( 'string' === typeof display ) {	
 					arr = [ display ];
 				} else {
