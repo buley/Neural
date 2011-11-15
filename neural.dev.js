@@ -769,7 +769,7 @@ var Neural = (function() {
 
 				} else {
 
-					Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+					Cache.delete( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
 
 					if( 'function' === typeof on_error ) {
 						on_error();
