@@ -770,7 +770,7 @@ var Neural = (function() {
 				} else {
 
 					Cache.delete( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
-
+console.log('DEALLLL');
 					if( 'function' === typeof on_error ) {
 						on_error();
 					}
