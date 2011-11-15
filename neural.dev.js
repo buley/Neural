@@ -3028,11 +3028,11 @@ var Neural = (function() {
 		if( 'number' === typeof topics || 'string' === typeof topics ) {
 			return md5( topics );
 		} else if ( 'undefined' === topics.join ) {
-			console.log('json');topics = JSON.stringify( topics );
+			topics = JSON.stringify( topics );
 			return md5( topics );
 		} else { 
 			sorted_topics = Public.prototype.utilities.alphaSortArray( topics );
-			console.log('sorted',sorted_topics);return md5( sorted_topics.join("|") );
+			return md5( sorted_topics.join("|") );
 		} 
 	};
 
