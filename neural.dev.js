@@ -994,10 +994,6 @@ var Neural = (function() {
 
 				display = hiddens[ x ];
 				
-				if( 'object' !== typeof display ) {
-					throw( 'Neuron must be an object' );
-				}
-		
 				if( 'string' === typeof display ) {	
 					arr = [ display ];
 				} else {
