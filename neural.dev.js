@@ -873,10 +873,10 @@ var Neural = (function() {
 			}
 		};
 
-		expected_actions = Public.prototype.countAttributes( additions );
+		expected_actions = Public.prototype.countAttributes( hidden );
 
-		for( x in additions ) {
-			if( additions.hasOwnProperty( x ) ) {
+		for( x in hiddens ) {
+			if( hiddens.hasOwnProperty( x ) ) {
 		
 				neuron = hiddens[ x ];
 		
