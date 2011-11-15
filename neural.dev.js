@@ -1002,7 +1002,7 @@ var Neural = (function() {
 		
 
 				display = hiddens[ x ];
-				
+				arr = [];	
 				if( 'string' === typeof display ) {	
 					arr = [ display ];
 				} else {
