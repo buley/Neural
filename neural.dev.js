@@ -796,6 +796,236 @@ var Neural = (function() {
 
 	};
 
+	Public.prototype.addOrGetInputNeurons = function( req ) {
+
+		var additions = []
+		    , tokens = req.tokens || []
+		    , tokens_length = tokens.length || 0
+		    , expected_actions = tokens.length
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , return_existing = req.return_existing
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , own_on_success
+		    , own_on_error
+		    , own_on_complete
+		    , x = 0
+		    , neuron_hash = ''
+		    , neurons = []
+		    , arr = []
+		    , neurons_length = 0
+		    , neuron
+		    , request
+	 	    , neuron_data
+		    , cached_neuron_data
+		    , cached_neuron_id;
+
+		for( x = 0; x < tokens_length; x += 1 ) {
+			additions.push( { 'display': tokens[ x ] } );
+		}
+
+		if( true !== return_existing ) {
+			return_existing = false;
+		}
+		
+		own_on_success = function( passed_neuron ) {
+
+			console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
+			
+			neuron_id = passed_neuron.id;
+			neurons.push( neuron_id );
+
+			if( 'function' === typeof on_success ) {
+				on_success( passed_neuron );
+			}
+			
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( neurons );
+			}
+
+		};
+
+		own_on_error = function( context ) {
+			
+			console.log( 'Public.prototype.addOrGetNeurons > error', context );
+			
+			expected_actions -= 1;
+			
+			if( 'function' === typeof on_error ) {
+				on_error( context );
+			}
+			
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( neurons );
+			}
+
+		};
+
+		own_on_complete = function( passed_neurons ) {
+			console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
+			if( neurons.length >= expected_actions ) {
+				if( 'function' === typeof on_complete ) {
+					on_complete( passed_neurons );
+				}
+			}
+		};
+
+		expected_actions = Public.prototype.countAttributes( additions );
+
+		for( x in additions ) {
+			if( additions.hasOwnProperty( x ) ) {
+		
+				neuron = additions[ x ];
+		
+				if( 'object' !== typeof neuron ) {
+					throw( 'Neuron must be an object' );
+				}
+		
+				if( 'undefined' === typeof neuron.display ) {
+					throw( 'Neuron.display must be set' );
+				}
+		
+				arr = [ neuron.display, 'input' ];
+		
+				neuron.hash = Public.prototype.utilities.getId( arr );
+				neuron.type = 'input';
+		
+				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
+		
+				Public.prototype.addOrGetNeuron( request );
+		
+			}
+		}
+		
+		return this;	
+
+	}
+
+	//Hidden neurons
+
+	Public.prototype.addOrGetHiddenNeurons = function( req ) {
+
+		var additions = []
+		    , tokens = req.tokens || []
+		    , tokens_length = tokens.length || 0
+		    , expected_actions = tokens.length
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , return_existing = req.return_existing
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , own_on_success
+		    , own_on_error
+		    , own_on_complete
+		    , x = 0
+		    , y = 0
+		    , display_count = 0
+		    , neuron_hash = ''
+		    , neurons = []
+		    , arr = []
+		    , neurons_length = 0
+		    , neuron
+		    , request
+	 	    , neuron_data
+		    , cached_neuron_data
+		    , cached_neuron_id;
+
+		for( x = 0; x < tokens_length; x += 1 ) {
+			additions.push( { 'display': tokens[ x ] } );
+		}
+
+		if( true !== return_existing ) {
+			return_existing = false;
+		}
+		
+		own_on_success = function( passed_neuron ) {
+
+			console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
+			
+			neuron_id = passed_neuron.id;
+			neurons.push( neuron_id );
+
+			if( 'function' === typeof on_success ) {
+				on_success( passed_neuron );
+			}
+			
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( neurons );
+			}
+
+		};
+
+		own_on_error = function( context ) {
+			
+			console.log( 'Public.prototype.addOrGetNeurons > error', context );
+			
+			expected_actions -= 1;
+			
+			if( 'function' === typeof on_error ) {
+				on_error( context );
+			}
+			
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( neurons );
+			}
+
+		};
+
+		own_on_complete = function( passed_neurons ) {
+			console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
+			if( neurons.length >= expected_actions ) {
+				if( 'function' === typeof on_complete ) {
+					on_complete( passed_neurons );
+				}
+			}
+		};
+
+		expected_actions = Public.prototype.countAttributes( additions );
+
+		for( x in additions ) {
+			if( additions.hasOwnProperty( x ) ) {
+		
+				neuron = additions[ x ];
+		
+				if( 'object' !== typeof neuron ) {
+					throw( 'Neuron must be an object' );
+				}
+		
+				if( 'undefined' === typeof neuron.display ) {
+					throw( 'Neuron.display must be set' );
+				}
+	
+				if( 'string' === typeof neuron.display ) {	
+					arr = [ neuron.display, 'hidden' ];
+				} else {
+
+					display_count = display.length;
+					for( y = 0; y < display_count; y += 1 ) {
+						arr.push( display[ x ] );
+					}
+					arr.push( 'hidden' );
+				}
+		
+				neuron.hash = Public.prototype.utilities.getId( arr );
+				neuron.type = 'hidden';
+		
+				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
+		
+				Public.prototype.addOrGetNeuron( request );
+		
+			}
+		}
+		
+		return this;	
+
+	}
+
+	//Output
 	Public.prototype.addOrGetOutputNeurons = function( req ) {
 
 		var additions = []
@@ -888,7 +1118,16 @@ var Neural = (function() {
 					throw( 'Neuron.display must be set' );
 				}
 		
-				arr = [ neuron.display, 'output' ];
+				if( 'string' === typeof neuron.display ) {	
+					arr = [ neuron.display, 'output' ];
+				} else {
+
+					display_count = display.length;
+					for( y = 0; y < display_count; y += 1 ) {
+						arr.push( display[ x ] );
+					}
+					arr.push( 'output' );
+				}
 		
 				neuron.hash = Public.prototype.utilities.getId( arr );
 				neuron.type = 'output';
