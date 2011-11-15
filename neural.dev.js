@@ -1174,10 +1174,6 @@ var Neural = (function() {
 		    , cached_hidden_neuron_data
 		    , cached_hidden_neuron_id;
 
-		if( true !== return_existing ) {
-			return_existing = false;
-		}
-
 		for( a = 0; a < tokens_length; a += 1 ) {
 
 			aa = tokens[ a ];
