@@ -993,24 +993,24 @@ var Neural = (function() {
 		
 				neuron = {};
 			       	neuron.display = hiddens[ x ];
-		
+				display = neuron.display[ x ];
 				if( 'object' !== typeof neuron ) {
 					throw( 'Neuron must be an object' );
 				}
 		
-				if( 'undefined' === typeof neuron.display ) {
+				if( 'undefined' === typeof display ) {
 					throw( 'Neuron.display must be set' );
 				}
 	
-				if( 'string' === typeof neuron.display ) {	
-					arr = [ neuron.display, 'hidden' ];
+				if( 'string' === typeof display ) {	
+					arr = [ display, 'hidden' ];
 				} else {
 					display_count = 0;
 					if( 'undefined' !== typeof display.length ) {
 						display_count = display.length;
 					}
 					for( y = 0; y < display_count; y += 1 ) {
-						arr.push( display[ x ] );
+						arr.push( display );
 					}
 					arr.push( 'hidden' );
 				}
