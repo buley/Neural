@@ -724,8 +724,10 @@ var Neural = (function() {
 
 				neurons.push( neuron_id );
 
+				neuron_data.id = neuron_id;
+				
 				if( 'function' === typeof on_success ) {
-					on_success( neuron_id );
+					on_success( neuron_data );
 				}				
 
 			}, 'on_error': function( context ) {
