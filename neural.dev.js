@@ -796,7 +796,9 @@ var Neural = (function() {
 
 	Public.prototype.addOrGetOutputNeurons = function( req ) {
 
-		var additions = req.value
+		var additions
+		    , tokens = req.tokens || []
+		    , tokens_length = tokens.length
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
@@ -818,6 +820,10 @@ var Neural = (function() {
 	 	    , neuron_data
 		    , cached_neuron_data
 		    , cached_neuron_id;
+
+		for( x = 0; x < tokens_length; x += 1 ) {
+			additions.push( { 'display': tokens[ x ] } );
+		}
 
 		if( true !== return_existing ) {
 			return_existing = false;
