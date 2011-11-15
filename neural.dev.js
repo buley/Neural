@@ -961,7 +961,6 @@ var Neural = (function() {
 				on_success( passed_neuron );
 			}
 		
-			console.log('len',neurons.length,'ex',expected_actions);	
 			if( neurons.length >= expected_actions ) {
 				own_on_complete( neurons );
 			}
