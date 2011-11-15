@@ -912,7 +912,7 @@ var Neural = (function() {
 
 	Public.prototype.addOrGetHiddenNeurons = function( req ) {
 
-		console.log("HIDDEN LAYER",req);
+
 		var additions = []
 		    , tokens = req.tokens || []
 		    , tokens_length = tokens.length || 0
@@ -940,6 +940,7 @@ var Neural = (function() {
 		    , cached_neuron_data
 		    , cached_neuron_id;
 
+		console.log("HIDDEN LAYER",expected_actions);
 		for( x = 0; x < tokens_length; x += 1 ) {
 			additions.push( { 'display': tokens[ x ] } );
 		}
@@ -960,7 +961,8 @@ var Neural = (function() {
 			if( 'function' === typeof on_success ) {
 				on_success( passed_neuron );
 			}
-			
+		
+			console.log('len',neurons.length,'ex',expected_actions);	
 			if( neurons.length >= expected_actions ) {
 				own_on_complete( neurons );
 			}
