@@ -1005,8 +1005,10 @@ var Neural = (function() {
 				if( 'string' === typeof neuron.display ) {	
 					arr = [ neuron.display, 'hidden' ];
 				} else {
-
-					display_count = display.length;
+					display_count = 0;
+					if( 'undefined' !== typeof display.length ) {
+						display_count = display.length;
+					}
 					for( y = 0; y < display_count; y += 1 ) {
 						arr.push( display[ x ] );
 					}
