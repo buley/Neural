@@ -987,9 +987,9 @@ var Neural = (function() {
 		};
 
 		expected_actions = Public.prototype.countAttributes( additions );
-
-		for( x in additions ) {
-			if( additions.hasOwnProperty( x ) ) {
+		hiddens = Public.prototype.getHiddenIds( tokens );
+		for( x in hiddens ) {
+			if( hiddens.hasOwnProperty( x ) ) {
 		
 				neuron = additions[ x ];
 		
