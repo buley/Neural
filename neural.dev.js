@@ -798,12 +798,12 @@ var Neural = (function() {
 
 		var additions
 		    , tokens = req.tokens || []
-		    , tokens_length = 0
+		    , tokens_length = tokens.length || 0
+		    , expected_actions = tokens.length
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
 		    , return_existing = req.return_existing
-		    , expected_actions = additions.length
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
