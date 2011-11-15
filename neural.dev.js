@@ -1011,7 +1011,7 @@ var Neural = (function() {
 						display_count = display.length;
 					}
 					for( y = 0; y < display_count; y += 1 ) {
-						arr.push( display );
+						arr.push( display[ y ] );
 					}
 				}
 		
