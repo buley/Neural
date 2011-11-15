@@ -991,9 +991,8 @@ var Neural = (function() {
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 		
-				neuron = {};
+
 				display = hiddens[ x ];
-			       	neuron.display = display;
 				
 				if( 'object' !== typeof neuron ) {
 					throw( 'Neuron must be an object' );
@@ -1004,7 +1003,7 @@ var Neural = (function() {
 				}
 	
 				if( 'string' === typeof display ) {	
-					arr = [ display, 'hidden' ];
+					arr = [ display ];
 				} else {
 					display_count = 0;
 					if( 'undefined' !== typeof display.length ) {
@@ -1013,12 +1012,14 @@ var Neural = (function() {
 					for( y = 0; y < display_count; y += 1 ) {
 						arr.push( display );
 					}
-					arr.push( 'hidden' );
 				}
 		
+				neuron = {};
+				neuron.display = arr.slice( 0 );
+				arr.push( 'hidden' );
 				neuron.hash = Public.prototype.utilities.getId( arr );
 				neuron.type = 'hidden';
-		
+					
 				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
 		
 				Public.prototype.addOrGetNeuron( request );
