@@ -3031,8 +3031,7 @@ var Neural = (function() {
 			topics = JSON.stringify( topics );
 			return md5( topics );
 		} else { 
-			sorted_topics = Public.prototype.utilities.alphaSortArray( topics );
-			return md5( sorted_topics.join("|") );
+			return md5( topics.join("|") );
 		} 
 	};
 
