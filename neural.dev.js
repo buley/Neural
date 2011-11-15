@@ -1158,19 +1158,17 @@ var Neural = (function() {
 	}
 */
 
-	Public.prototype.getHiddenIds = function( req ) {
+	Public.prototype.getHiddenIds = function( tokens ) {
 
 		var a = 0
 		    , b = 0
 		    , c = 0
-		    , hidden_hash = ''
 		    , hiddens = {}
 		    , aa
 		    , bb
 		    , cc
 		    , arr = []
-		    , hiddens_length = 0
-		    , hidd
+		    , tokens_length = tokens.length
 	 	    , neuron_data
 		    , hidden_id
 		    , cached_hidden_neuron_data
@@ -1186,10 +1184,7 @@ var Neural = (function() {
 
 			arr = [ aa, 'hidden' ];
 			hidden_id = Public.prototype.utilities.getId( arr );
-			hiddens[ hidden_id ] = {
-				'display': arr	
-				, 'hash': hidden_id
-			};
+			hiddens[ hidden_id ] = arr;	
 
 			for( b = 0; b < tokens_length; b += 1 ) {
 				bb = tokens[ b ];
@@ -1217,6 +1212,7 @@ var Neural = (function() {
 			}
 		}
 
+		return hiddens;
 	}
 
 
