@@ -776,17 +776,17 @@ var Neural = (function() {
 										console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify(hidden_neuron) );
 									}
 
-									Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': hidden_neuron, 'ttl': 300 } );
-									Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': hidden_id, 'ttl': 300 } );
+									Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': returned_neuron, 'ttl': 300 } );
+									Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
-									hidden_ids.push( hidden_id );
+									neurons.push( neuron_id );
 					
 									if( 'function' === typeof on_success ) {
-										on_success( hidden_id );
+										on_success( neuron_id );
 									}				
-									if( hidden_ids.length >= expected_actions ) {
+									if( neurons.length >= expected_actions ) {
 										if( 'function' === typeof on_complete ) {
-											on_complete( hidden_ids );
+											on_complete( neurons );
 										}
 									}
 
@@ -796,7 +796,7 @@ var Neural = (function() {
 										console.log( 'Public.prototype.add Network.put error > Network.get error', context );
 									}
 
-									Cache.delete( { 'key': ( 'neurons.hashes.' + hidden_hash ) } );
+									Cache.delete( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
 
 									if( 'function' === typeof on_error ) {
 										on_error( context );
@@ -804,9 +804,9 @@ var Neural = (function() {
 
 									expected_actions -= 1;
 
-									if( hidden_ids.length >= expected_actions ) {
+									if( neurons.length >= expected_actions ) {
 										if( 'function' === typeof on_complete ) {
-											on_complete( hidden_ids );
+											on_complete( neurons );
 										}
 									}
 
