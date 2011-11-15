@@ -875,18 +875,26 @@ var Neural = (function() {
 
 		for( x in additions ) {
 			if( additions.hasOwnProperty( x ) ) {
+		
 				neuron = additions[ x ];
+		
 				if( 'object' !== typeof neuron ) {
 					throw( 'Neuron must be an object' );
 				}
+		
 				if( 'undefined' === typeof neuron.display ) {
 					throw( 'Neuron.display must be set' );
 				}
+		
 				arr = [ neuron.display, 'output' ];
+		
 				neuron.hash = Public.prototype.utilities.getId( arr );
 				neuron.type = 'output';
+		
 				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
+		
 				Public.prototype.addOrGetNeuron( request );
+		
 			}
 		}
 		
