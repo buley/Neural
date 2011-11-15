@@ -796,7 +796,7 @@ var Neural = (function() {
 
 	Public.prototype.addOrGetOutputNeurons = function( req ) {
 
-		var additions
+		var additions = []
 		    , tokens = req.tokens || []
 		    , tokens_length = tokens.length || 0
 		    , expected_actions = tokens.length
