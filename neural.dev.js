@@ -696,13 +696,11 @@ var Neural = (function() {
 	Public.prototype.addOutputNeuron = function( req ) {
 
 		var output_neuron = req.value
+		    , additions = req.additions
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
-		    , on_complete = req.on_complete || null;	
-
-		//xxx
-	
-		var tokens = req.tokens
+		    , on_complete = req.on_complete || null
+		    , tokens = req.tokens
 		    , return_existing = req.return_existing
 		    , tokens_length = tokens.length
 		    , expected_actions = 0
@@ -722,10 +720,10 @@ var Neural = (function() {
 			return_existing = false;
 		}
 
-		expected_actions = Public.prototype.countAttributes( hiddens );
+		expected_actions = Public.prototype.countAttributes( additions );
 
-		for( x in hiddens ) {
-			if( hiddens.hasOwnProperty( x ) ) {
+		for( x in additions ) {
+			if( additions.hasOwnProperty( x ) ) {
 
 				( function() {
 					//yyy
