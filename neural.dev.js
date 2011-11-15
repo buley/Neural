@@ -1191,22 +1191,22 @@ var Neural = (function() {
 
 			aa = tokens[ a ];
 
-			arr = [ aa, 'hidden' ];
-			hidden_id = Public.prototype.utilities.getId( arr );
+			arr = [ aa ];
+			hidden_id = Public.prototype.utilities.getId( [ aa ] );
 			hiddens[ hidden_id ] = arr;	
 
 			for( b = 0; b < tokens_length; b += 1 ) {
 				bb = tokens[ b ];
 				if( aa !== bb ) {
-					arr = [ aa, bb, 'hidden' ];
-					hidden_id = Public.prototype.utilities.getId( arr );
+					arr = [ aa, bb ];
+					hidden_id = Public.prototype.utilities.getId( [ aa, bb, 'hidden' ] );
 					hiddens[ hidden_id ] = arr;
 
 					for( c = 0; c < tokens_length; c += 1 ) {
 						cc = tokens[ c ];
 						if( aa !== cc && bb !== cc && aa !== bb ) {
 							arr = Public.prototype.utilities.alphaSortArray( [ aa, bb, cc, 'hidden' ] );
-							hidden_id = Public.prototype.utilities.getId( arr );
+							hidden_id = Public.prototype.utilities.getId( [ aa, bb, cc, 'hidden' ] );
 							hiddens[ hidden_id ] = arr;
 						}
 					}
