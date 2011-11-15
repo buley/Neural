@@ -796,6 +796,8 @@ var Neural = (function() {
 
 	};
 
+	//TODO: Have each of these aggresively cache
+
 	Public.prototype.addOrGetInputNeurons = function( req ) {
 
 		var additions = []
