@@ -916,7 +916,7 @@ var Neural = (function() {
 		var additions = []
 		    , tokens = req.tokens || []
 		    , tokens_length = tokens.length || 0
-		    , expected_actions = tokens.length
+		    , expected_actions = 0
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
@@ -947,7 +947,7 @@ var Neural = (function() {
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
-		
+			
 		own_on_success = function( passed_neuron ) {
 
 			if( !!debug ) {
@@ -964,7 +964,6 @@ var Neural = (function() {
 			console.log('len',neurons.length,'ex',expected_actions);	
 			if( neurons.length >= expected_actions ) {
 				own_on_complete( neurons );
-				return this;
 			}
 
 		};
@@ -997,8 +996,9 @@ var Neural = (function() {
 			}
 		};
 
-		expected_actions = Public.prototype.countAttributes( additions );
+
 		hiddens = Public.prototype.getHiddenIds( tokens );
+		expected_actions = Public.prototype.countAttributes( hiddens );
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 		
