@@ -828,7 +828,7 @@ var Neural = (function() {
 
 			console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
 			
-			neuron_id = returned_neuron.id;
+			neuron_id = passed_neuron.id;
 			neurons.push( neuron_id );
 
 			if( 'function' === typeof on_success ) {
