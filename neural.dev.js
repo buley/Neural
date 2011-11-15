@@ -1002,6 +1002,8 @@ var Neural = (function() {
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 		
+				neuron = {};
+				neuron.display = [];
 
 				display = hiddens[ x ];
 				arr = [];	
@@ -1013,17 +1015,17 @@ var Neural = (function() {
 						display_count = display.length;
 					}
 					for( y = 0; y < display_count; y += 1 ) {
-						arr.push( display[ y ] );
+						var d = display[ y ];
+						arr.push( d );
+						neuron.display.push( d );
 					}
 				}
-		
-				var newest = {};
-				newest.display = arr.slice( 0 );
+	 0 );
 				arr.push( 'hidden' );
-				newest.hash = Public.prototype.utilities.getId( arr );
-				newest.type = 'hidden';
+				neuron.hash = Public.prototype.utilities.getId( arr );
+				neuron.type = 'hidden';
 					
-				request = { 'value': newest, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
+				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
 		
 				Public.prototype.addOrGetNeuron( request );
 		
