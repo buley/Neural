@@ -716,7 +716,7 @@ var Neural = (function() {
 		}
 
 		if( neuron_data !== cached_neuron_data && ( 'undefined' === typeof cached_neuron_id || null === cached_neuron_id || 'undefined' === typeof cached_neuron_data || null === cached_neuron_data ) ) {
-
+		console.log("NEURRRRONDATA",neuron_data);
 			Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
 
 				Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron_data, 'ttl': 300 } );
@@ -898,7 +898,6 @@ var Neural = (function() {
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null;	
-
 
 		//
 
