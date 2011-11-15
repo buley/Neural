@@ -706,13 +706,12 @@ var Neural = (function() {
 		    , return_existing = req.return_existing
 		    , tokens_length = tokens.length
 		    , expected_actions = 0
-		    , neuron_ids = []
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
 		    , x = 0
 		    , neuron_hash = ''
-		    , neurons = {}
+		    , neurons = []
 		    , neurons_length = 0
 		    , neuron
 	 	    , neuron_data
@@ -749,13 +748,13 @@ var Neural = (function() {
 							Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron_data, 'ttl': 300 } );
 							Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
-							hidden_ids.push( hidden_id );
+							neurons.push( neuron_id );
 			
 							if( 'function' === typeof on_success ) {
-								on_success( hidden_id );
+								on_success( neuron_id );
 							}				
 
-							if( hidden_ids.length >= expected_actions ) {
+							if( neuron_ids.length >= expected_actions ) {
 								if( 'function' === typeof on_complete ) {
 									on_complete( hidden_ids );
 								}
@@ -769,9 +768,9 @@ var Neural = (function() {
 							}
 
 							if( true === return_existing ) {
-								Network.get( {  'type': 'neuron', 'on_success': function( hidden_neuron ) {
+								Network.get( {  'type': 'neuron', 'on_success': function( returned_neuron ) {
 								
-									hidden_id = hidden_neuron.id;
+									neuron_id = returned_neuron.id;
 
 									if( true === debug ) {
 										console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify(hidden_neuron) );
