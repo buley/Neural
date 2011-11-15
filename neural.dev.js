@@ -1020,7 +1020,6 @@ var Neural = (function() {
 						neuron.display.push( d );
 					}
 				}
-	 0 );
 				arr.push( 'hidden' );
 				neuron.hash = Public.prototype.utilities.getId( arr );
 				neuron.type = 'hidden';
