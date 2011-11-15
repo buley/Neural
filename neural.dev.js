@@ -741,7 +741,7 @@ var Neural = (function() {
 						neuron_id = returned_neuron.id;
 
 						if( true === debug ) {
-							console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify( return_neuron ) );
+							console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify( returned_neuron ) );
 						}
 
 						Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': returned_neuron, 'ttl': 300 } );
