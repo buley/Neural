@@ -908,6 +908,7 @@ var Neural = (function() {
 
 	Public.prototype.addOrGetHiddenNeurons = function( req ) {
 
+		console.log("HIDDEN LAYER",req);
 		var additions = []
 		    , tokens = req.tokens || []
 		    , tokens_length = tokens.length || 0
@@ -1143,7 +1144,7 @@ var Neural = (function() {
 
 	}
 
-
+/*
 	Public.prototype.addOutputNeurons = function( req ) {
 
 		var hidden_ids = req.hidden_ids
@@ -1153,6 +1154,68 @@ var Neural = (function() {
 		    , on_complete = req.on_complete || null;	
 
 		//
+
+	}
+*/
+
+	Public.prototype.getHiddenIds = function( req ) {
+
+		var a = 0
+		    , b = 0
+		    , c = 0
+		    , hidden_hash = ''
+		    , hiddens = {}
+		    , aa
+		    , bb
+		    , cc
+		    , arr = []
+		    , hiddens_length = 0
+		    , hidd
+	 	    , neuron_data
+		    , hidden_id
+		    , cached_hidden_neuron_data
+		    , cached_hidden_neuron_id;
+
+		if( true !== return_existing ) {
+			return_existing = false;
+		}
+
+		for( a = 0; a < tokens_length; a += 1 ) {
+
+			aa = tokens[ a ];
+
+			arr = [ aa, 'hidden' ];
+			hidden_id = Public.prototype.utilities.getId( arr );
+			hiddens[ hidden_id ] = {
+				'display': arr	
+				, 'hash': hidden_id
+			};
+
+			for( b = 0; b < tokens_length; b += 1 ) {
+				bb = tokens[ b ];
+				if( aa !== bb ) {
+					arr = [ aa, bb, 'hidden' ];
+					hidden_id = Public.prototype.utilities.getId( arr );
+					hiddens[ hidden_id ] = {
+						'display': arr	
+						, 'hash': hidden_id
+					};
+
+					for( c = 0; c < tokens_length; c += 1 ) {
+						cc = tokens[ c ];
+						if( aa !== cc && bb !== cc && aa !== bb ) {
+							arr = Public.prototype.utilities.alphaSortArray( [ aa, bb, cc, 'hidden' ] );
+							hidden_id = Public.prototype.utilities.getId( arr );
+							hiddens[ hidden_id ] = {
+								'display': arr
+								, 'hash': hidden_id
+							};
+						}
+					}
+
+				}
+			}
+		}
 
 	}
 
@@ -1223,6 +1286,7 @@ var Neural = (function() {
 				}
 			}
 		}
+
 		expected_actions = Public.prototype.countAttributes( hiddens );
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
@@ -1963,9 +2027,7 @@ var Neural = (function() {
 		}
 
 
-
-
-	Public.prototype.getInputNeurons = function( results, input_ids, on_success, on_error, on_complete ) {
+		Public.prototype.getInputNeurons = function( results, input_ids, on_success, on_error, on_complete ) {
 
 			if( true === debug ) {
 				console.log( 'Public.prototype.getNetwork getInputNeurons()', results, input_ids );
