@@ -798,7 +798,7 @@ var Neural = (function() {
 
 		var additions
 		    , tokens = req.tokens || []
-		    , tokens_length = tokens.length || 0
+		    , tokens_length = 0
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
