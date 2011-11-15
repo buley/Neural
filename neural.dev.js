@@ -878,7 +878,7 @@ var Neural = (function() {
 		for( x in additions ) {
 			if( additions.hasOwnProperty( x ) ) {
 		
-				neuron = additions[ x ];
+				neuron = hiddens[ x ];
 		
 				if( 'object' !== typeof neuron ) {
 					throw( 'Neuron must be an object' );
