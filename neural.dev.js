@@ -879,8 +879,8 @@ var Neural = (function() {
 				}
 				arr = [ neuron.display, 'output' ];
 				neuron.hash = Public.prototype.utilities.getId( arr );
+				neuron.type = 'output';
 				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error }; 
-				console.log("REQUEST",request);
 				Public.prototype.addOrGetNeuron( request );
 			}
 		}
