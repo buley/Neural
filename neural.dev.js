@@ -940,7 +940,6 @@ var Neural = (function() {
 		    , cached_neuron_data
 		    , cached_neuron_id;
 
-		console.log("HIDDEN LAYER",expected_actions);
 		for( x = 0; x < tokens_length; x += 1 ) {
 			additions.push( { 'display': tokens[ x ] } );
 		}
@@ -965,6 +964,7 @@ var Neural = (function() {
 			console.log('len',neurons.length,'ex',expected_actions);	
 			if( neurons.length >= expected_actions ) {
 				own_on_complete( neurons );
+				return this;
 			}
 
 		};
