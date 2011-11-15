@@ -2707,15 +2707,15 @@ var Neural = (function() {
 
 	//TODO: rename topics to tokens here
 	Public.prototype.utilities.getId = function( topics ) {
-		if( 'string' === typeof topics ) {
+		if( 'number' === typeof topics || 'string' === typeof topics ) {
+			return md5( topics );
+		} else if ( Public.prototype.hasAttributes( topics ) ) {
+			topics = JSON.stringify( topics );
 			return md5( topics );
 		} else { 
 			sorted_topics = Public.prototype.utilities.alphaSortArray( topics );
 			return md5( sorted_topics.join("|") );
-		} else if( Public.prototype.hasAttributes( topics ) ) {
-			topics = JSON.stringify( topics );
-			return md5( topics );
-		}
+		} 
 	};
 
 
