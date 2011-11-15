@@ -770,7 +770,6 @@ var Neural = (function() {
 				} else {
 
 					Cache.delete( { 'key': ( 'neurons.hashes.' + neuron_data.hash ) } );
-console.log('DEALLLL');
 					if( 'function' === typeof on_error ) {
 						on_error();
 					}
@@ -880,7 +879,7 @@ console.log('DEALLLL');
 				arr = [ neuron.display, 'output' ];
 				neuron.hash = Public.prototype.utilities.getId( arr );
 				neuron.type = 'output';
-				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error }; 
+				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
 				Public.prototype.addOrGetNeuron( request );
 			}
 		}
