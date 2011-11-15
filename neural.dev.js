@@ -692,6 +692,16 @@ var Neural = (function() {
 
 	};
 
+		
+	Public.prototype.addHiddenNeurons = function( req ) {
+
+		var tokens = req.tokens
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null;	
+
+	}
+
 	Public.prototype.addHiddenNeurons = function( req ) {
 
 		var tokens = req.tokens
