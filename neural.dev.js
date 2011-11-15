@@ -698,7 +698,6 @@ var Neural = (function() {
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , return_existing = req.return_existing
-		    , tokens_length = tokens.length
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , x = 0
@@ -783,9 +782,13 @@ var Neural = (function() {
 		} else {
 
 			if( true === return_existing ) {
-			
+
 				neurons.push( cached_neuron_id );
-			
+
+				if( 'function' === typeof on_success ) {
+					on_success( cached_neuron_data );
+				}
+
 			}
 
 		}
@@ -2666,9 +2669,7 @@ var Neural = (function() {
 		
 	};
 
-
 	/* Convenience Methods */
-
 
 	Public.prototype.utilities = Public.prototype.utilities || {};
 
@@ -2681,6 +2682,7 @@ var Neural = (function() {
 	};
 
 	Public.prototype.utilities.alphaSort = function( a, b ) {
+
 		// http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
 		var reA = /[^a-zA-Z]/g;
 		var reN = /[^0-9]/g;
@@ -2703,6 +2705,7 @@ var Neural = (function() {
 		} else {
 			return aA > bA ? 1 : -1;
 		}
+
 	}
 
 	//TODO: rename topics to tokens here
