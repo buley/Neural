@@ -873,12 +873,12 @@ var Neural = (function() {
 			}
 		};
 
-		expected_actions = Public.prototype.countAttributes( hiddens );
+		expected_actions = Public.prototype.countAttributes( additions );
 
-		for( x in hiddens ) {
-			if( hiddens.hasOwnProperty( x ) ) {
+		for( x in additions ) {
+			if( additions.hasOwnProperty( x ) ) {
 		
-				neuron = hiddens[ x ];
+				neuron = additions[ x ];
 		
 				if( 'object' !== typeof neuron ) {
 					throw( 'Neuron must be an object' );
@@ -991,7 +991,7 @@ var Neural = (function() {
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
 		
-				neuron = additions[ x ];
+				neuron = hiddens[ x ];
 		
 				if( 'object' !== typeof neuron ) {
 					throw( 'Neuron must be an object' );
