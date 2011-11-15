@@ -692,7 +692,7 @@ var Neural = (function() {
 
 	};
 		
-	Public.prototype.addNeuron = function( req ) {
+	Public.prototype.addOrGetNeuron = function( req ) {
 
 		var neuron_data = req.value || {}
 		    , on_success = req.on_success || null
@@ -792,7 +792,7 @@ var Neural = (function() {
 
 	};
 
-	Public.prototype.addOutputNeurons = function( req ) {
+	Public.prototype.addOrGetOutputNeurons = function( req ) {
 
 		var additions = req.value
 		    , on_success = req.on_success || null
@@ -821,13 +821,15 @@ var Neural = (function() {
 			return_existing = false;
 		}
 		
-		own_on_success = function( returned_neuron ) {
+		own_on_success = function( passed_neuron ) {
 
+			console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
+			
 			neuron_id = returned_neuron.id;
 			neurons.push( neuron_id );
 
 			if( 'function' === typeof on_success ) {
-				on_success( returned_neuron );
+				on_success( passed_neuron );
 			}
 			
 			if( neurons.length >= expected_actions ) {
@@ -837,6 +839,8 @@ var Neural = (function() {
 		};
 
 		own_on_error = function( context ) {
+			
+			console.log( 'Public.prototype.addOrGetNeurons > error', context );
 			
 			expected_actions -= 1;
 			
@@ -851,6 +855,7 @@ var Neural = (function() {
 		};
 
 		own_on_complete = function( passed_neurons ) {
+			console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
 			if( neurons.length >= expected_actions ) {
 				if( 'function' === typeof on_complete ) {
 					on_complete( passed_neurons );
@@ -871,7 +876,7 @@ var Neural = (function() {
 				}
 				arr = [ neuron.display, 'output' ];
 				neuron.hash = Public.prototype.utilities.getId( arr );
-				Public.prototype.addNeuron( { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error } );
+				Public.prototype.addOrGetNeuron( { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error } );
 			}
 		}
 		
