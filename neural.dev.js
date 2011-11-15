@@ -992,8 +992,9 @@ var Neural = (function() {
 			if( hiddens.hasOwnProperty( x ) ) {
 		
 				neuron = {};
-			       	neuron.display = hiddens[ x ];
-				display = neuron.display[ x ];
+				display = hiddens[ x ];
+			       	neuron.display = display;
+				
 				if( 'object' !== typeof neuron ) {
 					throw( 'Neuron must be an object' );
 				}
