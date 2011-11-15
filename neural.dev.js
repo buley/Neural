@@ -833,8 +833,9 @@ var Neural = (function() {
 		
 		own_on_success = function( passed_neuron ) {
 
-			console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
-			
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
+			}
 			neuron_id = passed_neuron.id;
 			neurons.push( neuron_id );
 
@@ -850,8 +851,9 @@ var Neural = (function() {
 
 		own_on_error = function( context ) {
 			
-			console.log( 'Public.prototype.addOrGetNeurons > error', context );
-			
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > error', context );
+			}
 			expected_actions -= 1;
 			
 			if( 'function' === typeof on_error ) {
@@ -865,7 +867,9 @@ var Neural = (function() {
 		};
 
 		own_on_complete = function( passed_neurons ) {
-			console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
+			}
 			if( neurons.length >= expected_actions ) {
 				if( 'function' === typeof on_complete ) {
 					on_complete( passed_neurons );
@@ -946,8 +950,10 @@ var Neural = (function() {
 		
 		own_on_success = function( passed_neuron ) {
 
-			console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
-			
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
+			}
+
 			neuron_id = passed_neuron.id;
 			neurons.push( neuron_id );
 
@@ -963,8 +969,9 @@ var Neural = (function() {
 
 		own_on_error = function( context ) {
 			
-			console.log( 'Public.prototype.addOrGetNeurons > error', context );
-			
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > error', context );
+			}
 			expected_actions -= 1;
 			
 			if( 'function' === typeof on_error ) {
@@ -978,7 +985,9 @@ var Neural = (function() {
 		};
 
 		own_on_complete = function( passed_neurons ) {
-			console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
+			}
 			if( neurons.length >= expected_actions ) {
 				if( 'function' === typeof on_complete ) {
 					on_complete( passed_neurons );
@@ -1060,9 +1069,10 @@ var Neural = (function() {
 		}
 		
 		own_on_success = function( passed_neuron ) {
-
-			console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
-			
+	
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
+			}
 			neuron_id = passed_neuron.id;
 			neurons.push( neuron_id );
 
@@ -1078,8 +1088,9 @@ var Neural = (function() {
 
 		own_on_error = function( context ) {
 			
-			console.log( 'Public.prototype.addOrGetNeurons > error', context );
-			
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > error', context );
+			}
 			expected_actions -= 1;
 			
 			if( 'function' === typeof on_error ) {
@@ -1093,7 +1104,9 @@ var Neural = (function() {
 		};
 
 		own_on_complete = function( passed_neurons ) {
-			console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_neurons );
+			}
 			if( neurons.length >= expected_actions ) {
 				if( 'function' === typeof on_complete ) {
 					on_complete( passed_neurons );
