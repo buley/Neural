@@ -925,6 +925,116 @@ var Neural = (function() {
 	};
 
 
+	//Synapses
+	Public.prototype.addOrGetSynapses = function( req ) {
+
+		var additions = []
+		    , incoming = req.value || []
+		    , synapses = []
+		    , synapses_length = synapses.length || 0
+		    , expected_actions = tokens.length
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , return_existing = req.return_existing
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , own_on_success
+		    , own_on_error
+		    , own_on_complete
+		    , x = 0
+		    , neuron_hash = ''
+		    , neurons = []
+		    , arr = []
+		    , neurons_length = 0
+		    , neuron
+		    , request
+	 	    , neuron_data
+		    , cached_neuron_data
+		    , cached_neuron_id;
+
+		for( x = 0; x < synapses_length; x += 1 ) {
+
+			synapse = synapses[ x ];
+			additions.push( { 'to': synapse.to, 'to_type': synapse.to_type, 'from': synapse.from, 'from_type': synapse.from_type } );
+
+		}
+
+		if( true !== return_existing ) {
+			return_existing = false;
+		}
+		
+		own_on_success = function( passed_synapse ) {
+	
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeuron > success', passed_synapse );
+			}
+
+			synapse_id = passed_synapse.id;
+			synapses.push( synapse_id );
+
+			if( 'function' === typeof on_success ) {
+				on_success( passed_synapse );
+			}
+			
+			if( synapses.length >= expected_actions ) {
+				own_on_complete( synapses );
+			}
+
+		};
+
+		own_on_error = function( context ) {
+			
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > error', context );
+			}
+			expected_actions -= 1;
+			
+			if( 'function' === typeof on_error ) {
+				on_error( context );
+			}
+			
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( synapses );
+			}
+
+		};
+
+		own_on_complete = function( passed_synapses ) {
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_synapses );
+			}
+			if( synapses.length >= expected_actions ) {
+				if( 'function' === typeof on_complete ) {
+					on_complete( passed_synapses );
+				}
+			}
+		};
+
+		expected_actions = Public.prototype.countAttributes( additions );
+
+		for( x in additions ) {
+			if( additions.hasOwnProperty( x ) ) {
+		
+				synapse = additions[ x ];
+		
+				if( 'object' !== typeof synapse ) {
+					throw( 'Neuron must be an object' );
+				}
+		
+				request = { 'value': synapse, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
+		
+				Public.prototype.addOrGetNeuron( request );
+		
+			}
+		}
+		
+		return this;	
+
+	}
+
+
 
 
 	//xxx
