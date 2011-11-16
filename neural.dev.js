@@ -821,9 +821,9 @@ var Neural = (function() {
 		    , cached_synapse_data
 		    , cached_synapse_id;
 
-		synapse_hash = Public.prototype.utilities.getId( new_synapse_data );
-		new_synapse_data[ 'hash' ] = synapse_hash;
-		new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
+		synapse_hash = Public.prototype.utilities.getId( synapse_data );
+		synapse_data[ 'hash' ] = synapse_hash;
+		synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
 
 		cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
 		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
