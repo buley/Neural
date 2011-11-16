@@ -963,7 +963,7 @@ var Neural = (function() {
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
-		
+		console.log("ATTRR",additions);	
 		own_on_success = function( passed_synapse ) {
 	
 			if( !!debug ) {
