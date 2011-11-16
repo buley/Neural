@@ -723,8 +723,6 @@ var Neural = (function() {
 
 				Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
-				console.log("PUT ID",neuron_id,"DATA",neuron_data);
-				
 				neurons.push( neuron_id );
 
 				neuron_data.id = neuron_id;
@@ -804,6 +802,122 @@ var Neural = (function() {
 
 	};
 
+	//xxx
+	
+	Public.prototype.addOrGetSynapse = function( req ) {
+
+		var synapse_data = req.value || {}
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , return_existing = req.return_existing
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , x = 0
+		    , synapse_hash = ''
+		    , synapses = []
+		    , synapses_length = 0
+		    , synapse
+	 	    , synapse_data
+		    , cached_synapse_data
+		    , cached_synapse_id;
+
+		cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
+			cached_synapse_data = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
+		}
+
+		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
+
+			Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
+
+				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
+
+				Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+	
+				synapses.push( synapse_id );
+
+				synapse_data.id = synapse_id;
+				
+				if( 'function' === typeof on_success ) {
+					on_success( synapse_data );
+				}				
+
+			}, 'on_error': function( context ) {
+			
+				if( true === debug ) {
+					console.log( 'Public.prototype.add Network.put error', context );
+				}
+
+				if( true === return_existing ) {
+
+
+					Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
+					
+
+						synapse_id = returned_synapse.id;
+
+						if( true === debug ) {
+							console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify( returned_synapse ) );
+						}
+
+						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': returned_synapse, 'ttl': 300 } );
+						Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+
+						console.log( "GOT DATA", Cache.get( { 'key': ( 'synapses.data.' + synapse_id ) } ));
+						
+						synapses.push( synapse_id );
+		
+						if( 'function' === typeof on_success ) {
+							on_success( returned_synapse );
+						}				
+
+					}, 'on_error': function( context ) {
+						
+						if( true === debug ) {
+							console.log( 'Public.prototype.add Network.put error > Network.get error', context );
+						}
+
+						Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+						if( 'function' === typeof on_error ) {
+							on_error( context );
+						}
+
+					}, 'index': 'hash', 'key': synapse_data.hash, 'expecting': { 'type': 'hidden' } } );
+
+				} else {
+
+					Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+					if( 'function' === typeof on_error ) {
+						on_error();
+					}
+
+				}
+
+			}, 'data': synapse_data } );
+
+		} else {
+
+			if( true === return_existing ) {
+
+				synapses.push( cached_synapse_id );
+
+				if( 'function' === typeof on_success ) {
+					on_success( cached_synapse_data );
+				}
+
+			}
+
+		}
+
+	};
+
+
+
+
+	//xxx
 	//TODO: Have each of these aggresively cache
 
 	Public.prototype.addOrGetInputNeurons = function( req ) {
@@ -2352,7 +2466,7 @@ var Neural = (function() {
 		for( x = 0; x < synapses_length; x += 1 ) {
 
 			synapse = Public.prototype.returnSynapse( synapses[ x ] );
-			
+			console.log("CACHED SYNAPSE",synapse);			
 			// Handle to
 			to_id = synapse.to;
 			to_neuron = Public.prototype.returnNeuron( to_id );
