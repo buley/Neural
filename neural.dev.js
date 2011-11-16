@@ -924,7 +924,6 @@ var Neural = (function() {
 
 	};
 
-
 	//Synapses
 	Public.prototype.addOrGetSynapses = function( req ) {
 
@@ -932,7 +931,7 @@ var Neural = (function() {
 		    , incoming = req.value || []
 		    , synapses = []
 		    , synapses_length = synapses.length || 0
-		    , expected_actions = tokens.length
+		    , expected_actions = synapses_length
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
