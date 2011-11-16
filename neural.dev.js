@@ -3164,6 +3164,7 @@ var Neural = (function() {
 
 	//TODO: rename topics to tokens here
 	Public.prototype.utilities.getId = function( topics ) {
+		console.log("GETID",topics,hasAttributes( topics ));
 		if( 'number' === typeof topics || 'string' === typeof topics ) {
 			return md5( topics );
 		} else if ( hasAttributes( topics ) ) {
