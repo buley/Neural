@@ -964,7 +964,6 @@ var Neural = (function() {
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
-		console.log("ATTRR",additions);	
 		own_on_success = function( passed_synapse ) {
 	
 			if( !!debug ) {
@@ -1024,8 +1023,7 @@ var Neural = (function() {
 				}
 		
 				request = { 'value': synapse, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
-				console.log("REQ",request);		
-				Public.prototype.addOrGetNeuron( request );
+				Public.prototype.addOrGetSynapse( request );
 		
 			}
 		}
