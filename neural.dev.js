@@ -844,9 +844,9 @@ var Neural = (function() {
 
 				Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
 	
-				synapses.push( synapse_id );
-
 				synapse_data.id = synapse_id;
+				
+				synapses.push( synapse_id );
 				
 				if( 'function' === typeof on_success ) {
 					on_success( synapse_data );
