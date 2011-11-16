@@ -1023,7 +1023,7 @@ var Neural = (function() {
 				}
 		
 				request = { 'value': synapse, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
-		
+				console.log("REQ",request);		
 				Public.prototype.addOrGetNeuron( request );
 		
 			}
