@@ -821,6 +821,21 @@ var Neural = (function() {
 		    , cached_synapse_data
 		    , cached_synapse_id;
 
+		synapse_data = { 'from_type': 'input'
+			, 'from': input_neuron_id
+			, 'to_type': 'hidden'
+			, 'to': hidden_neuron_id 
+		};
+
+		synapse_hash = Public.prototype.utilities.getId( JSON.stringify( new_synapse_data ) );
+		new_synapse_data[ 'hash' ] = synapse_hash;
+		new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
+
+		cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
+		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
+			var cached_synapse = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
+		}
+
 		cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
 
 		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
@@ -829,6 +844,7 @@ var Neural = (function() {
 
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
 
+			//xxx
 			Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
 
 				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
