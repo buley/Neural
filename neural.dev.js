@@ -3166,7 +3166,7 @@ var Neural = (function() {
 	Public.prototype.utilities.getId = function( topics ) {
 		if( 'number' === typeof topics || 'string' === typeof topics ) {
 			return md5( topics );
-		} else if ( 'undefined' === topics.join ) {
+		} else if ( hasAttributes( topics ) ) {
 			topics = JSON.stringify( topics );
 			return md5( topics );
 		} else { 
