@@ -838,7 +838,6 @@ var Neural = (function() {
 
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
 
-			//xxx
 			Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
 
 				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
@@ -861,10 +860,9 @@ var Neural = (function() {
 
 				if( true === return_existing ) {
 
-
+console.log("STARSEARCH",synapse_data);
 					Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
 					
-
 						synapse_id = returned_synapse.id;
 
 						if( true === debug ) {
@@ -874,8 +872,6 @@ var Neural = (function() {
 						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': returned_synapse, 'ttl': 300 } );
 						Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
 
-						console.log( "GOT DATA", Cache.get( { 'key': ( 'synapses.data.' + synapse_id ) } ));
-						
 						synapses.push( synapse_id );
 		
 						if( 'function' === typeof on_success ) {
