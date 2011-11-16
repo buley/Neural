@@ -929,8 +929,9 @@ var Neural = (function() {
 
 		var additions = []
 		    , incoming = req.value || []
+		    , incoming_length = incoming.length || 0
 		    , synapses = []
-		    , synapses_length = synapses.length || 0
+		    , synapses_length = 0
 		    , expected_actions = synapses_length
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
@@ -953,9 +954,9 @@ var Neural = (function() {
 		    , cached_neuron_data
 		    , cached_neuron_id;
 
-		for( x = 0; x < synapses_length; x += 1 ) {
+		for( x = 0; x < incoming_length; x += 1 ) {
 
-			synapse = synapses[ x ];
+			synapse = incoming[ x ];
 			additions.push( { 'to': synapse.to, 'to_type': synapse.to_type, 'from': synapse.from, 'from_type': synapse.from_type } );
 
 		}
