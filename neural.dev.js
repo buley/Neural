@@ -714,7 +714,7 @@ var Neural = (function() {
 		if( 'undefined' !== typeof cached_neuron_id && null !== cached_neuron_id ) {
 			cached_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_neuron_id ) } );
 		}
-		console.log("ID",cached_neuron_id,"DATA",cached_neuron_data);
+
 		if( neuron_data !== cached_neuron_data && ( 'undefined' === typeof cached_neuron_id || null === cached_neuron_id || 'undefined' === typeof cached_neuron_data || null === cached_neuron_data ) ) {
 
 			Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
@@ -723,6 +723,8 @@ var Neural = (function() {
 
 				Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
+				console.log("ID",neuron_id,"DATA",neuron_data);
+				
 				neurons.push( neuron_id );
 
 				neuron_data.id = neuron_id;
