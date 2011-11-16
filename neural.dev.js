@@ -3268,7 +3268,6 @@ console.log("STARSEARCH",synapse_data);
 
 	//TODO: rename topics to tokens here
 	Public.prototype.utilities.getId = function( topics ) {
-		console.log("GETID",topics,Public.prototype.hasAttributes( topics ));
 		if( 'number' === typeof topics || 'string' === typeof topics ) {
 			return md5( topics );
 		} else if ( Public.prototype.hasAttributes( topics ) ) {
