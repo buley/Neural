@@ -2351,8 +2351,8 @@ var Neural = (function() {
 
 		for( x = 0; x < synapses_length; x += 1 ) {
 
-			synapse = synapses[ x ];
-
+			synapse = Public.prototype.returnSynapse( synapses[ x ] );
+			
 			// Handle to
 			to_id = synapse.to;
 			to_neuron = Public.prototype.returnNeuron( to_id );
@@ -2439,6 +2439,11 @@ var Neural = (function() {
 	Public.prototype.setNeuron = function( neuron_id, neuron ) {
 		Cache.put( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron, 'ttl': 300 } );
 	};*/
+
+
+	Public.prototype.returnSynapse = function( synapse_id ) {
+		return Cache.get( { 'key': 'synapses.data.' + synapse_id } );
+	};
 
 
 	Public.prototype.returnNeuron = function( neuron_id ) {
