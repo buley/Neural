@@ -744,7 +744,7 @@ var Neural = (function() {
 
 					Network.get( {  'type': 'neuron', 'on_success': function( returned_neuron ) {
 					
-						console.log("GOT DATA",returned_neuron);
+
 						neuron_id = returned_neuron.id;
 
 						if( true === debug ) {
@@ -754,6 +754,8 @@ var Neural = (function() {
 						Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': returned_neuron, 'ttl': 300 } );
 						Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
+						console.log( "GOT DATA", Cache.get( { 'key': ( 'neurons.data.' + neuron_id ) } ));
+						
 						neurons.push( neuron_id );
 		
 						if( 'function' === typeof on_success ) {
