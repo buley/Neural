@@ -821,12 +821,6 @@ var Neural = (function() {
 		    , cached_synapse_data
 		    , cached_synapse_id;
 
-		synapse_data = { 'from_type': 'input'
-			, 'from': input_neuron_id
-			, 'to_type': 'hidden'
-			, 'to': hidden_neuron_id 
-		};
-
 		synapse_hash = Public.prototype.utilities.getId( new_synapse_data );
 		new_synapse_data[ 'hash' ] = synapse_hash;
 		new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
