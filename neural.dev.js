@@ -827,7 +827,7 @@ var Neural = (function() {
 			, 'to': hidden_neuron_id 
 		};
 
-		synapse_hash = Public.prototype.utilities.getId( JSON.stringify( new_synapse_data ) );
+		synapse_hash = Public.prototype.utilities.getId( new_synapse_data );
 		new_synapse_data[ 'hash' ] = synapse_hash;
 		new_synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
 
