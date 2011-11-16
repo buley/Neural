@@ -744,7 +744,7 @@ var Neural = (function() {
 
 					Network.get( {  'type': 'neuron', 'on_success': function( returned_neuron ) {
 					
-						console.log("GOT ID",neuron_id,"DATA",neuron_data);
+						console.log("GOT DATA",returned_neuron);
 						neuron_id = returned_neuron.id;
 
 						if( true === debug ) {
