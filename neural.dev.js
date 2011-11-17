@@ -841,11 +841,11 @@ var Neural = (function() {
 
 			Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
 
+				synapse_data.id = synapse_id;
+				
 				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
 
 				Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
-	
-				synapse_data.id = synapse_id;
 				
 				synapses.push( synapse_id );
 				
