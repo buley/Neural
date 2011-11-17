@@ -1074,7 +1074,7 @@ console.log("STARSEARCH",synapse_data);
 			if( !!debug ) {
 				console.log( 'Public.prototype.addOrGetNeuron > success', passed_neuron );
 			}
-			neuron_id = passed_neuron.id;i
+			neuron_id = passed_neuron.id;
 		
 			console.log("BEFORE",passed_neuron,neuron_id);
 			neurons.push( neuron_id );
