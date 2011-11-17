@@ -2649,7 +2649,12 @@ console.log("STARSEARCH",synapse_data);
 						if( 'function' !== typeof on_success ) {
 							on_complete( partial_network );
 						}
-					    }
+					    },
+					    'on_error': function ( context ) {
+						if( 'function' === typeof on_error ) {
+							on_success( context );
+						}
+					    },
 					});
 
 				    } //end on_complete
