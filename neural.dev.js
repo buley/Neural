@@ -2582,7 +2582,7 @@ console.log("STARSEARCH",synapse_data);
 
 			synapse = Public.prototype.returnSynapse( synapses[ x ] );
 			console.log("CACHED SYNAPSE",synapse);			
-			if( null === synapse || 'undefined' !== typeof synapse ) {
+			if( null !== synapse && 'undefined' !== typeof synapse ) {
 
 				// Handle to
 				to_id = synapse.to;
