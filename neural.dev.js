@@ -2548,8 +2548,13 @@ console.log("STARSEARCH",synapse_data);
 
 	//xxx
  	Public.prototype.queryNetwork = function( request ) {
+
 		var input = request.input
-		  , output = request.output;
+		  , output = request.output
+		  , on_success = request.on_success || null
+		  , on_error = request.on_error || null
+		  , on_complete = request.on_complete || null
+		  , partial_network = 0;
 
 		Network.addOrGetInputNeurons({
 		    'return_existing': true,
@@ -2565,11 +2570,15 @@ console.log("STARSEARCH",synapse_data);
 			    'return_existing': true,
 			    'tokens': input,
 			    'on_success': function (neuron) {
-				console.log("NEURON", neuron);
+				if( 'function' !== typeof on_success ) {
+					on_success( neuron );
+				}
 			    },
 			    //end on_success
 			    'on_error': function () {
-				console.log("ERROR");
+				if( 'function' !== typeof on_error ) {
+					on_error();
+				}
 			    },
 			    //end on_error
 			    'on_complete': function (hidden_neurons) {
@@ -2578,11 +2587,15 @@ console.log("STARSEARCH",synapse_data);
 				    'return_existing': true,
 				    'tokens': output,
 				    'on_success': function (neuron) {
-					console.log("NEURON", neuron);
+					if( 'function' !== typeof on_success ) {
+						on_success( neuron );
+					}
 				    },
 				    //on_success
 				    'on_error': function () {
-					console.log("ERROR");
+					if( 'function' !== typeof on_error ) {
+						on_error();
+					}
 				    },
 				    //end on_error
 				    'on_complete': function (output_neurons) {
@@ -2631,7 +2644,10 @@ console.log("STARSEARCH",synapse_data);
 					    },
 					    'on_complete': function (synapses) {
 						console.log("INPUTS", input_neurons, "HIDDEN", hidden_neurons, "OUTPUT", output_neurons, "SYNAPSES", synapses);
-						console.log("COMPLETE", Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses));
+						partial_network = Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses));
+						if( 'function' !== typeof on_success ) {
+							on_complete( network );
+						}
 					    }
 					});
 
