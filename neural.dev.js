@@ -2491,52 +2491,53 @@ console.log("STARSEARCH",synapse_data);
 		for( a = 0; a < synapses_length; a += 1 ) {
 
 			synapse = synapses[ a ];
+			if( null === synapse || 'undefined' !== typeof synapse ) {
 
-			output_id = synapse.to;
-			cached_synapse = Cache.get( { 'key': ( 'neurons.data.' + output_id ) } );
+				output_id = synapse.to;
+				cached_synapse = Cache.get( { 'key': ( 'neurons.data.' + output_id ) } );
 
-			// If it exists in the cache, no need to get it from the database
-			if( 'undefined' === typeof cached_synapse || null === cached_synapse ) {
+				// If it exists in the cache, no need to get it from the database
+				if( 'undefined' === typeof cached_synapse || null === cached_synapse ) {
+				
+					// Else get it from the database
+					Network.get( {  'type': 'neuron', 'on_success': function( output_neuron_value ) {
 			
-				// Else get it from the database
-				Network.get( {  'type': 'neuron', 'on_success': function( output_neuron_value ) {
-		
-					if( true === debug ) {
-						console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor success', output_neuron_value );
-					}
+						if( true === debug ) {
+							console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor success', output_neuron_value );
+						}
 
-					Cache.set( { 'key': ( 'neurons.data.' + output_id ), 'value': output_neuron_value, 'ttl': 300 } );
-					if( 'undefined' !== typeof output_neuron_value && null !== output_neuron_value ) {
-						output_neurons.push( output_neuron_value );
-					} else {
+						Cache.set( { 'key': ( 'neurons.data.' + output_id ), 'value': output_neuron_value, 'ttl': 300 } );
+						if( 'undefined' !== typeof output_neuron_value && null !== output_neuron_value ) {
+							output_neurons.push( output_neuron_value );
+						} else {
+							expected_output_count -= 1;
+						}
+						if( expected_output_count === output_neurons.length ) {
+							on_complete( results, input_neurons, synapses, output_neurons );
+						}
+					}, 'on_error': function( context ) {
+						
+						if( true === debug ) {
+							console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor error', context );
+						}
+						
+						//TODO: Inspect error and do maybe do something
 						expected_output_count -= 1;
+						if( expected_ouput_count === output_neurons.length ) {
+							on_complete( results, input_neurons, synapses, output_neurons );
+						}
+
+					}, 'key': output_id } );
+
+				} else {
+					if( 'undefined' !== typeof cached_synapse ) {
+						output_neurons.push( cached_synapse );
 					}
 					if( expected_output_count === output_neurons.length ) {
 						on_complete( results, input_neurons, synapses, output_neurons );
 					}
-				}, 'on_error': function( context ) {
-					
-					if( true === debug ) {
-						console.log( 'Public.prototype.getTokens > get_output_neurons > Network.get cursor error', context );
-					}
-					
-					//TODO: Inspect error and do maybe do something
-					expected_output_count -= 1;
-					if( expected_ouput_count === output_neurons.length ) {
-						on_complete( results, input_neurons, synapses, output_neurons );
-					}
-
-				}, 'key': output_id } );
-
-			} else {
-				if( 'undefined' !== typeof cached_synapse ) {
-					output_neurons.push( cached_synapse );
-				}
-				if( expected_output_count === output_neurons.length ) {
-					on_complete( results, input_neurons, synapses, output_neurons );
 				}
 			}
-
 
 		}
 	
