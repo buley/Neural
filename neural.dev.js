@@ -961,6 +961,7 @@ console.log("STARSEARCH",synapse_data);
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
+
 		own_on_success = function( passed_synapse ) {
 	
 			if( !!debug ) {
@@ -985,12 +986,13 @@ console.log("STARSEARCH",synapse_data);
 			if( !!debug ) {
 				console.log( 'Public.prototype.addOrGetNeurons > error', context );
 			}
+		
 			expected_actions -= 1;
 			
 			if( 'function' === typeof on_error ) {
 				on_error( context );
 			}
-			
+		console.log('AMA',neurons.length,expected_actions);	
 			if( neurons.length >= expected_actions ) {
 				own_on_complete( synapses );
 			}
