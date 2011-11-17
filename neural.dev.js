@@ -726,6 +726,7 @@ var Neural = (function() {
 				Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
 				neurons.push( neuron_id );
+
 				
 				if( 'function' === typeof on_success ) {
 					on_success( neuron_data );
