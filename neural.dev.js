@@ -2554,16 +2554,20 @@ console.log("STARSEARCH",synapse_data);
 		  , on_success = request.on_success || null
 		  , on_error = request.on_error || null
 		  , on_complete = request.on_complete || null
-		  , partial_network = 0;
+		  , partial_network = {};
 
 		Network.addOrGetInputNeurons({
 		    'return_existing': true,
 		    'tokens': input,
 		    'on_success': function (neuron) {
-			console.log("NEURON", neuron);
+			if( 'function' !== typeof on_success ) {
+				on_success( neuron );
+			}
 		    },
 		    'on_error': function () {
-			console.log("ERROR");
+			if( 'function' !== typeof on_error ) {
+				on_error();
+			}
 		    },
 		    'on_complete': function (input_neurons) {
 			Network.addOrGetHiddenNeurons({
@@ -2604,9 +2608,7 @@ console.log("STARSEARCH",synapse_data);
 					var input_neuron_length = input_neurons.length;
 					var output_neuron_length = output_neurons.length;
 					var hidden_neuron_length = hidden_neurons.length;
-					var a, b, c, hidden_neuron, input_neuron, output_neuron, hidden_neuron_id, input_neuron_id, output_neuron_id, tokens = [],
-					    synapse_hash, synapse_data;
-					console.log('INPUT', input_neurons, 'HID', hidden_neurons, 'OUT', output_neurons);
+					var a, b, c, hidden_neuron, input_neuron, output_neuron, hidden_neuron_id, input_neuron_id, output_neuron_id, tokens = [], synapse_hash, synapse_data;
 					for (a = hidden_neuron_length; a > 1; a -= 1) {
 					    hidden_neuron = hidden_neurons[(a - 1)];
 					    console.log('hidden_neuron', hidden_neuron);
