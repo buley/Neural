@@ -2474,7 +2474,7 @@ console.log("STARSEARCH",synapse_data);
 		
 	};
 
-	Public.prototype.getOutputNeurons = function( results, input_neurons, synapses, on_success, on_error, on_complete ) {
+ 	Public.prototype.getOutputNeurons = function( results, input_neurons, synapses, on_success, on_error, on_complete ) {
 
 		if( true === debug ) {
 			console.log( 'Public.prototype.getNetwork getOutputNeurons() results', JSON.stringify( results ), 'input_neurons', input_neurons, synapses );
@@ -2545,6 +2545,198 @@ console.log("STARSEARCH",synapse_data);
 		}
 	
 	};
+
+	//xxx
+ 	Public.prototype.queryNetwork = function( request ) {
+		var input = request.input
+		  , output = request.output;
+
+		Network.addOrGetInputNeurons({
+		    'return_existing': true,
+		    'tokens': input,
+		    'on_success': function (neuron) {
+			console.log("NEURON", neuron);
+		    },
+		    'on_error': function () {
+			console.log("ERROR");
+		    },
+		    'on_complete': function (input_neurons) {
+			Network.addOrGetHiddenNeurons({
+			    'return_existing': true,
+			    'tokens': input,
+			    'on_success': function (neuron) {
+				console.log("NEURON", neuron);
+			    },
+			    //end on_success
+			    'on_error': function () {
+				console.log("ERROR");
+			    },
+			    //end on_error
+			    'on_complete': function (hidden_neurons) {
+
+				Network.addOrGetOutputNeurons({
+				    'return_existing': true,
+				    'tokens': output,
+				    'on_success': function (neuron) {
+					console.log("NEURON", neuron);
+				    },
+				    //on_success
+				    'on_error': function () {
+					console.log("ERROR");
+				    },
+				    //end on_error
+				    'on_complete': function (output_neurons) {
+					console.log('READY', input_neurons, hidden_neurons, output_neurons);
+					//not working yet
+					var input_neuron_length = input_neurons.length;
+					var output_neuron_length = output_neurons.length;
+					var hidden_neuron_length = hidden_neurons.length;
+					var a, b, c, hidden_neuron, input_neuron, output_neuron, hidden_neuron_id, input_neuron_id, output_neuron_id, tokens = [],
+					    synapse_hash, synapse_data;
+					console.log('INPUT', input_neurons, 'HID', hidden_neurons, 'OUT', output_neurons);
+					for (a = hidden_neuron_length; a > 1; a -= 1) {
+					    hidden_neuron = hidden_neurons[(a - 1)];
+					    console.log('hidden_neuron', hidden_neuron);
+					    for (b = input_neuron_length; b > 1; b -= 1) {
+						input_neuron = input_neurons[(b - 1)];
+						console.log('input_neuron', input_neuron);
+						// add
+						synapse_data = {
+						    'to': hidden_neuron,
+						    'to_type': 'hidden',
+						    'from': input_neuron,
+						    'from_type': 'input'
+						}
+						tokens.push(synapse_data);
+					    }
+					    for (c = output_neuron_length; c > 1; c -= 1) {
+						output_neuron = output_neurons[(c - 1)];
+						console.log('output_neuron', output_neuron);
+						// add
+						synapse_data = {
+						    'to': output_neuron,
+						    'to_type': 'output',
+						    'from': hidden_neuron,
+						    'from_type': 'hidden'
+						}
+						tokens.push(synapse_data);
+					    }
+					}
+
+					Network.addOrGetSynapses({
+					    'return_existing': true,
+					    'value': tokens,
+					    'on_success': function (synapse) {
+						console.log("SYN SUCCESS", synapse);
+					    },
+					    'on_complete': function (synapses) {
+						console.log("INPUTS", input_neurons, "HIDDEN", hidden_neurons, "OUTPUT", output_neurons, "SYNAPSES", synapses);
+						console.log("COMPLETE", Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses));
+					    }
+					});
+
+				    } //end on_complete
+				});
+
+			    } //end on_complete
+			});
+		    }
+		});
+
+		Network.addOrGetInputNeurons({
+		    'return_existing': true,
+		    'tokens': input,
+		    'on_success': function (neuron) {
+			console.log("NEURON", neuron);
+		    },
+		    'on_error': function () {
+			console.log("ERROR");
+		    },
+		    'on_complete': function (input_neurons) {
+			Network.addOrGetHiddenNeurons({
+			    'return_existing': true,
+			    'tokens': input,
+			    'on_success': function (neuron) {
+				console.log("NEURON", neuron);
+			    },
+			    //end on_success
+			    'on_error': function () {
+				console.log("ERROR");
+			    },
+			    //end on_error
+			    'on_complete': function (hidden_neurons) {
+
+				Network.addOrGetOutputNeurons({
+				    'return_existing': true,
+				    'tokens': output,
+				    'on_success': function (neuron) {
+					console.log("NEURON", neuron);
+				    },
+				    //on_success
+				    'on_error': function () {
+					console.log("ERROR");
+				    },
+				    //end on_error
+				    'on_complete': function (output_neurons) {
+					console.log('READY', input_neurons, hidden_neurons, output_neurons);
+					//not working yet
+					var input_neuron_length = input_neurons.length;
+					var output_neuron_length = output_neurons.length;
+					var hidden_neuron_length = hidden_neurons.length;
+					var a, b, c, hidden_neuron, input_neuron, output_neuron, hidden_neuron_id, input_neuron_id, output_neuron_id, tokens = [],
+					    synapse_hash, synapse_data;
+					console.log('INPUT', input_neurons, 'HID', hidden_neurons, 'OUT', output_neurons);
+					for (a = hidden_neuron_length; a > 1; a -= 1) {
+					    hidden_neuron = hidden_neurons[(a - 1)];
+					    console.log('hidden_neuron', hidden_neuron);
+					    for (b = input_neuron_length; b > 1; b -= 1) {
+						input_neuron = input_neurons[(b - 1)];
+						console.log('input_neuron', input_neuron);
+						// add
+						synapse_data = {
+						    'to': hidden_neuron,
+						    'to_type': 'hidden',
+						    'from': input_neuron,
+						    'from_type': 'input'
+						}
+						tokens.push(synapse_data);
+					    }
+					    for (c = output_neuron_length; c > 1; c -= 1) {
+						output_neuron = output_neurons[(c - 1)];
+						console.log('output_neuron', output_neuron);
+						// add
+						synapse_data = {
+						    'to': output_neuron,
+						    'to_type': 'output',
+						    'from': hidden_neuron,
+						    'from_type': 'hidden'
+						}
+						tokens.push(synapse_data);
+					    }
+					}
+
+					Network.addOrGetSynapses({
+					    'return_existing': true,
+					    'value': tokens,
+					    'on_success': function (synapse) {
+						console.log("SYN SUCCESS", synapse);
+					    },
+					    'on_complete': function (synapses) {
+						console.log("INPUTS", input_neurons, "HIDDEN", hidden_neurons, "OUTPUT", output_neurons, "SYNAPSES", synapses);
+						console.log("COMPLETE", Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses));
+					    }
+					});
+
+				    } //end on_complete
+				});
+
+			    } //end on_complete
+			});
+		    }
+		});
+		//DONE
+	}
+	//xxx
 
 	/* takes a token or tokens and builds an in memory representation of relevant 
 	 * neurons and their connections of an MLP such
