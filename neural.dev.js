@@ -2560,12 +2560,12 @@ console.log("STARSEARCH",synapse_data);
 		    'return_existing': true,
 		    'tokens': input,
 		    'on_success': function (neuron) {
-			if( 'function' !== typeof on_success ) {
+			if( 'function' == typeof on_success ) {
 				on_success( neuron );
 			}
 		    },
 		    'on_error': function () {
-			if( 'function' !== typeof on_error ) {
+			if( 'function' === typeof on_error ) {
 				on_error();
 			}
 		    },
@@ -2574,13 +2574,13 @@ console.log("STARSEARCH",synapse_data);
 			    'return_existing': true,
 			    'tokens': input,
 			    'on_success': function (neuron) {
-				if( 'function' !== typeof on_success ) {
+				if( 'function' === typeof on_success ) {
 					on_success( neuron );
 				}
 			    },
 			    //end on_success
 			    'on_error': function () {
-				if( 'function' !== typeof on_error ) {
+				if( 'function' === typeof on_error ) {
 					on_error();
 				}
 			    },
@@ -2591,13 +2591,13 @@ console.log("STARSEARCH",synapse_data);
 				    'return_existing': true,
 				    'tokens': output,
 				    'on_success': function (neuron) {
-					if( 'function' !== typeof on_success ) {
+					if( 'function' === typeof on_success ) {
 						on_success( neuron );
 					}
 				    },
 				    //on_success
 				    'on_error': function () {
-					if( 'function' !== typeof on_error ) {
+					if( 'function' === typeof on_error ) {
 						on_error();
 					}
 				    },
@@ -2646,7 +2646,7 @@ console.log("STARSEARCH",synapse_data);
 					    'on_complete': function (synapses) {
 						console.log("INPUTS", input_neurons, "HIDDEN", hidden_neurons, "OUTPUT", output_neurons, "SYNAPSES", synapses);
 						partial_network = Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses);
-						if( 'function' !== typeof on_success ) {
+						if( 'function' === typeof on_success ) {
 							on_complete( partial_network );
 						}
 					    },
