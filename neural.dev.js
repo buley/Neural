@@ -719,13 +719,13 @@ var Neural = (function() {
 
 			Network.put( {  'type': 'neuron', 'on_success': function( neuron_id ) {
 
+				neuron_data.id = neuron_id;
+
 				Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': neuron_data, 'ttl': 300 } );
 
 				Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
 				neurons.push( neuron_id );
-
-				neuron_data.id = neuron_id;
 				
 				if( 'function' === typeof on_success ) {
 					on_success( neuron_data );
@@ -1076,9 +1076,7 @@ console.log("STARSEARCH",synapse_data);
 			}
 			neuron_id = passed_neuron.id;
 		
-			console.log("BEFORE",passed_neuron,neuron_id);
 			neurons.push( neuron_id );
-			console.log("AFTER",passed_neuron);
 			if( 'function' === typeof on_success ) {
 				on_success( passed_neuron );
 			}
