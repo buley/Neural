@@ -2007,7 +2007,7 @@ console.log("STARSEARCH",synapse_data);
 	Public.prototype.getNetwork = function( request ) {
 
 		var result = request.result
-		    , input_ids = request.input_ids
+		    , tokens = request.tokens || request.input_ids //carryover
 		    , current_layer = request.current_layer
 		    , total_layers = request.total_layers
 		    , on_success = request.on_success 
@@ -2015,11 +2015,11 @@ console.log("STARSEARCH",synapse_data);
 		    , on_complete = request.on_complete;
 
 		if( true === debug ) {
-			console.log( 'Public.prototype.getNetwork', result, input_ids, current_layer, total_layers );
+			console.log( 'Public.prototype.getNetwork', result, tokens, current_layer, total_layers );
 		}
 
-		if( 'string' === typeof input_ids ) {
-			input_ids = [ input_ids ];
+		if( 'string' === typeof tokens ) {
+			tokens = [ tokens ];
 		}
 
 		if( null === current_layer || 'undefined' === typeof current_layer ) {
@@ -2068,7 +2068,7 @@ console.log("STARSEARCH",synapse_data);
 			}
 		};
 
-		Public.prototype.getInputNeurons( result, input_ids, on_success, on_error, own_on_complete );
+		Public.prototype.getInputNeurons( result, tokens, on_success, on_error, own_on_complete );
 
 		return this;
 	}
