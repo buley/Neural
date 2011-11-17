@@ -2549,16 +2549,16 @@ console.log("STARSEARCH",synapse_data);
 	/* takes a token or tokens and builds an in memory representation of relevant 
 	 * neurons and their connections of an MLP such
 	 * that it can be queried */
-	Public.prototype.buildNetwork = function( inputs, synapses, outputs ) {
+	Public.prototype.buildNetwork = function( inputs, hiddens, outputs, synapses ) {
 
 		if( true === debug ) {
-			console.log( 'Public.prototype.buildNetwork', inputs, synapses, outputs );
+			console.log( 'Public.prototype.buildNetwork', inputs, 'hiddens',hiddens,'outputs',outputs,'synapses',synapses );
 		}
 
 		/*
 		 *
 		 * var network {
-		 *	'input_id': {
+		 *	'neuron_display': {
 		 *		'data': { ... } 
 		 *		, 'to': {
 		 *			id (int): strength (number)
@@ -2568,6 +2568,7 @@ console.log("STARSEARCH",synapse_data);
 		 * }
 		 *
 		 */
+
 		var network = {}
 		  , own_network = {}
 		  , x = 0
