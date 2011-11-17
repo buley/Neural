@@ -2634,8 +2634,6 @@ console.log("STARSEARCH",synapse_data);
 						console.log("SYN SUCCESS", synapse);
 					    },
 					    'on_complete': function (synapses) {
-						console.log("INPUTS", input_neurons, "HIDDEN", hidden_neurons, "OUTPUT", output_neurons, "SYNAPSES", synapses);
-						console.log("COMPLETE", Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses));
 
 						partial_network = Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses);
 
