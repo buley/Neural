@@ -2555,116 +2555,6 @@ console.log("STARSEARCH",synapse_data);
 		  , on_error = request.on_error || null
 		  , on_complete = request.on_complete || null
 		  , partial_network = {};
-
-		Network.addOrGetInputNeurons({
-		    'return_existing': true,
-		    'tokens': input,
-		    'on_success': function (neuron) {
-			if( 'function' === typeof on_success ) {
-				on_success( neuron );
-			}
-		    },
-		    'on_error': function () {
-			if( 'function' === typeof on_error ) {
-				on_error();
-			}
-		    },
-		    'on_complete': function (input_neurons) {
-			Network.addOrGetHiddenNeurons({
-			    'return_existing': true,
-			    'tokens': input,
-			    'on_success': function (neuron) {
-				if( 'function' === typeof on_success ) {
-					on_success( neuron );
-				}
-			    },
-			    //end on_success
-			    'on_error': function () {
-				if( 'function' === typeof on_error ) {
-					on_error();
-				}
-			    },
-			    //end on_error
-			    'on_complete': function (hidden_neurons) {
-
-				Network.addOrGetOutputNeurons({
-				    'return_existing': true,
-				    'tokens': output,
-				    'on_success': function (neuron) {
-					if( 'function' === typeof on_success ) {
-						on_success( neuron );
-					}
-				    },
-				    //on_success
-				    'on_error': function () {
-					if( 'function' === typeof on_error ) {
-						on_error();
-					}
-				    },
-				    //end on_error
-				    'on_complete': function (output_neurons) {
-					console.log('READY', input_neurons, hidden_neurons, output_neurons);
-					//not working yet
-					var input_neuron_length = input_neurons.length;
-					var output_neuron_length = output_neurons.length;
-					var hidden_neuron_length = hidden_neurons.length;
-					var a, b, c, hidden_neuron, input_neuron, output_neuron, hidden_neuron_id, input_neuron_id, output_neuron_id, tokens = [], synapse_hash, synapse_data;
-					for (a = hidden_neuron_length; a > 1; a -= 1) {
-					    hidden_neuron = hidden_neurons[(a - 1)];
-					    for (b = input_neuron_length; b > 1; b -= 1) {
-						input_neuron = input_neurons[(b - 1)];
-						// add
-						synapse_data = {
-						    'to': hidden_neuron,
-						    'to_type': 'hidden',
-						    'from': input_neuron,
-						    'from_type': 'input'
-						}
-						tokens.push(synapse_data);
-					    }
-					    for (c = output_neuron_length; c > 1; c -= 1) {
-						output_neuron = output_neurons[(c - 1)];
-						// add
-						synapse_data = {
-						    'to': output_neuron,
-						    'to_type': 'output',
-						    'from': hidden_neuron,
-						    'from_type': 'hidden'
-						}
-						tokens.push(synapse_data);
-					    }
-					}
-
-					Network.addOrGetSynapses({
-					    'return_existing': true,
-					    'value': tokens,
-					    'on_success': function (synapse) {
-						if( 'function' === typeof on_success ) {
-							on_success( synapse );
-						}
-					    },
-					    'on_complete': function (synapses) {
-						console.log("INPUTS", input_neurons, "HIDDEN", hidden_neurons, "OUTPUT", output_neurons, "SYNAPSES", synapses);
-						partial_network = Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses);
-						if( 'function' === typeof on_complete ) {
-							on_complete( partial_network );
-						}
-					    },
-					    'on_error': function ( context ) {
-						if( 'function' === typeof on_error ) {
-							on_success( context );
-						}
-					    },
-					});
-
-				    } //end on_complete
-				});
-
-			    } //end on_complete
-			});
-		    }
-		});
-
 		Network.addOrGetInputNeurons({
 		    'return_existing': true,
 		    'tokens': input,
@@ -2746,6 +2636,12 @@ console.log("STARSEARCH",synapse_data);
 					    'on_complete': function (synapses) {
 						console.log("INPUTS", input_neurons, "HIDDEN", hidden_neurons, "OUTPUT", output_neurons, "SYNAPSES", synapses);
 						console.log("COMPLETE", Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses));
+
+						partial_network = Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses);
+
+						if( 'function' === typeof on_complete ) {
+							on_complete( partial_network );
+						}
 					    }
 					});
 
