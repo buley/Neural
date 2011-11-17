@@ -2547,7 +2547,7 @@ console.log("STARSEARCH",synapse_data);
 	};
 
 	//xxx
- 	Public.prototype.queryNetwork = function( request ) {
+ 	Public.prototype.getPartialNetwork = function( request ) {
 
 		var input = request.input
 		  , output = request.output
