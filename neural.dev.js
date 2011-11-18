@@ -2774,15 +2774,21 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				    'return_existing': true,
 				    'tokens': output,
 				    'on_success': function (neuron) {
-					console.log("NEURON", neuron);
+					if( !!debug ) {
+						console.log("NEURON", neuron);
+					}
 				    },
 				    //on_success
 				    'on_error': function () {
-					console.log("ERROR");
+					if( !!debug ) {
+						console.log("ERROR");
+					}
 				    },
 				    //end on_error
 				    'on_complete': function (output_neurons) {
-					console.log('READY', input_neurons, hidden_neurons, output_neurons);
+					if( !!debug ) {
+				    		onsole.log('READY', input_neurons, hidden_neurons, output_neurons);
+					}
 					//not working yet
 					var input_neuron_length = input_neurons.length;
 					var output_neuron_length = output_neurons.length;
