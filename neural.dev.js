@@ -2022,7 +2022,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 					if( 'undefined' !== typeof cached_synapse.id ) {
 				
-						console.log("CACHiNG",JSON.stringify(cached_synapse));
+						console.log("CACHiNG",JSON.stringify({ 'key': ( 'synapses.data.' + cached_synapse_id ), 'value': cached_synapse, 'ttl': 300 }),JSON.stringify(cached_synapse));
 
 						Cache.set( { 'key': ( 'synapses.data.' + cached_synapse_id ), 'value': cached_synapse, 'ttl': 300 } );
 					
