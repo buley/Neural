@@ -114,7 +114,7 @@ var Neural = (function() {
 
 
 	Public.prototype.incrementer = function( current, type_object ) {
-		current = ( isNaN( current ) ) ? current : 0;
+		current = ( !isNaN( current ) ) ? current : 0;
 		return current + 1;
 	};
 
@@ -2014,7 +2014,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						previous = previous();
 					};
 					
-					var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
+					var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
 
 					console.log("CACHED",JSON.stringify(cached_synapse));
 					cached_synapse.strength = next;
