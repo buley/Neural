@@ -1900,7 +1900,7 @@ console.log("STARSEARCH",synapse_data);
 						
 							}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
 								
-								console.log( 'Previous', previous );
+								console.log( 'Public.prototype.update > Previous', previous );
 								
 								if( 'function' == previous ) {
 									previous = previous();
@@ -1948,7 +1948,7 @@ console.log("STARSEARCH",synapse_data);
 					
 						}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
 							
-							console.log( 'Previous', previous );
+							console.log( 'Public.prototype.update > Previous', previous );
 							
 							if( 'function' == previous ) {
 								previous = previous();
