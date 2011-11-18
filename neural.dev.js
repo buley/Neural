@@ -1782,7 +1782,7 @@ console.log("STARSEARCH",synapse_data);
 								Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': resulting_input_neuron_id, 'ttl': 300 } );
 								Cache.set( { 'key': ( 'neurons.data.' + resulting_input_neuron_id ), 'value': input_neuron_result, 'ttl': 300 } );
 
-								synapse_callback( hidden_id, finished_value );
+								synapse_callback( hidden_id, input_neuron_result );
 
 							}, 'on_error': function( context ) {
 								
