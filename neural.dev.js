@@ -2140,7 +2140,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			}
 			//end
 
-		} );
+		} } );
 
 
 		return this;	
