@@ -760,8 +760,6 @@ var Neural = (function() {
 						Cache.set( { 'key': ( 'neurons.data.' + neuron_id ), 'value': returned_neuron, 'ttl': 300 } );
 						Cache.set( { 'key': ( 'neurons.hashes.' + neuron_data.hash ), 'value': neuron_id, 'ttl': 300 } );
 
-						console.log( "GOT DATA", Cache.get( { 'key': ( 'neurons.data.' + neuron_id ) } ));
-						
 						neurons.push( neuron_id );
 		
 						if( 'function' === typeof on_success ) {
@@ -1243,7 +1241,7 @@ console.log("STARSEARCH",synapse_data);
 			}
 		};
 
-
+		console.log("TOKSN FOE HIDDE",JSON.stringify(tokens));
 		hiddens = Public.prototype.getHiddenIds( tokens );
 		expected_actions = Public.prototype.countAttributes( hiddens );
 		for( x in hiddens ) {
@@ -2766,7 +2764,8 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					    'return_existing': true,
 					    'value': tokens,
 					    'on_success': function (synapse) {
-						console.log("SYN SUCCESS", synapse);
+					    
+						    //TODO: Debug statement
 					    },
 					    'on_complete': function (synapses) {
 
