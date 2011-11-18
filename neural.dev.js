@@ -1243,6 +1243,7 @@ console.log("STARSEARCH",synapse_data);
 
 		console.log("TOKSN FOE HIDDE",JSON.stringify(tokens));
 		hiddens = Public.prototype.getHiddenIds( tokens );
+		console.log("HIDDENS SUGGESTED",hiddens);
 		expected_actions = Public.prototype.countAttributes( hiddens );
 		for( x in hiddens ) {
 			if( hiddens.hasOwnProperty( x ) ) {
