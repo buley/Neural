@@ -1267,7 +1267,7 @@ console.log("STARSEARCH",synapse_data);
 					}
 				}
 				var new_arr = arr.slice(0);
-				new_arr.push( 'hidden' );
+				//new_arr.push( 'hidden' );
 				neuron.hash = Public.prototype.utilities.getId( new_arr );
 				neuron.type = 'hidden';
 					
