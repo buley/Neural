@@ -112,6 +112,12 @@ var Neural = (function() {
 
 	};
 
+
+	Public.prototype.incrementer = function( current, type_object ) {
+		current = ( isNaN( current ) ) ? current : 0;
+		return current + 1;
+	};
+
 	/* gets an output neuron */
 	Public.prototype.neurons.getOutput = function( key, on_success, on_error ) {
 
@@ -1776,7 +1782,8 @@ console.log("STARSEARCH",synapse_data);
 								}
 								Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': resulting_input_neuron_id, 'ttl': 300 } );
 								Cache.set( { 'key': ( 'neurons.data.' + resulting_input_neuron_id ), 'value': input_neuron_result, 'ttl': 300 } );
-								synapse_callback( hidden_id, resulting_input_neuron_id );
+
+								synapse_callback( hidden_id, finished_value );
 
 							}, 'on_error': function( context ) {
 								
@@ -1872,7 +1879,34 @@ console.log("STARSEARCH",synapse_data);
 							}
 
 							Cache.set( { 'key': ( 'synapses.hashes.' + synapse_hash ), 'value': returned_synapse_data.id, 'ttl': 300 } );
-							
+
+							//update if exists, on success return new neuron
+							/* Synapse Update Single */
+							Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+								console.log( 'success', finished_value );
+
+							}, 'on_error': function( context ) {
+						
+								console.log( 'error', context );
+						
+							}, 'on_complete': function() {
+						
+								console.log( 'complete' );
+						
+							}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+								
+								console.log( 'Previous', previous );
+								
+								if( 'function' == previous ) {
+									previous = previous();
+								};
+								
+								var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': token_hash } ) ) : 0;
+								return next; 
+
+							} } } );  
+
+
 							if( 'undefined' !== typeof on_success ) {
 								on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': false } );
 							}
@@ -1891,10 +1925,36 @@ console.log("STARSEARCH",synapse_data);
 
 						}, 'index': 'hash', 'key': synapse_hash } );
 					} else {
+
+						//update if exists, on success return new neuron
+						/* Synapse Update Single */
+						Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+							console.log( 'success', finished_value );
+
+							if( 'undefined' !== typeof on_success ) {
+								on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true } );
+							}
+
+						}, 'on_error': function( context ) {
 					
-						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'synapse', 'action': 'get', 'value': cached_synapse_data, 'cached': true } );
-						}
+							console.log( 'error', context );
+					
+						}, 'on_complete': function() {
+					
+							console.log( 'complete' );
+					
+						}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+							
+							console.log( 'Previous', previous );
+							
+							if( 'function' == previous ) {
+								previous = previous();
+							};
+							
+							var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': token_hash } ) ) : 0;
+							return next; 
+
+						} } } );  
 
 					}
 
