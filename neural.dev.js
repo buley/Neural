@@ -1992,7 +1992,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 				//update if exists, on success return new neuron
 				/* Synapse Update Single */
-				Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+				Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
 					console.log( 'success', finished_value );
 
 					if( 'undefined' !== typeof on_success ) {
@@ -2017,8 +2017,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					
 					var next = Public.prototype.incrementer( previous, { 'hash': synapse_hash } );
 
-					console.log("PREVOOIUS",previous);
-					console.log("CACHED",JSON.stringify(cached_synapse));
 					cached_synapse.strength = next;
 
 					if( 'undefined' !== typeof cached_synapse.id ) {
