@@ -2069,10 +2069,14 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		var hidden_hashes = {};
 
 		Network.addOrGetHiddenNeurons( { 'return_existing': true, 'tokens': tokens, 'on_success': function(neuron){
-			console.log("Network.addOrGetHiddenNeurons > success > NEURON",neuron);
+			if( !!debug ) {
+				console.log("Network.addOrGetHiddenNeurons > success > NEURON",neuron);
+			}
 			hidden_hashes[ neuron.id ] = neuron.hash;
 		}, 'on_error': function(){
-			console.log("Network.addOrGetHiddenNeurons > ERROR");
+			if( !!debug ) {
+				console.log("Network.addOrGetHiddenNeurons > ERROR");
+			}
 		}, 'on_complete': function( result ) {
 		
 			var result_len = result.length;
@@ -2082,8 +2086,9 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				var result_id = result[ z ];
 			
 				//begin
+				if( !!debug ) {
 					console.log("Network.addOrGetHiddenNeurons > COMPLETE", result );
-
+				}
 
 					hidden_hash = hidden_hashes[ result_id ];
 
