@@ -1849,15 +1849,14 @@ console.log("STARSEARCH",synapse_data);
 					if( true === debug ) {
 						console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
 					}
-
-					//yyy
+			
 					new_synapse_data.id = synapse_id;
-
+console.log("AWSOME",JSON.stringify(new_synapse_data));
 					Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.synapses.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.hashes.' + new_synapse_data.hash  ), 'value': synapse_id, 'ttl': 300 } );
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'synapse', 'action': 'put', 'data': new_synapse_data, 'result': synapse_id, 'cached': false } );
+						on_success( { 'type': 'synapse', 'action': 'put', 'data': new_synapse_data, 'result': synapse_id, 'cached': false, 'updated': false } );
 					}
 
 				}, 'on_error': function( context ) {
