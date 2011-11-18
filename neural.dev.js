@@ -1908,7 +1908,15 @@ console.log("STARSEARCH",synapse_data);
 								
 								var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
 
-								console.log( 'Updating', next );
+								returned_synapse_data.strength = next;
+
+								if( 'undefined' !== typeof returned_synapse_data.id ) {
+
+									Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
+								
+								}
+
+								console.log( 'Updating', next, returned_synapse_data );
 
 								return next; 
 
