@@ -1909,7 +1909,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 									previous = previous();
 								};
 								
-								var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
+								var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
 
 								returned_synapse_data.strength = next;
 
@@ -2024,8 +2024,9 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				
 						console.log("CACHiNG",JSON.stringify(cached_synapse));
 
-						Cache.set( { 'key': ( 'synapses.data.' + cached_synapse.id ), 'value': cached_synapse, 'ttl': 300 } );
+						Cache.set( { 'key': ( 'synapses.data.' + cached_synapse_id ), 'value': cached_synapse, 'ttl': 300 } );
 					
+		console.log("CURRENT",current,"+1",current+1);
 					}
 
 					console.log( 'Updating', next, cached_synapse );
