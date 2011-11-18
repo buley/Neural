@@ -1906,7 +1906,7 @@ console.log("STARSEARCH",synapse_data);
 									previous = previous();
 								};
 								
-								var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': token_hash } ) ) : 0;
+								var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
 								return next; 
 
 							} } } );  
@@ -1951,7 +1951,7 @@ console.log("STARSEARCH",synapse_data);
 								previous = previous();
 							};
 							
-							var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': token_hash } ) ) : 0;
+							var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
 							return next; 
 
 						} } } );  
@@ -1990,7 +1990,7 @@ console.log("STARSEARCH",synapse_data);
 						previous = previous();
 					};
 					
-					var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': token_hash } ) ) : 0;
+					var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
 					return next; 
 
 				} } } );  
