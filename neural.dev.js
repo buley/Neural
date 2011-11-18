@@ -1990,13 +1990,16 @@ console.log("STARSEARCH",synapse_data);
 			
 				}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
 					
-					console.log( 'Previous', previous );
+					console.log( 'Public.prototype.update > Previous', previous );
 					
 					if( 'function' == previous ) {
 						previous = previous();
 					};
 					
 					var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
+
+					console.log( 'Updating', next );
+
 					return next; 
 
 				} } } );  
