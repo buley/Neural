@@ -1251,7 +1251,6 @@ console.log("STARSEARCH",synapse_data);
 		
 				neuron = {};
 				neuron.display = [];
-
 				display = hiddens[ x ];
 				arr = [];	
 				if( 'string' === typeof display ) {	
@@ -1267,8 +1266,9 @@ console.log("STARSEARCH",synapse_data);
 						neuron.display.push( d );
 					}
 				}
-				arr.push( 'hidden' );
-				neuron.hash = Public.prototype.utilities.getId( arr );
+				var new_arr = arr.slice(0);
+				new_arr.push( 'hidden' );
+				neuron.hash = Public.prototype.utilities.getId( new_arr );
 				neuron.type = 'hidden';
 					
 				request = { 'value': neuron, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
