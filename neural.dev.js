@@ -6,7 +6,7 @@
 var Cache = {};
 var Neural = (function() {
 
-	var debug = false;
+	var debug = true;
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
@@ -866,7 +866,6 @@ var Neural = (function() {
 
 				if( true === return_existing ) {
 
-console.log("STARSEARCH",synapse_data);
 					Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
 					
 						synapse_id = returned_synapse.id;
@@ -997,7 +996,6 @@ console.log("STARSEARCH",synapse_data);
 			if( 'function' === typeof on_error ) {
 				on_error( context );
 			}
-		console.log('AMA',neurons.length,expected_actions);	
 			if( neurons.length >= expected_actions ) {
 				own_on_complete( synapses );
 			}
