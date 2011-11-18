@@ -116,7 +116,7 @@ var Neural = (function() {
 	Public.prototype.incrementer = function( current, type_object ) {
 		//current = ( !isNaN( current ) ) ? current : 0;
 		console.log("JAMIE JIMPLIN OR JANET JOPLER",current,current+1);
-		return current + Math.random() * 1000;
+		return current + 1;
 	};
 
 	/* gets an output neuron */
@@ -1998,8 +1998,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					if( 'undefined' !== typeof on_success ) {
 						on_success( { 'type': 'synapse', 'action': 'get', 'result': cached_synapse, 'cached': true, 'updated': true } );
 					}
-
-
 
 				}, 'on_error': function( context ) {
 			
