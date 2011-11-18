@@ -1907,6 +1907,9 @@ console.log("STARSEARCH",synapse_data);
 								};
 								
 								var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
+
+								console.log( 'Updating', next );
+
 								return next; 
 
 							} } } );  
@@ -1952,6 +1955,9 @@ console.log("STARSEARCH",synapse_data);
 							};
 							
 							var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
+
+							console.log( 'Updating', next );
+
 							return next; 
 
 						} } } );  
