@@ -2015,7 +2015,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						previous = previous();
 					};
 					
-					var next = Public.prototype.incrementer( previous, { 'hash': synapse_hash } );
+					var next = Public.prototype.incrementer( cached_synapse.strength, { 'hash': synapse_hash } );
 
 					cached_synapse.strength = next;
 
