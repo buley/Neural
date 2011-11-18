@@ -1962,9 +1962,39 @@ console.log("STARSEARCH",synapse_data);
 
 			} else {
 
-				if( 'undefined' !== typeof on_success ) {
-					on_success( { 'type': 'synapse', 'action': 'get', 'result': cached_synapse, 'cached': true } );
-				}
+
+				//update if exists, on success return new neuron
+				/* Synapse Update Single */
+				Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+					console.log( 'success', finished_value );
+
+					if( 'undefined' !== typeof on_success ) {
+						on_success( { 'type': 'synapse', 'action': 'get', 'result': cached_synapse, 'cached': true, 'updated': true } );
+					}
+
+
+
+				}, 'on_error': function( context ) {
+			
+					console.log( 'error', context );
+			
+				}, 'on_complete': function() {
+			
+					console.log( 'complete' );
+			
+				}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+					
+					console.log( 'Previous', previous );
+					
+					if( 'function' == previous ) {
+						previous = previous();
+					};
+					
+					var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': token_hash } ) ) : 0;
+					return next; 
+
+				} } } );  
+
 
 			}
 
