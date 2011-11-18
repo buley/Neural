@@ -1971,7 +1971,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 							new_synapse_data.strength = next;
 
-							if( 'undefined' !== typeof returned_synapse_data.id ) {
+							if( 'undefined' !== typeof new_synapse_data.id ) {
 
 								Cache.set( { 'key': ( 'synapses.data.' + new_synapse_data.id ), 'value': new_synapse_data, 'ttl': 300 } );
 							
