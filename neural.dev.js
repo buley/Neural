@@ -2056,6 +2056,9 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 			Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
 
+
+				neuron_data.id = hidden_id;
+
 				Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
 				Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
 
