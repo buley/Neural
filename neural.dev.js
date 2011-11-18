@@ -1850,6 +1850,9 @@ console.log("STARSEARCH",synapse_data);
 						console.log( 'Public.prototype.add > Network.put success > Network.put success', synapse_id );
 					}
 
+					//yyy
+					new_synapse_data.id = synapse_id;
+
 					Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.synapses.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.hashes.' + new_synapse_data.hash  ), 'value': synapse_id, 'ttl': 300 } );
