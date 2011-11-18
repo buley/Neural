@@ -1715,7 +1715,6 @@ console.log("STARSEARCH",synapse_data);
 		    synapse_callback = function() {};
 
 		tokens_copy.push( 'hidden' );
-		hidden_hash = Public.prototype.utilities.getId( tokens_copy );
 
 		hidden_layer_callback = function( hidden_id ) {
 
@@ -1945,7 +1944,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						//update if exists, on success return new neuron
 						/* Synapse Update Single */
 						Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
-							console.log( 'success', finished_value );
+							console.log( 'Public.prototype.update > Network.update > success', finished_value );
 
 							if( 'undefined' !== typeof on_success ) {
 								on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true, 'updated': true } );
@@ -1960,7 +1959,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 							console.log( 'complete' );
 					
 						}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
-							
+
 							console.log( 'Public.prototype.update > Previous', previous );
 							
 							if( 'function' == previous ) {
@@ -2039,6 +2038,8 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		};
 
 	    // Add the hidden node for the group of tokens	
+	    
+		hidden_hash = Public.prototype.utilities.getId( tokens_copy );
 
 		var neuron_data = {
 			'type': 'hidden'
