@@ -6,7 +6,7 @@
 var Cache = {};
 var Neural = (function() {
 
-	var debug = true;
+	var debug = false;
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
