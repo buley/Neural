@@ -2785,7 +2785,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				    //end on_error
 				    'on_complete': function (output_neurons) {
 					if( !!debug ) {
-				    		onsole.log('READY', input_neurons, hidden_neurons, output_neurons);
+						console.log('READY', input_neurons, hidden_neurons, output_neurons);
 					}
 					//not working yet
 					var input_neuron_length = input_neurons.length;
