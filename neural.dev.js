@@ -1452,7 +1452,7 @@ console.log("STARSEARCH",synapse_data);
 					for( c = 0; c < tokens_length; c += 1 ) {
 						cc = tokens[ c ];
 						if( aa !== cc && bb !== cc && aa !== bb ) {
-							arr = Public.prototype.utilities.alphaSortArray( [ aa, bb, cc, 'hidden' ] );
+							arr = Public.prototype.utilities.alphaSortArray( [ aa, bb, cc ] );
 							hidden_id = Public.prototype.utilities.getId( [ aa, bb, cc, 'hidden' ] );
 							hiddens[ hidden_id ] = arr;
 						}
