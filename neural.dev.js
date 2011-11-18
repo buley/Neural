@@ -2524,7 +2524,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 				} else {
 
-					if( 'undefined' !== typeof cached_neuron && Public.prototype.hasAttributes( cached_neuron ) ) {
+					if( 'undefined' !== typeof cached_neuron && null !== cached_neuron && Public.prototype.hasAttributes( cached_neuron ) ) {
 					
 						input_neurons.push( cached_neuron );
 					
