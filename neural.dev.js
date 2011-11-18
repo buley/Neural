@@ -1268,6 +1268,7 @@ console.log("STARSEARCH",synapse_data);
 				}
 				var new_arr = arr.slice(0);
 				//new_arr.push( 'hidden' );
+				//uuu
 				neuron.hash = Public.prototype.utilities.getId( new_arr );
 				neuron.type = 'hidden';
 					
@@ -1714,7 +1715,6 @@ console.log("STARSEARCH",synapse_data);
 		    hidden_layer_callback = function() {},
 		    synapse_callback = function() {};
 
-		tokens_copy.push( 'hidden' );
 
 		hidden_layer_callback = function( hidden_id ) {
 
