@@ -2026,7 +2026,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 						Cache.set( { 'key': ( 'synapses.data.' + cached_synapse_id ), 'value': cached_synapse, 'ttl': 300 } );
 					
-		console.log("CURRENT",current,"+1",current+1);
 					}
 
 					console.log( 'Updating', next, cached_synapse );
