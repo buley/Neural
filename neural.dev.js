@@ -1910,7 +1910,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 								if( 'function' == previous ) {
 									previous = previous();
 								};
-								console.log("PREEEEEEEEEEVIOUS",previous);
+
 								var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
 
 								returned_synapse_data.strength = next;
@@ -2019,6 +2019,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					
 					var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
 
+					console.log("PREVOOIUS",previous);
 					console.log("CACHED",JSON.stringify(cached_synapse));
 					cached_synapse.strength = next;
 
