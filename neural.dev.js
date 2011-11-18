@@ -1883,6 +1883,11 @@ console.log("STARSEARCH",synapse_data);
 							//update if exists, on success return new neuron
 							/* Synapse Update Single */
 							Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+	
+								if( 'undefined' !== typeof on_success ) {
+									on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false } );
+								}
+
 								console.log( 'success', finished_value );
 
 							}, 'on_error': function( context ) {
@@ -1905,11 +1910,6 @@ console.log("STARSEARCH",synapse_data);
 								return next; 
 
 							} } } );  
-
-
-							if( 'undefined' !== typeof on_success ) {
-								on_success( { 'type': 'synapse', 'action': 'get', 'result': returned_synapse_data, 'cached': false } );
-							}
 
 						}, 'on_error': function( context ) {
 							
