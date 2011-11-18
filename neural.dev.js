@@ -1964,7 +1964,15 @@ console.log("STARSEARCH",synapse_data);
 							
 							var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
 
-							console.log( 'Updating', next );
+							new_synapse_data.strength = next;
+
+							if( 'undefined' !== typeof returned_synapse_data.id ) {
+
+								Cache.set( { 'key': ( 'synapses.data.' + new_synapse_data.id ), 'value': new_synapse_data, 'ttl': 300 } );
+							
+							}
+
+							console.log( 'Updating', next, new_synapse_data );
 
 							return next; 
 
@@ -2006,7 +2014,15 @@ console.log("STARSEARCH",synapse_data);
 					
 					var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
 
-					console.log( 'Updating', next );
+					cached_synapse.strength = next;
+
+					if( 'undefined' !== typeof cached_synapse.id ) {
+
+						Cache.set( { 'key': ( 'synapses.data.' + cached_synapse.id ), 'value': cached_synapse, 'ttl': 300 } );
+					
+					}
+
+					console.log( 'Updating', next, cached_synapse );
 
 					return next; 
 
