@@ -2793,9 +2793,10 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					var input_neuron_length = input_neurons.length;
 					var output_neuron_length = output_neurons.length;
 					var hidden_neuron_length = hidden_neurons.length;
-					var a, b, c, hidden_neuron, input_neuron, output_neuron, hidden_neuron_id, input_neuron_id, output_neuron_id, tokens = [],
-					    synapse_hash, synapse_data;
-					console.log('INPUT', input_neurons, 'HID', hidden_neurons, 'OUT', output_neurons);
+					var a, b, c, hidden_neuron, input_neuron, output_neuron, hidden_neuron_id, input_neuron_id, output_neuron_id, tokens = [], synapse_hash, synapse_data;
+					if( !!debug ) {
+						console.log('INPUT', input_neurons, 'HID', hidden_neurons, 'OUT', output_neurons);
+					}
 					for (a = hidden_neuron_length; a > 1; a -= 1) {
 					    hidden_neuron = hidden_neurons[(a - 1)];
 					    console.log('hidden_neuron', hidden_neuron);
