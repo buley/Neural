@@ -1885,7 +1885,7 @@ console.log("STARSEARCH",synapse_data);
 							Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 	
 								if( 'undefined' !== typeof on_success ) {
-									on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false } );
+									on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false, 'updated': true } );
 								}
 
 								console.log( 'success', finished_value );
@@ -1932,7 +1932,7 @@ console.log("STARSEARCH",synapse_data);
 							console.log( 'success', finished_value );
 
 							if( 'undefined' !== typeof on_success ) {
-								on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true } );
+								on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true, 'updated': true } );
 							}
 
 						}, 'on_error': function( context ) {
