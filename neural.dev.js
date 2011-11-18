@@ -2014,9 +2014,12 @@ console.log("STARSEARCH",synapse_data);
 					
 					var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
 
+					console.log("CACHED",JSON.stringify(cached_synapse));
 					cached_synapse.strength = next;
 
 					if( 'undefined' !== typeof cached_synapse.id ) {
+				
+						console.log("CACHiNG",JSON.stringify(cached_synapse));
 
 						Cache.set( { 'key': ( 'synapses.data.' + cached_synapse.id ), 'value': cached_synapse, 'ttl': 300 } );
 					
