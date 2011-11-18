@@ -2129,10 +2129,10 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				} else {
 
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': cached_hidden_neuron_id, 'cached': true } );
+						on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': result_id, 'cached': true } );
 					}
 
-					hidden_layer_callback( cached_hidden_neuron_id );
+					hidden_layer_callback( result_id );
 
 				}
 
