@@ -981,7 +981,7 @@ var Neural = (function() {
 								console.log( 'complete' );
 							}
 
-						}, 'index': 'hash', 'key': '' + synapse_data.hash, 'data': { 'strength': function( previous ) {
+						}, 'index': 'hash', 'left': synapse_data.hash, 'data': { 'strength': function( previous ) {
 
 
 				console.log('s11');
