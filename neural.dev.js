@@ -2897,6 +2897,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		
 		var a
 		  , b
+		  , synapse_data
 		  , to
 		  , to_length = tos.length
 		  , from
