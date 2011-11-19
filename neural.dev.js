@@ -3045,10 +3045,11 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		for( x = 0; x < inputs_length; x += 1 ) {
 
 			input_id = inputs[ x ];
-			input = Public.prototype.returnNeuron( input_id );
-	
+
 			if( null !== input_id && 'undefined' !== typeof input_id ) {
 
+				input = Public.prototype.returnNeuron( input_id );
+				
 				if( 'undefined' === typeof own_network[ input_id ] ) {
 					own_network[ input_id ] = {};
 				}
@@ -3061,10 +3062,11 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		for( x = 0; x < outputs_length; x += 1 ) {
 
 			output_id = outputs[ x ];
-			output = Public.prototype.returnNeuron( output_id );
-	
+
 			if( null !== output_id && 'undefined' !== typeof output_id ) {
 
+				output = Public.prototype.returnNeuron( output_id );
+				
 				if( 'undefined' === typeof own_network[ output_id ] ) {
 					own_network[ output_id ] = {};
 				}
