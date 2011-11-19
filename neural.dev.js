@@ -1156,20 +1156,34 @@ var Neural = (function() {
 	Public.prototype.activateOutput = function( request ) {
 
 		var output = request.output
-		  , input = request.input;
+		  , input = request.input
+		  , on_success = request.on_success
+		  , on_error = request.on_complete
+		  , on_complete = request.on_complete
+		  , expected_actions = 0
+		  , action_count = 0;
 
 		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
-			console.log( "NEURON", neuron );
-		}, 'on_error': function(){
-			console.log( "ERROR" );
-		}, 'on_complete': function( result ) {
-			console.log( "GREAT COMPLETE", result );
 
-			Network.addOrGetHiddenNeurons( { 'return_existing': true, 'tokens': input, 'on_success': function( neuron ){
-				console.log( "addOrGetHiddenNeurons > NEURON", neuron ); }, 'on_error': function(){
-					console.log( "addOrGetHiddenNeurons > ERROR" );
+		}, 'on_error': function( context ){
+			if( 'function' === typeof on_error ) {
+				on_error( context );
+			}
+		}, 'on_complete': function( result ) {
+			Network.addOrGetHiddenNeurons(
+				{ 'return_existing': true
+				, 'tokens': input
+				, 'on_success': function( neuron ){
+					if( 'function' === typeof on_error ) {
+						on_error( context );
+					}
+				}, 'on_error': function( context ){
+					if( 'function' === typeof on_error ) {
+						on_error( context );
+					}
 				}, 'on_complete': function( result ) {
-					console.log( "addOrGetHiddenNeurons > GREAT COMPLETE", result );
+			
+
 				}
 			} );
 
