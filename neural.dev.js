@@ -1187,8 +1187,25 @@ var Neural = (function() {
 				}, 'on_complete': function( hidden_ids ) {
 					
 					synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
-					
-					console.log("ADOPTION AGENCY",synapses);
+					Network.addOrGetSynapses({
+					    'return_existing': true,
+					    'value': tokens,
+					    'on_success': function (synapse) {
+						    if( 'function' === typeof on_complete ) {
+							on_complete( synapses );
+						    }
+						    //TODO: Debug statement
+					    },
+					    'on_complete': function (synapses) {
+
+						partial_network = Network.buildNetwork(input_neurons, hidden_neurons, output_neurons, synapses);
+
+						if( 'function' === typeof on_complete ) {
+							on_complete( partial_network );
+						}
+					    }
+					});
+
 
 				}
 			} );
