@@ -2915,7 +2915,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	};
 
 
-
 	/* takes a token or tokens and builds an in memory representation of relevant 
 	 * neurons and their connections of an MLP such
 	 * that it can be queried */
