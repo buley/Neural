@@ -3891,7 +3891,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		req.on_success = function( value ) {
 			if( true === debug ) {
-				console.log( 'Public.prototype.synapses.setStrength success', value );
+				console.log( 'Public.prototype.synapses.update success', value );
 			}
 
 			if( 'function' == typeof on_success ) {
@@ -3901,7 +3901,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		req.on_error = function( context ) {
 			if( true === debug ) {
-				console.log( 'Public.prototype.synapses.setStrength error', context );
+				console.log( 'Public.prototype.synapses.update error', context );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -3910,7 +3910,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	
 		req.on_complete = function() {
 			if( true === debug ) {
-				console.log( 'Public.prototype.getAttr complete' );
+				console.log( 'Public.prototype.getAttr update' );
 			}
 			if( 'function' == typeof on_complete ) {
 				on_complete();
