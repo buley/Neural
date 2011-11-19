@@ -966,7 +966,7 @@ var Neural = (function() {
 									console.log( 'complete' );
 								}
 
-							}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+							}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
 								
 								if( true === debug ) {
 									console.log( 'Public.prototype.update > Previous', previous );
@@ -993,21 +993,6 @@ var Neural = (function() {
 								return next; 
 
 							} } } );  
-
-						}, 'on_error': function( context ) {
-							
-							if( true === debug ) {
-								console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
-							}
-							
-							Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
-						
-							if( 'function' === typeof on_error ) {
-								on_error( context );
-							}
-
-						}, 'index': 'hash', 'key': synapse_data.hash } );
-
 
 
 		} else {
