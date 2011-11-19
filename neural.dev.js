@@ -808,6 +808,127 @@ var Neural = (function() {
 
 	};
 
+	//
+
+	
+	Public.prototype.addOrUpdateSynapse = function( req ) {
+
+		var synapse_data = req.value || {}
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , return_existing = req.return_existing
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , x = 0
+		    , synapse_hash = ''
+		    , synapses = []
+		    , synapses_length = 0
+		    , synapse
+	 	    , synapse_data
+		    , cached_synapse_data
+		    , cached_synapse_id;
+
+		synapse_hash = Public.prototype.utilities.getId( synapse_data );
+		synapse_data[ 'hash' ] = synapse_hash;
+		synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
+
+		cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
+		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
+			var cached_synapse = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
+		}
+
+		cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
+			cached_synapse_data = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
+		}
+
+		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
+
+			Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
+
+				synapse_data.id = synapse_id;
+				
+				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
+
+				Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+				
+				synapses.push( synapse_id );
+				
+				if( 'function' === typeof on_success ) {
+					on_success( synapse_data );
+				}				
+
+			}, 'on_error': function( context ) {
+			
+				if( true === debug ) {
+					console.log( 'Public.prototype.add Network.put error', context );
+				}
+
+				if( true === return_existing ) {
+
+					Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
+					
+						synapse_id = returned_synapse.id;
+
+						if( true === debug ) {
+							console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify( returned_synapse ) );
+						}
+
+						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': returned_synapse, 'ttl': 300 } );
+						Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+
+						synapses.push( synapse_id );
+		
+						if( 'function' === typeof on_success ) {
+							on_success( returned_synapse );
+						}				
+
+					}, 'on_error': function( context ) {
+						
+						if( true === debug ) {
+							console.log( 'Public.prototype.add Network.put error > Network.get error', context );
+						}
+
+						Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+						if( 'function' === typeof on_error ) {
+							on_error( context );
+						}
+
+					}, 'index': 'hash', 'key': synapse_data.hash, 'expecting': { 'type': 'hidden' } } );
+
+				} else {
+
+					Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+					if( 'function' === typeof on_error ) {
+						on_error();
+					}
+
+				}
+
+			}, 'data': synapse_data } );
+
+		} else {
+
+			if( true === return_existing ) {
+
+				synapses.push( cached_synapse_id );
+
+				if( 'function' === typeof on_success ) {
+					on_success( cached_synapse_data );
+				}
+
+			}
+
+		}
+
+	};
+	
+
+
+
 	//xxx
 	
 	Public.prototype.addOrGetSynapse = function( req ) {
@@ -924,76 +1045,6 @@ var Neural = (function() {
 		}
 
 	};
-
-	Public.prototype.addOrUpdateSynapses = function( req ) {
-
-		var on_success = req.on_success || null
-		    , on_error = req.on_error || null
-		    , on_complete = req.on_complete || null
-		    , own_on_success
-		    , own_on_error
-		    , own_on_complete
-		    , expected_actions = 0
-		    , synapses = []
-		    , synapse
-		    , synapse_id;
-
-		own_on_success = function( passed_synapse ) {
-	
-			if( !!debug ) {
-				console.log( 'Public.prototype.addOrGetNeuron > success', passed_synapse );
-			}
-
-			synapse_id = passed_synapse.id;
-			synapses.push( synapse_id );
-
-			if( 'function' === typeof on_success ) {
-				on_success( passed_synapse );
-			}
-			
-			if( synapses.length >= expected_actions ) {
-				own_on_complete( synapses );
-			}
-
-		};
-
-		own_on_error = function( context ) {
-			
-			if( !!debug ) {
-				console.log( 'Public.prototype.addOrGetNeurons > error', context );
-			}
-		
-			expected_actions -= 1;
-			
-			if( 'function' === typeof on_error ) {
-				on_error( context );
-			}
-			if( neurons.length >= expected_actions ) {
-				own_on_complete( synapses );
-			}
-
-		};
-
-		own_on_complete = function( passed_synapses ) {
-			if( !!debug ) {
-				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_synapses );
-			}
-			if( synapses.length >= expected_actions ) {
-				if( 'function' === typeof on_complete ) {
-					on_complete( passed_synapses );
-				}
-			}
-		};
-
-
-		//
-		Public.prototype.addOrGetSynapses( { 
-			'on_success': own_on_success
-			, 'on_error': own_on_error
-			, 'on_complete': own_on_complete
-		} );
-
-	};
 	
 	//Synapses
 	Public.prototype.addOrGetSynapses = function( req ) {
@@ -1103,6 +1154,117 @@ var Neural = (function() {
 		return this;	
 
 	}
+
+	//Synapses
+	Public.prototype.addOrUpdateSynapses = function( req ) {
+
+		var additions = []
+		    , incoming = req.value || []
+		    , incoming_length = incoming.length || 0
+		    , synapses = []
+		    , synapses_length = 0
+		    , expected_actions = synapses_length
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , return_existing = req.return_existing
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+		    , own_on_success
+		    , own_on_error
+		    , own_on_complete
+		    , x = 0
+		    , neuron_hash = ''
+		    , neurons = []
+		    , arr = []
+		    , neurons_length = 0
+		    , neuron
+		    , request
+	 	    , neuron_data
+		    , cached_neuron_data
+		    , cached_neuron_id;
+
+		for( x = 0; x < incoming_length; x += 1 ) {
+
+			synapse = incoming[ x ];
+			additions.push( { 'to': synapse.to, 'to_type': synapse.to_type, 'from': synapse.from, 'from_type': synapse.from_type } );
+
+		}
+
+		if( true !== return_existing ) {
+			return_existing = false;
+		}
+
+		own_on_success = function( passed_synapse ) {
+	
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeuron > success', passed_synapse );
+			}
+
+			synapse_id = passed_synapse.id;
+			synapses.push( synapse_id );
+
+			if( 'function' === typeof on_success ) {
+				on_success( passed_synapse );
+			}
+			
+			if( synapses.length >= expected_actions ) {
+				own_on_complete( synapses );
+			}
+
+		};
+
+		own_on_error = function( context ) {
+			
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > error', context );
+			}
+		
+			expected_actions -= 1;
+			
+			if( 'function' === typeof on_error ) {
+				on_error( context );
+			}
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( synapses );
+			}
+
+		};
+
+		own_on_complete = function( passed_synapses ) {
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_synapses );
+			}
+			if( synapses.length >= expected_actions ) {
+				if( 'function' === typeof on_complete ) {
+					on_complete( passed_synapses );
+				}
+			}
+		};
+
+		expected_actions = Public.prototype.countAttributes( additions );
+
+		for( x in additions ) {
+			if( additions.hasOwnProperty( x ) ) {
+		
+				synapse = additions[ x ];
+		
+				if( 'object' !== typeof synapse ) {
+					throw( 'Neuron must be an object' );
+				}
+		
+				request = { 'value': synapse, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
+				Public.prototype.addOrUpdateSynapse( request );
+		
+			}
+		}
+		
+		return this;	
+
+	}
+
+
 
 
 
