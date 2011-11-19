@@ -1192,6 +1192,7 @@ var Neural = (function() {
 					}, 'on_complete': function( hidden_ids ) {
 						
 						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
+						console.log("SYNAPSES TO ADD",synapses);
 						Network.addOrGetSynapses( {
 						    'return_existing': true
 						    , 'value': input
@@ -1203,7 +1204,8 @@ var Neural = (function() {
 						    
 						    }, 'on_complete': function ( synapses ) {
 
-							partial_network = Network.buildNetwork( input_ids, hidden_ids, output_ids, synapses );
+								console.log('SYNAPSES RETURNED',synapses);
+    							    partial_network = Network.buildNetwork( input_ids, hidden_ids, output_ids, synapses );
 
 							if( 'function' === typeof on_complete ) {
 								on_complete( partial_network );
