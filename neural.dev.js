@@ -845,6 +845,7 @@ var Neural = (function() {
 
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
 
+			/*
 			Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
 
 				synapse_data.id = synapse_id;
@@ -941,6 +942,72 @@ var Neural = (function() {
 				}
 
 			}, 'data': synapse_data } );
+			*/
+
+							/* Synapse Update Single */
+							Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+	
+								if( 'undefined' !== typeof on_success ) {
+									on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false, 'updated': true } );
+								}
+
+								if( true === debug ) {
+									console.log( 'success', finished_value );
+								}
+							}, 'on_error': function( context ) {
+						
+								if( true === debug ) {
+									console.log( 'error', context );
+						
+								}
+							}, 'on_complete': function() {
+						
+								if( true === debug ) {
+									console.log( 'complete' );
+								}	
+							}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+								
+								if( true === debug ) {
+									console.log( 'Public.prototype.update > Previous', previous );
+								}
+
+								if( 'function' == previous ) {
+									previous = previous();
+								};
+
+								var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
+
+								returned_synapse_data.strength = next;
+
+								if( 'undefined' !== typeof returned_synapse_data.id ) {
+
+									Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
+								
+								}
+
+								if( true === debug ) {
+									console.log( 'Updating', next, returned_synapse_data );
+								}
+
+								return next; 
+
+							} } } );  
+
+						}, 'on_error': function( context ) {
+							
+							if( true === debug ) {
+								console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get error', context );
+							}
+							
+							Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
+						
+							if( 'function' === typeof on_error ) {
+								on_error( context );
+							}
+
+						}, 'index': 'hash', 'key': synapse_data.hash } );
+
+
 
 		} else {
 
