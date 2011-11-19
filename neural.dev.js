@@ -964,7 +964,8 @@ var Neural = (function() {
 						
 								if( true === debug ) {
 									console.log( 'complete' );
-								}	
+								}
+
 							}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
 								
 								if( true === debug ) {
