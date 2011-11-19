@@ -1152,6 +1152,32 @@ var Neural = (function() {
 
 	}
 
+	//xxx
+	Public.prototype.activateOutput = function( request ) {
+
+		var output = request.output
+		  , input = request.input;
+
+		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function(neuron){
+			console.log("NEURON",neuron);
+		}, 'on_error': function(){
+			console.log("ERROR");
+		}, 'on_complete': function( result ) {
+			console.log("GREAT COMPLETE", result );
+
+			Network.addOrGetHiddenNeurons( { 'return_existing': true, 'tokens': input, 'on_success': function( neuron ){
+				console.log( "addOrGetHiddenNeurons > NEURON", neuron ); }, 'on_error': function(){
+					console.log( "addOrGetHiddenNeurons > ERROR");
+				}, 'on_complete': function( result ) {
+					console.log( "addOrGetHiddenNeurons > GREAT COMPLETE", result );
+				}
+			} );
+
+		} } );
+
+	}
+
+	//xxx
 	//Hidden neurons
 
 	Public.prototype.addOrGetHiddenNeurons = function( req ) {
