@@ -1169,9 +1169,9 @@ var Neural = (function() {
 			console.log("Network.addOrGetInputNeurons > GREAT COMPLETE", input_ids );
 
 			//begin
-			Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
-				if( 'function' === typeof on_error ) {
-					on_error( context );
+			Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( output_neuron ){
+				if( 'function' === typeof on_success ) {
+					on_success( output_neuron );
 				}		
 			}, 'on_error': function( context ){
 				if( 'function' === typeof on_error ) {
@@ -1204,7 +1204,7 @@ var Neural = (function() {
 						    
 						    }, 'on_complete': function ( synapses ) {
 
-							    console.log('SYNAPSES RETURNED',synapses);
+
     							    partial_network = Network.buildNetwork( input_ids, hidden_ids, output_ids, synapses );
 
 							if( 'function' === typeof on_complete ) {
