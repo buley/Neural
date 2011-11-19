@@ -2891,7 +2891,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		for( x = 0; x < synapses_length; x += 1 ) {
 
 			synapse = Public.prototype.returnSynapse( synapses[ x ] );
-			console.log("CACHED SYNAPSE",synapse);			
 			if( null !== synapse && 'undefined' !== typeof synapse ) {
 
 				// Handle to
