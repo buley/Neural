@@ -1512,7 +1512,7 @@ var Neural = (function() {
 					}, 'on_complete': function( hidden_ids ) {
 						
 						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
-						Network.addOrGetSynapses( {
+						Network.addOrUpdateSynapses( {
 						    'return_existing': true
 						    , 'value': synapses
 						    , 'on_success': function (synapse) {
