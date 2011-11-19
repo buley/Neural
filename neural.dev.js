@@ -1192,14 +1192,13 @@ var Neural = (function() {
 					}, 'on_complete': function( hidden_ids ) {
 						
 						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
-						console.log("SYNAPSES TO ADD",synapses);
 						Network.addOrGetSynapses( {
 						    'return_existing': true
 						    , 'value': synapses
 						    , 'on_success': function (synapse) {
 
-							    if( 'function' === typeof on_complete ) {
-								on_complete( synapses );
+							    if( 'function' === typeof on_success ) {
+								on_success( synapses );
 							    }
 						    
 						    }, 'on_complete': function ( synapses ) {
