@@ -2894,7 +2894,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	}
 	
 	Public.prototype.zipSynapses = function( to_type, tos, from_type, froms ) {
-		var a, b, to, from, tokens = [];
+		var a, b, to, to_length = tos.length, from, from_length = froms.length, tokens = [];
 		for (a = to_length; a > 1; a -= 1) {
 		    to = tos[(a - 1)];
 		    console.log('to', to);
