@@ -1161,7 +1161,8 @@ var Neural = (function() {
 		  , on_error = request.on_complete
 		  , on_complete = request.on_complete
 		  , expected_actions = 0
-		  , action_count = 0;
+		  , action_count = 0
+		  , synapses = [];
 
 		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
 			if( 'function' === typeof on_error ) {
@@ -1184,9 +1185,9 @@ var Neural = (function() {
 						on_error( context );
 					}
 				}, 'on_complete': function( hidden_ids ) {
-					//
 					
-					console.log("UPTIGHT CHOIR BOY", output_ids, hidden_ids ); 
+					synapses.push( Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids  ) );
+					console.log("UPTIGHT CHOIR BOY", output_ids, hidden_ids, synapses ); 
 
 				}
 			} );
@@ -2902,10 +2903,10 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			console.log('from', from);
 			// add
 			synapse_data = {
-			    'to': to,
-			    'to_type': to_type
-			    'from': from,
-			    'from_type': from_type
+			    'to': to
+			    , 'to_type': to_type
+			    , 'from': from
+			    , 'from_type': from_type
 			}
 			tokens.push(synapse_data);
 		    }
