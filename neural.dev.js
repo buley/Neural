@@ -2903,10 +2903,10 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			console.log('from', from);
 			// add
 			synapse_data = {
-			    'to': to,
-			    'to_type': to_type
-			    'from': from,
-			    'from_type': from_type
+			    'to': to
+			    , 'to_type': to_type
+			    , 'from': from
+			    , 'from_type': from_type
 			}
 			tokens.push(synapse_data);
 		    }
