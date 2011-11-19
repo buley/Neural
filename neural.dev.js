@@ -3891,7 +3891,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		req.on_success = function( value ) {
 			if( true === debug ) {
-				console.log( 'Public.prototype.synapses.update success', value );
+				console.log( 'Public.prototype.update success', value );
 			}
 
 			if( 'function' == typeof on_success ) {
@@ -3901,7 +3901,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		req.on_error = function( context ) {
 			if( true === debug ) {
-				console.log( 'Public.prototype.synapses.update error', context );
+				console.log( 'Public.prototype.update error', context );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -3910,7 +3910,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	
 		req.on_complete = function() {
 			if( true === debug ) {
-				console.log( 'Public.prototype.getAttr update' );
+				console.log( 'Public.prototype.update complete' );
 			}
 			if( 'function' == typeof on_complete ) {
 				on_complete();
@@ -3955,7 +3955,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		req.on_success = function( value ) {
 			if( true === debug ) {
-				console.log( 'Public.prototype.getAttr success', value );
+				console.log( 'Public.prototype.delete success', value );
 			}
 			if( 'function' == typeof on_success ) {
 				on_success( value );
@@ -3964,7 +3964,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		req.on_error = function( context ) {
 			if( true === debug ) {
-				console.log( 'Public.prototype.getAttr error', context );
+				console.log( 'Public.prototype.delete error', context );
 			}
 			if( 'function' == typeof on_error ) {
 				on_error( context );
@@ -3973,7 +3973,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		req.on_complete = function() {
 			if( true === debug ) {
-				console.log( 'Public.prototype.getAttr complete' );
+				console.log( 'Public.prototype.delete complete' );
 			}
 			if( 'function' == typeof on_complete ) {
 				on_complete();
