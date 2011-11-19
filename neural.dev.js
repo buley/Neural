@@ -1167,7 +1167,7 @@ var Neural = (function() {
 
 			Network.addOrGetHiddenNeurons( { 'return_existing': true, 'tokens': input, 'on_success': function( neuron ){
 				console.log( "addOrGetHiddenNeurons > NEURON", neuron ); }, 'on_error': function(){
-					console.log( "addOrGetHiddenNeurons > ERROR");
+					console.log( "addOrGetHiddenNeurons > ERROR" );
 				}, 'on_complete': function( result ) {
 					console.log( "addOrGetHiddenNeurons > GREAT COMPLETE", result );
 				}
