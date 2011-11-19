@@ -1196,9 +1196,9 @@ var Neural = (function() {
 							on_complete( synapses );
 						    }
 					    
-					    }, 'on_complete': function (synapses) {
+					    }, 'on_complete': function ( synapses ) {
 
-						partial_network = Network.buildNetwork( input_neurons, hidden_neurons, output_neurons, synapses);
+						partial_network = Network.buildNetwork( null, hidden_ids, output_ids, synapses );
 
 						if( 'function' === typeof on_complete ) {
 							on_complete( partial_network );
