@@ -950,7 +950,7 @@ var Neural = (function() {
 
 			if( true === return_existing ) {
 
-				console.log('s7');
+				console.log('s7',synapse_data.hash);
 				synapses.push( cached_synapse_id );
 
 
@@ -981,7 +981,7 @@ var Neural = (function() {
 								console.log( 'complete' );
 							}
 
-						}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
+						}, 'index': 'hash', 'key': '' + synapse_data.hash, 'data': { 'strength': function( previous ) {
 
 
 				console.log('s11');
