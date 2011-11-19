@@ -865,6 +865,7 @@ var Neural = (function() {
 					console.log( 'Public.prototype.add Network.put error', context );
 				}
 
+				console.log("ERROR ADDING SYNAPSES< LETS TRY UPDATING");
 				if( true === return_existing ) {
 
 					Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
@@ -1336,7 +1337,6 @@ var Neural = (function() {
 				}
 		
 				request = { 'value': synapse, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
-				console.log("INDIV SYN",request);
 				Public.prototype.addOrUpdateSynapse( request );
 		
 			}
