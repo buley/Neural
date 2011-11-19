@@ -2894,24 +2894,36 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	}
 	
 	Public.prototype.zipSynapses = function( to_type, tos, from_type, froms ) {
-		var a, b, to, to_length = tos.length, from, from_length = froms.length, tokens = [];
+		
+		var a
+		  , b
+		  , to
+		  , to_length = tos.length
+		  , from
+		  , from_length = froms.length
+		  , tokens = [];
+
 		for (a = to_length; a > 1; a -= 1) {
-		    to = tos[(a - 1)];
-		    console.log('to', to);
-		    for (b = from_length; b > 1; b -= 1) {
-			from = froms[(b - 1)];
-			console.log('from', from);
-			// add
-			synapse_data = {
-			    'to': to
-			    , 'to_type': to_type
-			    , 'from': from
-			    , 'from_type': from_type
-			};
-			tokens.push(synapse_data);
-		    }
+		    
+			to = tos[(a - 1)];
+		    
+			for (b = from_length; b > 1; b -= 1) {
+			
+				from = froms[(b - 1)];
+			
+				synapse_data = {
+				    'to': to
+				    , 'to_type': to_type
+				    , 'from': from
+				    , 'from_type': from_type
+				};
+
+				tokens.push( synapse_data );
+			}
 		}
+
 		return tokens;
+
 	};
 
 
