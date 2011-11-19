@@ -1008,7 +1008,11 @@ var Neural = (function() {
 
 					//zzz
 
-				} } } );
+				} }, 'on_complete': function() {
+			       
+					console.log("reaganomics", "updated");
+
+				} } );
 
 			}
 
