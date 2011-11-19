@@ -2905,11 +2905,11 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		for (a = to_length; a > 1; a -= 1) {
 		    
-			to = tos[(a - 1)];
+			to = tos[ ( a - 1 ) ];
 		    
-			for (b = from_length; b > 1; b -= 1) {
+			for ( b = from_length; b > 1; b -= 1 ) {
 			
-				from = froms[(b - 1)];
+				from = froms[ ( b - 1 ) ];
 			
 				synapse_data = {
 				    'to': to
