@@ -1336,6 +1336,7 @@ var Neural = (function() {
 				}
 		
 				request = { 'value': synapse, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
+				console.log("INDIV SYN",request);
 				Public.prototype.addOrUpdateSynapse( request );
 		
 			}
@@ -1517,8 +1518,6 @@ var Neural = (function() {
 						    
 						    }, 'on_complete': function ( synapses ) {
 							
-							console.log("COMEPLTED SYNAPSES",synapses);
-
     							partial_network = Network.buildNetwork( input_ids, hidden_ids, output_ids, synapses );
 							if( 'function' === typeof on_complete ) {
 								on_complete( partial_network );
