@@ -971,7 +971,7 @@ var Neural = (function() {
 					if( true === debug ) {
 						console.log( 'Public.prototype.add Network.put error > Network.get error', context );
 					}
-
+					console.log("DAMN YOU GODZILLA",synapse_data.hash);
 					Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
 
 					if( 'function' === typeof on_error ) {
