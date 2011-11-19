@@ -2907,7 +2907,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			    , 'to_type': to_type
 			    , 'from': from
 			    , 'from_type': from_type
-			}
+			};
 			tokens.push(synapse_data);
 		    }
 
