@@ -925,6 +925,20 @@ var Neural = (function() {
 
 	};
 
+	Public.prototype.addOrUpdateSynapses = function( req ) {
+		var on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , on_complete = req.on_complete || null
+
+		//
+		Public.prototype.addOrGetSynapses( { 
+			'on_success': own_on_success
+			, 'on_error': own_on_error
+			, 'on_complete': own_on_complete
+		} );
+
+	};
+	
 	//Synapses
 	Public.prototype.addOrGetSynapses = function( req ) {
 
@@ -1204,7 +1218,7 @@ var Neural = (function() {
 						    }, 'on_complete': function ( synapses ) {
 
 
-    							    partial_network = Network.buildNetwork( input_ids, hidden_ids, output_ids, synapses );
+    							partial_network = Network.buildNetwork( input_ids, hidden_ids, output_ids, synapses );
 
 							if( 'function' === typeof on_complete ) {
 								on_complete( partial_network );
