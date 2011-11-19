@@ -1162,7 +1162,7 @@ var Neural = (function() {
 		  , on_complete = request.on_complete
 		  , expected_actions = 0
 		  , action_count = 0
-		  , synapses[];
+		  , synapses = [];
 
 		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
 			if( 'function' === typeof on_error ) {
