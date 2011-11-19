@@ -902,7 +902,7 @@ var Neural = (function() {
 							on_error( context );
 						}
 
-					}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
+					}, 'key': synapse_data.id, 'data': { 'strength': function( previous ) {
 						//dynamic data
 
 				console.log('s6');
@@ -985,7 +985,9 @@ var Neural = (function() {
 
 
 				console.log('s11');
+	
 					console.log("DOING UPDATE FROM CACHE",JSON.stringify(cached_synapse_data),Public.prototype.incrementer( cached_synapse_data.strength, { 'hash': cached_synapse_data.hash } ));
+
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
 					}
