@@ -948,6 +948,7 @@ var Neural = (function() {
 
 				synapses.push( cached_synapse_id );
 				console.log("DOING UPDATE FROM CACHE",cached_synapse_id);
+
 				Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
 			
 					// say goo goo ga ga jack	
@@ -977,7 +978,7 @@ var Neural = (function() {
 						on_error( context );
 					}
 
-				}, 'index': 'hash', 'key': cached_synapse_data.hash, 'data': { 'strength': function( previous ) {
+				}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
 					//dynamic data
 
 					if( true === debug ) {
