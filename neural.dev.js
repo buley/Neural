@@ -980,7 +980,7 @@ var Neural = (function() {
 				}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
 					//dynamic data
 
-					console.log("DAMN YOU MOTHRA",synapse_data.hash);
+					console.log("DAMN YOU MOTHRA",previous,synapse_data.hash);
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
 					}
