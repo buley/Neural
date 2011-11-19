@@ -947,7 +947,7 @@ var Neural = (function() {
 			if( true === return_existing ) {
 
 				synapses.push( cached_synapse_id );
-				console.log("DOING UPDATE FROM CACHE",cached_synapse_id,synapse_data);
+				console.log("DOING UPDATE FROM CACHE",cached_synapse_id,synapse_data.hash);
 
 				Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
 			
@@ -981,6 +981,7 @@ var Neural = (function() {
 				}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
 					//dynamic data
 
+					console.log("DAMN YOU MOTHRA",synapse_data.hash);
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
 					}
