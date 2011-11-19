@@ -1164,56 +1164,62 @@ var Neural = (function() {
 		  , action_count = 0
 		  , synapses = [];
 
-		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
-			if( 'function' === typeof on_error ) {
-				on_error( context );
-			}		
-		}, 'on_error': function( context ){
-			if( 'function' === typeof on_error ) {
-				on_error( context );
-			}
-		}, 'on_complete': function( output_ids ) {
-			Network.addOrGetHiddenNeurons(
-				{ 'return_existing': true
-				, 'tokens': input
-				, 'on_success': function( neuron ){
-					if( 'function' === typeof on_error ) {
-						on_error( context );
-					}
-				}, 'on_error': function( context ){
-					if( 'function' === typeof on_error ) {
-						on_error( context );
-					}
-				}, 'on_complete': function( hidden_ids ) {
-					
-					synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
-					Network.addOrGetSynapses( {
-					    'return_existing': true
-					    , 'value': input
-					    , 'on_success': function (synapse) {
+		//xx
+		Network.addOrGetInputNeurons( { 'return_existing': true, 'tokens': [ 'click', 'upvote' ], 'on_success': function(neuron){console.log("NEURON",neuron);}, 'on_error': function(){console.log("ERROR");}, 'on_complete': function( result ) {
+			console.log("Network.addOrGetInputNeurons > GREAT COMPLETE", result );
 
-						    if( 'function' === typeof on_complete ) {
-							on_complete( synapses );
-						    }
-					    
-					    }, 'on_complete': function ( synapses ) {
-
-						partial_network = Network.buildNetwork( null, hidden_ids, output_ids, synapses );
-
-						if( 'function' === typeof on_complete ) {
-							on_complete( partial_network );
-						}
-					    
-					    }
-					
-					} );
-
-
+			//begin
+			Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
+				if( 'function' === typeof on_error ) {
+					on_error( context );
+				}		
+			}, 'on_error': function( context ){
+				if( 'function' === typeof on_error ) {
+					on_error( context );
 				}
-			} );
+			}, 'on_complete': function( output_ids ) {
+				Network.addOrGetHiddenNeurons(
+					{ 'return_existing': true
+					, 'tokens': input
+					, 'on_success': function( neuron ){
+						if( 'function' === typeof on_error ) {
+							on_error( context );
+						}
+					}, 'on_error': function( context ){
+						if( 'function' === typeof on_error ) {
+							on_error( context );
+						}
+					}, 'on_complete': function( hidden_ids ) {
+						
+						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
+						Network.addOrGetSynapses( {
+						    'return_existing': true
+						    , 'value': input
+						    , 'on_success': function (synapse) {
 
+							    if( 'function' === typeof on_complete ) {
+								on_complete( synapses );
+							    }
+						    
+						    }, 'on_complete': function ( synapses ) {
+
+							partial_network = Network.buildNetwork( null, hidden_ids, output_ids, synapses );
+
+							if( 'function' === typeof on_complete ) {
+								on_complete( partial_network );
+							}
+						    
+						    }
+						
+						} );
+
+
+					}
+				} );
+
+			} } );
+			//end
 		} } );
-
 	}
 
 	//xxx
