@@ -1165,7 +1165,7 @@ var Neural = (function() {
 		  , synapses = [];
 
 		//xx
-		Network.addOrGetInputNeurons( { 'return_existing': true, 'tokens': [ 'click', 'upvote' ], 'on_success': function(neuron){console.log("NEURON",neuron);}, 'on_error': function(){console.log("ERROR");}, 'on_complete': function( input_ids ) {
+		Network.addOrGetInputNeurons( { 'return_existing': true, 'tokens': input, 'on_success': function(neuron){console.log("NEURON",neuron);}, 'on_error': function(){console.log("ERROR");}, 'on_complete': function( input_ids ) {
 			console.log("Network.addOrGetInputNeurons > GREAT COMPLETE", input_ids );
 
 			//begin
@@ -1204,7 +1204,7 @@ var Neural = (function() {
 						    
 						    }, 'on_complete': function ( synapses ) {
 
-								console.log('SYNAPSES RETURNED',synapses);
+							    console.log('SYNAPSES RETURNED',synapses);
     							    partial_network = Network.buildNetwork( input_ids, hidden_ids, output_ids, synapses );
 
 							if( 'function' === typeof on_complete ) {
