@@ -2910,7 +2910,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			};
 			tokens.push(synapse_data);
 		    }
-
+		}
 		return tokens;
 	};
 
