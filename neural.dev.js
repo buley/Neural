@@ -1181,9 +1181,9 @@ var Neural = (function() {
 				Network.addOrGetHiddenNeurons(
 					{ 'return_existing': true
 					, 'tokens': input
-					, 'on_success': function( neuron ){
-						if( 'function' === typeof on_error ) {
-							on_error( context );
+					, 'on_success': function( hidden_neuron ){
+						if( 'function' === typeof on_success ) {
+							on_success( hidden_neuron );
 						}
 					}, 'on_error': function( context ){
 						if( 'function' === typeof on_error ) {
