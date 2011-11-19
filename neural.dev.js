@@ -936,56 +936,51 @@ var Neural = (function() {
 					
 					Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 	
-							if( 'undefined' !== typeof on_success ) {
-								on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false, 'updated': true } );
-							}
+								if( 'undefined' !== typeof on_success ) {
+									on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false, 'updated': true } );
+								}
 
-							if( true === debug ) {
-								console.log( 'success', finished_value );
-							}
-						}, 'on_error': function( context ) {
-					
-							if( true === debug ) {
-								console.log( 'error', context );
-					
-							}
-						}, 'on_complete': function() {
-					
-							if( true === debug ) {
-								console.log( 'complete' );
-							}	
-						}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
-							
-							if( true === debug ) {
-								console.log( 'Public.prototype.update > Previous', previous );
-							}
+								if( true === debug ) {
+									console.log( 'success', finished_value );
+								}
+							}, 'on_error': function( context ) {
+						
+								if( true === debug ) {
+									console.log( 'error', context );
+						
+								}
+							}, 'on_complete': function() {
+						
+								if( true === debug ) {
+									console.log( 'complete' );
+								}	
+							}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+								
+								if( true === debug ) {
+									console.log( 'Public.prototype.update > Previous', previous );
+								}
 
-							if( 'function' == previous ) {
-								previous = previous();
-							};
+								if( 'function' == previous ) {
+									previous = previous();
+								};
 
-							var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
+								var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
 
-							returned_synapse_data.strength = next;
+								returned_synapse_data.strength = next;
 
-							if( 'undefined' !== typeof returned_synapse_data.id ) {
+								if( 'undefined' !== typeof returned_synapse_data.id ) {
 
-								Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
-							
-							}
+									Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
+								
+								}
 
-							if( true === debug ) {
-								console.log( 'Updating', next, returned_synapse_data );
-							}
+								if( true === debug ) {
+									console.log( 'Updating', next, returned_synapse_data );
+								}
 
-							return next; 
+								return next; 
 
-						} } } );  
-
-
-
-
-
+							} } } );  
 
 				} else {
 
