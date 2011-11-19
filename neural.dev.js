@@ -1195,7 +1195,7 @@ var Neural = (function() {
 						console.log("SYNAPSES TO ADD",synapses);
 						Network.addOrGetSynapses( {
 						    'return_existing': true
-						    , 'value': input
+						    , 'value': synapses
 						    , 'on_success': function (synapse) {
 
 							    if( 'function' === typeof on_complete ) {
