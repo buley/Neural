@@ -930,7 +930,7 @@ var Neural = (function() {
 
 						//zzz
 
-					} } } );
+					} };
 
 				} else {
 
