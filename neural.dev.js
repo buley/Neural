@@ -1188,9 +1188,9 @@ var Neural = (function() {
 					
 					synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
 					Network.addOrGetSynapses({
-					    'return_existing': true,
-					    'value': tokens,
-					    'on_success': function (synapse) {
+					    'return_existing': true
+					    , 'value': tokens
+					    , 'on_success': function (synapse) {
 						    if( 'function' === typeof on_complete ) {
 							on_complete( synapses );
 						    }
