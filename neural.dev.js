@@ -2386,10 +2386,9 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 			} else {
 
-
 				//update if exists, on success return new neuron
 				/* Synapse Update Single */
-				Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
+				Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 
 					if( true === debug ) {
 						console.log( 'success', finished_value );
