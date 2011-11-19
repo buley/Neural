@@ -1161,7 +1161,8 @@ var Neural = (function() {
 		  , on_error = request.on_complete
 		  , on_complete = request.on_complete
 		  , expected_actions = 0
-		  , action_count = 0;
+		  , action_count = 0
+		  , synapses[];
 
 		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
 			if( 'function' === typeof on_error ) {
@@ -1185,7 +1186,9 @@ var Neural = (function() {
 					}
 				}, 'on_complete': function( hidden_ids ) {
 					//
-					console.log("UPTIGHT CHOIR BOY", output_ids, hidden_ids ); 
+					synapses.push( Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids  ) );		
+					console.log("UPTIGHT CHOIR BOY", output_ids, hidden_ids, synapses ); 
+
 				}
 			} );
 
@@ -2827,7 +2830,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					if( !!debug ) {
 						console.log('READY', input_neurons, hidden_neurons, output_neurons);
 					}
-					//not working yet
 					var input_neuron_length = input_neurons.length;
 					var output_neuron_length = output_neurons.length;
 					var hidden_neuron_length = hidden_neurons.length;
@@ -2890,7 +2892,29 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		});
 		//DONE
 	}
-	//xxx
+	
+	Public.prototype.zipSynapses = function( to_type, tos, from_type, froms ) {
+		var a, b, to, from, tokens = [];
+		for (a = to_length; a > 1; a -= 1) {
+		    to = tos[(a - 1)];
+		    console.log('to', to);
+		    for (b = from_length; b > 1; b -= 1) {
+			from = froms[(b - 1)];
+			console.log('from', from);
+			// add
+			synapse_data = {
+			    'to': to,
+			    'to_type': to_type
+			    'from': from,
+			    'from_type': from_type
+			}
+			tokens.push(synapse_data);
+		    }
+
+		return tokens;
+	};
+
+
 
 	/* takes a token or tokens and builds an in memory representation of relevant 
 	 * neurons and their connections of an MLP such
