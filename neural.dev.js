@@ -2983,10 +2983,10 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , x = 0
 		  , synapses_length = synapses.length
 		  , synapse
-		  , input_length = inputs.length
+		  , inputs_length = inputs.length
 		  , input
 		  , input_id
-		  , output_length = outputs.length
+		  , outputs_length = outputs.length
 		  , output
 		  , output_id
 		  , neuron
