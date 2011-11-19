@@ -1185,8 +1185,8 @@ var Neural = (function() {
 						on_error( context );
 					}
 				}, 'on_complete': function( hidden_ids ) {
-					//
-					synapses.push( Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids  ) );		
+					
+					synapses.push( Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids  ) );
 					console.log("UPTIGHT CHOIR BOY", output_ids, hidden_ids, synapses ); 
 
 				}
