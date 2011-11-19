@@ -869,9 +869,7 @@ var Neural = (function() {
 
 					Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
 				
-						// say goo goo ga ga jack
-						
-						
+						// say goo goo ga ga jack	
 						// goo goo ga ga
 
 						synapse_id = returned_synapse.id;
