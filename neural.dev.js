@@ -1158,12 +1158,12 @@ var Neural = (function() {
 		var output = request.output
 		  , input = request.input;
 
-		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function(neuron){
-			console.log("NEURON",neuron);
+		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
+			console.log( "NEURON", neuron );
 		}, 'on_error': function(){
-			console.log("ERROR");
+			console.log( "ERROR" );
 		}, 'on_complete': function( result ) {
-			console.log("GREAT COMPLETE", result );
+			console.log( "GREAT COMPLETE", result );
 
 			Network.addOrGetHiddenNeurons( { 'return_existing': true, 'tokens': input, 'on_success': function( neuron ){
 				console.log( "addOrGetHiddenNeurons > NEURON", neuron ); }, 'on_error': function(){
