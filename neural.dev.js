@@ -871,11 +871,11 @@ var Neural = (function() {
 				
 						// say goo goo ga ga jack	
 						// goo goo ga ga
-
+						console.log("GOOD TIMES",returned_synapse);
 						synapse_id = returned_synapse.id;
 
 						if( true === debug ) {
-							console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify( returned_synapse ) );
+							console.log( 'Public.prototype.add Network.put error > Network.update success', JSON.stringify( returned_synapse ) );
 						}
 
 						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': returned_synapse, 'ttl': 300 } );
