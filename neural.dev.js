@@ -946,7 +946,6 @@ var Neural = (function() {
 
 			if( true === return_existing ) {
 
-				synapses.push( cached_synapse_id );
 				console.log("DOING UPDATE FROM CACHE",cached_synapse_id,cached_synapse_data,synapse_data.hash);
 
 				Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
@@ -960,7 +959,7 @@ var Neural = (function() {
 						console.log( 'Public.prototype.add Network.put error > Network.update success', JSON.stringify( returned_synapse ) );
 					}
 
-					synapses.push( synapse_id );
+					synapses.push( cached_synapse_id );
 
 					if( 'function' === typeof on_success ) {
 						on_success( cached_synapse_data );
