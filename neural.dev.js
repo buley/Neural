@@ -1164,12 +1164,14 @@ var Neural = (function() {
 		  , action_count = 0;
 
 		Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( neuron ){
-
+			if( 'function' === typeof on_error ) {
+				on_error( context );
+			}		
 		}, 'on_error': function( context ){
 			if( 'function' === typeof on_error ) {
 				on_error( context );
 			}
-		}, 'on_complete': function( result ) {
+		}, 'on_complete': function( output_ids ) {
 			Network.addOrGetHiddenNeurons(
 				{ 'return_existing': true
 				, 'tokens': input
@@ -1181,9 +1183,9 @@ var Neural = (function() {
 					if( 'function' === typeof on_error ) {
 						on_error( context );
 					}
-				}, 'on_complete': function( result ) {
-			
-
+				}, 'on_complete': function( hidden_ids ) {
+					//
+					console.log("UPTIGHT CHOIR BOY", output_ids, hidden_ids ); 
 				}
 			} );
 
