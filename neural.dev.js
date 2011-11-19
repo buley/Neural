@@ -1189,6 +1189,7 @@ var Neural = (function() {
 					synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
 
 					//
+					console.log("ADOPTION AGENCY",synapses);
 
 				}
 			} );
