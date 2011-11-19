@@ -926,13 +926,17 @@ var Neural = (function() {
 	};
 
 	Public.prototype.addOrUpdateSynapses = function( req ) {
+
 		var on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
 		    , own_on_success
 		    , own_on_error
 		    , own_on_complete
-		    , expected_actions = 0;
+		    , expected_actions = 0
+		    , synapses = []
+		    , synapse
+		    , synapse_id;
 
 		own_on_success = function( passed_synapse ) {
 	
@@ -980,8 +984,6 @@ var Neural = (function() {
 				}
 			}
 		};
-
-
 
 
 		//
