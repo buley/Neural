@@ -929,6 +929,60 @@ var Neural = (function() {
 		var on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
+		    , own_on_success
+		    , own_on_error
+		    , own_on_complete
+		    , expected_actions = 0;
+
+		own_on_success = function( passed_synapse ) {
+	
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeuron > success', passed_synapse );
+			}
+
+			synapse_id = passed_synapse.id;
+			synapses.push( synapse_id );
+
+			if( 'function' === typeof on_success ) {
+				on_success( passed_synapse );
+			}
+			
+			if( synapses.length >= expected_actions ) {
+				own_on_complete( synapses );
+			}
+
+		};
+
+		own_on_error = function( context ) {
+			
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > error', context );
+			}
+		
+			expected_actions -= 1;
+			
+			if( 'function' === typeof on_error ) {
+				on_error( context );
+			}
+			if( neurons.length >= expected_actions ) {
+				own_on_complete( synapses );
+			}
+
+		};
+
+		own_on_complete = function( passed_synapses ) {
+			if( !!debug ) {
+				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_synapses );
+			}
+			if( synapses.length >= expected_actions ) {
+				if( 'function' === typeof on_complete ) {
+					on_complete( passed_synapses );
+				}
+			}
+		};
+
+
+
 
 		//
 		Public.prototype.addOrGetSynapses( { 
