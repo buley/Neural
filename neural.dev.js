@@ -988,7 +988,7 @@ var Neural = (function() {
 						previous = previous();
 					};
 
-					var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
+					var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': returned_synapse_data.hash } ) : 0;
 
 					returned_synapse_data.strength = next;
 
