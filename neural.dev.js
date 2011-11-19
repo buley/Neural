@@ -2336,7 +2336,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 	Public.prototype.mergeObjects = function( obj1, obj2, replace ) {
 
-		if( true === debug ) {
+		if( debug > 10 ) {
 			console.log('Public.prototype.mergeObjects()',obj1, obj2, replace);
 		}
 
