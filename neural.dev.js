@@ -867,8 +867,13 @@ var Neural = (function() {
 
 				if( true === return_existing ) {
 
-					Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
-					
+					Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
+				
+						// say goo goo ga ga jack
+						
+						
+						// goo goo ga ga
+
 						synapse_id = returned_synapse.id;
 
 						if( true === debug ) {
@@ -896,7 +901,36 @@ var Neural = (function() {
 							on_error( context );
 						}
 
-					}, 'index': 'hash', 'key': synapse_data.hash, 'expecting': { 'type': 'hidden' } } );
+					}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
+						//dynamic data
+
+						if( true === debug ) {
+							console.log( 'Public.prototype.update > Previous', previous );
+						}
+
+						if( 'function' == previous ) {
+							previous = previous();
+						};
+
+						var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
+
+						returned_synapse_data.strength = next;
+
+						if( 'undefined' !== typeof returned_synapse_data.id ) {
+
+							Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
+						
+						}
+
+						if( true === debug ) {
+							console.log( 'Updating', next, returned_synapse_data );
+						}
+
+						return next; 
+
+						//zzz
+
+					} } );
 
 				} else {
 
