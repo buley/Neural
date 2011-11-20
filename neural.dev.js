@@ -2480,6 +2480,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					if( 'undefined' !== typeof result_id && null !== result_id ) {
 						cached_hidden_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + result_id ) } );
 					}
+
 					if( neuron_data !== cached_hidden_neuron_data && ( 'undefined' === typeof result_id || null === result_id || 'undefined' === typeof cached_hidden_neuron_data || null === cached_hidden_neuron_data ) ) {
 
 						Network.put( {  'type': 'neuron', 'on_success': function( hidden_id ) {
