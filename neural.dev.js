@@ -2412,7 +2412,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						console.log( 'complete' );
 					}
 
-				}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+				}, 'key': cached_synapse.id, 'data': { 'strength': function( previous ) {
 					
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
