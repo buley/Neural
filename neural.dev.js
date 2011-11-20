@@ -2407,7 +2407,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					}
 
 					if( 'undefined' !== typeof on_success ) {
-						on_success( { 'type': 'synapse', 'action': 'get', 'result': cached_synapse, 'cached': true, 'updated': true } );
+						on_success( { 'type': 'synapse', 'action': 'update', 'result': finished_value, 'cached': true, 'updated': true } );
 					}
 
 				}, 'on_error': function( context ) {
@@ -2428,7 +2428,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						console.log( 'Public.prototype.update > Previous', previous );
 					}
 
-					var next = Public.prototype.incrementer( previous, { 'hash': synapse_hash } );
+					var next = Public.prototype.incrementer( cached_synapse.strength, { 'hash': synapse_hash } );
 
 					cached_synapse.strength = next;
 
