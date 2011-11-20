@@ -2341,15 +2341,13 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						}, 'index': 'hash', 'key': synapse_hash } );
 					} else {
 
-						//update if exists, on success return new neuron
-						/* Synapse Update Single */
 						Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 							if( true === debug ) {
 								console.log( 'Public.prototype.update > Network.update > success', finished_value );
 							}
 
 							if( 'undefined' !== typeof on_success ) {
-								on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true, 'updated': true } );
+								on_success( { 'type': 'synapse', 'action': 'update', 'value': finished_value, 'cached': true, 'updated': true } );
 							}
 
 						}, 'on_error': function( context ) {
@@ -2370,10 +2368,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 								console.log( 'Public.prototype.update > Previous', previous );
 							}
 
-							if( 'function' == previous ) {
-								previous = previous();
-							};
-							
 							var next = ( 'number' === typeof previous ) ? Math.floor( Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) ) : 0;
 
 							new_synapse_data.strength = next;
