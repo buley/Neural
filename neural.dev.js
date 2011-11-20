@@ -2298,15 +2298,11 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 								if( true === debug ) {
 									console.log( 'complete' );
 								}	
-							}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+							}, 'key': returned_synapse_data.id, 'data': { 'strength': function( previous ) {
 								
 								if( true === debug ) {
 									console.log( 'Public.prototype.update > Previous', previous );
 								}
-
-								if( 'function' == previous ) {
-									previous = previous();
-								};
 
 								var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
 
@@ -2362,7 +2358,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 								console.log( 'complete' );
 							}
 
-						}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
+						}, 'key': new_synapse_data.id, 'data': { 'strength': function( previous ) {
 
 							if( true === debug ) {
 								console.log( 'Public.prototype.update > Previous', previous );
