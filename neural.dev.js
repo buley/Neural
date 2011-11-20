@@ -2428,11 +2428,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						console.log( 'Public.prototype.update > Previous', previous );
 					}
 
-					if( 'function' == previous ) {
-						previous = previous();
-					};
-					
-					var next = Public.prototype.incrementer( cached_synapse.strength, { 'hash': synapse_hash } );
+					var next = Public.prototype.incrementer( previous, { 'hash': synapse_hash } );
 
 					cached_synapse.strength = next;
 
