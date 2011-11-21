@@ -3127,7 +3127,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					if( !!debug ) {
 						console.log('READY', input_neurons, hidden_neurons, output_neurons);
 					}
-					synapses = public.prototype.zipsynapses( 'hidden', hidden_neurons, 'output', output_ids );
+					synapses = public.prototype.zipsynapses( 'hidden', hidden_neurons, 'output', output_neurons );
 						
 					var syn2 = public.prototype.zipsynapses( 'input', input_neurons, 'hidden', hidden_neurons );
 					var syn2_len = syn2.length;
