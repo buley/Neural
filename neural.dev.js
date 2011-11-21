@@ -923,14 +923,6 @@ var Neural = (function() {
 
 		} else {
 
-
-
-			
-			if( true === return_existing ) {
-				synapses.push( cached_synapse_id );
-
-			}
-
 			/* Synapse Update Single */
 			Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 
@@ -941,6 +933,18 @@ var Neural = (function() {
 						if( 'undefined' !== typeof on_success ) {
 							on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true, 'updated': true } );
 						}
+		
+						if( true === return_existing ) {
+							synapses.push( finished_value );
+						}
+
+						synapse_id = finished_value.id;
+
+
+						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': finished_value, 'ttl': 300 } );
+						Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+
+
 
 				}, 'on_error': function( context ) {
 				
