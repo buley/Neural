@@ -2295,7 +2295,16 @@ var Neural = (function() {
 								if( true === debug ) {
 									console.log( 'complete' );
 								}	
-							}, 'key': returned_synapse_data.id, 'data': { 'strength': function( previous ) {
+							}, 'key': returned_synapse_data.id, 'data': { 'hash': function( previous ){
+						console.log("HASH CACHE",previous);
+						if( -1 !== previous.indexOf( '_' ) ) {
+							var spl = previous.split( '_' );
+							var num = spl[ 1 ];
+							return spl[ 0 ] + '_' + (num + 1);
+						} else {
+							return previous + '_1';	
+						}
+					}, 'strength': function( previous ) {
 								
 								if( true === debug ) {
 									console.log( 'Public.prototype.update > Previous', previous );
@@ -2355,7 +2364,16 @@ var Neural = (function() {
 								console.log( 'complete' );
 							}
 
-						}, 'key': new_synapse_data.id, 'data': { 'strength': function( previous ) {
+						}, 'key': new_synapse_data.id, 'data': { 'hash': function( previous ){
+						console.log("HASH CACHE",previous);
+						if( -1 !== previous.indexOf( '_' ) ) {
+							var spl = previous.split( '_' );
+							var num = spl[ 1 ];
+							return spl[ 0 ] + '_' + (num + 1);
+						} else {
+							return previous + '_1';	
+						}
+					}, 'strength': function( previous ) {
 
 							if( true === debug ) {
 								console.log( 'Public.prototype.update > Previous', previous );
@@ -2410,15 +2428,15 @@ var Neural = (function() {
 					}
 
 				}, 'key': cached_synapse.id, 'data': { 'hash': function( previous ){
-					console.log("HASH CACHE",previous);
-					if( -1 !== previous.indexOf( '_' ) ) {
-						var spl = previous.split( '_' );
-						var num = spl[ 1 ];
-						return spl[ 0 ] + '_' + (num + 1);
-					} else {
-						return previous + '_1';	
-					}
-				}, 'strength': function( previous ) {
+						console.log("HASH CACHE",previous);
+						if( -1 !== previous.indexOf( '_' ) ) {
+							var spl = previous.split( '_' );
+							var num = spl[ 1 ];
+							return spl[ 0 ] + '_' + (num + 1);
+						} else {
+							return previous + '_1';	
+						}
+					}, 'strength': function( previous ) {
 					
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
