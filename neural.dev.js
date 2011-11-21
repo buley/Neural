@@ -3518,7 +3518,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			, 'from_type': false
 			, 'to': false
 			, 'to_type': false
-			, 'strength': false
+			//, 'strength': false
 		};
 
 		console.log( 'Neural_synapses_install', indexes );
