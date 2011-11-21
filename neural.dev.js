@@ -927,7 +927,6 @@ var Neural = (function() {
 			/* Synapse Update Single */
 			Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 
-				console.log('synapse update success',finished_value);
 						if( true === debug ) {
 							console.log( 'Public.prototype.update > Network.update > success', finished_value );
 						}
@@ -942,8 +941,7 @@ var Neural = (function() {
 
 						synapse_id = finished_value;
 
-
-						Cache.delete( { 'key': ( 'synapses.data.' + finished_value ) } );
+						Cache.set( { 'key': ( 'synapses.data.' + finished_value.id ), 'value': finished_value, 'ttl': 300 } );
 
 
 				}, 'on_error': function( context ) {
