@@ -938,9 +938,9 @@ var Neural = (function() {
 						}
 
 						if( 'undefined' !== typeof on_success ) {
-							on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true, 'updated': true } );
+							on_success( { 'type': 'synapse', 'action': 'add_or_get', 'value': finished_value, 'cached': true, 'updated': true } );
 						}
-		
+						console.log('synapse-check',finished_value);	
 						synapse_id = finished_value.id;
 						
 						if( true === return_existing && 'undefined' !== typeof synapse_id ) {
