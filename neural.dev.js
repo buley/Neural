@@ -1343,7 +1343,6 @@ var Neural = (function() {
 				}
 		
 				request = { 'value': synapse, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
-				console.log("ADD OR UPDAET SYNAPSES",request);
 				Public.prototype.addOrUpdateSynapse( request );
 		
 			}
@@ -1513,7 +1512,7 @@ var Neural = (function() {
 					}, 'on_complete': function( hidden_ids ) {
 						
 						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
-						console.log("ADD OR UPDATE SYNAPSES",synapses);					
+						console.log("ADD OR UPDATE SYNAPSES",hidden_ids,output_ids,synapses);					
 						Network.addOrUpdateSynapses( {
 						    'return_existing': true
 						    , 'value': synapses
