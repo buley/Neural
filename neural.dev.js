@@ -1476,7 +1476,7 @@ var Neural = (function() {
 		
 		}, 'on_complete': function( input_ids ) {
 
-			console.log("Getting output");
+
 
 			//begin
 			Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( output_neuron ){
@@ -1488,7 +1488,7 @@ var Neural = (function() {
 					on_error( context );
 				}
 			}, 'on_complete': function( output_ids ) {
-				console.log("Getting hidden");
+
 				Network.addOrGetHiddenNeurons(
 					{ 'return_existing': true
 					, 'tokens': input
@@ -1503,6 +1503,7 @@ var Neural = (function() {
 					}, 'on_complete': function( hidden_ids ) {
 						
 						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
+						console.log("Getting synapses",synapses);
 						
 						Network.addOrUpdateSynapses( {
 						    'return_existing': true
