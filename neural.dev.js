@@ -853,7 +853,7 @@ var Neural = (function() {
 		console.log("CACHE",cached_synapse_data,cached_synapse_id);
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
 			
-			Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
+			Network.update( {  'type': 'synapses', 'on_success': function( returned_synapse ) {
 		
 				synapse_id = returned_synapse.id;
 
@@ -877,7 +877,6 @@ var Neural = (function() {
 				}
 
 				Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
-				console.log("PUTTING");
 				Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
 					
 					synapse_data.id = synapse_id;
@@ -926,7 +925,7 @@ var Neural = (function() {
 		} else {
 
 			/* Synapse Update Single */
-			Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
+			Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 
 				console.log('synapse update success',finished_value);
 						if( true === debug ) {
@@ -2254,7 +2253,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 							//update if exists, on success return new neuron
 							/* Synapse Update Single */
-							Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
+							Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 	
 								if( 'undefined' !== typeof on_success ) {
 									on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false, 'updated': true } );
@@ -2313,7 +2312,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						}, 'index': 'hash', 'key': synapse_hash } );
 					} else {
 
-						Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
+						Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 							if( true === debug ) {
 								console.log( 'Public.prototype.update > Network.update > success', finished_value );
 							}
@@ -2366,7 +2365,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 				//update if exists, on success return new neuron
 				/* Synapse Update Single */
-				Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
+				Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 
 					if( true === debug ) {
 						console.log( 'success', finished_value );
