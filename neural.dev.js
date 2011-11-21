@@ -843,107 +843,110 @@ var Neural = (function() {
 		}
 		console.log('s0');
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
+			
 			console.log('s1');
-			Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
-				console.log('s2');
-				synapse_data.id = synapse_id;
-				
-				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
 
+			Network.update( {  'type': 'synapses', 'on_success': function( returned_synapse ) {
+		
+		console.log('s4');
+				// say goo goo ga ga jack	
+				// goo goo ga ga
+				console.log("GOOD TIMES",returned_synapse);
+				synapse_id = returned_synapse.id;
+
+				if( true === debug ) {
+					console.log( 'Public.prototype.add Network.put error > Network.update success', JSON.stringify( returned_synapse ) );
+				}
+
+				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': returned_synapse, 'ttl': 300 } );
 				Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
-				
+
 				synapses.push( synapse_id );
-				
+
 				if( 'function' === typeof on_success ) {
-					on_success( synapse_data );
+					on_success( returned_synapse );
 				}				
 
 			}, 'on_error': function( context ) {
-			
-				console.log('s3');
+				
+		console.log('s5');
 				if( true === debug ) {
-					console.log( 'Public.prototype.add Network.put error', context );
+					console.log( 'Public.prototype.add Network.put error > Network.get error', context );
 				}
 
-				if( true === return_existing ) {
+				Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
 
-					Network.update( {  'type': 'synapses', 'on_success': function( returned_synapse ) {
+				if( 'function' === typeof on_error ) {
+					on_error( context );
+				}
+
+				Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
+					console.log('s2');
+					synapse_data.id = synapse_id;
+					
+					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
+
+					Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+					
+					synapses.push( synapse_id );
+					
+					if( 'function' === typeof on_success ) {
+						on_success( synapse_data );
+					}				
+
+				}, 'on_error': function( context ) {
 				
-				console.log('s4');
-						// say goo goo ga ga jack	
-						// goo goo ga ga
-						console.log("GOOD TIMES",returned_synapse);
-						synapse_id = returned_synapse.id;
+					console.log('s3');
+					if( true === debug ) {
+						console.log( 'Public.prototype.add Network.put error', context );
+					}
 
-						if( true === debug ) {
-							console.log( 'Public.prototype.add Network.put error > Network.update success', JSON.stringify( returned_synapse ) );
-						}
+					if( true === return_existing ) {
 
-						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': returned_synapse, 'ttl': 300 } );
-						Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
-
-						synapses.push( synapse_id );
-		
-						if( 'function' === typeof on_success ) {
-							on_success( returned_synapse );
-						}				
-
-					}, 'on_error': function( context ) {
-						
-				console.log('s5');
-						if( true === debug ) {
-							console.log( 'Public.prototype.add Network.put error > Network.get error', context );
-						}
-
+									} else {
+						console.log("BOMBED OUT");
 						Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
 
 						if( 'function' === typeof on_error ) {
-							on_error( context );
+							on_error();
 						}
 
-					}, 'key': synapse_data.id, 'data': { 'strength': function( previous ) {
-						//dynamic data
-
-				console.log('s6');
-						if( true === debug ) {
-							console.log( 'Public.prototype.update > Previous', previous );
-						}
-
-						if( 'function' == previous ) {
-							previous = previous();
-						};
-
-						var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
-
-						returned_synapse_data.strength = next;
-
-						if( 'undefined' !== typeof returned_synapse_data.id ) {
-
-							Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
-						
-						}
-
-						if( true === debug ) {
-							console.log( 'Updating', next, returned_synapse_data );
-						}
-
-						return next; 
-
-						//zzz
-
-					} } } );
-
-				} else {
-					console.log("BOMBED OUT");
-					Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
-
-					if( 'function' === typeof on_error ) {
-						on_error();
 					}
 
+				}, 'data': synapse_data } );
+
+			}, 'key': synapse_data.id, 'data': { 'strength': function( previous ) {
+				//dynamic data
+
+		console.log('s6');
+				if( true === debug ) {
+					console.log( 'Public.prototype.update > Previous', previous );
 				}
 
-			}, 'data': synapse_data } );
+				if( 'function' == previous ) {
+					previous = previous();
+				};
+
+				var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
+
+				returned_synapse_data.strength = next;
+
+				if( 'undefined' !== typeof returned_synapse_data.id ) {
+
+					Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
+				
+				}
+
+				if( true === debug ) {
+					console.log( 'Updating', next, returned_synapse_data );
+				}
+
+				return next; 
+
+				//zzz
+
+			} } } );
+
 
 		} else {
 
@@ -1012,6 +1015,119 @@ var Neural = (function() {
 							return next; 
 
 				} } } );  
+			}
+
+		}
+
+	};
+	
+	
+	Public.prototype.addOrUpdateSynapse = function( req ) {
+
+		var synapse_data = req.value || {}
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , return_existing = req.return_existing
+		    , on_success = req.on_success || null
+		    , on_error = req.on_error || null
+		    , x = 0
+		    , synapse_hash = ''
+		    , synapses = []
+		    , synapses_length = 0
+		    , synapse
+	 	    , synapse_data
+		    , cached_synapse_data
+		    , cached_synapse_id;
+
+		synapse_hash = Public.prototype.utilities.getId( synapse_data );
+		synapse_data[ 'hash' ] = synapse_hash;
+		synapse_data[ 'strength' ] = Public.prototype.defaults.get( 'strength' );
+
+		cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_hash ) } );
+		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
+			var cached_synapse = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
+		}
+
+		cached_synapse_id = Cache.get( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
+			cached_synapse_data = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
+		}
+
+		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
+
+			Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
+			
+				synapse_id = returned_synapse.id;
+				console.log("GOT IT",returned_synapse);
+				if( true === debug ) {
+					console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify( returned_synapse ) );
+				}
+
+				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': returned_synapse, 'ttl': 300 } );
+				Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+
+				if( true === return_existing ) {
+					synapses.push( synapse_id );
+				}
+
+				if( 'function' === typeof on_success ) {
+					on_success( returned_synapse );
+				}				
+
+			}, 'on_error': function( context ) {
+				
+				if( true === debug ) {
+					console.log( 'Public.prototype.add Network.put error > Network.get error', context );
+				}
+
+				Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+				if( 'function' === typeof on_error ) {
+					on_error( context );
+				}
+
+				Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
+
+					synapse_data.id = synapse_id;
+					
+					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
+
+					Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+					
+					synapses.push( synapse_id );
+					
+					if( 'function' === typeof on_success ) {
+						on_success( synapse_data );
+					}				
+
+				}, 'on_error': function( context ) {
+				
+					if( true === debug ) {
+						console.log( 'Public.prototype.add Network.put error', context );
+					}
+
+				Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
+
+				if( 'function' === typeof on_error ) {
+					on_error();
+				}
+
+				}, 'data': synapse_data } );
+
+			}, 'index': 'hash', 'key': synapse_data.hash, 'expecting': { 'type': 'hidden' } } );
+
+
+		} else {
+
+			if( true === return_existing ) {
+
+				synapses.push( cached_synapse_id );
+
+				if( 'function' === typeof on_success ) {
+					on_success( cached_synapse_data );
+				}
+
 			}
 
 		}
