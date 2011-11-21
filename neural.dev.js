@@ -852,7 +852,6 @@ var Neural = (function() {
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
 			
 
-
 			console.log('s1');
 			Network.update( {  'type': 'synapses', 'on_success': function( returned_synapse ) {
 		
@@ -874,15 +873,15 @@ var Neural = (function() {
 
 			}, 'on_error': function( context ) {
 				
+			console.log('s22');
 				if( true === debug ) {
 					console.log( 'Public.prototype.add Network.put error > Network.get error', context );
 				}
 
 				Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
 
-	console.log("COULD NOT UPDATE");
 				Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
-					console.log('s2');
+					console.log('s23');
 					synapse_data.id = synapse_id;
 					
 					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
@@ -897,7 +896,7 @@ var Neural = (function() {
 
 				}, 'on_error': function( context ) {
 				
-					console.log('s3');
+					console.log('s24');
 					if( true === debug ) {
 						console.log( 'Public.prototype.add Network.put error', context );
 					}
@@ -908,7 +907,7 @@ var Neural = (function() {
 
 				}, 'data': synapse_data } );
 
-			}, 'key': synapse_data.id, 'data': { 'strength': function( previous ) {
+			}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
 				//dynamic data
 
 		console.log('s6');
