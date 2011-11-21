@@ -956,72 +956,74 @@ var Neural = (function() {
 
 		} else {
 
-			if( true === return_existing ) {
 
-				console.log('s7',synapse_data.hash);
+
+			console.log('s7',synapse_data.hash);
+			
+			if( true === return_existing ) {
 				synapses.push( cached_synapse_id );
 
-
-				/* Synapse Update Single */
-						Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
-
-				console.log('s8');
-							if( true === debug ) {
-								console.log( 'Public.prototype.update > Network.update > success', finished_value );
-							}
-
-							if( 'undefined' !== typeof on_success ) {
-								on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true, 'updated': true } );
-							}
-
-						}, 'on_error': function( context ) {
-					
-				console.log('s9');
-							if( true === debug ) {
-								console.log( 'error', context );
-							}
-
-						}, 'on_complete': function() {
-					
-
-				console.log('s10');
-							if( true === debug ) {
-								console.log( 'complete' );
-							}
-
-						}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
-
-
-				console.log('s11');
-	
-					console.log("DOING UPDATE FROM CACHE",JSON.stringify(cached_synapse_data),Public.prototype.incrementer( cached_synapse_data.strength, { 'hash': cached_synapse_data.hash } ));
-
-					if( true === debug ) {
-						console.log( 'Public.prototype.update > Previous', previous );
-					}
-
-					if( 'function' == previous ) {
-						previous = previous();
-					};
-
-					var next = ( 'number' === typeof cached_synapse_data.strength ) ? Public.prototype.incrementer( cached_synapse_data.strength, { 'hash': cached_synapse_data.hash } ) : 0;
-
-					cached_synapse_data.strength = next;
-
-					if( 'undefined' !== typeof cached_synapse_data.id ) {
-
-						Cache.set( { 'key': ( 'synapses.data.' + cached_synapse_data.id ), 'value': cached_synapse_data, 'ttl': 300 } );
-					
-					}
-
-					if( true === debug ) {
-						console.log( 'Updating', next, cached_synapse_data );
-					}
-
-							return next; 
-
-				} } } );  
 			}
+
+			/* Synapse Update Single */
+			Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+
+			console.log('s8');
+						if( true === debug ) {
+							console.log( 'Public.prototype.update > Network.update > success', finished_value );
+						}
+
+						if( 'undefined' !== typeof on_success ) {
+							on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true, 'updated': true } );
+						}
+
+					}, 'on_error': function( context ) {
+				
+			console.log('s9');
+						if( true === debug ) {
+							console.log( 'error', context );
+						}
+
+					}, 'on_complete': function() {
+				
+
+			console.log('s10');
+						if( true === debug ) {
+							console.log( 'complete' );
+						}
+
+					}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
+
+
+			console.log('s11');
+
+				console.log("DOING UPDATE FROM CACHE",JSON.stringify(cached_synapse_data),Public.prototype.incrementer( cached_synapse_data.strength, { 'hash': cached_synapse_data.hash } ));
+
+				if( true === debug ) {
+					console.log( 'Public.prototype.update > Previous', previous );
+				}
+
+				if( 'function' == previous ) {
+					previous = previous();
+				};
+
+				var next = ( 'number' === typeof cached_synapse_data.strength ) ? Public.prototype.incrementer( cached_synapse_data.strength, { 'hash': cached_synapse_data.hash } ) : 0;
+
+				cached_synapse_data.strength = next;
+
+				if( 'undefined' !== typeof cached_synapse_data.id ) {
+
+					Cache.set( { 'key': ( 'synapses.data.' + cached_synapse_data.id ), 'value': cached_synapse_data, 'ttl': 300 } );
+				
+				}
+
+				if( true === debug ) {
+					console.log( 'Updating', next, cached_synapse_data );
+				}
+
+				return next; 
+
+			} } } );  
 
 		}
 
