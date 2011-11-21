@@ -2411,7 +2411,13 @@ var Neural = (function() {
 
 				}, 'key': cached_synapse.id, 'data': { 'hash': function( previous ){
 					console.log("HASH CACHE",previous);
-					return Math.random() * 1000;	
+					if( -1 !== previous.indexOf( '_' ) ) {
+						var spl = previous.split( '_' );
+						var num = spl[ 1 ];
+						return spl[ 0 ] + '_' + (num + 1);
+					} else {
+						return previous + '_1';	
+					}
 				}, 'strength': function( previous ) {
 					
 					if( true === debug ) {
