@@ -13,7 +13,7 @@ var Neural = (function() {
 	Cache = new CREAM();
 
 	var defaults = {
-		'strength': 0
+		'strength': 1
 	};
 
 	/* PUBLIC */
