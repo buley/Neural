@@ -2409,7 +2409,10 @@ var Neural = (function() {
 						console.log( 'complete' );
 					}
 
-				}, 'key': cached_synapse.id, 'data': { 'strength': function( previous ) {
+				}, 'key': cached_synapse.id, 'data': { 'hash': function( previous ){
+					console.log("HASH CACHE",previous);
+					return null;	
+				}, 'strength': function( previous ) {
 					
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
