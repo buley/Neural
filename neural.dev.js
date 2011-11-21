@@ -903,7 +903,7 @@ var Neural = (function() {
 
 				}, 'data': synapse_data } );
 
-			}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
+			}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
 				//dynamic data
 
 				if( true === debug ) {
@@ -949,7 +949,7 @@ var Neural = (function() {
 				}, 'on_error': function( context ) {
 				
 						if( true === debug ) {
-							console.log( 'error', context );
+							console.log( 'Cached update error', context );
 						}
 
 				}, 'on_complete': function() {
@@ -958,7 +958,7 @@ var Neural = (function() {
 						console.log( 'complete' );
 					}*/
 
-				}, 'index': 'hash', 'key': synapse_data.hash
+				}, 'index': 'hash', 'key': synapse_hash
 			
 				, 'data': { 'strength': function( previous ) {
 
