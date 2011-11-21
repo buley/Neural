@@ -720,7 +720,7 @@ var Neural = (function() {
 		if( 'undefined' !== typeof cached_neuron_id && null !== cached_neuron_id ) {
 			cached_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_neuron_id ) } );
 		}
-		console.log("CACHCED NEURON",cached_neuron_id,cached_neuron_data);
+
 		if( neuron_data !== cached_neuron_data && ( 'undefined' === typeof cached_neuron_id || null === cached_neuron_id || 'undefined' === typeof cached_neuron_data || null === cached_neuron_data ) ) {
 
 			Network.get( {  'type': 'neuron', 'on_success': function( returned_neuron ) {
@@ -856,7 +856,7 @@ var Neural = (function() {
 		
 				synapse_id = returned_synapse.id;
 
-				if( true === return_existing ) {
+				if( true === return_existing && 'undefined' !== synapse_id ) {
 					console.log('pushing',synapse_id,synapses);
 					synapses.push( synapse_id );
 				}
@@ -887,8 +887,10 @@ var Neural = (function() {
 
 					Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
 					
-					console.log('pushing',synapse_id,synapses);
-					synapses.push( synapse_id );
+					if( 'undefined' !== typeof synapse_id ) {
+						console.log('pushing',synapse_id,synapses);
+						synapses.push( synapse_id );
+					}
 					
 					if( 'function' === typeof on_success ) {
 						on_success( synapse_data );
@@ -941,12 +943,11 @@ var Neural = (function() {
 		
 						synapse_id = finished_value.id;
 						
-						if( true === return_existing ) {
-							console.log('pushing',synapse_id,synapses);
+						if( true === return_existing && 'undefined' !== synapse_id ) {
 							synapses.push( synapse_id );
-
+							console.log('pushing',synapse_id,synapses);
 						}
-						Cache.delete( { 'key': ( 'synapses.data.' + finished_value.id ) } );
+						Cache.delete( { 'key': ( 'synapses.data.' + finished_value ) } );
 
 
 				}, 'on_error': function( context ) {
@@ -968,10 +969,6 @@ var Neural = (function() {
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
 					}
-
-					if( 'function' == previous ) {
-						previous = previous();
-					};
 
 					var next = ( 'number' === typeof cached_synapse_data.strength ) ? Public.prototype.incrementer( cached_synapse_data.strength, { 'hash': cached_synapse_data.hash } ) : 0;
 
