@@ -913,7 +913,7 @@ var Neural = (function() {
 				if( true === debug ) {
 					console.log( 'Updating', next, synapse_hash );
 				}
-
+				console.log("UPDATING TO",next);
 				return next; 
 
 				//zzz
@@ -962,6 +962,7 @@ var Neural = (function() {
 				, 'data': { 'strength': function( previous ) {
 
 
+
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
 					}
@@ -984,6 +985,7 @@ var Neural = (function() {
 						console.log( 'Updating', next, cached_synapse_data );
 					}
 
+					console.log("CACHE UPDATING TO",next);
 					return next; 
 
 				} } 
