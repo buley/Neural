@@ -720,7 +720,7 @@ var Neural = (function() {
 		if( 'undefined' !== typeof cached_neuron_id && null !== cached_neuron_id ) {
 			cached_neuron_data = Cache.get( { 'key': ( 'neurons.data.' + cached_neuron_id ) } );
 		}
-
+		console.log("CACHCED NEURON",cached_neuron_id,cached_neuron_data);
 		if( neuron_data !== cached_neuron_data && ( 'undefined' === typeof cached_neuron_id || null === cached_neuron_id || 'undefined' === typeof cached_neuron_data || null === cached_neuron_data ) ) {
 
 			Network.get( {  'type': 'neuron', 'on_success': function( returned_neuron ) {
