@@ -3229,11 +3229,12 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , tokens = [];
 
 		for (a = to_length; a > 1; a -= 1) {
-		    
+		   	console.log('a',a); 
 			to = tos[ ( a - 1 ) ];
 		    
 			for ( b = from_length; b > 1; b -= 1 ) {
 			
+		   	console.log('b',b); 
 				from = froms[ ( b - 1 ) ];
 			
 				synapse_data = {
