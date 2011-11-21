@@ -942,14 +942,11 @@ var Neural = (function() {
 						synapse_id = finished_value.id;
 						
 						if( true === return_existing ) {
-							synapses.push( synapse_id );
-						}
-
-						if( true === return_existing ) {
-							synapses.push( synapse_id );
 							console.log('pushing',synapse_id,synapses);
+							synapses.push( synapse_id );
+
 						}
-						Cache.delete( { 'key': ( 'synapses.data.' + finished_value ) } );
+						Cache.delete( { 'key': ( 'synapses.data.' + finished_value.id ) } );
 
 
 				}, 'on_error': function( context ) {
