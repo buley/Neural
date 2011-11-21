@@ -850,6 +850,7 @@ var Neural = (function() {
 		if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
 			cached_synapse_data = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
 		}
+		console.log("CACHE",cached_synapse_data,cached_synapse_id);
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
 			
 			Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
