@@ -3127,45 +3127,9 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					if( !!debug ) {
 						console.log('READY', input_neurons, hidden_neurons, output_neurons);
 					}
-					//hhh
-					var input_neuron_length = input_neurons.length;
-					var output_neuron_length = output_neurons.length;
-					var hidden_neuron_length = hidden_neurons.length;
-					var a, b, c, hidden_neuron, input_neuron, output_neuron, hidden_neuron_id, input_neuron_id, output_neuron_id, tokens = [], synapse_hash, synapse_data;
-					if( !!debug ) {
-						console.log('INPUT', input_neurons, 'HID', hidden_neurons, 'OUT', output_neurons);
-					}
-					for (a = hidden_neuron_length; a > 1; a -= 1) {
-					    hidden_neuron = hidden_neurons[(a - 1)];
-					    for (b = input_neuron_length; b > 1; b -= 1) {
-						input_neuron = input_neurons[(b - 1)];
-						// add
-						synapse_data = {
-						    'to': hidden_neuron,
-						    'to_type': 'hidden',
-						    'from': input_neuron,
-						    'from_type': 'input'
-						}
-						tokens.push(synapse_data);
-					    }
-					    for (c = output_neuron_length; c > 1; c -= 1) {
-						output_neuron = output_neurons[(c - 1)];
-						console.log('output_neuron', output_neuron);
-						// add
-						synapse_data = {
-						    'to': output_neuron,
-						    'to_type': 'output',
-						    'from': hidden_neuron,
-						    'from_type': 'hidden'
-						}
-						tokens.push(synapse_data);
-					    }
-					}
-
-	
-					synapses = public.prototype.zipsynapses( 'hidden', hidden_ids, 'output', output_ids );
+					synapses = public.prototype.zipsynapses( 'hidden', hidden_neurons, 'output', output_ids );
 						
-					var syn2 = public.prototype.zipsynapses( 'input', input_ids, 'hidden', hidden_ids );
+					var syn2 = public.prototype.zipsynapses( 'input', input_neurons, 'hidden', hidden_neurons );
 					var syn2_len = syn2.length;
 			
 					for( var z = 0; z < syn2_len; z+=1) {
