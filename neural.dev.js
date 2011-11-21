@@ -817,7 +817,7 @@ var Neural = (function() {
 
 	
 	Public.prototype.addOrUpdateSynapse = function( req ) {
-		console.log('Public.prototype.addOrUpdateSynapse XXX',req);
+		
 		var synapse_data = req.value || {}
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
@@ -909,7 +909,6 @@ var Neural = (function() {
 				}
 
 				var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
-				//TODO: Wish I could update the cache
 
 				if( true === debug ) {
 					console.log( 'Updating', next, synapse_hash );
