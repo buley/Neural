@@ -3513,12 +3513,12 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				, 'incrementing': true
 				, 'unique': true
 			}
-			/*, 'hash': true
+			//, 'hash': true
 			, 'from': false
 			, 'from_type': false
 			, 'to': false
 			, 'to_type': false
-			, 'strength': false*/
+			, 'strength': false
 		};
 
 		console.log( 'Neural_synapses_install', indexes );
