@@ -943,7 +943,7 @@ var Neural = (function() {
 						synapse_id = finished_value;
 
 
-						Cache.delete( { 'key': ( 'synapses.data.' + finished_value ) );
+						Cache.delete( { 'key': ( 'synapses.data.' + finished_value ) } );
 
 
 				}, 'on_error': function( context ) {
