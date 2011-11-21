@@ -980,7 +980,16 @@ var Neural = (function() {
 								console.log( 'complete' );
 							}
 
-						}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
+						}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'hash': function( previous ){
+						console.log("HASH CACHE",previous);
+						if( -1 !== previous.indexOf( '_' ) ) {
+							var spl = previous.split( '_' );
+							var num = spl[ 1 ];
+							return spl[ 0 ] + '_' + (num + 1);
+						} else {
+							return previous + '_1';	
+						}
+					}, 'strength': function( previous ) {
 
 
 				console.log('s11');
