@@ -1469,11 +1469,10 @@ var Neural = (function() {
 						}
 					}, 'on_complete': function( hidden_ids ) {
 						
-						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
+						synapses = public.prototype.zipsynapses( 'hidden', hidden_ids, 'output', output_ids );
 						
-						var syn2 = Public.prototype.zipSynapses( 'input', input_ids, 'hidden', hidden_ids );
+						var syn2 = public.prototype.zipsynapses( 'input', input_ids, 'hidden', hidden_ids );
 						var syn2_len = syn2.length;
-						console.log('s2n1',syn2);
 						for( var z = 0; z < syn2_len; z+=1) {
 							synapses.push( syn2[z] );
 						}
@@ -3084,7 +3083,8 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , on_success = request.on_success || null
 		  , on_error = request.on_error || null
 		  , on_complete = request.on_complete || null
-		  , partial_network = {};
+		  , partial_network = {}
+		  , synapses;
 		Network.addOrGetInputNeurons({
 		    'return_existing': true,
 		    'tokens': input,
@@ -3127,6 +3127,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					if( !!debug ) {
 						console.log('READY', input_neurons, hidden_neurons, output_neurons);
 					}
+					//hhh
 					var input_neuron_length = input_neurons.length;
 					var output_neuron_length = output_neurons.length;
 					var hidden_neuron_length = hidden_neurons.length;
@@ -3161,9 +3162,21 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					    }
 					}
 
+	
+					synapses = public.prototype.zipsynapses( 'hidden', hidden_ids, 'output', output_ids );
+						
+					var syn2 = public.prototype.zipsynapses( 'input', input_ids, 'hidden', hidden_ids );
+					var syn2_len = syn2.length;
+			
+					for( var z = 0; z < syn2_len; z+=1) {
+						synapses.push( syn2[z] );
+					}
+
+
+
 					Network.addOrGetSynapses({
 					    'return_existing': true,
-					    'value': tokens,
+					    'value': synapses,
 					    'on_success': function (synapse) {
 					    
 						    //TODO: Debug statement
