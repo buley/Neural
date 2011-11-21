@@ -915,7 +915,6 @@ var Neural = (function() {
 				if( true === debug ) {
 					console.log( 'Updating', next, synapse_hash );
 				}
-				console.log("UPDATING TO",next);
 				return next; 
 
 				//zzz
@@ -945,7 +944,6 @@ var Neural = (function() {
 
 						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': finished_value, 'ttl': 300 } );
 						Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
-
 
 
 				}, 'on_error': function( context ) {
