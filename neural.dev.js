@@ -857,6 +857,7 @@ var Neural = (function() {
 				synapse_id = returned_synapse.id;
 
 				if( true === return_existing ) {
+					console.log('pushing',synapse_id,synapses);
 					synapses.push( synapse_id );
 				}
 				
@@ -866,8 +867,6 @@ var Neural = (function() {
 
 				Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': returned_synapse, 'ttl': 300 } );
 				Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
-
-
 
 				if( 'function' === typeof on_success ) {
 					on_success( returned_synapse );
@@ -888,6 +887,7 @@ var Neural = (function() {
 
 					Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
 					
+					console.log('pushing',synapse_id,synapses);
 					synapses.push( synapse_id );
 					
 					if( 'function' === typeof on_success ) {
@@ -943,9 +943,11 @@ var Neural = (function() {
 							synapses.push( finished_value );
 						}
 
-						synapse_id = finished_value;
-
-
+						synapse_id = finished_value.id;
+						if( true === return_existing ) {
+							synapses.push( synapse_id );
+							console.log('pushing',synapse_id,synapses);
+						}
 						Cache.delete( { 'key': ( 'synapses.data.' + finished_value ) } );
 
 
