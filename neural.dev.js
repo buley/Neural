@@ -3513,7 +3513,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				, 'incrementing': true
 				, 'unique': true
 			}
-			, 'hash': false
+			, 'hash': true
 			, 'from': false
 			, 'from_type': false
 			, 'to': false
