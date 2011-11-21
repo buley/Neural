@@ -876,7 +876,7 @@ var Neural = (function() {
 				}
 
 				Cache.delete( { 'key': ( 'synapses.hashes.' + synapse_data.hash ) } );
-
+				console.log("PUTTING");
 				Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
 					
 					synapse_data.id = synapse_id;
