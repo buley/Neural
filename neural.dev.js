@@ -817,7 +817,9 @@ var Neural = (function() {
 
 	
 	Public.prototype.addOrUpdateSynapse = function( req ) {
-		
+		if( !!debug ) {
+			console.log('Public.prototype.addOrUpdateSynapse',req);
+		}	
 		var synapse_data = req.value || {}
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
