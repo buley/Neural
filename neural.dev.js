@@ -1060,7 +1060,7 @@ var Neural = (function() {
 			Network.get( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
 			
 				synapse_id = returned_synapse.id;
-
+				console.log("GOT IT",returned_synapse);
 				if( true === debug ) {
 					console.log( 'Public.prototype.add Network.put error > Network.get success', JSON.stringify( returned_synapse ) );
 				}
