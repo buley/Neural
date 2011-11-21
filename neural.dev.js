@@ -854,8 +854,7 @@ var Neural = (function() {
 
 			Network.update( {  'type': 'synapses', 'on_success': function( returned_synapse ) {
 		
-		console.log('s4');
-				synapse_id = returned_synapse.id;
+		console.log('s4',returned_synapse);
 
 				if( true === debug ) {
 					console.log( 'Public.prototype.add Network.put error > Network.update success', JSON.stringify( returned_synapse ) );
