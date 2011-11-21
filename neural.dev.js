@@ -856,7 +856,7 @@ var Neural = (function() {
 		
 				synapse_id = returned_synapse.id;
 
-				if( true === return_existing && 'undefined' !== synapse_id ) {
+				if( true === return_existing && 'undefined' !== typeof synapse_id ) {
 					console.log('pushing',synapse_id,synapses);
 					synapses.push( synapse_id );
 				}
