@@ -1471,6 +1471,12 @@ var Neural = (function() {
 						
 						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
 						
+						var syn2 = Public.prototype.zipSynapses( 'input', input_ids, 'hidden', hidden_ids );
+						var syn2_len = syn2.length;
+						for( var z = 0; z < syn2_len; z+=1) {
+							synapses.push( syn2[z] );
+						}
+
 						Network.addOrUpdateSynapses( {
 						    'return_existing': true
 						    , 'value': synapses
