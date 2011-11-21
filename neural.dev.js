@@ -114,8 +114,7 @@ var Neural = (function() {
 
 
 	Public.prototype.incrementer = function( current, type_object ) {
-		//current = ( !isNaN( current ) ) ? current : 0;
-		console.log("JAMIE JIMPLIN OR JANET JOPLER",current,current+1);
+		current = ( !isNaN( current ) ) ? current : 0;
 		return current + 1;
 	};
 
