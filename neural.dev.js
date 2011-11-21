@@ -929,19 +929,8 @@ var Neural = (function() {
 					console.log( 'Public.prototype.update > Previous', previous );
 				}
 
-				if( 'function' == previous ) {
-					previous = previous();
-				};
-
 				var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
-
-				returned_synapse_data.strength = next;
-
-				if( 'undefined' !== typeof returned_synapse_data.id ) {
-
-					Cache.set( { 'key': ( 'synapses.data.' + returned_synapse_data.id ), 'value': returned_synapse_data, 'ttl': 300 } );
-				
-				}
+				//TODO: Wish I could update the cache
 
 				if( true === debug ) {
 					console.log( 'Updating', next, returned_synapse_data );
@@ -986,8 +975,7 @@ var Neural = (function() {
 
 					}, 'on_complete': function() {
 				
-
-			console.log('s10');
+						console.log('s10');
 						if( true === debug ) {
 							console.log( 'complete' );
 						}
