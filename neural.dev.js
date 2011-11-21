@@ -1241,7 +1241,9 @@ var Neural = (function() {
 			}
 
 			synapse_id = passed_synapse.id;
-			synapses.push( synapse_id );
+			if( 'undefined' !== typeof synapse_id ) {
+				synapses.push( synapse_id );
+			}
 
 			if( 'function' === typeof on_success ) {
 				on_success( passed_synapse );
