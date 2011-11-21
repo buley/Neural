@@ -6,7 +6,7 @@
 var Cache = {};
 var Neural = (function() {
 
-	var debug = false;
+	var debug = true;
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
@@ -3153,10 +3153,8 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					}
 					for (a = hidden_neuron_length; a > 1; a -= 1) {
 					    hidden_neuron = hidden_neurons[(a - 1)];
-					    console.log('hidden_neuron', hidden_neuron);
 					    for (b = input_neuron_length; b > 1; b -= 1) {
 						input_neuron = input_neurons[(b - 1)];
-						console.log('input_neuron', input_neuron);
 						// add
 						synapse_data = {
 						    'to': hidden_neuron,
