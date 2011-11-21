@@ -2411,7 +2411,7 @@ var Neural = (function() {
 
 				}, 'key': cached_synapse.id, 'data': { 'hash': function( previous ){
 					console.log("HASH CACHE",previous);
-					return null;	
+					return previous;	
 				}, 'strength': function( previous ) {
 					
 					if( true === debug ) {
