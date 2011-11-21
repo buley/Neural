@@ -933,7 +933,7 @@ var Neural = (function() {
 				//TODO: Wish I could update the cache
 
 				if( true === debug ) {
-					console.log( 'Updating', next, returned_synapse_data );
+					console.log( 'Updating', next, synapse_hash );
 				}
 
 				return next; 
