@@ -980,16 +980,7 @@ var Neural = (function() {
 								console.log( 'complete' );
 							}
 
-						}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'hash': function( previous ){
-						console.log("HASH CACHE",previous);
-						if( -1 !== previous.indexOf( '_' ) ) {
-							var spl = previous.split( '_' );
-							var num = spl[ 1 ];
-							return spl[ 0 ] + '_' + (num + 1);
-						} else {
-							return previous + '_1';	
-						}
-					}, 'strength': function( previous ) {
+						}, 'index': 'hash', 'key': synapse_data.hash, 'data': { 'strength': function( previous ) {
 
 
 				console.log('s11');
@@ -2242,6 +2233,7 @@ var Neural = (function() {
 
 			if( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
 				var cached_synapse = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
+				console.log("CAMP BUDDY",JSON.stringify({ 'key': ( 'synapses.data.' + cached_synapse_id ) }), cached_synapse );
 			}
 			if( ( 'undefined' === typeof cached_synapse || null === cached_synapse ) && new_synapse_data !== cached_synapse ) {
 
@@ -2252,6 +2244,7 @@ var Neural = (function() {
 					}
 			
 					new_synapse_data.id = synapse_id;
+console.log("AWSOME",JSON.stringify(new_synapse_data));
 					Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.synapses.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.hashes.' + new_synapse_data.hash  ), 'value': synapse_id, 'ttl': 300 } );
@@ -2304,16 +2297,7 @@ var Neural = (function() {
 								if( true === debug ) {
 									console.log( 'complete' );
 								}	
-							}, 'key': returned_synapse_data.id, 'data': { 'hash': function( previous ){
-						console.log("HASH CACHE",previous);
-						if( -1 !== previous.indexOf( '_' ) ) {
-							var spl = previous.split( '_' );
-							var num = spl[ 1 ];
-							return spl[ 0 ] + '_' + (num + 1);
-						} else {
-							return previous + '_1';	
-						}
-					}, 'strength': function( previous ) {
+							}, 'key': returned_synapse_data.id, 'data': { 'strength': function( previous ) {
 								
 								if( true === debug ) {
 									console.log( 'Public.prototype.update > Previous', previous );
@@ -2373,16 +2357,7 @@ var Neural = (function() {
 								console.log( 'complete' );
 							}
 
-						}, 'key': new_synapse_data.id, 'data': { 'hash': function( previous ){
-						console.log("HASH CACHE",previous);
-						if( -1 !== previous.indexOf( '_' ) ) {
-							var spl = previous.split( '_' );
-							var num = spl[ 1 ];
-							return spl[ 0 ] + '_' + (num + 1);
-						} else {
-							return previous + '_1';	
-						}
-					}, 'strength': function( previous ) {
+						}, 'key': new_synapse_data.id, 'data': { 'strength': function( previous ) {
 
 							if( true === debug ) {
 								console.log( 'Public.prototype.update > Previous', previous );
@@ -2436,16 +2411,7 @@ var Neural = (function() {
 						console.log( 'complete' );
 					}
 
-				}, 'key': cached_synapse.id, 'data': { 'hash': function( previous ){
-						console.log("HASH CACHE",previous);
-						if( -1 !== previous.indexOf( '_' ) ) {
-							var spl = previous.split( '_' );
-							var num = spl[ 1 ];
-							return spl[ 0 ] + '_' + (num + 1);
-						} else {
-							return previous + '_1';	
-						}
-					}, 'strength': function( previous ) {
+				}, 'key': cached_synapse.id, 'data': { 'strength': function( previous ) {
 					
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
@@ -3547,7 +3513,7 @@ var Neural = (function() {
 				, 'incrementing': true
 				, 'unique': true
 			}
-			, 'hash': true
+			, 'hash': false
 			, 'from': false
 			, 'from_type': false
 			, 'to': false
