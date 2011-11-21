@@ -1470,8 +1470,13 @@ var Neural = (function() {
 		  , synapses = [];
 
 		//xx
-		Network.addOrGetInputNeurons( { 'return_existing': true, 'tokens': input, 'on_success': function(neuron){console.log("NEURON",neuron);}, 'on_error': function(){console.log("ERROR");}, 'on_complete': function( input_ids ) {
-			console.log("Network.addOrGetInputNeurons > GREAT COMPLETE", input_ids );
+		Network.addOrGetInputNeurons( { 'return_existing': true, 'tokens': input, 'on_success': function(neuron){
+		
+		} , 'on_error': function(){
+		
+		}, 'on_complete': function( input_ids ) {
+
+			console.log("Getting output");
 
 			//begin
 			Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( output_neuron ){
@@ -1483,6 +1488,7 @@ var Neural = (function() {
 					on_error( context );
 				}
 			}, 'on_complete': function( output_ids ) {
+				console.log("Getting hidden");
 				Network.addOrGetHiddenNeurons(
 					{ 'return_existing': true
 					, 'tokens': input
