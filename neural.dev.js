@@ -830,6 +830,7 @@ var Neural = (function() {
 		    , synapses_length = 0
 		    , synapse
 	 	    , synapse_data
+		    , synapse_id
 		    , cached_synapse_data
 		    , cached_synapse_id;
 
@@ -854,7 +855,7 @@ var Neural = (function() {
 
 			Network.update( {  'type': 'synapses', 'on_success': function( returned_synapse ) {
 		
-		console.log('s4',returned_synapse);
+				synapse_id = returned_synapse.id;
 
 				if( true === debug ) {
 					console.log( 'Public.prototype.add Network.put error > Network.update success', JSON.stringify( returned_synapse ) );
