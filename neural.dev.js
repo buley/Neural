@@ -6,7 +6,7 @@
 var Cache = {};
 var Neural = (function() {
 
-	var debug = false;
+	var debug = true;
 
 	/* Decorate a vanilla InDBApp */
 	var Private = new InDBApp();
@@ -853,7 +853,7 @@ var Neural = (function() {
 		console.log("CACHE",cached_synapse_data,cached_synapse_id);
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
 			
-			Network.update( {  'type': 'synapses', 'on_success': function( returned_synapse ) {
+			Network.update( {  'type': 'synapse', 'on_success': function( returned_synapse ) {
 		
 				synapse_id = returned_synapse.id;
 
@@ -925,8 +925,9 @@ var Neural = (function() {
 		} else {
 
 			/* Synapse Update Single */
-			Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+			Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
 
+				console.log('synapse update success',finished_value);
 						if( true === debug ) {
 							console.log( 'Public.prototype.update > Network.update > success', finished_value );
 						}
@@ -941,7 +942,8 @@ var Neural = (function() {
 
 						synapse_id = finished_value;
 
-						Cache.set( { 'key': ( 'synapses.data.' + finished_value.id ), 'value': finished_value, 'ttl': 300 } );
+
+						Cache.delete( { 'key': ( 'synapses.data.' + finished_value ) } );
 
 
 				}, 'on_error': function( context ) {
@@ -2251,7 +2253,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 							//update if exists, on success return new neuron
 							/* Synapse Update Single */
-							Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+							Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
 	
 								if( 'undefined' !== typeof on_success ) {
 									on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false, 'updated': true } );
@@ -2310,7 +2312,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						}, 'index': 'hash', 'key': synapse_hash } );
 					} else {
 
-						Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+						Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
 							if( true === debug ) {
 								console.log( 'Public.prototype.update > Network.update > success', finished_value );
 							}
@@ -2363,7 +2365,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 				//update if exists, on success return new neuron
 				/* Synapse Update Single */
-				Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
+				Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
 
 					if( true === debug ) {
 						console.log( 'success', finished_value );
