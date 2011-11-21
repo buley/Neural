@@ -851,10 +851,12 @@ var Neural = (function() {
 		console.log('s0');
 		if( synapse_data !== cached_synapse_data && ( 'undefined' === typeof cached_synapse_id || null === cached_synapse_id || 'undefined' === typeof cached_synapse_data || null === cached_synapse_data ) ) {
 			
-			console.log('s1');
 
+
+			console.log('s1');
 			Network.update( {  'type': 'synapses', 'on_success': function( returned_synapse ) {
 		
+			console.log('s21');
 				synapse_id = returned_synapse.id;
 
 				if( true === debug ) {
