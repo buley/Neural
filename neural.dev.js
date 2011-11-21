@@ -940,11 +940,10 @@ var Neural = (function() {
 							synapses.push( finished_value );
 						}
 
-						synapse_id = finished_value.id;
+						synapse_id = finished_value;
 
 
-						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': finished_value, 'ttl': 300 } );
-						Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+						Cache.delete( { 'key': ( 'synapses.data.' + finished_value ) );
 
 
 				}, 'on_error': function( context ) {
