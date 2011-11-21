@@ -939,11 +939,12 @@ var Neural = (function() {
 							on_success( { 'type': 'synapse', 'action': 'get', 'value': finished_value, 'cached': true, 'updated': true } );
 						}
 		
+						synapse_id = finished_value.id;
+						
 						if( true === return_existing ) {
-							synapses.push( finished_value );
+							synapses.push( synapse_id );
 						}
 
-						synapse_id = finished_value.id;
 						if( true === return_existing ) {
 							synapses.push( synapse_id );
 							console.log('pushing',synapse_id,synapses);
