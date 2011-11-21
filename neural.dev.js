@@ -924,7 +924,7 @@ var Neural = (function() {
 
 
 		} else {
-	console.log("CACHE UPDATE");
+
 			/* Synapse Update Single */
 			Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 
@@ -956,14 +956,13 @@ var Neural = (function() {
 
 				}, 'on_complete': function() {
 			
-					if( true === debug ) {
+					/*if( true === debug ) {
 						console.log( 'complete' );
-					}
+					}*/
 
 				}, 'index': 'hash', 'key': synapse_data.hash
+			
 				, 'data': { 'strength': function( previous ) {
-
-
 
 					if( true === debug ) {
 						console.log( 'Public.prototype.update > Previous', previous );
@@ -987,7 +986,6 @@ var Neural = (function() {
 						console.log( 'Updating', next, cached_synapse_data );
 					}
 
-					console.log("CACHE UPDATING TO",next);
 					return next; 
 
 				} } 
@@ -3209,7 +3207,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	}
 	
 	Public.prototype.zipSynapses = function( to_type, tos, from_type, froms ) {
-	console.log('zipping',to_type, tos, from_type, froms);	
 		var a
 		  , b
 		  , synapse_data
@@ -3220,12 +3217,10 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , tokens = [];
 
 		for (a = to_length; a >= 1; a -= 1) {
-		   	console.log('a',a); 
 			to = tos[ ( a - 1 ) ];
 		    
 			for ( b = from_length; b >= 1; b -= 1 ) {
 			
-		   	console.log('b',b); 
 				from = froms[ ( b - 1 ) ];
 			
 				synapse_data = {
