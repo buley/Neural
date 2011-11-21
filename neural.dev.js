@@ -924,7 +924,7 @@ var Neural = (function() {
 
 
 		} else {
-
+	console.log("CACHE UPDATE");
 			/* Synapse Update Single */
 			Network.update( {  'type': 'synapses', 'on_success': function( finished_value ) {
 
