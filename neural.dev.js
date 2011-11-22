@@ -3119,7 +3119,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					item = input_ids[ x ];
 
 					input_tos = network[ item ][ 'to' ];
-					console.log("ITEM",item,input_ids,x,network[item]);
+
 					for( attr in input_tos ) {
 						if( tos.hasOwnProperty( attr ) ) {
 							in_hid_id = attr;
