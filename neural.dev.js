@@ -1240,6 +1240,7 @@ var Neural = (function() {
 			}
 
 			synapse_id = passed_synapse.id;
+
 			if( 'undefined' !== typeof synapse_id ) {
 				synapses.push( synapse_id );
 			}
@@ -1280,7 +1281,7 @@ var Neural = (function() {
 			
 			if( synapses.length >= expected_actions ) {
 				if( 'function' === typeof on_complete ) {
-					on_complete( passed_synapses );
+					on_complete( passed_synapses.sort( function(a,b){return (a<b) ? -1 : 1; } ) );
 				}
 			}
 
@@ -1298,7 +1299,6 @@ var Neural = (function() {
 				}
 		
 				request = { 'value': synapse, 'on_success': own_on_success, 'on_error': own_on_error, 'return_existing': return_existing }; 
-				console.log( 'Public.prototype.addOrUpdateSynapse', request );
 				Public.prototype.addOrUpdateSynapse( request );
 		
 			}
