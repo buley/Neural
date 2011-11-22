@@ -3098,10 +3098,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	
 	};
 
-	//xxx
-	//TODO: all the on_success and on_error work got lost
-	//TODO: example: Network.getPartialNetwork( { 'input': [ 'Microsoft', 'Oracle' ], 'output': [ 'click', 'like', 'hate', 'friends' ], 'on_complete': function( network ) { console.log( "NETWORK", network ); } } );
-	//why are 34 and 36 (Microsoft alone hidden/input) missing?
  	Public.prototype.getPartialNetwork = function( request ) {
 
 		var input = request.input
@@ -3161,8 +3157,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					for( var z = 0; z < syn2_len; z+=1) {
 						synapses.push( syn2[z] );
 					}
-
-
 
 					Network.addOrGetSynapses({
 					    'return_existing': true,
