@@ -1113,7 +1113,7 @@ var Neural = (function() {
 	 	    , neuron_data
 		    , cached_neuron_data
 		    , cached_neuron_id;
-		console.log("INCOMING",incoming);
+		console.log("INCOMING",incoming);\
 		for( x = 0; x < incoming_length; x += 1 ) {
 
 			synapse = incoming[ x ];
