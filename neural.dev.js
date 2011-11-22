@@ -1173,7 +1173,7 @@ var Neural = (function() {
 		};
 
 		expected_actions = Public.prototype.countAttributes( additions );
-		console.log("ADDITIONS",additions);
+		console.log("ADDITIONS",additions);	
 		for( x in additions ) {
 			if( additions.hasOwnProperty( x ) ) {
 		
