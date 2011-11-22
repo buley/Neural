@@ -3105,7 +3105,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 		Network.addOrGetInputNeurons( {
 			'return_existing': true
-			, 'tokens': input,
+			, 'tokens': input
 			, 'on_success': function( input_ids ) {
 				console.log( 'INPUT NEURONS', input_ids );
 			}
