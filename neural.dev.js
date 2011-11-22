@@ -3079,6 +3079,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	/* queries a network for active output neurons
 	 * takes a tokens input (one or more tokens) and network (neuron/connection weight matrix) and returns a normalized score */	
  	Public.prototype.queryNetwork = function( request ) {
+	//yyy
 	
 		var input = request.input
 		  , input_len = input.length
@@ -3088,6 +3089,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , x = 0
 		  , attr
 		  , to_id
+		  , input_ids
 		  , input_tos
 		  , hidden_froms
 		  , hidden_tos
@@ -3101,6 +3103,13 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
     			return (Math.exp(arg) - Math.exp(-arg)) / (Math.exp(arg) + Math.exp(-arg));
 		}
 
+		Network.addOrGetInputNeurons( {
+			'return_existing': true,
+			, 'tokens': input,
+			, 'on_success': function( input_ids ) {
+				console.log( 'INPUT NEURONS', input_ids );
+			}
+		} );	
 		Network.getPartialNetwork( { 'input': input, 'output': output, 'on_complete': function( network ) {
 			
 			console.log( "NETWORK", network ); 
