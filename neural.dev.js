@@ -1289,6 +1289,8 @@ var Neural = (function() {
 
 		expected_actions = Public.prototype.countAttributes( additions );
 
+		additions = additions.sort( function(a,b){return (a<b) ? -1 : 1; } ) );
+				}
 		for( x in additions ) {
 			if( additions.hasOwnProperty( x ) ) {
 		
