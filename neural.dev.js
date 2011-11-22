@@ -3107,54 +3107,54 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			'return_existing': true
 			, 'tokens': input
 			, 'on_complete': function( input_ids ) {
-				console.log( 'INPUT NEURONS', input_ids );
-			}
-		} );	
-		Network.getPartialNetwork( { 'input': input, 'output': output, 'on_complete': function( network ) {
-			
-			console.log( "NETWORK", network ); 
-			
-			for( x = 0; x < input_len; x += 1 ) {
+		
+			Network.getPartialNetwork( { 'input': input, 'output': output, 'on_complete': function( network ) {
+				
+				console.log( "NETWORK", network ); 
+				
+				for( x = 0; x < input_len; x += 1 ) {
 
-				item = input[ x ];
+					item = input[ x ];
 
-				input_tos = network[ item ][ 'to' ];
-				for( attr in input_tos ) {
-					if( tos.hasOwnProperty( attr ) ) {
-						in_hid_id = attr;
-						in_hid_strength = input_tos[ attr ];
-						hidden_tos = network[ in_hid_id ][ 'to' ];
-						for( to_id in input_tos ) {
-							if( tos.hasOwnProperty( to_id ) ) {
-						
-								hid_out_id = to_id
-								hid_out_strength = input_tos[ to_id ];
-	
-								matrix[ to_id ] += ( hid_out_strength * in_hid_strength );
+					input_tos = network[ item ][ 'to' ];
+					for( attr in input_tos ) {
+						if( tos.hasOwnProperty( attr ) ) {
+							in_hid_id = attr;
+							in_hid_strength = input_tos[ attr ];
+							hidden_tos = network[ in_hid_id ][ 'to' ];
+							for( to_id in input_tos ) {
+								if( tos.hasOwnProperty( to_id ) ) {
+							
+									hid_out_id = to_id
+									hid_out_strength = input_tos[ to_id ];
+		
+									matrix[ to_id ] += ( hid_out_strength * in_hid_strength );
+								}
 							}
 						}
 					}
+					
+				}	
+			
+				var results = {};	
+				for( attr in matrix ) {
+					if( matrix.hasOwnProperty( attr ) ) {
+						var neuron = Public.prototype.returnNeuron( attr );
+						results[ neuron.display ] = { 
+							'neuron': neuron
+							, 'score': tanh( matrix[ attr ] )
+						};
+					}
 				}
-				
-			}	
+
+				if( 'function' === typeof on_success ) {
+					on_success( results );
+				}
+
+			} } );
 		
-			var results = {};	
-			for( attr in matrix ) {
-				if( matrix.hasOwnProperty( attr ) ) {
-					var neuron = Public.prototype.returnNeuron( attr );
-					results[ neuron.display ] = { 
-						'neuron': neuron
-						, 'score': tanh( matrix[ attr ] )
-					};
-				}
 			}
-
-			if( 'function' === typeof on_success ) {
-				on_success( results );
-			}
-
-		} } );
-
+		} );	
 	};
 
  	Public.prototype.getPartialNetwork = function( request ) {
