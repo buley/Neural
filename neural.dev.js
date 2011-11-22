@@ -3117,7 +3117,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				for( x = 0; x < input_len; x += 1 ) {
 
 					item = input_ids[ x ];
-
+					console.log("ITEM",item,input_ids,x);
 					input_tos = network[ item ][ 'to' ];
 					for( attr in input_tos ) {
 						if( tos.hasOwnProperty( attr ) ) {
