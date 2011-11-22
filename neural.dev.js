@@ -898,7 +898,6 @@ var Neural = (function() {
 				}, 'data': synapse_data } );
 
 			}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
-				//dynamic data
 
 				if( true === debug ) {
 					console.log( 'Public.prototype.update > Previous', previous );
@@ -910,8 +909,6 @@ var Neural = (function() {
 					console.log( 'Updating', next, synapse_hash );
 				}
 				return next; 
-
-				//zzz
 
 			} } } );
 
