@@ -1265,6 +1265,7 @@ var Neural = (function() {
 			if( 'function' === typeof on_error ) {
 				on_error( context );
 			}
+
 			if( neurons.length >= expected_actions ) {
 				own_on_complete( synapses );
 			}
@@ -1272,14 +1273,17 @@ var Neural = (function() {
 		};
 
 		own_on_complete = function( passed_synapses ) {
+			
 			if( !!debug ) {
 				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_synapses );
 			}
+			
 			if( synapses.length >= expected_actions ) {
 				if( 'function' === typeof on_complete ) {
 					on_complete( passed_synapses );
 				}
 			}
+
 		};
 
 		expected_actions = Public.prototype.countAttributes( additions );
