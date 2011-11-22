@@ -1113,14 +1113,14 @@ var Neural = (function() {
 	 	    , neuron_data
 		    , cached_neuron_data
 		    , cached_neuron_id;
-
+		console.log("INCOMING",incoming);
 		for( x = 0; x < incoming_length; x += 1 ) {
 
 			synapse = incoming[ x ];
 			additions.push( { 'to': synapse.to, 'to_type': synapse.to_type, 'from': synapse.from, 'from_type': synapse.from_type } );
 
 		}
-
+		console.log("ADDITIONS", typeof md5 );
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
@@ -1443,8 +1443,6 @@ var Neural = (function() {
 		
 		}, 'on_complete': function( input_ids ) {
 
-
-
 			//begin
 			Network.addOrGetOutputNeurons( { 'return_existing': true, 'tokens': output, 'on_success': function( output_neuron ){
 				if( 'function' === typeof on_success ) {
@@ -1468,7 +1466,9 @@ var Neural = (function() {
 							on_error( context );
 						}
 					}, 'on_complete': function( hidden_ids ) {
-						
+
+
+			
 						synapses = Public.prototype.zipSynapses( 'hidden', hidden_ids, 'output', output_ids );
 						
 						var syn2 = Public.prototype.zipSynapses( 'input', input_ids, 'hidden', hidden_ids );
