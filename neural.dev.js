@@ -3123,6 +3123,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						if( tos.hasOwnProperty( attr ) ) {
 							in_hid_id = attr;
 							in_hid_strength = input_tos[ attr ];
+							console.log('HIDDD',network[in_hid_id]);
 							hidden_tos = network[ in_hid_id ][ 'to' ];
 							for( to_id in input_tos ) {
 								if( tos.hasOwnProperty( to_id ) ) {
