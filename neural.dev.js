@@ -1114,15 +1114,13 @@ var Neural = (function() {
 		    , cached_neuron_data
 		    , cached_neuron_id;
 
-		console.log("INCOMING",incoming);
-
 		for( x = 0; x < incoming_length; x += 1 ) {
 
 			synapse = incoming[ x ];
 			additions.push( { 'to': synapse.to, 'to_type': synapse.to_type, 'from': synapse.from, 'from_type': synapse.from_type } );
 
 		}
-		console.log("OUTPUT",additions);
+		
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
@@ -1130,7 +1128,7 @@ var Neural = (function() {
 		own_on_success = function( passed_synapse ) {
 	
 			if( !!debug ) {
-				console.log( 'Public.prototype.addOrGetNeuron > success', passed_synapse );
+				console.log( 'Public.prototype.addOrGetSynapses > success', passed_synapse );
 			}
 
 			synapse_id = passed_synapse.id;
@@ -1149,7 +1147,7 @@ var Neural = (function() {
 		own_on_error = function( context ) {
 			
 			if( !!debug ) {
-				console.log( 'Public.prototype.addOrGetNeurons > error', context );
+				console.log( 'Public.prototype.addOrGetSynapses > error', context );
 			}
 		
 			expected_actions -= 1;
@@ -1165,7 +1163,7 @@ var Neural = (function() {
 
 		own_on_complete = function( passed_synapses ) {
 			if( !!debug ) {
-				console.log( 'Public.prototype.addOrGetNeurons > complete', passed_synapses );
+				console.log( 'Public.prototype.addOrGetSynapses > complete', passed_synapses );
 			}
 			if( synapses.length >= expected_actions ) {
 				if( 'function' === typeof on_complete ) {
@@ -1175,7 +1173,7 @@ var Neural = (function() {
 		};
 
 		expected_actions = Public.prototype.countAttributes( additions );
-
+		console.log("ADDITIONS",additions);
 		for( x in additions ) {
 			if( additions.hasOwnProperty( x ) ) {
 		
