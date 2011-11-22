@@ -3085,18 +3085,55 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , output = request.output
 		  , output_len = output.length
 		  , item = 0
-		  , x = 0;
+		  , x = 0
+		  , attr
+		  , to_id
+		  , input_tos
+		  , hidden_froms
+		  , hidden_tos
+		  , matrix
+		  , in_hid_id
+		  , in_hid_strength
+		  , hid_out_id
+		  , hid_out_strength;
+
+		var tanh = function(arg) {
+    			return (Math.exp(arg) - Math.exp(-arg)) / (Math.exp(arg) + Math.exp(-arg));
+		}
 
 		Network.getPartialNetwork( { 'input': input, 'output': output, 'on_complete': function( network ) {
 			
 			console.log( "NETWORK", network ); 
-		
+			
 			for( x = 0; x < input_len; x += 1 ) {
 
 				item = input[ x ];
 
+				input_tos = network[ item ][ 'to' ];
+				for( attr in input_tos ) {
+					if( tos.hasOwnProperty( attr ) ) {
+						in_hid_id = attr;
+						in_hid_strength = input_tos[ attr ];
+						hidden_tos = network[ in_hid_id ][ 'to' ];
+						for( to_id in input_tos ) {
+							if( tos.hasOwnProperty( to_id ) ) {
+						
+								hid_out_id = to_id
+								hid_out_strength = input_tos[ to_id ];
+	
+								matrix[ to_id ] += ( hid_out_strength * in_hid_strength );
+							}
+						}
+					}
+				}
+				
 			}	
 			
+			for( attr in matrix ) {
+				if( matrix.hasOwnProperty( attr ) ) {
+					matrix[ attr ] = tanh( matrix[ attr ] );
+				}
+			}
 
 		} } );
 
