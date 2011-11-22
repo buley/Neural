@@ -3082,12 +3082,20 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	
 		var input = request.input
 		  , input_len = input.length
+		  , output = request.output
+		  , output_len = output.length
+		  , item = 0
 		  , x = 0;
 
-		Network.getPartialNetwork( { 'input': request.input, 'output': request.output, 'on_complete': function( network ) {
+		Network.getPartialNetwork( { 'input': input, 'output': output, 'on_complete': function( network ) {
 			
 			console.log( "NETWORK", network ); 
-			
+		
+			for( x = 0; x < input_len; x += 1 ) {
+
+				item = input[ x ];
+
+			}	
 			
 
 		} } );
