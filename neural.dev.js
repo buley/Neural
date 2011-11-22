@@ -813,8 +813,6 @@ var Neural = (function() {
 
 	};
 
-	//
-
 	
 	Public.prototype.addOrUpdateSynapse = function( req ) {
 		if( !!debug ) {
