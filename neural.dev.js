@@ -3128,11 +3128,20 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				}
 				
 			}	
-			
+		
+			var results = {};	
 			for( attr in matrix ) {
 				if( matrix.hasOwnProperty( attr ) ) {
-					matrix[ attr ] = tanh( matrix[ attr ] );
+					var neuron = Public.prototype.returnNeuron( attr );
+					results[ neuron.id ] = { 
+						'neuron': neuron
+						'score': tanh( matrix[ attr ] )
+					};
 				}
+			}
+
+			if( 'function' === typeof on_success ) {
+				on_success( results );
 			}
 
 		} } );
