@@ -930,9 +930,34 @@ var Neural = (function() {
 
 				}, 'on_error': function( context ) {
 				
+					if( true === debug ) {
+						console.log( 'Cached update error', context );
+					}
+
+					Network.put( {  'type': 'synapse', 'on_success': function( synapse_id ) {
+						
+						synapse_data.id = synapse_id;
+						
+						Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': synapse_data, 'ttl': 300 } );
+
+						Cache.set( { 'key': ( 'synapses.hashes.' + synapse_data.hash ), 'value': synapse_id, 'ttl': 300 } );
+						console.log("SYN",synapse_data);	
+						if( 'function' === typeof on_success ) {
+							on_success( synapse_data );
+						}				
+
+					}, 'on_error': function( context ) {
+					
 						if( true === debug ) {
-							console.log( 'Cached update error', context );
+							console.log( 'Public.prototype.add Network.put error', context );
 						}
+						
+						if( 'function' === typeof on_error ) {
+							on_error( context );
+						}
+
+					}, 'data': synapse_data } );
+
 
 				}, 'on_complete': function() {
 			
