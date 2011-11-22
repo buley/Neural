@@ -3108,13 +3108,15 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			, 'tokens': input
 			, 'on_complete': function( input_ids ) {
 		
+			inpout_len = input_ids.length;
+
 			Network.getPartialNetwork( { 'input': input, 'output': output, 'on_complete': function( network ) {
 				
 				console.log( "NETWORK", network ); 
 				
 				for( x = 0; x < input_len; x += 1 ) {
 
-					item = input[ x ];
+					item = input_ids[ x ];
 
 					input_tos = network[ item ][ 'to' ];
 					for( attr in input_tos ) {
