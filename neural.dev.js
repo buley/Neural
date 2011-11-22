@@ -1120,7 +1120,7 @@ var Neural = (function() {
 			additions.push( { 'to': synapse.to, 'to_type': synapse.to_type, 'from': synapse.from, 'from_type': synapse.from_type } );
 
 		}
-		console.log("ADDITIONS", typeof md5 );
+		console.log("OUTPUT",additions);
 		if( true !== return_existing ) {
 			return_existing = false;
 		}
