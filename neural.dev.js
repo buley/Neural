@@ -3125,14 +3125,14 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						if( input_tos.hasOwnProperty( attr ) ) {
 							in_hid_id = attr;
 							in_hid_strength = input_tos[ attr ];
-							console.log('HIDDD',in_hid_id,'mds',network[in_hid_id]);
+							in_hid_strength = ( 'undefined' === typeof in_hid_strength ) ? in_hid_strength : 0;
 							hidden_tos = network[ in_hid_id ][ 'to' ];
 							for( to_id in hidden_tos ) {
 								if( hidden_tos.hasOwnProperty( to_id ) ) {
 							
 									hid_out_id = to_id
 									hid_out_strength = hidden_tos[ to_id ];
-		
+									hid_out_strength = ( 'undefined' === typeof hid_out_strength ) ? hid_out_strength : 0;
 									matrix[ to_id ] += ( hid_out_strength * in_hid_strength );
 								}
 							}
