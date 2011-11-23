@@ -880,7 +880,7 @@ var Neural = (function() {
 			}, 'index': 'hash', 'key': synapse_hash, 'data': { 'strength': function( previous ) {
 
 				if ( true === debug ) {
-					console.log( 'Public.prototype.update > Previous', previous, synapse_hash );
+					console.log( 'Public.prototype.update > Previous', previous, 'hash', synapse_hash );
 				}
 
 				var next = ( 'number' === typeof previous ) ? Public.prototype.incrementer( previous, { 'hash': synapse_hash } ) : 0;
