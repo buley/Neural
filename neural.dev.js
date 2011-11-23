@@ -3130,7 +3130,11 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 							in_hid_id = attr;
 							in_hid_strength = input_tos[ attr ];
 							in_hid_strength = ( 'number' === typeof in_hid_strength ) ? in_hid_strength : 0;
+							if( 'undefined' !== typeof network[ in_hid_id ] ) {
+								network[ in_hid_id ] = {};
+							}
 							hidden_tos = network[ in_hid_id ][ 'to' ];
+							
 							for( to_id in hidden_tos ) {
 								if( hidden_tos.hasOwnProperty( to_id ) ) {
 							
@@ -3159,6 +3163,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					if( matrix.hasOwnProperty( attr ) ) {	
 						var neuron = Public.prototype.returnNeuron( attr );
 						console.log( '(', matrix[attr], '/', count, ') / ', input_len );
+						, '+', output_len, ')' );
 						results[ neuron.display ] = { 
 							'neuron': neuron
 							, 'score': ( matrix[ attr ] / count ) / input_len
