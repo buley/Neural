@@ -3154,7 +3154,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						var neuron = Public.prototype.returnNeuron( attr );
 						results[ neuron.display ] = { 
 							'neuron': neuron
-							, 'score': tanh( matrix[ attr ] )
+							, 'score': matrix[ attr ]
 						};
 					}
 				}
