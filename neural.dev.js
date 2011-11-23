@@ -3118,8 +3118,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				for( x = 0; x < input_len; x += 1 ) {
 
 					item = input_ids[ x ];
-
-					console.log('INPUT TO',x,'Object',item);
 					input_tos = network[ item ][ 'to' ];
 
 					for( attr in input_tos ) {
@@ -3144,17 +3142,15 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 			
 				var results = {};	
 				for( attr in matrix ) {
-					if( matrix.hasOwnProperty( attr ) ) {
-			
+					if( matrix.hasOwnProperty( attr ) ) {	
 						var neuron = Public.prototype.returnNeuron( attr );
-						console.log('NEURON',neuron,attr);
 						results[ neuron.display ] = { 
 							'neuron': neuron
-							, 'score': matrix[ attr ]
+							, 'score': tanh( matrix[ attr ] )
 						};
 					}
 				}
-				console.log("RESULTS",results);	
+				
 				if( 'function' === typeof on_complete ) {
 					on_complete( results );
 				}
