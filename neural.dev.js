@@ -3079,7 +3079,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 	/* queries a network for active output neurons
 	 * takes a tokens input (one or more tokens) and network (neuron/connection weight matrix) and returns a normalized score */	
  	Public.prototype.queryNetwork = function( request ) {
-	//yyy
 	
 		var input = request.input
 		  , input_len = input.length
@@ -3132,6 +3131,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 									hid_out_id = to_id
 									hid_out_strength = hidden_tos[ to_id ];
 									hid_out_strength = ( 'number' === typeof hid_out_strength ) ? hid_out_strength : 0;
+									console.log(to_id,"BEFORE",matrix[ to_id ], '1st', hid_out_strength,'2nd', in_hid_strength);
 									matrix[ to_id ] += ( hid_out_strength * in_hid_strength );
 								}
 							}
