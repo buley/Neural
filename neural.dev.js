@@ -3151,7 +3151,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						};
 					}
 				}
-
+				console.log("RESULTS",results);
 				if( 'function' === typeof on_success ) {
 					on_success( results );
 				}
