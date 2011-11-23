@@ -3142,7 +3142,9 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				var results = {};	
 				for( attr in matrix ) {
 					if( matrix.hasOwnProperty( attr ) ) {
+			
 						var neuron = Public.prototype.returnNeuron( attr );
+						console.log('NEURON',neuron,attr);
 						results[ neuron.display ] = { 
 							'neuron': neuron
 							, 'score': tanh( matrix[ attr ] )
@@ -3151,7 +3153,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				}
 
 				if( 'function' === typeof on_success ) {
-					on_success( matrix );
+					on_success( results );
 				}
 
 			} } );
