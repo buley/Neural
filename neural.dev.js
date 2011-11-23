@@ -3148,13 +3148,20 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					
 				}	
 			
-				var results = {};	
+				var results = {};
+				var count = 0;
+				for( attr in matrix ) {
+					if( matrix.hasOwnProperty( attr ) ) {	
+						count += 1;
+					}
+				}
+
 				for( attr in matrix ) {
 					if( matrix.hasOwnProperty( attr ) ) {	
 						var neuron = Public.prototype.returnNeuron( attr );
 						results[ neuron.display ] = { 
 							'neuron': neuron
-							, 'score': matrix[ attr ]
+							, 'score': ( ( matrix[ attr ] / count ) / ( input_len + output_len ) )
 						};
 					}
 				}
