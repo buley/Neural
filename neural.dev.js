@@ -3112,8 +3112,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 			Network.getPartialNetwork( { 'input': input, 'output': output, 'on_complete': function( network ) {
 				
-				console.log( "NETWORK", network ); 
-				
 				for( x = 0; x < input_len; x += 1 ) {
 
 					item = input_ids[ x ];
@@ -3153,7 +3151,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 				}
 
 				if( 'function' === typeof on_success ) {
-					on_success( results );
+					on_success( matrix );
 				}
 
 			} } );
