@@ -3132,6 +3132,8 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 									hid_out_strength = hidden_tos[ to_id ];
 									hid_out_strength = ( 'number' === typeof hid_out_strength ) ? hid_out_strength : 0;
 									console.log(to_id,"BEFORE",matrix[ to_id ], '1st', hid_out_strength,'2nd', in_hid_strength);
+									
+									matrix[ to_id ] = ( 'number' === typeof matrix[ to_id ] ) ? matrix[ to_id ] : 0;
 									matrix[ to_id ] += ( hid_out_strength * in_hid_strength );
 								}
 							}
