@@ -3150,7 +3150,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						console.log('NEURON',neuron,attr);
 						results[ neuron.display ] = { 
 							'neuron': neuron
-							, 'score': tanh( matrix[ attr ] )
+							, 'score': matrix[ attr ]
 						};
 					}
 				}
