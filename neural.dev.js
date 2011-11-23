@@ -3118,6 +3118,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 					item = input_ids[ x ];
 
+					console.log('INPUT TO',x,'Object',item);
 					input_tos = network[ item ][ 'to' ];
 
 					for( attr in input_tos ) {
