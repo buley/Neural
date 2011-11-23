@@ -3163,7 +3163,6 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					if( matrix.hasOwnProperty( attr ) ) {	
 						var neuron = Public.prototype.returnNeuron( attr );
 						console.log( '(', matrix[attr], '/', count, ') / ', input_len );
-						, '+', output_len, ')' );
 						results[ neuron.display ] = { 
 							'neuron': neuron
 							, 'score': ( matrix[ attr ] / count ) / input_len
