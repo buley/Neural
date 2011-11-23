@@ -3140,6 +3140,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 									console.log(to_id,"BEFORE",matrix[ to_id ], '1st', hid_out_strength,'2nd', in_hid_strength);
 									
 									matrix[ to_id ] = ( 'number' === typeof matrix[ to_id ] ) ? matrix[ to_id ] : 0;
+									//output strength / commonality of occurance
 									matrix[ to_id ] += ( hid_out_strength * in_hid_strength );
 								}
 							}
