@@ -3101,8 +3101,13 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , on_error = request.on_error
 		  , on_complete = request.on_complete;
 
-		var tanh = function(arg) {
-    			return (Math.exp(arg) - Math.exp(-arg)) / (Math.exp(arg) + Math.exp(-arg));
+		var tanh = function( x ) {
+		if( x < -3 ) {
+			return -1;
+		} else if( x > 3 ) {
+			return 1;
+		} else {
+			return x * ( 27 + x * x ) / ( 27 + 9 * x * x );
 		}
 
 		Network.addOrGetInputNeurons( {
