@@ -3093,7 +3093,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , input_tos
 		  , hidden_froms
 		  , hidden_tos
-		  , matrix
+		  , matrix = {}
 		  , in_hid_id
 		  , in_hid_strength
 		  , hid_out_id
