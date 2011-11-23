@@ -3130,7 +3130,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 							in_hid_id = attr;
 							in_hid_strength = input_tos[ attr ];
 							in_hid_strength = ( 'number' === typeof in_hid_strength ) ? in_hid_strength : 0;
-							if( 'undefined' !== typeof network[ in_hid_id ] ) {
+							if( 'undefined' === typeof network[ in_hid_id ] ) {
 								network[ in_hid_id ] = {};
 							}
 							hidden_tos = network[ in_hid_id ][ 'to' ];
