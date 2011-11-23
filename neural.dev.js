@@ -3131,7 +3131,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 								if( hidden_tos.hasOwnProperty( to_id ) ) {
 							
 									hid_out_id = to_id
-									hid_out_strength = input_tos[ to_id ];
+									hid_out_strength = hidden_tos[ to_id ];
 		
 									matrix[ to_id ] += ( hid_out_strength * in_hid_strength );
 								}
