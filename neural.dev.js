@@ -3097,7 +3097,10 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		  , in_hid_id
 		  , in_hid_strength
 		  , hid_out_id
-		  , hid_out_strength;
+		  , hid_out_strength
+		  , on_success = function(){}
+		  , on_error = function(){}
+		  , on_complete = function(){};
 
 		var tanh = function(arg) {
     			return (Math.exp(arg) - Math.exp(-arg)) / (Math.exp(arg) + Math.exp(-arg));
@@ -3151,9 +3154,9 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 						};
 					}
 				}
-				console.log("RESULTS",results);
-				if( 'function' === typeof on_success ) {
-					on_success( results );
+				
+				if( 'function' === typeof on_complete ) {
+					on_complete( results );
 				}
 
 			} } );
