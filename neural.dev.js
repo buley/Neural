@@ -31,7 +31,7 @@ var Neural = (function() {
 			}
 		}
 
-		Private = new InDBApp( { 'database': current_database, 'description': current_description } );
+		Private = new InDBApp( { 'name': current_database, 'description': current_description } );
 		Private.shorthand.set( { 'store': 'neurons', 'data': Public.prototype.neurons.shorthand_map } );
 		Private.shorthand.set( { 'store': 'synapses', 'data': Public.prototype.synapses.shorthand_map } );
 
