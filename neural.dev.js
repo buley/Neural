@@ -22,8 +22,8 @@ var Neural = (function() {
 		var current_description = "A basic MLP network."
 
 		if ( 'undefined' !== typeof request ) {
-			if ( 'undefined' !== typeof request.database ) {
-				current_database = request.database;
+			if ( 'undefined' !== typeof request.name ) {
+				current_database = request.name;
 			}
 
 			if ( 'undefined' !== typeof request.description ) {
