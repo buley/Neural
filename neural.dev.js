@@ -896,7 +896,6 @@ var Neural = (function() {
 			/* Synapse Update Single */
 			Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
 
-				console.log('synapse update success',finished_value);
 						if ( true === debug ) {
 							console.log( 'Public.prototype.update > Network.update > success', finished_value );
 						}
