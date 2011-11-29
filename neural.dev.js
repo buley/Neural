@@ -2194,7 +2194,6 @@ var Neural = (function() {
 
 			if ( 'undefined' !== typeof cached_synapse_id && null !== cached_synapse_id ) {
 				var cached_synapse = Cache.get( { 'key': ( 'synapses.data.' + cached_synapse_id ) } );
-				console.log("CAMP BUDDY",JSON.stringify({ 'key': ( 'synapses.data.' + cached_synapse_id ) }), cached_synapse );
 			}
 			if ( ( 'undefined' === typeof cached_synapse || null === cached_synapse ) && new_synapse_data !== cached_synapse ) {
 
