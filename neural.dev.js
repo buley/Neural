@@ -2498,13 +2498,14 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 
 					} else {
 
-						if ( 'undefined' !== typeof on_success ) {
+
+						if ( 'function' !== typeof on_success ) {
 							on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': result_id, 'cached': true } );
+						}
+
+						hidden_layer_callback( result_id );
+
 					}
-
-					hidden_layer_callback( result_id );
-
-				}
 
 			}
 			//end
