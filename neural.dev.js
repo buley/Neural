@@ -2499,7 +2499,7 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 					} else {
 
 
-						if ( 'function' !== typeof on_success ) {
+						if ( 'function' === typeof on_success ) {
 							on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': result_id, 'cached': true } );
 						}
 
