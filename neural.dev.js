@@ -2150,7 +2150,7 @@ var Neural = (function() {
 							}, 'index': 'hash', 'key': token_hash, 'expecting': { 'type': 'input' }  } );
 						} else {
 
-							if ( 'undefined' !== typeof on_success ) {
+							if ( 'function' === typeof on_success ) {
 								on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_input_neuron, 'cached': true } );
 							}
 
