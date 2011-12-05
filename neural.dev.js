@@ -900,7 +900,7 @@ var Neural = (function() {
 							console.log( 'Public.prototype.update > Network.update > success', finished_value );
 						}
 
-						if ( 'undefined' !== typeof on_success ) {
+						if ( 'function' === typeof on_success ) {
 							on_success( finished_value );
 						}
 						
@@ -2127,7 +2127,7 @@ var Neural = (function() {
 									console.log( 'Public.prototype.add > Network.put success > Network.put error > Network.get success', JSON.stringify(resulting_input_neuron_id) );
 								}
 								
-								if ( 'undefined' !== typeof on_success ) {
+								if ( 'function' === typeof on_success ) {
 									on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': resulting_input_neuron_id, 'cached': false } );
 								}
 								Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': resulting_input_neuron_id, 'ttl': 300 } );
@@ -2162,7 +2162,7 @@ var Neural = (function() {
 
 				} else {
 
-					if ( 'undefined' !== typeof on_success ) {
+					if ( 'function' === typeof on_success ) {
 
 						on_success( { 'type': 'neuron', 'subtype': 'input', 'action': 'get', 'key': token_hash, 'value': cached_input_neuron, 'cached': true } );
 
@@ -2205,7 +2205,7 @@ var Neural = (function() {
 					Cache.set( { 'key': ( 'neurons.data.' + input_neuron_id + '.synapses.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.data.' + synapse_id ), 'value': new_synapse_data, 'ttl': 300 } );
 					Cache.set( { 'key': ( 'synapses.hashes.' + new_synapse_data.hash  ), 'value': synapse_id, 'ttl': 300 } );
-					if ( 'function' !== typeof on_success ) {
+					if ( 'function' === typeof on_success ) {
 						on_success( { 'type': 'synapse', 'action': 'put', 'data': new_synapse_data, 'result': synapse_id, 'cached': false, 'updated': false } );
 					}
 
@@ -2236,7 +2236,7 @@ var Neural = (function() {
 							/* Synapse Update Single */
 							Network.update( {  'type': 'synapse', 'on_success': function( finished_value ) {
 	
-								if ( 'undefined' !== typeof on_success ) {
+								if ( 'function' === typeof on_success ) {
 									on_success( { 'type': 'synapse', 'action': 'get', 'result': finished_value, 'cached': false, 'updated': true } );
 								}
 
@@ -2298,7 +2298,7 @@ var Neural = (function() {
 								console.log( 'Public.prototype.update > Network.update > success', finished_value );
 							}
 
-							if ( 'undefined' !== typeof on_success ) {
+							if ( 'function' === typeof on_success ) {
 								on_success( { 'type': 'synapse', 'action': 'update', 'value': finished_value, 'cached': true, 'updated': true } );
 							}
 
@@ -2352,7 +2352,7 @@ var Neural = (function() {
 						console.log( 'success', finished_value );
 					}
 
-					if ( 'undefined' !== typeof on_success ) {
+					if ( 'function' === typeof on_success ) {
 						on_success( { 'type': 'synapse', 'action': 'update', 'result': finished_value, 'cached': true, 'updated': true } );
 					}
 
@@ -2447,7 +2447,7 @@ var Neural = (function() {
 							Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data, 'ttl': 300 } );
 							Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id, 'ttl': 300 } );
 
-							if ( 'undefined' !== typeof on_success ) {
+							if ( 'function' === typeof on_success ) {
 								on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'put', 'value': hidden_id } );
 							}
 
@@ -2472,7 +2472,7 @@ var Neural = (function() {
 								Cache.set( { 'key': ( 'neurons.data.' + hidden_id ), 'value': neuron_data } );
 								Cache.set( { 'key': ( 'neurons.hashes.' + hidden_hash ), 'value': hidden_id } );
 
-								if ( 'undefined' !== typeof on_success ) {
+								if ( 'function' === typeof on_success ) {
 									on_success( { 'type': 'neuron', 'subtype': 'hidden', 'action': 'get', 'value': hidden_id, 'cached': false } );
 								}
 
