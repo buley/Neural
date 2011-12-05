@@ -3188,12 +3188,12 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		    'return_existing': true,
 		    'tokens': input,
 		    'on_success': function (neuron) {
-			if( !!debug ) }
+			if( !!debug ) {
 		    	    console.log("NEURON", neuron);
 			}
 		    },
 		    'on_error': function () {
-			if( !!debug ) }
+			if( !!debug ) {
 				console.log("ERROR");
 			}
 		    },
