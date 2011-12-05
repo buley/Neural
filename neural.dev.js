@@ -3188,21 +3188,29 @@ console.log("AWSOME",JSON.stringify(new_synapse_data));
 		    'return_existing': true,
 		    'tokens': input,
 		    'on_success': function (neuron) {
-			console.log("NEURON", neuron);
+			if( !!debug ) }
+		    	    console.log("NEURON", neuron);
+			}
 		    },
 		    'on_error': function () {
-			console.log("ERROR");
+			if( !!debug ) }
+				console.log("ERROR");
+			}
 		    },
 		    'on_complete': function (input_neurons) {
 			Network.addOrGetHiddenNeurons({
 			    'return_existing': true,
 			    'tokens': input,
 			    'on_success': function (neuron) {
-				console.log("NEURON", neuron);
-			    },
+				if( !!debug ) {
+					console.log("NEURON", neuron);
+				}
+    			    },
 			    //end on_success
 			    'on_error': function () {
-				console.log("ERROR");
+				if( !!debug ) {
+					console.log("ERROR");
+				}
 			    },
 			    //end on_error
 			    'on_complete': function (hidden_neurons) {
