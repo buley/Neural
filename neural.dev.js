@@ -2101,7 +2101,7 @@ var Neural = (function() {
 						Cache.set( { 'key': ( 'neurons.data.' + neuron_id + '.hash' ), 'value': token_hash, 'ttl': 300 } );
 						Cache.set( { 'key': ( 'neurons.hashes.' + token_hash ), 'value': neuron_id, 'ttl': 300 } );
 
-						if ( 'undefined' !== typeof on_success ) {
+						if ( 'function' === typeof on_success ) {
 							on_success( { 'type': 'neuron', 'subtype': 'input', 'value': neuron_id, 'action': 'put', 'cached': false } );
 						}
 						
