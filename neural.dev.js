@@ -1523,6 +1523,7 @@ var Neural = (function() {
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
 		    , on_complete = req.on_complete || null
+		    , deduplify = req.deduplify || false
 		    , own_on_success
 		    , own_on_error
 		    , own_on_complete
@@ -1594,7 +1595,7 @@ var Neural = (function() {
 			}
 		};
 
-		hiddens = Public.prototype.getHiddenIds( tokens );
+		hiddens = Public.prototype.getHiddenIds( tokens, dedupe );
 		expected_actions = Public.prototype.countAttributes( hiddens );
 		for( x in hiddens ) {
 			if ( hiddens.hasOwnProperty( x ) ) {
@@ -1769,11 +1770,13 @@ var Neural = (function() {
 	}
 */
 
-	Public.prototype.getHiddenIds = function( tokens ) {
+	Public.prototype.getHiddenIds = function( tokens, deduplify ) {
 
 		var a = 0
 		    , b = 0
 		    , c = 0
+		    , deduplify = ( true === deduplify ) ? true : false
+		    , seen = {}
 		    , hiddens = {}
 		    , aa
 		    , bb
@@ -1796,10 +1799,12 @@ var Neural = (function() {
 			for( b = 0; b < tokens_length; b += 1 ) {
 				bb = tokens[ b ];
 				if ( aa !== bb ) {
-					arr = [ aa, bb ];
+					
+					arr = Public.prototype.utilities.alphaSortArray( [ aa, bb ] );
+
 					hidden_id = Public.prototype.utilities.getId( [ aa, bb, 'hidden' ] );
 					hiddens[ hidden_id ] = arr;
-
+					/*
 					for( c = 0; c < tokens_length; c += 1 ) {
 						cc = tokens[ c ];
 						if ( aa !== cc && bb !== cc && aa !== bb ) {
@@ -1808,6 +1813,7 @@ var Neural = (function() {
 							hiddens[ hidden_id ] = arr;
 						}
 					}
+					*/
 
 				}
 			}
