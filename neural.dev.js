@@ -1595,7 +1595,7 @@ var Neural = (function() {
 			}
 		};
 
-		hiddens = Public.prototype.getHiddenIds( tokens, dedupe );
+		hiddens = Public.prototype.getHiddenIds( tokens, deduplify );
 		expected_actions = Public.prototype.countAttributes( hiddens );
 		for( x in hiddens ) {
 			if ( hiddens.hasOwnProperty( x ) ) {
