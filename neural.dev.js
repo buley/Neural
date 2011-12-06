@@ -1800,9 +1800,12 @@ var Neural = (function() {
 			for( b = 0; b < tokens_length; b += 1 ) {
 				bb = tokens[ b ];
 				if ( aa !== bb ) {
-					
+	
+					if( true === deduplify ) {				
 					arr = Public.prototype.utilities.alphaSortArray( [ aa, bb ] );
-
+					} else {
+						arr = [ aa, bb ];
+					}
 					hidden_id = Public.prototype.utilities.getId( [ aa, bb, 'hidden' ] );
 					hiddens[ hidden_id ] = arr;
 					/*
