@@ -1424,7 +1424,6 @@ var Neural = (function() {
 
 	}
 
-	//xxx
 	Public.prototype.activateOutput = function( request ) {
 
 		var output = request.output
@@ -1432,6 +1431,7 @@ var Neural = (function() {
 		  , on_success = request.on_success
 		  , on_error = request.on_complete
 		  , on_complete = request.on_complete
+		  , deduplify = request.deduplify || false
 		  , expected_actions = 0
 		  , action_count = 0
 		  , synapses = [];
@@ -1457,6 +1457,7 @@ var Neural = (function() {
 				Network.addOrGetHiddenNeurons(
 					{ 'return_existing': true
 					, 'tokens': input
+					, 'deduplify': deduplify
 					, 'on_success': function( hidden_neuron ){
 						if ( 'function' === typeof on_success ) {
 							on_success( hidden_neuron );
@@ -2054,7 +2055,8 @@ var Neural = (function() {
 		var tokens = req.tokens
 		    , on_success = req.on_success || null
 		    , on_error = req.on_error || null
-		    , on_complete = req.on_complete || null;
+		    , on_complete = req.on_complete || null
+		    , deduplify = req.deduplify || false;
 
 		if ( 'string' === tokens ) {
 			tokens = [ tokens ];
@@ -2408,7 +2410,7 @@ var Neural = (function() {
 	
 		var hidden_hashes = {};
 
-		Network.addOrGetHiddenNeurons( { 'return_existing': true, 'tokens': tokens, 'on_success': function(neuron){
+		Network.addOrGetHiddenNeurons( { 'return_existing': true, 'tokens': tokens, 'deduplify': deduplify, 'on_success': function(neuron){
 			if ( !!debug ) {
 				console.log("Network.addOrGetHiddenNeurons > success > NEURON",neuron);
 			}
